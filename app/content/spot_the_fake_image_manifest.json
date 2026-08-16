@@ -1,0 +1,18 @@
+{
+  "rounds": [
+    {
+      "id": "round-1",
+      "subject_label": "PLACEHOLDER ROUND 1 -- replace before event",
+      "real_image": "round-1-real.jpg",
+      "fake_image": "round-1-fake.jpg",
+      "reveal_note": "This is placeholder content (a solid-color test image, not a photo of a person) used only to test the game plumbing. Replace real_image/fake_image and this note with real content before the event -- see app/content/README.md."
+    },
+    {
+      "id": "round-2",
+      "subject_label": "PLACEHOLDER ROUND 2 -- replace before event",
+      "real_image": "round-2-real.jpg",
+      "fake_image": "round-2-fake.jpg",
+      "reveal_note": "This is placeholder content (a solid-color test image, not a photo of a person) used only to test the game plumbing. Replace real_image/fake_image and this note with real content before the event -- see app/content/README.md."
+    }
+  ]
+}

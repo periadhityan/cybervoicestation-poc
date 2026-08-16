@@ -1,0 +1,18 @@
+{
+  "rounds": [
+    {
+      "id": "round-1",
+      "subject_label": "PLACEHOLDER ROUND 1 -- replace before event",
+      "real_video": "round-1-real.mp4",
+      "fake_video": "round-1-fake.mp4",
+      "reveal_note": "This is placeholder content (a synthetic test pattern, not footage of a person) used only to test the game plumbing. Replace real_video/fake_video and this note with real content before the event -- see app/content/README.md."
+    },
+    {
+      "id": "round-2",
+      "subject_label": "PLACEHOLDER ROUND 2 -- replace before event",
+      "real_video": "round-2-real.mp4",
+      "fake_video": "round-2-fake.mp4",
+      "reveal_note": "This is placeholder content (a synthetic test pattern, not footage of a person) used only to test the game plumbing. Replace real_video/fake_video and this note with real content before the event -- see app/content/README.md."
+    }
+  ]
+}

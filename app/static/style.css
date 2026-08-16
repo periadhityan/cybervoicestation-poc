@@ -124,6 +124,19 @@ footer a {
   opacity: .7;
 }
 
+.clip-media video,
+.clip-media img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+  background: #0b0d12;
+}
+
+.clip-media img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
 .guess-btn {
   width: 100%;
   margin-top: 12px;

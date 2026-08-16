@@ -10,6 +10,8 @@ from flask import Flask, Response, jsonify, render_template, request
 
 from cleanup import SessionCleaner
 from spot_the_fake import bp as spot_the_fake_bp
+from spot_the_fake_image import bp as spot_the_fake_image_bp
+from spot_the_fake_video import bp as spot_the_fake_video_bp
 from voice_engine import VoiceEngine
 
 
@@ -32,6 +34,8 @@ app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_BYTES
 app.config["JSON_SORT_KEYS"] = False
 app.register_blueprint(spot_the_fake_bp)
+app.register_blueprint(spot_the_fake_video_bp)
+app.register_blueprint(spot_the_fake_image_bp)
 
 cleaner = SessionCleaner(SESSION_ROOT)
 
