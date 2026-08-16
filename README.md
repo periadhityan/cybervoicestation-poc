@@ -161,6 +161,78 @@ consent wording per the campaign project's open decisions list.
 
 ---
 
+## Deploying to other hardware
+
+Once the native + container build above is validated on this Mac, here's how
+to run the same app somewhere else. The gap called out in the table above —
+`checkpoints_v2/`, `upstream/OpenVoice/`, `upstream/MeloTTS/`, and
+`BUILD_MANIFEST.txt` not being in git — applies on *any* second machine, so
+every path below deals with it one way or another.
+
+### Option 1 — A dedicated mini-PC (Docker appliance)
+
+For a permanent, hardened, unattended kiosk: RAM-backed `tmpfs` for
+`/session`, read-only root filesystem, dropped capabilities. Condensed
+version (full walkthrough — OS install, kiosk browser autostart, hardware
+UAT checklist — is in the project's Mini-PC Setup Guide doc):
+
+```bash
+# On the mini-PC (Ubuntu Server LTS recommended), after installing Docker Engine:
+git clone <your-repo-URL> ~/CyberVoiceStation
+cd ~/CyberVoiceStation
+
+# Bring BUILD_MANIFEST.txt over from the Mac (scp/USB) first, then pin the
+# same commits it recorded:
+mkdir -p upstream && cd upstream
+git clone https://github.com/myshell-ai/OpenVoice.git
+cd OpenVoice && git checkout <commit from BUILD_MANIFEST.txt> && cd ..
+git clone https://github.com/myshell-ai/MeloTTS.git
+cd MeloTTS && git checkout <commit from BUILD_MANIFEST.txt> && cd ../..
+
+# Re-download checkpoints_v2/ per Phase 4 above, then:
+cd ~/CyberVoiceStation
+docker compose -f deploy/compose.yaml build --no-cache
+docker compose -f deploy/compose.yaml up -d
+```
+
+A mini-PC is almost certainly **x86-64** while this Mac is **ARM64** — the
+image has to be built **on the mini-PC itself**, not copied over. Docker
+images aren't portable across CPU architectures; the Dockerfile is portable
+source, not a portable prebuilt image.
+
+### Option 2 — A second Apple Silicon Mac
+
+Same chip family as this Mac, so this is the easiest transfer of the two.
+
+**Native** (gets the same MPS acceleration as this Mac): repeat Phases 0-6
+above on the second Mac, but instead of re-downloading `checkpoints_v2/`
+from scratch, copy the folder over directly (AirDrop/USB/scp), along with
+`BUILD_MANIFEST.txt`, and check out OpenVoice/MeloTTS to the exact commits
+it records before installing them.
+
+**Docker, transferring the already-built image (fastest option overall)** —
+because both Macs are ARM64, no rebuild is needed and the checkpoint/upstream
+gap doesn't even come up, since the image already has everything baked in:
+
+```bash
+# on this Mac:
+docker images | grep cybervoice     # confirm the exact image name/tag
+docker save deploy-cybervoice:latest -o cybervoice-image.tar
+# AirDrop/USB/scp cybervoice-image.tar to the second Mac (a few GB, budget time)
+
+# on the second Mac:
+docker load -i cybervoice-image.tar
+git clone <your-repo-URL> ~/CyberVoiceStation
+cd ~/CyberVoiceStation
+docker compose -f deploy/compose.yaml up -d
+```
+
+Run a quick health check and one full clone session afterward regardless of
+which option you use — different physical machines can behave differently
+even on matching hardware/architecture.
+
+---
+
 ## Repo layout
 ```
 app/                  Flask backend, voice engine, cleanup logic, UI
