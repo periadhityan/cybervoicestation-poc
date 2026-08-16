@@ -70,7 +70,7 @@ function renderRound() {
   guessBtns.forEach(btn => (btn.disabled = false));
 
   roundProgress.textContent = `ROUND ${currentIndex + 1} OF ${games.length}`;
-  scoreLine.textContent = `${score}/${currentIndex}`;
+  scoreLine.textContent = `${score}/${games.length}`;
   subjectLabel.textContent = game.subjectLabel;
 
   clipA.src = game.slotA.url;
@@ -93,7 +93,7 @@ function handleGuess(slotLetter) {
   feedbackVerdict.textContent = correct ? 'Correct -- that was the real one.' : 'Not quite -- that was the fake.';
   feedbackNote.textContent = game.revealNote || '';
   feedback.classList.remove('hidden');
-  scoreLine.textContent = `${score}/${currentIndex + 1}`;
+  scoreLine.textContent = `${score}/${games.length}`;
 }
 
 function nextRound() {
