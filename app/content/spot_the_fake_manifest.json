@@ -13,6 +13,27 @@
       "real_audio": "round-2-real.mp3",
       "fake_audio": "round-2-fake.mp3",
       "reveal_note": "This is placeholder content (a synthetic tone, not speech) used only to test the game plumbing. Replace real_audio/fake_audio and this note with real content before the event -- see app/content/README.md."
+    },
+    {
+      "id": "round-3",
+      "subject_label": "PLACEHOLDER ROUND 3 -- replace before event",
+      "real_audio": "round-3-real.mp3",
+      "fake_audio": "round-3-fake.mp3",
+      "reveal_note": "This is placeholder content (a synthetic tone, not speech) used only to test the game plumbing. Replace real_audio/fake_audio and this note with real content before the event -- see app/content/README.md."
+    },
+    {
+      "id": "round-4",
+      "subject_label": "PLACEHOLDER ROUND 4 -- replace before event",
+      "real_audio": "round-4-real.mp3",
+      "fake_audio": "round-4-fake.mp3",
+      "reveal_note": "This is placeholder content (a synthetic tone, not speech) used only to test the game plumbing. Replace real_audio/fake_audio and this note with real content before the event -- see app/content/README.md."
+    },
+    {
+      "id": "round-5",
+      "subject_label": "PLACEHOLDER ROUND 5 -- replace before event",
+      "real_audio": "round-5-real.mp3",
+      "fake_audio": "round-5-fake.mp3",
+      "reveal_note": "This is placeholder content (a synthetic tone, not speech) used only to test the game plumbing. Replace real_audio/fake_audio and this note with real content before the event -- see app/content/README.md."
     }
   ]
 }
