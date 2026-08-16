@@ -2,38 +2,59 @@
   "rounds": [
     {
       "id": "round-1",
-      "subject_label": "PLACEHOLDER ROUND 1 -- replace before event",
+      "difficulty": "easy",
+      "subject_label": "PLACEHOLDER ROUND 1 (EASY) -- replace before event",
       "real_audio": "round-1-real.mp3",
       "fake_audio": "round-1-fake.mp3",
-      "reveal_note": "This is placeholder content (a synthetic tone, not speech) used only to test the game plumbing. Replace real_audio/fake_audio and this note with real content before the event -- see app/content/README.md."
+      "reveal_note": "Placeholder tones, not speech -- this pair is a big frequency gap (easy). Replace with real content before the event -- see app/content/README.md."
     },
     {
       "id": "round-2",
-      "subject_label": "PLACEHOLDER ROUND 2 -- replace before event",
+      "difficulty": "easy",
+      "subject_label": "PLACEHOLDER ROUND 2 (EASY) -- replace before event",
       "real_audio": "round-2-real.mp3",
       "fake_audio": "round-2-fake.mp3",
-      "reveal_note": "This is placeholder content (a synthetic tone, not speech) used only to test the game plumbing. Replace real_audio/fake_audio and this note with real content before the event -- see app/content/README.md."
+      "reveal_note": "Placeholder tones, not speech -- this pair is a big frequency gap (easy). Replace with real content before the event -- see app/content/README.md."
     },
     {
       "id": "round-3",
-      "subject_label": "PLACEHOLDER ROUND 3 -- replace before event",
+      "difficulty": "easy",
+      "subject_label": "PLACEHOLDER ROUND 3 (EASY) -- replace before event",
       "real_audio": "round-3-real.mp3",
       "fake_audio": "round-3-fake.mp3",
-      "reveal_note": "This is placeholder content (a synthetic tone, not speech) used only to test the game plumbing. Replace real_audio/fake_audio and this note with real content before the event -- see app/content/README.md."
+      "reveal_note": "Placeholder tones, not speech -- this pair is a big frequency gap (easy). Replace with real content before the event -- see app/content/README.md."
     },
     {
       "id": "round-4",
-      "subject_label": "PLACEHOLDER ROUND 4 -- replace before event",
+      "difficulty": "easy",
+      "subject_label": "PLACEHOLDER ROUND 4 (EASY) -- replace before event",
       "real_audio": "round-4-real.mp3",
       "fake_audio": "round-4-fake.mp3",
-      "reveal_note": "This is placeholder content (a synthetic tone, not speech) used only to test the game plumbing. Replace real_audio/fake_audio and this note with real content before the event -- see app/content/README.md."
+      "reveal_note": "Placeholder tones, not speech -- this pair is a big frequency gap (easy). Replace with real content before the event -- see app/content/README.md."
     },
     {
       "id": "round-5",
-      "subject_label": "PLACEHOLDER ROUND 5 -- replace before event",
+      "difficulty": "medium",
+      "subject_label": "PLACEHOLDER ROUND 5 (MEDIUM) -- replace before event",
       "real_audio": "round-5-real.mp3",
       "fake_audio": "round-5-fake.mp3",
-      "reveal_note": "This is placeholder content (a synthetic tone, not speech) used only to test the game plumbing. Replace real_audio/fake_audio and this note with real content before the event -- see app/content/README.md."
+      "reveal_note": "Placeholder tones, not speech -- this pair is a moderate frequency gap (medium). Replace with real content before the event -- see app/content/README.md."
+    },
+    {
+      "id": "round-6",
+      "difficulty": "medium",
+      "subject_label": "PLACEHOLDER ROUND 6 (MEDIUM) -- replace before event",
+      "real_audio": "round-6-real.mp3",
+      "fake_audio": "round-6-fake.mp3",
+      "reveal_note": "Placeholder tones, not speech -- this pair is a moderate frequency gap (medium). Replace with real content before the event -- see app/content/README.md."
+    },
+    {
+      "id": "round-7",
+      "difficulty": "hard",
+      "subject_label": "PLACEHOLDER ROUND 7 (HARD) -- replace before event",
+      "real_audio": "round-7-real.mp3",
+      "fake_audio": "round-7-fake.mp3",
+      "reveal_note": "Placeholder tones, not speech -- this pair is a tiny frequency gap (hard, deliberately close). Replace with real content before the event -- see app/content/README.md."
     }
   ]
 }

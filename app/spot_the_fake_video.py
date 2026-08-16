@@ -42,6 +42,7 @@ def spot_the_fake_video_rounds():
     payload = [
         {
             "id": entry["id"],
+            "difficulty": entry.get("difficulty", ""),
             "subject_label": entry.get("subject_label", "Unknown"),
             "real_video_url": f"/static/{STATIC_SUBDIR}/{entry['real_video']}",
             "fake_video_url": f"/static/{STATIC_SUBDIR}/{entry['fake_video']}",

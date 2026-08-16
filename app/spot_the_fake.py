@@ -45,6 +45,7 @@ def spot_the_fake_rounds():
     payload = [
         {
             "id": entry["id"],
+            "difficulty": entry.get("difficulty", ""),
             "subject_label": entry.get("subject_label", "Unknown"),
             "real_audio_url": f"/static/{STATIC_SUBDIR}/{entry['real_audio']}",
             "fake_audio_url": f"/static/{STATIC_SUBDIR}/{entry['fake_audio']}",

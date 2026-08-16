@@ -50,6 +50,7 @@ function buildGames(rounds) {
     ]);
     return {
       id: round.id,
+      difficulty: round.difficulty,
       subjectLabel: round.subject_label,
       revealNote: round.reveal_note,
       slotA: slots[0],
@@ -79,7 +80,8 @@ function renderRound() {
   feedback.classList.add('hidden');
   guessBtns.forEach(btn => (btn.disabled = false));
 
-  roundProgress.textContent = `ROUND ${currentIndex + 1} OF ${games.length}`;
+  const difficultyTag = game.difficulty ? ` · ${game.difficulty.toUpperCase()}` : '';
+  roundProgress.textContent = `ROUND ${currentIndex + 1} OF ${games.length}${difficultyTag}`;
   scoreLine.textContent = `${score}/${games.length}`;
   subjectLabel.textContent = game.subjectLabel;
 

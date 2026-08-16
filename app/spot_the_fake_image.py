@@ -40,6 +40,7 @@ def spot_the_fake_image_rounds():
     payload = [
         {
             "id": entry["id"],
+            "difficulty": entry.get("difficulty", ""),
             "subject_label": entry.get("subject_label", "Unknown"),
             "real_image_url": f"/static/{STATIC_SUBDIR}/{entry['real_image']}",
             "fake_image_url": f"/static/{STATIC_SUBDIR}/{entry['fake_image']}",
