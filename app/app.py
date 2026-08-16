@@ -69,6 +69,11 @@ def normalise_audio(input_path: Path, output_path: Path) -> None:
 
 
 @app.get("/")
+def home():
+    return render_template("home.html")
+
+
+@app.get("/hear-yourself-hacked")
 def index():
     return render_template("index.html", device=engine.device)
 
