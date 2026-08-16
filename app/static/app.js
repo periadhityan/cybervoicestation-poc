@@ -12,6 +12,7 @@ const resultPanel = document.getElementById('resultPanel');
 const errorPanel = document.getElementById('errorPanel');
 const errorText = document.getElementById('errorText');
 const resultAudio = document.getElementById('resultAudio');
+const demoTextCaption = document.getElementById('demoTextCaption');
 const timer = document.getElementById('timer');
 
 let recorder = null;
@@ -51,6 +52,7 @@ function resetState() {
   clearInterval(timerHandle);
   timerHandle = null;
   timer.textContent = '00:00';
+  demoTextCaption.textContent = '';
   consent.checked = false;
   startBtn.disabled = true;
   recordBtn.disabled = false;
@@ -148,11 +150,13 @@ stopBtn.addEventListener('click', async () => {
       throw new Error(body.error || `Server returned HTTP ${response.status}`);
     }
 
+    const demoTextHeader = response.headers.get('X-Demo-Text');
     const resultBlob = await response.blob();
 
     // Browser-side result exists only as an object URL for playback.
     currentObjectUrl = URL.createObjectURL(resultBlob);
     resultAudio.src = currentObjectUrl;
+    demoTextCaption.textContent = demoTextHeader ? `"${decodeURIComponent(demoTextHeader)}"` : '';
     showOnly(resultPanel);
     resultAudio.play().catch(() => {});
   } catch (err) {

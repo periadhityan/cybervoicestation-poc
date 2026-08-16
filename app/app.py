@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import atexit
 import os
+import random
 import subprocess
 import uuid
 from pathlib import Path
+from urllib.parse import quote
 
 from flask import Flask, Response, jsonify, render_template, request
 
@@ -22,12 +24,53 @@ SESSION_ROOT = Path(
 
 MAX_UPLOAD_BYTES = 12 * 1024 * 1024
 
-# Keep the demonstration text fixed. This avoids turning the station into a
-# general-purpose voice-impersonation tool.
-DEMO_TEXT = (
-    "Hi, it's me. I'm tied up in another meeting. "
-    "I need you to approve this request urgently. "
-    "Please verify unusual requests using a trusted channel before acting."
+# Keep the demonstration text to a small, fixed, pre-approved pool of
+# realistic social-engineering scenarios -- never free text the visitor
+# supplies. That keeps this station a training demo, not a general-purpose
+# voice-impersonation tool. One scenario is picked at random per session so
+# repeat visitors (and people queued behind them) hear something different
+# each time. Every scenario closes with a verification reminder, spoken in
+# the participant's own cloned voice, to reinforce the lesson.
+DEMO_TEXTS = (
+    "Hi, it's me. I'm stuck in back-to-back meetings today. I need you to "
+    "process an urgent wire transfer for a new vendor before end of day -- "
+    "please don't loop in finance on this one. If you ever get a request "
+    "like this, stop and verify it through a second channel first.",
+
+    "Hi, this is IT support. We detected unusual sign-in activity and need "
+    "to verify it's really you. Can you read me the six-digit code just "
+    "texted to your phone? We'll lock this down right away. Remember: real "
+    "IT staff will never ask for your one-time code over the phone.",
+
+    "Hey, it's me -- sorry for the random text. I'm in back-to-back "
+    "meetings and need a quick favor. Can you grab four hundred dollars in "
+    "gift cards for a client gift and send me the codes? I'll pay you back "
+    "today. Requests like this should always be confirmed by phone, never "
+    "by text alone.",
+
+    "It's me, please don't panic. I've been in an accident and need help "
+    "covering an emergency payment right now. Can you send money by wire "
+    "transfer to this account before the office closes? Please call me "
+    "back on my usual number first -- a real emergency should never "
+    "pressure you to skip that.",
+
+    "Hi, quick note about our banking details -- we've switched providers "
+    "and updated the account number for upcoming invoices. Please make "
+    "sure the next payment goes to the new account I'm sending over. Any "
+    "request to change payment details should be verified by phone with a "
+    "known contact first.",
+
+    "Hi, this is about my paycheck -- I recently switched banks and need "
+    "to update my direct deposit before the next payroll run. Can you "
+    "update it to the new account I'm about to send you? Requests to "
+    "change payroll details should always go through the official portal, "
+    "never a phone call alone.",
+
+    "This is an automated security alert. Suspicious activity was detected "
+    "on your account and it will be locked in ten minutes unless you "
+    "verify your identity. Please call the number in this message and be "
+    "ready to confirm your password. Real security teams will never ask "
+    "you to read your password aloud.",
 )
 
 app = Flask(__name__)
@@ -111,9 +154,10 @@ def clone_voice():
 
         normalise_audio(uploaded, reference_wav)
 
+        demo_text = random.choice(DEMO_TEXTS)
         output_path = engine.clone(
             reference_wav=reference_wav,
-            text=DEMO_TEXT,
+            text=demo_text,
             session_dir=session_dir,
         )
 
@@ -134,6 +178,7 @@ def clone_voice():
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
         response.headers["X-Session-Cleaned"] = "true"
+        response.headers["X-Demo-Text"] = quote(demo_text)
         return response
 
     except subprocess.TimeoutExpired:

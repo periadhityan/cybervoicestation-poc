@@ -159,6 +159,18 @@ button:disabled { opacity: .35; cursor: not-allowed; box-shadow: none; transform
 
 audio { width: 100%; margin: 24px 0; border-radius: 12px; }
 
+.demo-caption {
+  margin: 4px 0 24px;
+  padding: 14px 18px;
+  border-left: 3px solid var(--accent-pink);
+  background: rgba(244, 114, 182, 0.08);
+  border-radius: 0 12px 12px 0;
+  font-style: italic;
+  opacity: .9;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
 footer {
   text-align: center;
   padding: 24px;
