@@ -39,7 +39,8 @@ COPY requirements-lock.txt /opt/cybervoice/requirements-lock-reference.txt
 # too, since every real dependency they need is already satisfied by the
 # lock file. This is a straight reproduction of a known-good environment,
 # not a fresh resolve.
-RUN python -m pip install --upgrade pip setuptools wheel \
+RUN python -m pip install --upgrade pip wheel \
+    && python -m pip install "setuptools<81" \
     && python -m pip install --no-deps -r /opt/cybervoice/requirements-lock-reference.txt \
     && python -m pip install -e /opt/cybervoice/upstream/OpenVoice --no-deps \
     && python -m pip install -e /opt/cybervoice/upstream/MeloTTS --no-deps
