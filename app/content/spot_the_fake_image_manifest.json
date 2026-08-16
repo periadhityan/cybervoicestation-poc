@@ -1,60 +1,112 @@
 {
-  "rounds": [
+  "easy": [
     {
-      "id": "round-1",
+      "id": "easy-1",
       "difficulty": "easy",
-      "subject_label": "PLACEHOLDER ROUND 1 (EASY) -- replace before event",
-      "real_image": "round-1-real.jpg",
-      "fake_image": "round-1-fake.jpg",
-      "reveal_note": "Placeholder solid-color stills, not photos -- very different colors (easy). Replace with real content before the event -- see app/content/README.md."
+      "subject_label": "PLACEHOLDER EASY 1 -- replace before event",
+      "real_image": "easy-1-real.jpg",
+      "fake_image": "easy-1-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- easy tier. Replace before the event -- see app/content/README.md."
     },
     {
-      "id": "round-2",
+      "id": "easy-2",
       "difficulty": "easy",
-      "subject_label": "PLACEHOLDER ROUND 2 (EASY) -- replace before event",
-      "real_image": "round-2-real.jpg",
-      "fake_image": "round-2-fake.jpg",
-      "reveal_note": "Placeholder solid-color stills, not photos -- very different colors (easy). Replace with real content before the event -- see app/content/README.md."
+      "subject_label": "PLACEHOLDER EASY 2 -- replace before event",
+      "real_image": "easy-2-real.jpg",
+      "fake_image": "easy-2-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- easy tier. Replace before the event -- see app/content/README.md."
     },
     {
-      "id": "round-3",
+      "id": "easy-3",
       "difficulty": "easy",
-      "subject_label": "PLACEHOLDER ROUND 3 (EASY) -- replace before event",
-      "real_image": "round-3-real.jpg",
-      "fake_image": "round-3-fake.jpg",
-      "reveal_note": "Placeholder solid-color stills, not photos -- very different colors (easy). Replace with real content before the event -- see app/content/README.md."
+      "subject_label": "PLACEHOLDER EASY 3 -- replace before event",
+      "real_image": "easy-3-real.jpg",
+      "fake_image": "easy-3-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- easy tier. Replace before the event -- see app/content/README.md."
     },
     {
-      "id": "round-4",
+      "id": "easy-4",
       "difficulty": "easy",
-      "subject_label": "PLACEHOLDER ROUND 4 (EASY) -- replace before event",
-      "real_image": "round-4-real.jpg",
-      "fake_image": "round-4-fake.jpg",
-      "reveal_note": "Placeholder solid-color stills, not photos -- very different colors (easy). Replace with real content before the event -- see app/content/README.md."
+      "subject_label": "PLACEHOLDER EASY 4 -- replace before event",
+      "real_image": "easy-4-real.jpg",
+      "fake_image": "easy-4-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- easy tier. Replace before the event -- see app/content/README.md."
     },
     {
-      "id": "round-5",
+      "id": "easy-5",
+      "difficulty": "easy",
+      "subject_label": "PLACEHOLDER EASY 5 -- replace before event",
+      "real_image": "easy-5-real.jpg",
+      "fake_image": "easy-5-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- easy tier. Replace before the event -- see app/content/README.md."
+    },
+    {
+      "id": "easy-6",
+      "difficulty": "easy",
+      "subject_label": "PLACEHOLDER EASY 6 -- replace before event",
+      "real_image": "easy-6-real.jpg",
+      "fake_image": "easy-6-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- easy tier. Replace before the event -- see app/content/README.md."
+    }
+  ],
+  "medium": [
+    {
+      "id": "medium-1",
       "difficulty": "medium",
-      "subject_label": "PLACEHOLDER ROUND 5 (MEDIUM) -- replace before event",
-      "real_image": "round-5-real.jpg",
-      "fake_image": "round-5-fake.jpg",
-      "reveal_note": "Placeholder solid-color stills, not photos -- related but distinguishable shades (medium). Replace with real content before the event -- see app/content/README.md."
+      "subject_label": "PLACEHOLDER MEDIUM 1 -- replace before event",
+      "real_image": "medium-1-real.jpg",
+      "fake_image": "medium-1-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- medium tier. Replace before the event -- see app/content/README.md."
     },
     {
-      "id": "round-6",
+      "id": "medium-2",
       "difficulty": "medium",
-      "subject_label": "PLACEHOLDER ROUND 6 (MEDIUM) -- replace before event",
-      "real_image": "round-6-real.jpg",
-      "fake_image": "round-6-fake.jpg",
-      "reveal_note": "Placeholder solid-color stills, not photos -- related but distinguishable shades (medium). Replace with real content before the event -- see app/content/README.md."
+      "subject_label": "PLACEHOLDER MEDIUM 2 -- replace before event",
+      "real_image": "medium-2-real.jpg",
+      "fake_image": "medium-2-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- medium tier. Replace before the event -- see app/content/README.md."
     },
     {
-      "id": "round-7",
+      "id": "medium-3",
+      "difficulty": "medium",
+      "subject_label": "PLACEHOLDER MEDIUM 3 -- replace before event",
+      "real_image": "medium-3-real.jpg",
+      "fake_image": "medium-3-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- medium tier. Replace before the event -- see app/content/README.md."
+    },
+    {
+      "id": "medium-4",
+      "difficulty": "medium",
+      "subject_label": "PLACEHOLDER MEDIUM 4 -- replace before event",
+      "real_image": "medium-4-real.jpg",
+      "fake_image": "medium-4-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- medium tier. Replace before the event -- see app/content/README.md."
+    }
+  ],
+  "hard": [
+    {
+      "id": "hard-1",
       "difficulty": "hard",
-      "subject_label": "PLACEHOLDER ROUND 7 (HARD) -- replace before event",
-      "real_image": "round-7-real.jpg",
-      "fake_image": "round-7-fake.jpg",
-      "reveal_note": "Placeholder solid-color stills, not photos -- nearly identical shades (hard, deliberately close). Replace with real content before the event -- see app/content/README.md."
+      "subject_label": "PLACEHOLDER HARD 1 -- replace before event",
+      "real_image": "hard-1-real.jpg",
+      "fake_image": "hard-1-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- hard tier. Replace before the event -- see app/content/README.md."
+    },
+    {
+      "id": "hard-2",
+      "difficulty": "hard",
+      "subject_label": "PLACEHOLDER HARD 2 -- replace before event",
+      "real_image": "hard-2-real.jpg",
+      "fake_image": "hard-2-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- hard tier. Replace before the event -- see app/content/README.md."
+    },
+    {
+      "id": "hard-3",
+      "difficulty": "hard",
+      "subject_label": "PLACEHOLDER HARD 3 -- replace before event",
+      "real_image": "hard-3-real.jpg",
+      "fake_image": "hard-3-fake.jpg",
+      "reveal_note": "Placeholder solid-color stills, not photos -- hard tier. Replace before the event -- see app/content/README.md."
     }
   ]
 }

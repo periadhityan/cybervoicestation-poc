@@ -8,12 +8,25 @@ Three independent games, one per modality, each with its own manifest:
 | Video | `spot_the_fake_video_manifest.json` | `app/static/spot_the_fake/video/` |
 | Picture | `spot_the_fake_image_manifest.json` | `app/static/spot_the_fake/image/` |
 
-Each round needs (field names vary slightly per modality -- see the
+## Pool-based manifest schema
+
+Each manifest is a **pool per difficulty tier**, not a fixed list of rounds:
+
+```json
+{
+  "easy": [ { ...round... }, { ...round... }, ... ],
+  "medium": [ { ...round... }, ... ],
+  "hard": [ { ...round... }, ... ]
+}
+```
+
+Each round object (field names vary slightly per modality -- see the
 existing entries for the exact keys):
 
 ```json
 {
   "id": "unique-slug",
+  "difficulty": "easy | medium | hard",
   "subject_label": "What the participant sees for this round",
   "real_<audio|video|image>": "filename",
   "fake_<audio|video|image>": "filename",
@@ -21,11 +34,23 @@ existing entries for the exact keys):
 }
 ```
 
+On every page load, the Flask route (`app/spot_the_fake*.py`) randomly
+samples 4 easy + 2 medium + 1 hard pair from each pool (see
+`SELECT_COUNTS` in each module) and always serves them in that tier order.
+**The pools need at least that many entries per tier to have any real
+variety** -- the whole point is that two players in a row, or the same
+player hitting "Play Again," see a different set of clips, so nobody can
+memorize the previous player's answers by watching or overhearing them.
+More entries per pool = less repetition. The shipped placeholder pools have
+6 easy / 4 medium / 3 hard candidates per game as a starting point --
+expand them freely, the sampling logic doesn't care how large the pools
+get.
+
 The placeholder rounds shipped in each manifest are synthetic test content
 (tones for audio, test-pattern clips for video, solid-color stills for
 images) -- not real speech, footage, or photos of anyone. They exist only to
-prove each game's plumbing works end to end. **Replace them with real
-rounds before the event.**
+prove each game's plumbing (including the sampling) works end to end.
+**Replace them with real rounds before the event.**
 
 ## How to source the real rounds
 
@@ -71,25 +96,23 @@ in-house with this codebase.
 
 ## Regenerating the placeholder content
 
-**Audio** (synthetic tones):
 ```bash
 cd ~/Repos/CyberVoiceStation
-ffmpeg -f lavfi -i "sine=frequency=300:duration=4" -ar 44100 app/static/spot_the_fake/round-N-real.mp3
-ffmpeg -f lavfi -i "sine=frequency=600:duration=4" -ar 44100 app/static/spot_the_fake/round-N-fake.mp3
+python scripts/generate_placeholder_content.py
 ```
 
-**Video** (synthetic test patterns, no audio track):
-```bash
-mkdir -p app/static/spot_the_fake/video
-ffmpeg -f lavfi -i "testsrc=size=480x270:duration=4:rate=24" -pix_fmt yuv420p app/static/spot_the_fake/video/round-N-real.mp4
-ffmpeg -f lavfi -i "smptebars=size=480x270:duration=4:rate=24" -pix_fmt yuv420p app/static/spot_the_fake/video/round-N-fake.mp4
-```
+This regenerates all three manifests and their placeholder media from
+scratch (6 easy / 4 medium / 3 hard pairs each, by default -- edit
+`POOL_SIZES` in the script to change that). Safe to re-run any time; it
+deletes stale placeholder files from previous runs first. See the script's
+docstring for how each tier's placeholder pairs are constructed (frequency
+gap for audio, pattern similarity for video, color similarity for images).
 
-**Picture** (solid-color stills):
-```bash
-mkdir -p app/static/spot_the_fake/image
-ffmpeg -f lavfi -i "color=c=0x2a6f97:s=480x270" -frames:v 1 app/static/spot_the_fake/image/round-N-real.jpg
-ffmpeg -f lavfi -i "color=c=0xa63d40:s=480x270" -frames:v 1 app/static/spot_the_fake/image/round-N-fake.jpg
-```
-
-Then add a matching entry to the relevant manifest.
+To add a real round instead of a placeholder one: drop the real/fake media
+file into the relevant static folder, then add a matching entry to the
+correct tier array in the manifest by hand -- the generator script only
+touches its own placeholder entries, so hand-added real entries are safe
+from being overwritten by a future placeholder-regeneration run **as long
+as you don't re-run the generator with settings that would collide with
+your filenames** (stick to real content filenames that don't start with
+`easy-`, `medium-`, `hard-`, or `round-` to be safe).
