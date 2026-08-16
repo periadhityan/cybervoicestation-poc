@@ -32,12 +32,24 @@ class VoiceEngine:
         self.tts = TTS(language="EN", device=self.device)
         self.speaker_ids = self.tts.hps.data.spk2id
 
-        # Prefer EN-Default for a neutral awareness demo.
-        preferred = ["EN-Default", "EN-US", "EN-AU", "EN_INDIA", "EN-BR"]
-        self.base_speaker_key = next(
-            (key for key in preferred if key in self.speaker_ids),
-            next(iter(self.speaker_ids.keys())),
-        )
+        # CYBERVOICE_BASE_SPEAKER lets you lock in whichever base speaker
+        # wins the scripts/compare_speakers.py A/B comparison, without
+        # editing this file. Falls back to the original neutral-first
+        # preference order if unset.
+        override = __import__("os").environ.get("CYBERVOICE_BASE_SPEAKER")
+        if override:
+            if override not in self.speaker_ids:
+                raise ValueError(
+                    f"CYBERVOICE_BASE_SPEAKER={override!r} is not a valid "
+                    f"speaker key. Available: {sorted(self.speaker_ids.keys())}"
+                )
+            self.base_speaker_key = override
+        else:
+            preferred = ["EN-Default", "EN-US", "EN-AU", "EN_INDIA", "EN-BR"]
+            self.base_speaker_key = next(
+                (key for key in preferred if key in self.speaker_ids),
+                next(iter(self.speaker_ids.keys())),
+            )
         self.base_speaker_id = self.speaker_ids[self.base_speaker_key]
 
         self.source_se_path = self._find_source_embedding(self.base_speaker_key)

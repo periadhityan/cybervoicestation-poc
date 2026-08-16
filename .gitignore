@@ -39,3 +39,6 @@ SHA256SUMS.txt
 # --- Editors ---
 .vscode/
 .idea/
+
+# --- Voice-quality tuning outputs (real test-voice recordings) ---
+runtime/tuning/**
