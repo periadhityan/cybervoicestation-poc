@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       ffmpeg \
       git \
       build-essential \
+      pkg-config \
       libsndfile1 \
       mecab \
       libmecab-dev \
@@ -26,28 +27,22 @@ COPY checkpoints_v2 /opt/cybervoice/checkpoints_v2
 COPY requirements-app.txt /opt/cybervoice/requirements-app.txt
 COPY requirements-lock.txt /opt/cybervoice/requirements-lock-reference.txt
 
-# --- Dependency install order matters here. This mirrors the exact sequence
-# that was needed to get a working env natively on macOS: pip's resolver
-# alone pulls in a broken chain via faster-whisper's pin on av==10.0.0,
-# which will NOT build from source against modern ffmpeg headers (and the
-# `ffmpeg` apt package doesn't even ship the dev headers needed to try), so
-# we sidestep it entirely with a prebuilt `av` wheel plus --no-deps on the
-# packages that hard-pin the broken version. numpy is re-pinned last because
-# dtw-python otherwise drags it up to a version that breaks pandas/sklearn's
-# compiled extensions.
+# --- OpenVoice's own setup.py hard-depends on faster-whisper==0.9.0, which
+# hard-pins av==10.*, which will NOT build from source against any ffmpeg
+# newer than the one it was written for. Letting pip resolve dependencies
+# normally for `-e OpenVoice` / `-e MeloTTS` triggers that build every time,
+# no matter what order a *later* pinned `av` install is placed in -- pip
+# resolves OpenVoice's own declared constraint first. The reliable fix is to
+# stop asking pip to resolve anything: install the exact frozen set that
+# already proved to work on the native macOS build (requirements-lock.txt)
+# with --no-deps, then install OpenVoice/MeloTTS themselves with --no-deps
+# too, since every real dependency they need is already satisfied by the
+# lock file. This is a straight reproduction of a known-good environment,
+# not a fresh resolve.
 RUN python -m pip install --upgrade pip setuptools wheel \
-    && python -m pip install "cython<3" \
-    && python -m pip install -e /opt/cybervoice/upstream/OpenVoice \
-    && python -m pip install -e /opt/cybervoice/upstream/MeloTTS \
-    && python -m pip install -r /opt/cybervoice/requirements-app.txt \
-    && python -m pip install "av>=12,<14" --only-binary=:all: \
-    && python -m pip install faster-whisper==0.9.0 --no-deps \
-    && python -m pip install whisper-timestamped==1.14.2 --no-deps \
-    && python -m pip install "ctranslate2<4" \
-    && python -m pip install "onnxruntime<2,>=1.14" \
-    && python -m pip install openai-whisper --no-deps \
-    && python -m pip install "dtw-python<1.4" \
-    && python -m pip install "numpy==1.22.0"
+    && python -m pip install --no-deps -r /opt/cybervoice/requirements-lock-reference.txt \
+    && python -m pip install -e /opt/cybervoice/upstream/OpenVoice --no-deps \
+    && python -m pip install -e /opt/cybervoice/upstream/MeloTTS --no-deps
 
 # MeloTTS's English phonemizer (g2p_en) needs the unidic dictionary plus
 # specific NLTK corpora that aren't declared as installable deps anywhere.
