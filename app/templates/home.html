@@ -44,7 +44,6 @@
         Try each station below. None of them collect your name, employee
         ID, or keep anything you record or upload after your session ends.
       </p>
-      <div class="countdown-banner" id="countdownBanner"></div>
     </section>
 
     <div class="hub-grid">
@@ -77,23 +76,5 @@
   <footer>
     Cybersecurity Awareness Month 2026 &middot; Pause. Think. Report.
   </footer>
-
-  <script>
-    (function () {
-      var el = document.getElementById('countdownBanner');
-      if (!el) return;
-      var target = new Date('2026-10-01T00:00:00');
-      var end = new Date('2026-11-01T00:00:00');
-      var now = new Date();
-      if (now < target) {
-        var days = Math.ceil((target - now) / 86400000);
-        el.textContent = '🗓️ Cybersecurity Awareness Month kicks off in ' + days + (days === 1 ? ' day!' : ' days!');
-      } else if (now < end) {
-        el.textContent = '🎉 Cybersecurity Awareness Month is live all October -- go play every station!';
-      } else {
-        el.textContent = '🛡️ Thanks for taking part in Cybersecurity Awareness Month 2026!';
-      }
-    })();
-  </script>
 </body>
 </html>
