@@ -1,0 +1,18 @@
+OpenVoice commit: 74a1d147b17a8c3092dd5430504bd83ef6c7eb23
+MeloTTS commit: 209145371cff8fc3bd60d7be902ea69cbdb7965a
+OpenVoice commit: 74a1d147b17a8c3092dd5430504bd83ef6c7eb23
+MeloTTS commit: 209145371cff8fc3bd60d7be902ea69cbdb7965a
+OpenVoice commit: 74a1d147b17a8c3092dd5430504bd83ef6c7eb23
+OpenVoice commit: 74a1d147b17a8c3092dd5430504bd83ef6c7eb23
+OpenVoice commit: 74a1d147b17a8c3092dd5430504bd83ef6c7eb23
+OpenVoice commit: 74a1d147b17a8c3092dd5430504bd83ef6c7eb23
+OpenVoice commit: 74a1d147b17a8c3092dd5430504bd83ef6c7eb23
+OpenVoice commit: 74a1d147b17a8c3092dd5430504bd83ef6c7eb23
+origin	https://github.com/myshell-ai/OpenVoice.git (fetch)
+origin	https://github.com/myshell-ai/OpenVoice.git (push)
+Build freeze date: Sun 16 Aug 2026 14:11:08 +08
+macOS: 26.5.2
+Architecture: arm64
+FFmpeg: ffmpeg version 9.0.1 Copyright (c) 2000-2026 the FFmpeg developers
+Python: Python 3.9.23
+PyTorch: 2.8.0

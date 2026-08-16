@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd ~/Repos/CyberVoiceStation
+
+cat > app/templates/home.html <<'EOF'
 <!doctype html>
 <html lang="en">
 <head>
@@ -41,26 +46,32 @@
         never be enough to act on a request.
       </p>
       <p class="lead">
-        Try each station below. None of them collect your name or employee
-        ID, and no score or answer is saved anywhere once you leave the page.
+        Try each station below. None of them collect your name, employee
+        ID, or keep anything you record or upload after your session ends.
       </p>
     </section>
 
     <div class="hub-grid">
-      <a class="hub-card accent-pink" href="/spot-the-fake">
+      <a class="hub-card accent-cyan" href="/hear-yourself-hacked">
         <p class="eyebrow">STATION 1</p>
+        <h2>🎙️ Hear Yourself Hacked</h2>
+        <p>Clone your own voice locally and hear how convincing an AI-generated version of it can sound.</p>
+      </a>
+
+      <a class="hub-card accent-pink" href="/spot-the-fake">
+        <p class="eyebrow">STATION 2</p>
         <h2>🎧 Which Is Fake? (Audio)</h2>
         <p>Listen to two short clips. Guess which one is the real recording.</p>
       </a>
 
       <a class="hub-card accent-orange" href="/spot-the-fake-video">
-        <p class="eyebrow">STATION 2</p>
+        <p class="eyebrow">STATION 3</p>
         <h2>🎬 Which Is Fake? (Video)</h2>
         <p>Watch two short clips. Guess which one is the real footage.</p>
       </a>
 
       <a class="hub-card accent-green" href="/spot-the-fake-image">
-        <p class="eyebrow">STATION 3</p>
+        <p class="eyebrow">STATION 4</p>
         <h2>🖼️ Which Is Fake? (Picture)</h2>
         <p>Compare two photos. Guess which one is the real photo.</p>
       </a>
@@ -72,3 +83,31 @@
   </footer>
 </body>
 </html>
+EOF
+
+python3 - <<'PYEOF'
+import re
+path = "app/static/style.css"
+with open(path, "r", encoding="utf-8") as fh:
+    css = fh.read()
+
+pattern = re.compile(
+    r"\.countdown-banner \{.*?\n\}\n\n",
+    re.DOTALL,
+)
+new_css, count = pattern.subn("", css, count=1)
+if count != 1:
+    raise SystemExit("Expected to find exactly one .countdown-banner block, found %d -- aborting, please check app/static/style.css by hand." % count)
+
+with open(path, "w", encoding="utf-8") as fh:
+    fh.write(new_css)
+
+print("Removed .countdown-banner rule from style.css")
+PYEOF
+
+echo "-- files written --"
+git status --short
+git add app/templates/home.html app/static/style.css
+git commit -m "Drop homepage kickoff countdown banner"
+git push
+echo "-- done, hard-refresh your browser (Cmd+Shift+R) to see it --"
