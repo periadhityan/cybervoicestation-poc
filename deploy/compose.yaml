@@ -1,0 +1,20 @@
+services:
+  cybervoice:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    environment:
+      CYBERVOICE_BIND: "0.0.0.0"
+      CYBERVOICE_SESSION_ROOT: "/session"
+    ports:
+      - "127.0.0.1:8080:8080"
+    tmpfs:
+      - /session:size=256m,mode=0700
+    read_only: true
+    volumes:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped

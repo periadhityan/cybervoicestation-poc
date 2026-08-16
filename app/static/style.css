@@ -1,0 +1,88 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #0b0d12;
+  color: #f7f7f8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.shell {
+  width: min(1000px, 92vw);
+  margin: 0 auto;
+}
+
+.card {
+  padding: 48px;
+  border: 1px solid #343944;
+  border-radius: 24px;
+  background: #141821;
+}
+
+.hidden { display: none; }
+
+.eyebrow {
+  letter-spacing: .16em;
+  font-size: 14px;
+  font-weight: 700;
+  opacity: .7;
+}
+
+h1 { font-size: clamp(48px, 8vw, 92px); margin: 12px 0; }
+h2 { font-size: clamp(36px, 5vw, 64px); }
+.lead { font-size: 26px; }
+
+button {
+  margin-top: 24px;
+  padding: 18px 28px;
+  border: 0;
+  border-radius: 14px;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:disabled { opacity: .35; cursor: not-allowed; }
+
+.privacy, .lesson, blockquote {
+  margin: 28px 0;
+  padding: 24px;
+  border-radius: 16px;
+  background: #202633;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.consent-row {
+  display: flex;
+  gap: 14px;
+  font-size: 18px;
+  align-items: flex-start;
+}
+
+.consent-row input {
+  width: 24px;
+  height: 24px;
+}
+
+#timer {
+  font-size: 64px;
+  font-variant-numeric: tabular-nums;
+  margin: 24px 0;
+}
+
+audio { width: 100%; margin: 24px 0; }
+
+footer {
+  text-align: center;
+  padding: 20px;
+  opacity: .35;
+  font-size: 12px;
+}

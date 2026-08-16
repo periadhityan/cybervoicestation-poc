@@ -1,0 +1,41 @@
+# --- Model weights / checkpoints (large binaries, do not commit) ---
+checkpoints_v2/**
+!checkpoints_v2/.gitkeep
+!checkpoints_v2/**/.gitkeep
+
+# --- Upstream repos are cloned in, not vendored ---
+upstream/OpenVoice/
+upstream/MeloTTS/
+!upstream/.gitkeep
+
+# --- Runtime / session data must never be committed (participant audio) ---
+runtime/sessions/**
+!runtime/sessions/.gitkeep
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+.pytest_cache/
+
+# --- Conda / venv ---
+.conda/
+venv/
+env/
+
+# --- Dependency freeze / build evidence (keep out of git; regenerate per build) ---
+requirements-lock.txt
+BUILD_MANIFEST.txt
+SHA256SUMS.txt
+
+# --- macOS ---
+.DS_Store
+
+# --- Docker ---
+*.log
+
+# --- Editors ---
+.vscode/
+.idea/
