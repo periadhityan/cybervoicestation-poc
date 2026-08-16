@@ -43,7 +43,7 @@ async function loadRounds() {
 }
 
 function buildGames(rounds) {
-  return shuffle(rounds.slice()).map(round => {
+  return rounds.map(round => {
     const slots = shuffle([
       { url: round.real_audio_url, isReal: true },
       { url: round.fake_audio_url, isReal: false },
