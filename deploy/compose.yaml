@@ -8,6 +8,7 @@ services:
       CYBERVOICE_SESSION_ROOT: "/session"
       HF_HUB_OFFLINE: "1"
       TRANSFORMERS_OFFLINE: "1"
+      NUMBA_CACHE_DIR: "/tmp/numba-cache"
     ports:
       - "127.0.0.1:8080:8080"
     tmpfs:
