@@ -86,3 +86,60 @@ footer {
   opacity: .35;
   font-size: 12px;
 }
+
+footer a {
+  color: inherit;
+  opacity: 1;
+}
+
+/* --- Which Is Fake? game --- */
+
+.clip-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 28px 0;
+}
+
+.clip-choice {
+  padding: 20px;
+  border-radius: 16px;
+  background: #202633;
+}
+
+.clip-name {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  opacity: .7;
+}
+
+.guess-btn {
+  width: 100%;
+  margin-top: 12px;
+}
+
+#feedback {
+  margin-top: 16px;
+  padding: 24px;
+  border-radius: 16px;
+  background: #202633;
+}
+
+#feedbackVerdict {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+#noRoundsNote {
+  margin-top: 20px;
+  opacity: .7;
+}
+
+@media (max-width: 640px) {
+  .clip-grid {
+    grid-template-columns: 1fr;
+  }
+}

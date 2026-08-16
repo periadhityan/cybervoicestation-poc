@@ -1,0 +1,18 @@
+{
+  "rounds": [
+    {
+      "id": "round-1",
+      "subject_label": "PLACEHOLDER ROUND 1 -- replace before event",
+      "real_audio": "round-1-real.mp3",
+      "fake_audio": "round-1-fake.mp3",
+      "reveal_note": "This is placeholder content (a synthetic tone, not speech) used only to test the game plumbing. Replace real_audio/fake_audio and this note with real content before the event -- see app/content/README.md."
+    },
+    {
+      "id": "round-2",
+      "subject_label": "PLACEHOLDER ROUND 2 -- replace before event",
+      "real_audio": "round-2-real.mp3",
+      "fake_audio": "round-2-fake.mp3",
+      "reveal_note": "This is placeholder content (a synthetic tone, not speech) used only to test the game plumbing. Replace real_audio/fake_audio and this note with real content before the event -- see app/content/README.md."
+    }
+  ]
+}
