@@ -4,11 +4,34 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cybersecurity Awareness Month 2026</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+  <div class="floaty-icons" aria-hidden="true">
+    <span class="floaty-icon" style="left:6%; animation-duration:18s; animation-delay:0s;">🔒</span>
+    <span class="floaty-icon" style="left:18%; animation-duration:22s; animation-delay:3s;">🛡️</span>
+    <span class="floaty-icon" style="left:32%; animation-duration:16s; animation-delay:6s;">🐛</span>
+    <span class="floaty-icon" style="left:48%; animation-duration:24s; animation-delay:1s;">🔍</span>
+    <span class="floaty-icon" style="left:64%; animation-duration:19s; animation-delay:8s;">🔑</span>
+    <span class="floaty-icon" style="left:78%; animation-duration:21s; animation-delay:4s;">📧</span>
+    <span class="floaty-icon" style="left:90%; animation-duration:17s; animation-delay:10s;">🛡️</span>
+  </div>
+
   <main class="shell">
     <section class="card" id="homeIntro">
+      <svg class="mascot" viewBox="0 0 120 140" width="88" height="102" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="shieldGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#22d3ee"/>
+            <stop offset="100%" stop-color="#a78bfa"/>
+          </linearGradient>
+        </defs>
+        <path d="M60 4 L112 22 V64 C112 100 88 124 60 136 C32 124 8 100 8 64 V22 Z" fill="url(#shieldGrad)" stroke="#1a1442" stroke-width="4"/>
+        <circle cx="42" cy="58" r="7" fill="#1a1442"/>
+        <circle cx="78" cy="58" r="7" fill="#1a1442"/>
+        <path d="M40 84 Q60 100 80 84" stroke="#1a1442" stroke-width="5" fill="none" stroke-linecap="round"/>
+      </svg>
       <p class="eyebrow">CYBERSECURITY AWARENESS MONTH 2026</p>
       <h1>🛡️ Pause. Think. Report.</h1>
       <p class="lead">
@@ -21,6 +44,7 @@
         Try each station below. None of them collect your name, employee
         ID, or keep anything you record or upload after your session ends.
       </p>
+      <div class="countdown-banner" id="countdownBanner"></div>
     </section>
 
     <div class="hub-grid">
@@ -53,5 +77,23 @@
   <footer>
     Cybersecurity Awareness Month 2026 &middot; Pause. Think. Report.
   </footer>
+
+  <script>
+    (function () {
+      var el = document.getElementById('countdownBanner');
+      if (!el) return;
+      var target = new Date('2026-10-01T00:00:00');
+      var end = new Date('2026-11-01T00:00:00');
+      var now = new Date();
+      if (now < target) {
+        var days = Math.ceil((target - now) / 86400000);
+        el.textContent = '🗓️ Cybersecurity Awareness Month kicks off in ' + days + (days === 1 ? ' day!' : ' days!');
+      } else if (now < end) {
+        el.textContent = '🎉 Cybersecurity Awareness Month is live all October -- go play every station!';
+      } else {
+        el.textContent = '🛡️ Thanks for taking part in Cybersecurity Awareness Month 2026!';
+      }
+    })();
+  </script>
 </body>
 </html>

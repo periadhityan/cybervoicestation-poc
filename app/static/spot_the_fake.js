@@ -4,6 +4,8 @@ const noRoundsNote = document.getElementById('noRoundsNote');
 
 const roundPanel = document.getElementById('roundPanel');
 const roundProgress = document.getElementById('roundProgress');
+const roundDots = document.getElementById('roundDots');
+const difficultyPill = document.getElementById('difficultyPill');
 const scoreLine = document.getElementById('scoreLine');
 const subjectLabel = document.getElementById('subjectLabel');
 const clipA = document.getElementById('clipA');
@@ -64,14 +66,31 @@ function pauseClips() {
   clipB.pause();
 }
 
+function renderDots() {
+  roundDots.innerHTML = '';
+  games.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'round-dot';
+    if (i < currentIndex) dot.classList.add('done');
+    else if (i === currentIndex) dot.classList.add('current');
+    roundDots.appendChild(dot);
+  });
+}
+
 function renderRound() {
   const game = games[currentIndex];
   answered = false;
   feedback.classList.add('hidden');
   guessBtns.forEach(btn => (btn.disabled = false));
 
-  const difficultyTag = game.difficulty ? ` · ${game.difficulty.toUpperCase()}` : '';
-  roundProgress.textContent = `ROUND ${currentIndex + 1} OF ${games.length}${difficultyTag}`;
+  roundProgress.textContent = `ROUND ${currentIndex + 1} OF ${games.length}`;
+  if (game.difficulty) {
+    difficultyPill.textContent = game.difficulty.toUpperCase();
+    difficultyPill.className = `difficulty-pill pill-${game.difficulty}`;
+  } else {
+    difficultyPill.classList.add('hidden');
+  }
+  renderDots();
   scoreLine.textContent = `${score}/${games.length}`;
   subjectLabel.textContent = game.subjectLabel;
 
@@ -104,6 +123,9 @@ function nextRound() {
     pauseClips();
     finalScore.textContent = `You spotted ${score} out of ${games.length} correctly.`;
     showOnly(resultPanel);
+    if (games.length && score / games.length >= 0.8 && window.launchConfetti) {
+      window.launchConfetti();
+    }
     return;
   }
   renderRound();
