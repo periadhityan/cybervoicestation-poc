@@ -57,7 +57,14 @@ ref_wav = tmp_dir / "ref.wav"
 out_wav = tmp_dir / "out.wav"
 
 tts.tts_to_file(
-    "This is a build time cache warm up clip.",
+    "This is a build time cache warm up clip used to pre load every model "
+    "resource this application needs before the container ever starts. In "
+    "production this station lets a participant record their own voice and "
+    "hear a synthetic version deliver a short social engineering awareness "
+    "script, entirely offline, with no data retained after each session "
+    "ends. This warm up phase never touches a real voice recording, and "
+    "exists only so the image already holds every cached model file it "
+    "needs by the time it runs for the first time.",
     base_speaker_id,
     str(ref_wav),
     speed=1.0,
