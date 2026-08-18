@@ -1,0 +1,45 @@
+# Compose file for the public AWS deployment specifically. Separate from
+# ../compose.yaml (which stays as-is for local/native Docker use, publishing
+# only to 127.0.0.1) so that running this one is an explicit, deliberate
+# choice -- it's the only compose file in this repo that opens a port to the
+# public internet.
+#
+# Reads SITE_PASSCODE and FLASK_SECRET_KEY from a .env file placed next to
+# this file on the EC2 instance (not committed -- see the AWS Public
+# Deployment Guide project doc).
+services:
+  cybervoice:
+    build:
+      context: ../..
+      dockerfile: deploy/Dockerfile
+    environment:
+      CYBERVOICE_BIND: "0.0.0.0"
+      SITE_PASSCODE: "${SITE_PASSCODE}"
+      FLASK_SECRET_KEY: "${FLASK_SECRET_KEY}"
+    expose:
+      - "8080"
+    read_only: true
+    volumes:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - cybervoice
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:

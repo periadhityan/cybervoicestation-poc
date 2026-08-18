@@ -1,0 +1,7 @@
+# Replace with your actual subdomain before first deploy.
+# Caddy handles HTTPS automatically (Let's Encrypt) -- nothing else to configure
+# as long as this domain's DNS A record points at the instance's Elastic IP
+# and the security group allows inbound 80/443.
+cyberroom.periadhityan.com {
+	reverse_proxy cybervoice:8080
+}
