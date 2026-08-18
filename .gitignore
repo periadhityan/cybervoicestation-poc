@@ -20,3 +20,6 @@ env/
 # --- Editors ---
 .vscode/
 .idea/
+
+# --- AWS deployment config (account-specific, not for git) ---
+deploy/aws/config.env

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cybersecurity Awareness Month 2026</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="floaty-icons" aria-hidden="true">
+    <span class="floaty-icon" style="left:10%; animation-duration:19s; animation-delay:1s;">🔒</span>
+    <span class="floaty-icon" style="left:35%; animation-duration:23s; animation-delay:5s;">🛡️</span>
+    <span class="floaty-icon" style="left:60%; animation-duration:17s; animation-delay:9s;">🔑</span>
+    <span class="floaty-icon" style="left:85%; animation-duration:21s; animation-delay:3s;">🔍</span>
+  </div>
+
+  <main class="shell">
+    <section class="card" id="loginCard">
+      <p class="eyebrow">CYBERSECURITY AWARENESS MONTH 2026</p>
+      <h1>🔒 Enter Passcode</h1>
+      <p class="lead">This activity is shared internally for Cybersecurity Awareness Month. Enter the passcode you were given to continue.</p>
+
+      {% if error %}
+      <div class="tips">
+        <p>That passcode didn't match. Double-check it and try again.</p>
+      </div>
+      {% endif %}
+
+      <form method="post" action="/login">
+        <input type="hidden" name="next" value="{{ request.args.get('next', '/') }}">
+        <label for="passcode" class="eyebrow" style="display:block; margin-bottom:8px;">PASSCODE</label>
+        <input
+          type="password"
+          id="passcode"
+          name="passcode"
+          autocomplete="off"
+          autofocus
+          required
+          style="width:100%; padding:16px 18px; font-size:18px; border-radius:14px; border:2px solid var(--card-border); background:rgba(255,255,255,0.06); color:#f5f3ff;">
+        <button type="submit">CONTINUE</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    Cybersecurity Awareness Month 2026 &middot; Pause. Think. Report.
+  </footer>
+</body>
+</html>
