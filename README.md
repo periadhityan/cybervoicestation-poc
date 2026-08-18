@@ -4,12 +4,16 @@ Three lightweight, self-contained "spot the fake" games for the Cyber Room
 station at Cybersecurity Awareness Month 2026: audio, video, and picture.
 Each game plays a real clip and an AI-generated one side by side and asks
 the participant to guess which is real, then reveals what gave the fake
-away. No login, no personal data collected, no participant files stored --
-answers and scores exist only in the browser tab.
+away. No participant data collected, no files stored -- answers and scores
+exist only in the browser tab.
 
-*(This repo previously also included a live voice-cloning station,
-"Hear Yourself Hacked." That's been removed -- this build is just the three
+*(This repo previously also included a live voice-cloning station, "Hear
+Yourself Hacked." That's been removed -- this build is just the three
 "Which Is Fake?" games.)*
+
+For the full architecture, deployment topology, and security model, see
+**[ARCHITECTURE.md](./ARCHITECTURE.md)**. This README is just the quick
+start.
 
 ---
 
@@ -22,10 +26,11 @@ answers and scores exist only in the browser tab.
   pool per difficulty tier (easy/medium/hard) on every page load, so two
   participants back to back don't see the exact same rounds.
 - Placeholder content ships out of the box (synthetic tones/patterns/colors)
-  so the app runs end to end immediately. See
-  `app/content/README.md` for the manifest schema, and the project's
-  Content Loading Guide for how to source and load real content before the
-  event.
+  so the app runs end to end immediately. See `app/content/README.md` for
+  the manifest schema and how to load real content before the event.
+- An optional shared-passcode gate (`SITE_PASSCODE` env var) for when this
+  is deployed somewhere publicly reachable -- off by default, so local dev
+  and the in-person kiosk path are never accidentally gated.
 
 There's no model runtime, no GPU/MPS dependency, and no large downloads --
 this is just Flask plus static JSON manifests and media files, so setup and
@@ -35,9 +40,7 @@ deployment are both fast.
 
 ## Prerequisites
 
-- Python 3.9+ (any recent 3.x works -- there's no longer a pinned-version
-  requirement, since nothing in this app depends on a specific ML library
-  build)
+- Python 3.9+ (any recent 3.x works)
 - Optional: Docker, if you want the containerized/hardened path instead of
   running natively
 
@@ -53,31 +56,47 @@ cd ~/CyberVoiceStation
 ```
 
 `run-native.sh` creates a local virtualenv (`.venv/`), installs
-`requirements-app.txt` into it, and starts the app. That's the whole setup
--- no separate model-download phase, no checkpoints, no upstream repos to
-pin.
+`requirements-app.txt` into it, and starts the app. No model downloads, no
+checkpoints, no upstream repos to pin. This is the fastest loop for
+content-loading work too -- restarting picks up manifest/media changes
+immediately.
 
-## Run it with Docker
+## Run it with Docker (local only)
 
 ```bash
-# install Docker (Docker Desktop on Mac/Windows, Docker Engine on Linux)
 docker compose -f deploy/compose.yaml build
 docker compose -f deploy/compose.yaml up
 # open http://127.0.0.1:8080
 ```
 
-The container runs with a read-only root filesystem and dropped Linux
-capabilities -- reasonable hardening for a machine left semi-unattended at
-a public event, even though there's no participant audio to protect
-anymore. This is optional; native is just as fine for a one-day event.
+Published to `127.0.0.1` only -- this is the in-person kiosk / mini-PC path,
+not a public deployment. Runs with a read-only root filesystem and dropped
+Linux capabilities.
+
+## Deploying publicly on AWS
+
+This app is also deployed live on AWS (EC2 + Caddy for automatic HTTPS +
+Route 53), gated behind a shared passcode, with a simple start/stop workflow
+so it only runs (and costs money) while it's actually needed. That's a
+separate compose file (`deploy/aws/compose.aws.yaml`) and a distinct setup
+process -- see **[ARCHITECTURE.md §3.3 and §5](./ARCHITECTURE.md#3-deployment-topologies)**
+for the architecture, and the AWS Public Deployment Guide project doc for
+the full step-by-step.
+
+Day-to-day, once it's set up once:
+
+```bash
+./scripts/aws/start.sh    # before an activity
+./scripts/aws/stop.sh     # after
+```
 
 ---
 
-## Deploying to a second machine
+## Deploying to a second local machine
 
-Because there's no model weights or pinned upstream source to carry over
-anymore, moving this to any second machine -- another Mac, a Windows PC, a
-mini-PC, whatever's around -- is just:
+Because there's no model weights or pinned upstream source to carry over,
+moving the local/native or mini-PC path to any second machine -- another
+Mac, a Windows PC, a mini-PC, whatever's around -- is just:
 
 ```bash
 git clone <your-repo-URL> ~/CyberVoiceStation
@@ -85,11 +104,9 @@ cd ~/CyberVoiceStation
 ./scripts/run-native.sh
 ```
 
-or the Docker steps above. No `BUILD_MANIFEST.txt`, no checkpoint
-downloads, no upstream commit-pinning, no architecture-specific rebuild
-concerns to think through -- `git clone` really is sufficient this time.
-The only thing to double check on a brand-new machine is that Python 3.9+
-(native path) or Docker (container path) is installed.
+or the Docker steps above. `git clone` really is sufficient -- the only
+thing to check on a new machine is that Python 3.9+ (native) or Docker
+(container) is installed.
 
 ---
 
@@ -98,9 +115,11 @@ The only thing to double check on a brand-new machine is that Python 3.9+
 ```
 app/                  Flask backend + templates + static JS/CSS
 app/content/           Manifests + README for loading real game content
-deploy/               Dockerfile + compose.yaml for the optional container build
-scripts/              run-native.sh, verify-offline.sh, generate_placeholder_content.py
+deploy/               Dockerfile + compose.yaml (local) + aws/ (public deployment)
+scripts/              run-native.sh, verify-offline.sh, generate_placeholder_content.py, aws/ (start/stop)
 requirements-app.txt
+README.md             This file
+ARCHITECTURE.md       Full architecture, deployment, and security reference
 ```
 
 ---
@@ -112,7 +131,7 @@ patterns, solid colors) so the app is fully playable today. Swapping in
 real real/fake pairs is a matter of dropping media files into
 `app/static/spot_the_fake*/` and adding matching entries to the manifest
 JSON files -- see `app/content/README.md` for the exact schema and the
-project's Content Loading Guide doc for sourcing options per game
+Content Loading Guide project doc for sourcing options per game
 (audio/video/picture).
 
 ---
