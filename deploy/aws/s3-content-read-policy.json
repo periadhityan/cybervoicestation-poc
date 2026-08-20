@@ -5,7 +5,7 @@
       "Sid": "ListContentPrefixOnly",
       "Effect": "Allow",
       "Action": "s3:ListBucket",
-      "Resource": "arn:aws:s3:::REPLACE_WITH_BUCKET_NAME",
+      "Resource": "arn:aws:s3:::cyberroom-content-periadhityan",
       "Condition": {
         "StringLike": { "s3:prefix": "content/*" }
       }
@@ -14,7 +14,7 @@
       "Sid": "ReadContentObjectsOnly",
       "Effect": "Allow",
       "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::REPLACE_WITH_BUCKET_NAME/content/*"
+      "Resource": "arn:aws:s3:::cyberroom-content-periadhityan/content/*"
     }
   ]
 }

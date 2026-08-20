@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+set -euo pipefail
+cd ~/Repos/CyberVoiceStation
+
+echo "-- fixing scripts/sync_content_to_s3.sh (bash 3.2 / macOS empty-array bug under set -u) --"
+cat > scripts/sync_content_to_s3.sh <<'DELIVER_EOF'
+#!/usr/bin/env bash
 # Uploads app/static/content/ to the S3 bucket used by the AWS deployment's
 # CONTENT_BACKEND=s3 mode, mirroring the exact same folder structure
 # (content/<modality>/<difficulty>/...) as S3 key prefixes. Run this from
@@ -51,3 +57,18 @@ aws s3 sync app/static/content "s3://$BUCKET/content" \
   $DELETE_FLAG
 
 echo "-- done. Live within ~60s (content_pool.py's S3 listing cache) -- no app restart or redeploy needed. --"
+DELIVER_EOF
+
+chmod +x scripts/sync_content_to_s3.sh
+
+echo "-- staging, committing, pushing --"
+git add -A
+git commit -m "Fix sync_content_to_s3.sh: unbound variable under macOS bash 3.2
+
+Empty bash arrays expanded with \"\${arr[@]}\" under set -u throw
+\"unbound variable\" on bash < 4.4 -- which is exactly what macOS ships as
+/bin/bash by default. Swapped the --delete flag handling from an array to
+a plain string, which does not have this issue on any bash version."
+git push
+
+echo "-- done --"
