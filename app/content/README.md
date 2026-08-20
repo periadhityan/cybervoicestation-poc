@@ -144,3 +144,41 @@ professionally produced volunteer session.
 
 See the Content Loading Guide project doc for a phased, week-by-week plan
 for sourcing and loading content ahead of the event.
+
+## Two storage backends: local folders or S3
+
+Everything above describes the **local** backend (`CONTENT_BACKEND=local`,
+the default) -- content lives on disk under `app/static/content/`. This is
+what local/native and mini-PC deployments always use, and it's the fastest
+loop for content-loading work (drop files in, refresh the browser, done).
+
+The AWS deployment can instead run with `CONTENT_BACKEND=s3`, where the
+exact same `<round-id>-real/fake.<ext>` + optional `notes.json` convention
+applies, just as S3 object keys under `content/<modality>/<difficulty>/`
+in a private bucket instead of local folders. Nothing about *how* you name
+or organize content changes -- only where it physically lives and how you
+get it there:
+
+```bash
+./scripts/sync_content_to_s3.sh <bucket-name>
+```
+
+uploads whatever's currently in your local `app/static/content/` to the
+bucket, mirroring the same folder structure as S3 key prefixes. New or
+changed content shows up live within about a minute (a short server-side
+cache), with no redeploy, rebuild, or restart of the AWS instance needed --
+unlike the local backend baked into the Docker image, S3 content updates
+are fully decoupled from the app itself.
+
+**Why you'd want this:** a large, growing content library (lots of video
+especially) bloats the git repo permanently, can hit GitHub's 100MB
+per-file limit, and makes every content change require a full Docker
+rebuild on the instance. S3 sidesteps all three. See the S3 Content Storage
+project doc for the one-time setup (bucket, IAM role, enabling
+`CONTENT_BACKEND=s3`) and `ARCHITECTURE.md` §2.2/§4.3 for how it works
+under the hood -- notably, the bucket is never publicly readable; the app
+serves each round's media as a short-lived presigned URL, generated only
+after the site's passcode gate has already authenticated the request.
+
+For a modest library (a few dozen pairs per game), the local backend is
+simpler and there's no need to bother with S3 at all.

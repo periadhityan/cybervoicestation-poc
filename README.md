@@ -30,6 +30,11 @@ start.
   folders (`app/static/content/<modality>/<difficulty>/`) -- no manifest to
   maintain. See `app/content/README.md` for the full convention and how to
   load real content before the event.
+- Content can be served from local folders (default, simplest) or from a
+  private S3 bucket via presigned URLs (`CONTENT_BACKEND=s3`, AWS
+  deployment only) -- worth it once the content library is large enough
+  that git and Docker rebuilds get annoying. See `app/content/README.md`
+  and the S3 Content Storage project doc.
 - An optional shared-passcode gate (`SITE_PASSCODE` env var) for when this
   is deployed somewhere publicly reachable -- off by default, so local dev
   and the in-person kiosk path are never accidentally gated.

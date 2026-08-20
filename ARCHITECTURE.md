@@ -64,7 +64,7 @@ Each of the three blueprints follows the same pattern:
 ### 2.2 Content model
 
 There is no manifest to hand-edit. Content is discovered purely by folder
-and filename convention, under `app/static/content/<modality>/<difficulty>/`:
+(or S3 key prefix) and filename convention:
 
 ```
 <round-id>-real.<ext>
@@ -72,22 +72,43 @@ and filename convention, under `app/static/content/<modality>/<difficulty>/`:
 notes.json          (optional — per-round subject_label / reveal_note overrides)
 ```
 
-`app/content_pool.py` (shared by all three blueprints) scans each tier
-folder, pairs up files by matching `<round-id>` prefix, and skips any
+`app/content_pool.py` (shared by all three blueprints) implements this
+discovery behind two interchangeable backends, chosen by the
+`CONTENT_BACKEND` env var:
+
+- **`local` (default).** Files live under `app/static/content/<modality>/<difficulty>/`
+  on disk, served as normal Flask static files. Zero setup — this is what
+  local/native and mini-PC deployments use, and what the placeholder
+  content ships as.
+- **`s3`.** Files live in an S3 bucket under the same
+  `content/<modality>/<difficulty>/` key structure. Rounds are served as
+  short-lived presigned URLs generated per request, so the bucket stays
+  **private** — nothing is ever publicly readable. This is what the AWS
+  deployment uses for real content once `CONTENT_BACKEND=s3` is set; see
+  §3.3 and the S3 Content Storage project doc for the full setup and
+  rationale (mainly: avoiding unbounded git repo growth and Docker rebuilds
+  as the content library grows).
+
+Either backend scans its tier for matching `<round-id>` pairs and skips any
 incomplete pair (only a real or only a fake file present) silently rather
 than erroring — a content-loading session is often mid-way through adding a
 pair. A round gets a sensible auto-generated label and a modality-generic
-reveal note by default; an optional `notes.json` in the same folder
-supplies a real label and a specific "what gave it away" note per
-round-id, with anything not listed falling back to the default.
+reveal note by default; an optional `notes.json` supplies a real label and
+a specific "what gave it away" note per round-id, with anything not listed
+falling back to the default. Callers (the three blueprints) never touch
+backend-specific details — `content_pool.pick_rounds()` always returns
+ready-to-use `real_url` / `fake_url` fields regardless of which backend is
+active.
 
 Placeholder content (synthetic tones, geometric patterns, solid colors)
-ships by default so the app is fully playable with zero setup. Loading real
-content is just dropping media file pairs into the right tier folder — no
-code change, no JSON to maintain, no restart needed. See
-`app/content/README.md` for the full convention and sourcing guardrails
-(notably: no deepfakes of real, named public figures without consent — see
-that file for the reasoning and the safe alternatives).
+ships by default so the app is fully playable with zero setup, always via
+the local backend. Loading real content is just dropping media file pairs
+into the right tier folder (or syncing them to S3 — see
+`scripts/sync_content_to_s3.sh`) — no code change, no JSON to maintain, no
+restart needed for the local backend, and no rebuild needed at all for S3.
+See `app/content/README.md` for the full convention and sourcing
+guardrails (notably: no deepfakes of real, named public figures without
+consent — see that file for the reasoning and the safe alternatives).
 
 ---
 
@@ -142,6 +163,7 @@ Route 53 (A record: cyberroom.periadhityan.com -> Elastic IP)
 EC2 instance (t4g.micro, Ubuntu 26.04 LTS, ap-southeast-1)
   Elastic IP: stable across stop/start cycles
   Security group: inbound 22 (SSH, restricted to admin IP), 80, 443 only
+  IAM instance role: read-only to the content/* prefix of one S3 bucket
    |
    v
 Docker Compose (deploy/aws/compose.aws.yaml)
@@ -154,9 +176,18 @@ Docker Compose (deploy/aws/compose.aws.yaml)
   +-- cybervoice (built from deploy/Dockerfile)
         expose: 8080 (internal to the compose network only, no host
         port published -- unreachable except through Caddy)
-        SITE_PASSCODE / FLASK_SECRET_KEY injected from deploy/aws/.env
+        SITE_PASSCODE / FLASK_SECRET_KEY / CONTENT_* injected from
+        deploy/aws/.env
         read_only root fs, cap_drop ALL, no-new-privileges (same
         hardening as the mini-PC path)
+         |
+         v (only when CONTENT_BACKEND=s3)
+       S3 bucket (private, no public access)
+         content/<modality>/<difficulty>/<round-id>-real/fake.<ext>
+         Read via the instance's IAM role (list + get, content/* only) to
+         build each round's response; the actual media bytes are served
+         to the browser directly from S3 via a short-lived presigned URL
+         (~15 min default), not proxied through the EC2 instance.
 ```
 
 Key design choice: **`deploy/aws/compose.aws.yaml` is a separate file from
@@ -233,6 +264,14 @@ The repo ships `.example` versions of both (`config.env.example`) with
 placeholder values, so the real files are a one-time local copy-and-fill,
 never tracked.
 
+**S3 content config isn't a secret at all.** `CONTENT_BACKEND`,
+`CONTENT_S3_BUCKET`, `CONTENT_S3_PREFIX`, and `CONTENT_S3_URL_TTL` (also set
+in `deploy/aws/.env`, alongside the two real secrets above) are just
+config, not credentials — there's no AWS access key or secret key anywhere
+in this app. The instance authenticates to S3 via its attached **IAM
+instance role** (see §4.3), which is how S3 access works without ever
+putting AWS credentials in a file at all.
+
 ### 4.3 Network exposure
 
 - EC2 security group allows inbound **22** (SSH, restricted to the admin's
@@ -247,6 +286,18 @@ never tracked.
 - The GitHub PAT used to clone the private repo onto the EC2 instance is
   scoped to **Contents: Read-only** on this one repository — it cannot push,
   open PRs, or touch anything outside this repo.
+- **S3 content access (when `CONTENT_BACKEND=s3`).** The bucket has no
+  public access at all — every object stays private. The EC2 instance
+  authenticates via an **IAM instance role** (not a stored key/secret),
+  scoped to exactly `s3:ListBucket` and `s3:GetObject` on the `content/*`
+  prefix of one bucket (see `deploy/aws/s3-content-read-policy.json`) — it
+  can't write, delete, or touch anything outside that prefix, let alone
+  anything outside that one bucket. The app never hands the browser
+  long-lived access: each round's media URL is a presigned S3 URL
+  (`CONTENT_S3_URL_TTL`, 15 minutes by default) generated fresh per
+  request, and that request only happens after the passcode gate has
+  already authenticated the session — so S3 access is gated the same way
+  the rest of the site is, just one level removed.
 
 ### 4.4 Container hardening
 
@@ -299,6 +350,13 @@ one-time setup, for reference:
 Day-to-day, only step 8's two scripts are needed — everything else is
 one-time.
 
+**S3 content backend is a separate, optional add-on** on top of the steps
+above — it swaps where real content is stored (S3 instead of baked into the
+Docker image) without touching anything about how the instance itself is
+provisioned. See the S3 Content Storage project doc for that setup (bucket,
+IAM role, instance profile attachment) and §2.2 above for the resulting
+architecture.
+
 ---
 
 ## 6. Repository layout
@@ -319,11 +377,13 @@ deploy/
     compose.aws.yaml          AWS -- the only compose file with public ports
     Caddyfile                 Reverse proxy + automatic HTTPS config
     config.env.example        Template for the local start/stop scripts' config
+    s3-content-read-policy.json   IAM policy template for the S3 content backend
 
 scripts/
   run-native.sh               Local dev / kiosk entry point
   verify-offline.sh           Confirms the app works with no network dependency
   generate_placeholder_content.py   Regenerates the default placeholder content folders
+  sync_content_to_s3.sh       Uploads app/static/content/ to the S3 bucket (CONTENT_BACKEND=s3)
   aws/
     start.sh, stop.sh         Day-to-day EC2 start/stop, wrapping the AWS CLI
 

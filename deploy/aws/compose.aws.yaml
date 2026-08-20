@@ -4,9 +4,15 @@
 # choice -- it's the only compose file in this repo that opens a port to the
 # public internet.
 #
-# Reads SITE_PASSCODE and FLASK_SECRET_KEY from a .env file placed next to
-# this file on the EC2 instance (not committed -- see the AWS Public
-# Deployment Guide project doc).
+# Reads SITE_PASSCODE, FLASK_SECRET_KEY, and the CONTENT_* S3 settings from
+# a .env file placed next to this file on the EC2 instance (not committed --
+# see the AWS Public Deployment Guide and S3 Content Storage project docs).
+#
+# CONTENT_BACKEND=s3 switches content_pool.py from reading local files to
+# listing/presigning from an S3 bucket -- the instance authenticates to S3
+# via its attached IAM instance role, not a key/secret in this file. Leave
+# CONTENT_BACKEND unset (or "local") to keep serving from
+# app/static/content/ baked into the image instead.
 services:
   cybervoice:
     build:
@@ -16,6 +22,11 @@ services:
       CYBERVOICE_BIND: "0.0.0.0"
       SITE_PASSCODE: "${SITE_PASSCODE}"
       FLASK_SECRET_KEY: "${FLASK_SECRET_KEY}"
+      CONTENT_BACKEND: "${CONTENT_BACKEND:-local}"
+      CONTENT_S3_BUCKET: "${CONTENT_S3_BUCKET:-}"
+      CONTENT_S3_PREFIX: "${CONTENT_S3_PREFIX:-content}"
+      CONTENT_S3_URL_TTL: "${CONTENT_S3_URL_TTL:-900}"
+      AWS_REGION: "${AWS_REGION:-ap-southeast-1}"
     expose:
       - "8080"
     read_only: true
