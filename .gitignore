@@ -21,6 +21,24 @@ env/
 .vscode/
 .idea/
 
-# --- AWS deployment config (account-specific, not for git) ---
+# --- AWS deployment config / secrets (account-specific, not for git) ---
 deploy/aws/config.env
 deploy/aws/.env
+
+# --- Game content media (audio/video/image) ---
+# Real/fake round pairs live under app/static/content/ and are served either
+# from the local filesystem (native/mini-PC) or synced to S3 for the AWS
+# deployment (see scripts/sync_content_to_s3.sh) -- either way they don't
+# need to be committed, and keeping large/growing media out of git avoids
+# unbounded repo growth and GitHub's 100MB per-file limit as the library
+# grows. notes.json (the small per-tier label/reveal-note file) is
+# intentionally NOT matched below -- that's plain text worth keeping in git.
+app/static/content/**/*.mp3
+app/static/content/**/*.wav
+app/static/content/**/*.mp4
+app/static/content/**/*.webm
+app/static/content/**/*.mov
+app/static/content/**/*.jpg
+app/static/content/**/*.jpeg
+app/static/content/**/*.png
+app/static/content/**/*.webp

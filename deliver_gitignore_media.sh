@@ -1,3 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd ~/Repos/CyberVoiceStation
+
+echo "-- writing .gitignore --"
+cat > .gitignore <<'DELIVER_EOF'
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+.pytest_cache/
+
+# --- Virtualenv ---
+.venv/
+venv/
+env/
+
+# --- macOS ---
+.DS_Store
+
+# --- Docker ---
+*.log
+
+# --- Editors ---
+.vscode/
+.idea/
+
+# --- AWS deployment config / secrets (account-specific, not for git) ---
+deploy/aws/config.env
+deploy/aws/.env
+
+# --- Game content media (audio/video/image) ---
+# Real/fake round pairs live under app/static/content/ and are served either
+# from the local filesystem (native/mini-PC) or synced to S3 for the AWS
+# deployment (see scripts/sync_content_to_s3.sh) -- either way they don't
+# need to be committed, and keeping large/growing media out of git avoids
+# unbounded repo growth and GitHub's 100MB per-file limit as the library
+# grows. notes.json (the small per-tier label/reveal-note file) is
+# intentionally NOT matched below -- that's plain text worth keeping in git.
+app/static/content/**/*.mp3
+app/static/content/**/*.wav
+app/static/content/**/*.mp4
+app/static/content/**/*.webm
+app/static/content/**/*.mov
+app/static/content/**/*.jpg
+app/static/content/**/*.jpeg
+app/static/content/**/*.png
+app/static/content/**/*.webp
+DELIVER_EOF
+
+echo "-- writing README.md --"
+cat > README.md <<'DELIVER_EOF'
 # CyberVoiceStation — "Which Is Fake?" Cyber Room PoC
 
 Three lightweight, self-contained "spot the fake" games for the Cyber Room
@@ -163,3 +217,29 @@ git remote add origin git@github.com:<your-username>/cybervoicestation-poc.git
 git branch -M main
 git push -u origin main
 ```
+DELIVER_EOF
+
+echo "-- untracking already-committed game media (kept on disk, just removed from git) --"
+MEDIA_TRACKED=$(git ls-files -- 'app/static/content' | grep -E '\.(mp3|wav|mp4|webm|mov|jpg|jpeg|png|webp)$' || true)
+if [ -n "$MEDIA_TRACKED" ]; then
+  echo "$MEDIA_TRACKED" | xargs git rm --cached -- 
+  echo "-- untracked $(echo "$MEDIA_TRACKED" | wc -l | tr -d ' ') media file(s) --"
+else
+  echo "-- nothing tracked matched -- nothing to untrack --"
+fi
+
+echo "-- staging, committing, pushing --"
+git add -A
+git commit -m "Stop tracking game content media in git
+
+Real/fake round media (audio/video/image files under
+app/static/content/) is now gitignored -- it is served locally from disk
+or synced to S3 for the AWS deployment, either way it never needed to be
+committed. Untracks whatever was already in the index and adds ignore
+patterns so future content additions are not picked up by git add -A.
+notes.json (plain text, small) is intentionally still tracked. A fresh
+clone now needs one run of scripts/generate_placeholder_content.py to
+get local placeholder content -- README updated accordingly."
+git push
+
+echo "-- done --"
