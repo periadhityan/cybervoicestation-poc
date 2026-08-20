@@ -16,7 +16,8 @@ which is real, and the app reveals the answer with a short explanation of
 what gave the fake away.
 
 There is no model runtime anywhere in this app. It's Flask, server-rendered
-Jinja templates, vanilla JS/CSS, and static JSON manifests plus media files.
+Jinja templates, vanilla JS/CSS, and static media files discovered by folder
+convention (see §2.2) -- no database, no manifest to maintain.
 (An earlier version of this app also included a live voice-cloning station.
 That's been removed entirely — see `README.md`'s note on this. Nothing in
 this document describes that removed feature.)
@@ -28,13 +29,15 @@ this document describes that removed feature.)
 ```
 app/
   app.py                    Flask app, routing, the passcode gate
+  content_pool.py           Shared folder-based content discovery (all 3 games)
   spot_the_fake.py          Blueprint: /spot-the-fake (audio)
   spot_the_fake_video.py    Blueprint: /spot-the-fake-video
   spot_the_fake_image.py    Blueprint: /spot-the-fake-image
   content/
-    *_manifest.json         Pool-based content: real/fake pairs per difficulty tier
-    README.md                Manifest schema + content-sourcing guardrails
-  static/                   CSS, JS (per-game logic + confetti), favicon
+    README.md               Content folder convention + sourcing guardrails
+  static/
+    content/                Real/fake media, discovered by folder convention (see §2.2)
+    ...                     CSS, JS (per-game logic + confetti), favicon
   templates/                Jinja templates, one per page + login.html
 ```
 
@@ -43,13 +46,15 @@ app/
 Each of the three blueprints follows the same pattern:
 
 1. `GET /spot-the-fake*` renders the game's template.
-2. `GET /api/spot-the-fake*/rounds` reads that game's manifest JSON — a
-   pool of candidate real/fake pairs per difficulty tier (`easy`/`medium`/
-   `hard`) — and randomly samples a fixed count per tier (`SELECT_COUNTS =
-   [("easy", 4), ("medium", 2), ("hard", 1)]`), always served in that tier
-   order. This means two participants back to back (or the same participant
-   hitting "Play Again") see a different set of rounds each time, so
-   answers can't be memorized by watching someone else play.
+2. `GET /api/spot-the-fake*/rounds` calls `content_pool.pick_rounds()`,
+   which scans that game's `app/static/content/<modality>/<difficulty>/`
+   folders for real/fake file pairs — a pool of candidates per difficulty
+   tier (`easy`/`medium`/`hard`) — and randomly samples a fixed count per
+   tier (`SELECT_COUNTS = [("easy", 4), ("medium", 2), ("hard", 1)]`),
+   always served in that tier order. This means two participants back to
+   back (or the same participant hitting "Play Again") see a different set
+   of rounds each time, so answers can't be memorized by watching someone
+   else play.
 3. All scoring, round progression, and the reveal happen **client-side** in
    the page's JS once the round data is fetched. The server is otherwise
    stateless per request — no session, no participant identity, no score
@@ -58,12 +63,29 @@ Each of the three blueprints follows the same pattern:
 
 ### 2.2 Content model
 
-Manifests are plain JSON, one file per game, structured as a pool per
-difficulty tier. Placeholder content (synthetic tones, geometric patterns,
-solid colors) ships by default so the app is fully playable with zero setup.
-Swapping in real content is a matter of dropping media files into
-`app/static/spot_the_fake*/` and adding matching manifest entries — see
-`app/content/README.md` for the exact schema and sourcing guardrails
+There is no manifest to hand-edit. Content is discovered purely by folder
+and filename convention, under `app/static/content/<modality>/<difficulty>/`:
+
+```
+<round-id>-real.<ext>
+<round-id>-fake.<ext>
+notes.json          (optional — per-round subject_label / reveal_note overrides)
+```
+
+`app/content_pool.py` (shared by all three blueprints) scans each tier
+folder, pairs up files by matching `<round-id>` prefix, and skips any
+incomplete pair (only a real or only a fake file present) silently rather
+than erroring — a content-loading session is often mid-way through adding a
+pair. A round gets a sensible auto-generated label and a modality-generic
+reveal note by default; an optional `notes.json` in the same folder
+supplies a real label and a specific "what gave it away" note per
+round-id, with anything not listed falling back to the default.
+
+Placeholder content (synthetic tones, geometric patterns, solid colors)
+ships by default so the app is fully playable with zero setup. Loading real
+content is just dropping media file pairs into the right tier folder — no
+code change, no JSON to maintain, no restart needed. See
+`app/content/README.md` for the full convention and sourcing guardrails
 (notably: no deepfakes of real, named public figures without consent — see
 that file for the reasoning and the safe alternatives).
 
@@ -87,9 +109,10 @@ per `deploy/*` config rather than per branch:
 `scripts/run-native.sh` creates a `.venv/`, installs `requirements-app.txt`
 (just Flask), and runs `python app.py`, binding to `127.0.0.1:8080` by
 default (`CYBERVOICE_BIND` env var overrides this). This is the fast
-iteration loop — restarting picks up manifest/media changes immediately, no
-rebuild step. This is also the default in-person kiosk booth path: bring a
-laptop, run this, point a kiosk browser at `127.0.0.1:8080`.
+iteration loop — content under `app/static/content/` is discovered fresh on
+every request, so dropping in new media picks it up immediately, no restart
+or rebuild step needed. This is also the default in-person kiosk booth
+path: bring a laptop, run this, point a kiosk browser at `127.0.0.1:8080`.
 
 ### 3.2 Mini-PC / Docker (local only)
 
@@ -283,8 +306,10 @@ one-time.
 ```
 app/
   app.py                     Flask app + passcode gate
+  content_pool.py            Shared folder-based content discovery
   spot_the_fake*.py          Three game blueprints
-  content/                   Manifests + content README
+  content/                   Content README (folder convention + sourcing guardrails)
+  static/content/            Real/fake media, one subtree per modality/difficulty
   static/, templates/        Frontend assets
 
 deploy/
@@ -298,7 +323,7 @@ deploy/
 scripts/
   run-native.sh               Local dev / kiosk entry point
   verify-offline.sh           Confirms the app works with no network dependency
-  generate_placeholder_content.py   Regenerates the default placeholder pools
+  generate_placeholder_content.py   Regenerates the default placeholder content folders
   aws/
     start.sh, stop.sh         Day-to-day EC2 start/stop, wrapping the AWS CLI
 

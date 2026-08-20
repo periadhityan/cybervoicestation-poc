@@ -26,15 +26,17 @@ start.
   pool per difficulty tier (easy/medium/hard) on every page load, so two
   participants back to back don't see the exact same rounds.
 - Placeholder content ships out of the box (synthetic tones/patterns/colors)
-  so the app runs end to end immediately. See `app/content/README.md` for
-  the manifest schema and how to load real content before the event.
+  so the app runs end to end immediately. Content is just files dropped into
+  folders (`app/static/content/<modality>/<difficulty>/`) -- no manifest to
+  maintain. See `app/content/README.md` for the full convention and how to
+  load real content before the event.
 - An optional shared-passcode gate (`SITE_PASSCODE` env var) for when this
   is deployed somewhere publicly reachable -- off by default, so local dev
   and the in-person kiosk path are never accidentally gated.
 
 There's no model runtime, no GPU/MPS dependency, and no large downloads --
-this is just Flask plus static JSON manifests and media files, so setup and
-deployment are both fast.
+this is just Flask plus static media files discovered by folder convention,
+so setup and deployment are both fast.
 
 ---
 
@@ -43,6 +45,9 @@ deployment are both fast.
 - Python 3.9+ (any recent 3.x works)
 - Optional: Docker, if you want the containerized/hardened path instead of
   running natively
+- Optional: `ffmpeg` on your PATH, only needed to (re)generate placeholder
+  content via `scripts/generate_placeholder_content.py` -- not needed to run
+  the app itself, and not needed once you've loaded real content
 
 ---
 
@@ -58,8 +63,9 @@ cd ~/CyberVoiceStation
 `run-native.sh` creates a local virtualenv (`.venv/`), installs
 `requirements-app.txt` into it, and starts the app. No model downloads, no
 checkpoints, no upstream repos to pin. This is the fastest loop for
-content-loading work too -- restarting picks up manifest/media changes
-immediately.
+content-loading work too -- content is discovered fresh on every request,
+so dropping new files into `app/static/content/` shows up immediately, no
+restart needed at all.
 
 ## Run it with Docker (local only)
 
@@ -114,7 +120,8 @@ thing to check on a new machine is that Python 3.9+ (native) or Docker
 
 ```
 app/                  Flask backend + templates + static JS/CSS
-app/content/           Manifests + README for loading real game content
+app/content/           README for loading real game content (folder convention)
+app/static/content/    Real/fake media, discovered by folder convention -- no manifest
 deploy/               Dockerfile + compose.yaml (local) + aws/ (public deployment)
 scripts/              run-native.sh, verify-offline.sh, generate_placeholder_content.py, aws/ (start/stop)
 requirements-app.txt
@@ -128,10 +135,12 @@ ARCHITECTURE.md       Full architecture, deployment, and security reference
 
 The three games ship with placeholder content (synthetic tones, geometric
 patterns, solid colors) so the app is fully playable today. Swapping in
-real real/fake pairs is a matter of dropping media files into
-`app/static/spot_the_fake*/` and adding matching entries to the manifest
-JSON files -- see `app/content/README.md` for the exact schema and the
-Content Loading Guide project doc for sourcing options per game
+real real/fake pairs is just dropping two files into the right
+`app/static/content/<audio|video|image>/<easy|medium|hard>/` folder, named
+`<round-id>-real.<ext>` and `<round-id>-fake.<ext>` -- no manifest to edit,
+no restart needed. See `app/content/README.md` for the full convention
+(including the optional `notes.json` for custom labels) and the Content
+Loading Guide project doc for a phased, week-by-week sourcing plan per game
 (audio/video/picture).
 
 ---

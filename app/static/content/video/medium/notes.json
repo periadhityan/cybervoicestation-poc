@@ -1,0 +1,18 @@
+{
+  "medium-1": {
+    "subject_label": "PLACEHOLDER MEDIUM 1 -- replace before event",
+    "reveal_note": "Placeholder test patterns, not footage -- medium tier. Replace before the event -- see app/content/README.md."
+  },
+  "medium-2": {
+    "subject_label": "PLACEHOLDER MEDIUM 2 -- replace before event",
+    "reveal_note": "Placeholder test patterns, not footage -- medium tier. Replace before the event -- see app/content/README.md."
+  },
+  "medium-3": {
+    "subject_label": "PLACEHOLDER MEDIUM 3 -- replace before event",
+    "reveal_note": "Placeholder test patterns, not footage -- medium tier. Replace before the event -- see app/content/README.md."
+  },
+  "medium-4": {
+    "subject_label": "PLACEHOLDER MEDIUM 4 -- replace before event",
+    "reveal_note": "Placeholder test patterns, not footage -- medium tier. Replace before the event -- see app/content/README.md."
+  }
+}

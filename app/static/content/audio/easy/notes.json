@@ -1,0 +1,26 @@
+{
+  "easy-1": {
+    "subject_label": "PLACEHOLDER EASY 1 -- replace before event",
+    "reveal_note": "Placeholder tones, not speech -- easy tier (380Hz gap). Replace before the event -- see app/content/README.md."
+  },
+  "easy-2": {
+    "subject_label": "PLACEHOLDER EASY 2 -- replace before event",
+    "reveal_note": "Placeholder tones, not speech -- easy tier (380Hz gap). Replace before the event -- see app/content/README.md."
+  },
+  "easy-3": {
+    "subject_label": "PLACEHOLDER EASY 3 -- replace before event",
+    "reveal_note": "Placeholder tones, not speech -- easy tier (380Hz gap). Replace before the event -- see app/content/README.md."
+  },
+  "easy-4": {
+    "subject_label": "PLACEHOLDER EASY 4 -- replace before event",
+    "reveal_note": "Placeholder tones, not speech -- easy tier (380Hz gap). Replace before the event -- see app/content/README.md."
+  },
+  "easy-5": {
+    "subject_label": "PLACEHOLDER EASY 5 -- replace before event",
+    "reveal_note": "Placeholder tones, not speech -- easy tier (380Hz gap). Replace before the event -- see app/content/README.md."
+  },
+  "easy-6": {
+    "subject_label": "PLACEHOLDER EASY 6 -- replace before event",
+    "reveal_note": "Placeholder tones, not speech -- easy tier (380Hz gap). Replace before the event -- see app/content/README.md."
+  }
+}

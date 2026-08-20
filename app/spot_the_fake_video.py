@@ -1,47 +1,29 @@
 """'Which Is Fake? (Video)' -- same pool-sampling pattern as spot_the_fake.py
 (audio), for short video clips instead. See that module's docstring for the
-sampling rationale, and app/content/README.md for the shared design
-rationale and content-sourcing guidance -- which applies even more strongly
-to video than audio, since face-swap/deepfake video of a real, identifiable
-person is a materially higher-risk category to produce than voice cloning
-alone.
+sampling rationale, app/content_pool.py for the shared discovery logic, and
+app/content/README.md for the shared design rationale and content-sourcing
+guidance -- which applies even more strongly to video than audio, since
+face-swap/deepfake video of a real, identifiable person is a materially
+higher-risk category to produce than a synthetic voice clip alone.
 
-This module only serves a randomly-sampled slice of a content manifest and
+This module only serves a randomly-sampled slice of the content pool and
 lets the browser play two clips side by side; it does not generate video
 deepfakes.
 """
 
 from __future__ import annotations
 
-import json
-import random
 from pathlib import Path
 
 from flask import Blueprint, jsonify, render_template
 
-CONTENT_DIR = Path(__file__).resolve().parent / "content"
-MANIFEST_PATH = CONTENT_DIR / "spot_the_fake_video_manifest.json"
-STATIC_SUBDIR = "spot_the_fake/video"
+from content_pool import pick_rounds
 
-SELECT_COUNTS = [("easy", 4), ("medium", 2), ("hard", 1)]
+MODALITY = "video"
+CONTENT_ROOT = Path(__file__).resolve().parent / "static" / "content" / MODALITY
+STATIC_URL_ROOT = f"/static/content/{MODALITY}"
 
 bp = Blueprint("spot_the_fake_video", __name__)
-
-
-def _load_pools() -> dict[str, list[dict]]:
-    if not MANIFEST_PATH.exists():
-        return {}
-    with MANIFEST_PATH.open("r", encoding="utf-8") as fh:
-        return json.load(fh)
-
-
-def _pick_rounds() -> list[dict]:
-    pools = _load_pools()
-    selected: list[dict] = []
-    for tier, count in SELECT_COUNTS:
-        pool = pools.get(tier, [])
-        selected.extend(random.sample(pool, min(count, len(pool))))
-    return selected
 
 
 @bp.get("/spot-the-fake-video")
@@ -54,12 +36,12 @@ def spot_the_fake_video_rounds():
     payload = [
         {
             "id": entry["id"],
-            "difficulty": entry.get("difficulty", ""),
-            "subject_label": entry.get("subject_label", "Unknown"),
-            "real_video_url": f"/static/{STATIC_SUBDIR}/{entry['real_video']}",
-            "fake_video_url": f"/static/{STATIC_SUBDIR}/{entry['fake_video']}",
-            "reveal_note": entry.get("reveal_note", ""),
+            "difficulty": entry["difficulty"],
+            "subject_label": entry["subject_label"],
+            "real_video_url": f"{STATIC_URL_ROOT}/{entry['difficulty']}/{entry['real_file']}",
+            "fake_video_url": f"{STATIC_URL_ROOT}/{entry['difficulty']}/{entry['fake_file']}",
+            "reveal_note": entry["reveal_note"],
         }
-        for entry in _pick_rounds()
+        for entry in pick_rounds(CONTENT_ROOT, MODALITY)
     ]
     return jsonify(rounds=payload)
