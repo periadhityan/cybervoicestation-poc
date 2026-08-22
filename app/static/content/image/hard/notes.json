@@ -1,14 +1,14 @@
 {
-  "hard-1": {
-    "subject_label": "PLACEHOLDER HARD 1 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- hard tier. Replace before the event -- see app/content/README.md."
+  "fingerprint-scan": {
+    "subject_label": "Fingerprint access control scanner",
+    "reveal_note": "This one's subtle -- look closely at the scanner housing and mounting bracket; AI-generated hardware often has screws, seams, or edges that don't quite align."
   },
-  "hard-2": {
-    "subject_label": "PLACEHOLDER HARD 2 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- hard tier. Replace before the event -- see app/content/README.md."
+  "usb-drive": {
+    "subject_label": "USB flash drive, close-up",
+    "reveal_note": "A close, detailed shot like this is genuinely hard -- check the connector pins and any printed branding/text, which AI image generators frequently smear or duplicate at this zoom level."
   },
-  "hard-3": {
-    "subject_label": "PLACEHOLDER HARD 3 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- hard tier. Replace before the event -- see app/content/README.md."
+  "suspicious-email": {
+    "subject_label": "Reacting to a suspicious email",
+    "reveal_note": "Look at the laptop screen and the person's hands -- AI-generated screens often show illegible text, and hand/finger positioning near a keyboard is a common tell."
   }
 }

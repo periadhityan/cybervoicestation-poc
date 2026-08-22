@@ -1,18 +1,18 @@
 {
-  "medium-1": {
-    "subject_label": "PLACEHOLDER MEDIUM 1 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- medium tier. Replace before the event -- see app/content/README.md."
+  "doc-review": {
+    "subject_label": "Reviewing paperwork at a desk",
+    "reveal_note": "Look at the text on the documents themselves -- AI-generated paperwork often has smudged, repeated, or nonsensical printed text up close."
   },
-  "medium-2": {
-    "subject_label": "PLACEHOLDER MEDIUM 2 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- medium tier. Replace before the event -- see app/content/README.md."
+  "id-badge": {
+    "subject_label": "Employee wearing an ID badge",
+    "reveal_note": "Zoom in on the badge and lanyard -- AI-generated badges often have garbled text/photo details, and lanyard clips or straps that don't attach correctly."
   },
-  "medium-3": {
-    "subject_label": "PLACEHOLDER MEDIUM 3 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- medium tier. Replace before the event -- see app/content/README.md."
+  "wifi-router": {
+    "subject_label": "Office WiFi router",
+    "reveal_note": "Check the antennas and port/cable connections -- AI-generated electronics often get the number of antennas, port placement, or cable routing subtly wrong."
   },
-  "medium-4": {
-    "subject_label": "PLACEHOLDER MEDIUM 4 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- medium tier. Replace before the event -- see app/content/README.md."
+  "two-factor-auth": {
+    "subject_label": "Entering a code on a phone",
+    "reveal_note": "Look at the finger position and the phone screen's UI -- AI-generated phone screens often show illegible or inconsistent app interface elements."
   }
 }
