@@ -1,20 +1,25 @@
-# Windows counterpart to scripts/run-native.sh -- same steps: create/reuse a
-# plain virtualenv, install requirements-app.txt into it, start the app.
-# No conda, no WSL, no bash required.
+# Windows counterpart to native/mac/run-native.sh -- same steps: create/
+# reuse a plain virtualenv, install requirements-app.txt into it, start the
+# app. No conda, no WSL, no bash required.
+#
+# This script lives at native\windows\ -- go up two levels to reach the
+# project root (native\windows\ -> native\ -> project root), where app\ and
+# requirements-app.txt actually live. The app itself isn't duplicated here;
+# this is just the Windows entry point into the one shared copy.
 #
 # Run from a PowerShell window:
-#   .\scripts\run-native.ps1
+#   .\native\windows\run-native.ps1
 #
 # If PowerShell refuses to run it ("running scripts is disabled on this
 # system"), that's the default execution policy blocking unsigned scripts --
 # run it this way instead, which only bypasses the policy for this one
 # process, not machine-wide:
-#   powershell -ExecutionPolicy Bypass -File .\scripts\run-native.ps1
+#   powershell -ExecutionPolicy Bypass -File .\native\windows\run-native.ps1
 
 $ErrorActionPreference = "Stop"
 
-# $PSScriptRoot is this script's own folder (scripts\); go up one level.
-$Project = Split-Path -Parent $PSScriptRoot
+# $PSScriptRoot is this script's own folder (native\windows\); go up two.
+$Project = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $VenvPython = Join-Path $Project ".venv\Scripts\python.exe"
 
 if (-not (Test-Path $VenvPython)) {

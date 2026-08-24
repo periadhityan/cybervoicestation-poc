@@ -119,7 +119,7 @@ per `deploy/*` config rather than per branch:
 
 | | Local / native | Mini-PC (Docker) | AWS (public) |
 |---|---|---|---|
-| Entry point | `scripts/run-native.sh` | `deploy/compose.yaml` | `deploy/aws/compose.aws.yaml` |
+| Entry point | `native/mac/run-native.sh` (Windows: `native/windows/run-native.bat`/`.ps1`) | `deploy/compose.yaml` | `deploy/aws/compose.aws.yaml` |
 | Reachable from | `127.0.0.1` only | `127.0.0.1` only | the public internet |
 | TLS | none (loopback) | none (loopback) | Caddy, automatic Let's Encrypt |
 | Passcode gate | off (`SITE_PASSCODE` unset) | off | **on** |
@@ -127,13 +127,19 @@ per `deploy/*` config rather than per branch:
 
 ### 3.1 Local / native
 
-`scripts/run-native.sh` creates a `.venv/`, installs `requirements-app.txt`
-(just Flask), and runs `python app.py`, binding to `127.0.0.1:8080` by
-default (`CYBERVOICE_BIND` env var overrides this). This is the fast
-iteration loop — content under `app/static/content/` is discovered fresh on
-every request, so dropping in new media picks it up immediately, no restart
-or rebuild step needed. This is also the default in-person kiosk booth
-path: bring a laptop, run this, point a kiosk browser at `127.0.0.1:8080`.
+`native/mac/run-native.sh` (macOS/Linux) or `native/windows/run-native.bat`
+/ `run-native.ps1` (Windows) creates a `.venv/`, installs
+`requirements-app.txt` (just Flask), and runs `python app.py`, binding to
+`127.0.0.1:8080` by default (`CYBERVOICE_BIND` env var overrides this).
+Both platforms' scripts point at the same shared `app/` folder and
+`app/static/content/` library one level up in `native/` — nothing about the
+app or its content is duplicated per platform, only the launcher script
+differs. This is the fast iteration loop — content under
+`app/static/content/` is discovered fresh on every request, so dropping in
+new media picks it up immediately, no restart or rebuild step needed. This
+is also the default in-person kiosk booth path: bring a laptop, run the
+launcher for whichever OS it's running, point a kiosk browser at
+`127.0.0.1:8080`.
 
 ### 3.2 Mini-PC / Docker (local only)
 
@@ -370,6 +376,12 @@ app/
   static/content/            Real/fake media, one subtree per modality/difficulty
   static/, templates/        Frontend assets
 
+native/
+  mac/
+    run-native.sh              macOS/Linux entry point -- points at the shared app/ above
+  windows/
+    run-native.bat, run-native.ps1   Windows entry points -- same shared app/, no duplication
+
 deploy/
   Dockerfile                 Shared image build (all deployment paths)
   compose.yaml                Local/mini-PC -- loopback-only, no public exposure
@@ -380,7 +392,6 @@ deploy/
     s3-content-read-policy.json   IAM policy template for the S3 content backend
 
 scripts/
-  run-native.sh               Local dev / kiosk entry point
   verify-offline.sh           Confirms the app works with no network dependency
   generate_placeholder_content.py   Regenerates the default placeholder content folders
   sync_content_to_s3.sh       Uploads app/static/content/ to the S3 bucket (CONTENT_BACKEND=s3)

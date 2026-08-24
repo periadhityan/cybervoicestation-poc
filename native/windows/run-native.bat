@@ -1,13 +1,18 @@
 @echo off
 setlocal
 
-rem Windows counterpart to scripts/run-native.sh -- same steps: create/reuse
-rem a plain virtualenv, install requirements-app.txt into it, start the app.
-rem No conda, no WSL, no bash required. Double-click this file from Explorer,
-rem or run it from a Command Prompt / PowerShell window.
+rem Windows counterpart to native/mac/run-native.sh -- same steps: create/
+rem reuse a plain virtualenv, install requirements-app.txt into it, start
+rem the app. No conda, no WSL, no bash required. Double-click this file
+rem from Explorer, or run it from a Command Prompt / PowerShell window.
+rem
+rem This script lives at native\windows\ -- go up two levels to reach the
+rem project root (native\windows\ -> native\ -> project root), where app\
+rem and requirements-app.txt actually live. The app itself isn't duplicated
+rem here; this is just the Windows entry point into the one shared copy.
 
-rem %~dp0 is this script's own folder (scripts\), with a trailing backslash.
-set "PROJECT=%~dp0.."
+rem %~dp0 is this script's own folder (native\windows\), trailing backslash.
+set "PROJECT=%~dp0..\.."
 for %%I in ("%PROJECT%") do set "PROJECT=%%~fI"
 
 if not exist "%PROJECT%\.venv\Scripts\python.exe" (

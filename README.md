@@ -61,11 +61,18 @@ so setup and deployment are both fast.
 
 ## Run it natively
 
+Platform-specific launcher scripts live under `native/` -- `native/mac/` for
+macOS/Linux, `native/windows/` for Windows. Both point at the same shared
+`app/` folder and `app/static/content/` library; nothing about the app or
+its content is duplicated per platform, only the entry-point script differs.
+
+### macOS / Linux
+
 ```bash
 git clone <your-repo-URL> ~/CyberVoiceStation
 cd ~/CyberVoiceStation
 python scripts/generate_placeholder_content.py   # first time only -- game media isn't tracked in git
-./scripts/run-native.sh
+./native/mac/run-native.sh
 # open http://127.0.0.1:8080
 ```
 
@@ -76,7 +83,7 @@ content-loading work too -- content is discovered fresh on every request,
 so dropping new files into `app/static/content/` shows up immediately, no
 restart needed at all.
 
-## Run it natively on Windows
+### Windows
 
 Same app, no WSL or bash required -- just Python 3.9+ from
 [python.org](https://www.python.org/downloads/windows/) (check **"Add
@@ -86,21 +93,21 @@ python.exe to PATH"** during setup).
 git clone <your-repo-URL> C:\CyberVoiceStation
 cd C:\CyberVoiceStation
 python scripts\generate_placeholder_content.py   :: first time only -- needs ffmpeg on PATH, see note below
-scripts\run-native.bat
+native\windows\run-native.bat
 :: open http://127.0.0.1:8080
 ```
 
-Double-clicking `scripts\run-native.bat` in Explorer works too. It creates
-the same `.venv\` virtualenv, installs `requirements-app.txt`, and starts
-the app -- keep the console window open while it's running, closing it
-stops the server.
+Double-clicking `native\windows\run-native.bat` in Explorer works too. It
+creates the same `.venv\` virtualenv, installs `requirements-app.txt`, and
+starts the app -- keep the console window open while it's running, closing
+it stops the server.
 
-Prefer PowerShell? `scripts\run-native.ps1` does the same thing. If
+Prefer PowerShell? `native\windows\run-native.ps1` does the same thing. If
 PowerShell blocks it with a "running scripts is disabled" error (the
 default execution policy), run it as:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\run-native.ps1
+powershell -ExecutionPolicy Bypass -File .\native\windows\run-native.ps1
 ```
 
 That only bypasses the policy for this one run, not machine-wide.
@@ -152,24 +159,27 @@ Mac, a Windows PC, a mini-PC, whatever's around -- is just:
 ```bash
 git clone <your-repo-URL> ~/CyberVoiceStation
 cd ~/CyberVoiceStation
-./scripts/run-native.sh
+./native/mac/run-native.sh
 ```
 
-(`scripts\run-native.bat` or `scripts\run-native.ps1` on Windows -- see
-"Run it natively on Windows" above) or the Docker steps above. `git clone`
-really is sufficient -- the only thing to check on a new machine is that
-Python 3.9+ (native) or Docker (container) is installed.
+(`native\windows\run-native.bat` or `native\windows\run-native.ps1` on
+Windows -- see "Run it natively" above) or the Docker steps above. `git
+clone` really is sufficient -- the only thing to check on a new machine is
+that Python 3.9+ (native) or Docker (container) is installed.
 
 ---
 
 ## Repo layout
 
 ```
-app/                  Flask backend + templates + static JS/CSS
+app/                  Flask backend + templates + static JS/CSS -- one shared copy, not per-platform
 app/content/           README for loading real game content (folder convention)
-app/static/content/    Real/fake media, discovered by folder convention -- no manifest
+app/static/content/    Real/fake media, discovered by folder convention -- no manifest, one shared copy
+native/               Platform-specific launcher scripts, both pointing at the shared app/ above
+native/mac/             run-native.sh (macOS/Linux)
+native/windows/         run-native.bat, run-native.ps1 (Windows)
 deploy/               Dockerfile + compose.yaml (local) + aws/ (public deployment)
-scripts/              run-native.sh/.bat/.ps1, verify-offline.sh, generate_placeholder_content.py, aws/ (start/stop)
+scripts/              verify-offline.sh, generate_placeholder_content.py, sync_content_to_s3.sh, aws/ (start/stop)
 requirements-app.txt
 README.md             This file
 ARCHITECTURE.md       Full architecture, deployment, and security reference
