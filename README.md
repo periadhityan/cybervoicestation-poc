@@ -76,6 +76,42 @@ content-loading work too -- content is discovered fresh on every request,
 so dropping new files into `app/static/content/` shows up immediately, no
 restart needed at all.
 
+## Run it natively on Windows
+
+Same app, no WSL or bash required -- just Python 3.9+ from
+[python.org](https://www.python.org/downloads/windows/) (check **"Add
+python.exe to PATH"** during setup).
+
+```bat
+git clone <your-repo-URL> C:\CyberVoiceStation
+cd C:\CyberVoiceStation
+python scripts\generate_placeholder_content.py   :: first time only -- needs ffmpeg on PATH, see note below
+scripts\run-native.bat
+:: open http://127.0.0.1:8080
+```
+
+Double-clicking `scripts\run-native.bat` in Explorer works too. It creates
+the same `.venv\` virtualenv, installs `requirements-app.txt`, and starts
+the app -- keep the console window open while it's running, closing it
+stops the server.
+
+Prefer PowerShell? `scripts\run-native.ps1` does the same thing. If
+PowerShell blocks it with a "running scripts is disabled" error (the
+default execution policy), run it as:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\run-native.ps1
+```
+
+That only bypasses the policy for this one run, not machine-wide.
+
+`generate_placeholder_content.py` needs `ffmpeg` on PATH (only for
+regenerating placeholder content -- not needed to run the app itself, or
+once real content is loaded). On Windows, either `winget install
+ffmpeg` (Windows 10 2020+ / 11) or download a build from
+[gyan.dev](https://www.gyan.dev/ffmpeg/builds/) and add its `bin\` folder
+to PATH.
+
 ## Run it with Docker (local only)
 
 ```bash
@@ -119,9 +155,10 @@ cd ~/CyberVoiceStation
 ./scripts/run-native.sh
 ```
 
-or the Docker steps above. `git clone` really is sufficient -- the only
-thing to check on a new machine is that Python 3.9+ (native) or Docker
-(container) is installed.
+(`scripts\run-native.bat` or `scripts\run-native.ps1` on Windows -- see
+"Run it natively on Windows" above) or the Docker steps above. `git clone`
+really is sufficient -- the only thing to check on a new machine is that
+Python 3.9+ (native) or Docker (container) is installed.
 
 ---
 
@@ -132,7 +169,7 @@ app/                  Flask backend + templates + static JS/CSS
 app/content/           README for loading real game content (folder convention)
 app/static/content/    Real/fake media, discovered by folder convention -- no manifest
 deploy/               Dockerfile + compose.yaml (local) + aws/ (public deployment)
-scripts/              run-native.sh, verify-offline.sh, generate_placeholder_content.py, aws/ (start/stop)
+scripts/              run-native.sh/.bat/.ps1, verify-offline.sh, generate_placeholder_content.py, aws/ (start/stop)
 requirements-app.txt
 README.md             This file
 ARCHITECTURE.md       Full architecture, deployment, and security reference
