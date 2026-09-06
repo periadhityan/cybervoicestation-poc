@@ -1,0 +1,10 @@
+{
+  "from_name": "Harborline Bank",
+  "from_email": "alerts@harborlinebank.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "A new device signed in to your account",
+  "date": "Fri, Sep 5, 2026 6:30 PM",
+  "body": "Hi Jordan,\n\nWe noticed a sign-in to your account from a new device (iPhone, Seattle WA) on Sep 5 at 6:28 PM. If this was you, no action is needed.\n\nIf you don't recognize this activity, open the Harborline app or type harborlinebank.com directly into your browser to review your account.\n\nHarborline Bank",
+  "link_text": "Learn About Account Security",
+  "link_url": "https://harborlinebank.com/security"
+}

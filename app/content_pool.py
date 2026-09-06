@@ -61,6 +61,7 @@ DEFAULT_REVEAL_NOTES = {
     "audio": "Listen again -- pacing, tone, or background noise often gives a synthetic clip away.",
     "video": "Watch again -- lighting, blinking, or lip-sync often gives a synthetic clip away.",
     "image": "Look again -- lighting, hands, or background detail often gives a synthetic image away.",
+    "email": "Check the sender's actual address, where any link really goes, and whether urgency is being used to rush you -- these are the tells that separate a phishing email from the real thing.",
 }
 
 CONTENT_BACKEND = os.environ.get("CONTENT_BACKEND", "local").strip().lower()

@@ -9,11 +9,11 @@ AWS public deployment going live.
 
 ## 1. What the app is
 
-A small Flask app serving three independent "Which Is Fake?" quiz games —
-audio, video, picture — plus a shared campaign homepage. Each game shows a
-real clip and an AI-generated one side by side, the participant guesses
-which is real, and the app reveals the answer with a short explanation of
-what gave the fake away.
+A small Flask app serving four independent "Which Is Fake?" quiz games —
+audio, video, picture, and phishing email — plus a shared campaign
+homepage. Each game shows a real item and a fake one side by side, the
+participant guesses which is real, and the app reveals the answer with a
+short explanation of what gave the fake away.
 
 There is no model runtime anywhere in this app. It's Flask, server-rendered
 Jinja templates, vanilla JS/CSS, and static media files discovered by folder
@@ -33,6 +33,7 @@ app/
   spot_the_fake.py          Blueprint: /spot-the-fake (audio)
   spot_the_fake_video.py    Blueprint: /spot-the-fake-video
   spot_the_fake_image.py    Blueprint: /spot-the-fake-image
+  spot_the_fake_email.py    Blueprint: /spot-the-fake-email
   content/
     README.md               Content folder convention + sourcing guardrails
   static/
@@ -43,7 +44,7 @@ app/
 
 ### 2.1 How a game works
 
-Each of the three blueprints follows the same pattern:
+Each of the four blueprints follows the same pattern:
 
 1. `GET /spot-the-fake*` renders the game's template.
 2. `GET /api/spot-the-fake*/rounds` calls `content_pool.pick_rounds()`,
@@ -72,7 +73,7 @@ There is no manifest to hand-edit. Content is discovered purely by folder
 notes.json          (optional — per-round subject_label / reveal_note overrides)
 ```
 
-`app/content_pool.py` (shared by all three blueprints) implements this
+`app/content_pool.py` (shared by all four blueprints) implements this
 discovery behind two interchangeable backends, chosen by the
 `CONTENT_BACKEND` env var:
 
@@ -95,17 +96,19 @@ than erroring — a content-loading session is often mid-way through adding a
 pair. A round gets a sensible auto-generated label and a modality-generic
 reveal note by default; an optional `notes.json` supplies a real label and
 a specific "what gave it away" note per round-id, with anything not listed
-falling back to the default. Callers (the three blueprints) never touch
+falling back to the default. Callers (the four blueprints) never touch
 backend-specific details — `content_pool.pick_rounds()` always returns
 ready-to-use `real_url` / `fake_url` fields regardless of which backend is
 active.
 
-Placeholder content (synthetic tones, geometric patterns, solid colors)
-ships by default so the app is fully playable with zero setup, always via
-the local backend. Loading real content is just dropping media file pairs
-into the right tier folder (or syncing them to S3 — see
-`scripts/sync_content_to_s3.sh`) — no code change, no JSON to maintain, no
-restart needed for the local backend, and no rebuild needed at all for S3.
+Placeholder content (synthetic tones, geometric patterns, solid colors for
+audio/video/image; hand-written example phishing emails for the email
+game) ships by default so the app is fully playable with zero setup,
+always via the local backend. Loading real content is just dropping file
+pairs into the right tier folder (or syncing them to S3 — see
+`scripts/sync_content_to_s3.sh`) — no code change, no manifest to
+maintain, no restart needed for the local backend, and no rebuild needed
+at all for S3.
 See `app/content/README.md` for the full convention and sourcing
 guardrails (notably: no deepfakes of real, named public figures without
 consent — see that file for the reasoning and the safe alternatives).
@@ -371,7 +374,7 @@ architecture.
 app/
   app.py                     Flask app + passcode gate
   content_pool.py            Shared folder-based content discovery
-  spot_the_fake*.py          Three game blueprints
+  spot_the_fake*.py          Four game blueprints
   content/                   Content README (folder convention + sourcing guardrails)
   static/content/            Real/fake media, one subtree per modality/difficulty
   static/, templates/        Frontend assets

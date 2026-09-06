@@ -1,0 +1,11 @@
+{
+  "from_name": "DesignSuite Billing Dept",
+  "from_email": "invoices@designsuite-billing.net",
+  "to": "accounts@meridianfreight.com",
+  "subject": "Invoice past due - service will be suspended",
+  "date": "Thu, Sep 17, 2026 9:12 AM",
+  "body": "Your DesignSuite invoice #DS-88213 for $588.00 is past due. Service will be suspended within 48 hours unless payment is submitted immediately.\n\nPay now to avoid interruption to your team's access.",
+  "link_text": "Pay Invoice Now",
+  "link_url": "http://designsuite-billing.net/pay?inv=88213",
+  "attachment_name": "Invoice_DS-88213.pdf.exe"
+}

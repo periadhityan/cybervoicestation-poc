@@ -1,0 +1,18 @@
+{
+  "it-password-reset": {
+    "subject_label": "IT password expiration notice",
+    "reveal_note": "The fake email's sender domain (meridian-it-helpdesk.com) isn't the company's real domain, and the threat of 'permanent suspension in 24 hours' is designed to make you click before you look closely."
+  },
+  "package-delivery": {
+    "subject_label": "Package delivery notification",
+    "reveal_note": "The fake uses a generic courier name, a link to an unrelated .top domain, and manufactures urgency about a 'failed delivery attempt' -- the real courier always references your specific order number and links to its own known domain."
+  },
+  "gift-card-request": {
+    "subject_label": "Request from \"the boss\"",
+    "reveal_note": "The fake comes from a free webmail address instead of a company account, asks for gift cards (a classic irreversible-payment scam), and pressures secrecy -- a real request for a purchase goes through the normal expense process, never gift cards over email."
+  },
+  "account-suspended": {
+    "subject_label": "Bank account security alert",
+    "reveal_note": "The fake's sender address is a lookalike domain (secure-harborline.com vs the bank's real harborlinebank.com) and links straight to a login page, instead of pointing you to open the app or type the bank's URL yourself."
+  }
+}

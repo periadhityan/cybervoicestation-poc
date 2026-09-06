@@ -1,0 +1,10 @@
+{
+  "from_name": "Harborline Bank Security",
+  "from_email": "security@secure-harborline.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your account has been suspended",
+  "date": "Fri, Sep 5, 2026 6:41 PM",
+  "body": "Dear Customer,\n\nWe detected unusual activity and have suspended your account. You must verify your identity within 12 hours or your account will be permanently closed.\n\nClick below to restore access immediately.",
+  "link_text": "Restore My Account",
+  "link_url": "http://secure-harborline.com/restore?ref=48291"
+}

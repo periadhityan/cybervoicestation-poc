@@ -1,0 +1,10 @@
+{
+  "from_name": "Coastline Parcel",
+  "from_email": "tracking@coastlineparcel.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your order #48213 is out for delivery",
+  "date": "Wed, Sep 3, 2026 7:02 AM",
+  "body": "Hi Jordan,\n\nYour package (order #48213) is out for delivery today between 10am-2pm. No signature required.\n\nTrack your order anytime from the link below.\n\nCoastline Parcel",
+  "link_text": "Track Order #48213",
+  "link_url": "https://coastlineparcel.com/track/48213"
+}

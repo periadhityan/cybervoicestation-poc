@@ -1,0 +1,10 @@
+{
+  "from_name": "Delivery Service",
+  "from_email": "notice@parcel-status.top",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Delivery attempt failed - action needed",
+  "date": "Wed, Sep 3, 2026 6:47 AM",
+  "body": "We attempted to deliver your package today but were unable to complete delivery. Your package will be returned to sender in 24 hours unless you confirm your address and pay a small redelivery fee.\n\nConfirm now to avoid your package being returned.",
+  "link_text": "Confirm Redelivery",
+  "link_url": "http://parcel-status.top/redeliver?track=48213X"
+}

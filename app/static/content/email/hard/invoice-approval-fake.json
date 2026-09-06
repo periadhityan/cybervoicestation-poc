@@ -1,0 +1,9 @@
+{
+  "from_name": "Rossum Industrial Supply",
+  "from_email": "accounts@rossum-supply.com",
+  "to": "accounts@meridianfreight.com",
+  "subject": "Invoice #RS-33291 - updated payment details",
+  "date": "Mon, Sep 21, 2026 4:55 PM",
+  "body": "Hello,\n\nFollowing up on invoice #RS-33291 for $14,220.00 -- please note we've switched banks since our last invoice. Kindly use the updated account details in the attached document for this payment going forward.\n\nRossum Industrial Supply",
+  "attachment_name": "Invoice_RS-33291_updated.pdf"
+}

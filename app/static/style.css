@@ -158,7 +158,7 @@ footer a:hover { text-decoration: underline; }
 
 .hub-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   margin-top: 28px;
 }
@@ -198,6 +198,7 @@ footer a:hover { text-decoration: underline; }
 .hub-card.accent-orange { --accent: var(--accent-orange); }
 .hub-card.accent-pink { --accent: var(--accent-pink); }
 .hub-card.accent-green { --accent: var(--accent-green); }
+.hub-card.accent-purple { --accent: var(--accent-purple); }
 
 @media (max-width: 900px) {
   .hub-grid {
@@ -253,6 +254,90 @@ footer a:hover { text-decoration: underline; }
   margin-top: 12px;
   background: linear-gradient(120deg, var(--accent-green), var(--accent-cyan));
   color: #0b1f14;
+}
+
+/* --- Mock email rendering (Inbox or Phishbox?) --- */
+
+.mail-window {
+  border-radius: 14px;
+  background: #f5f3ff;
+  color: #1a1442;
+  overflow: hidden;
+  text-align: left;
+}
+
+.mail-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(26, 20, 66, 0.14);
+  background: rgba(26, 20, 66, 0.04);
+}
+
+.mail-row {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.mail-label {
+  flex: 0 0 auto;
+  font-weight: 800;
+  opacity: .65;
+}
+
+.mail-value {
+  word-break: break-word;
+}
+
+.mail-subject {
+  font-weight: 800;
+}
+
+.mail-body {
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.mail-attachment {
+  margin: 0 16px 16px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(26, 20, 66, 0.08);
+  font-size: 13px;
+  display: inline-block;
+}
+
+.mail-link-row {
+  margin: 0 16px 16px;
+}
+
+.mail-link {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: linear-gradient(120deg, var(--accent-cyan), var(--accent-purple));
+  color: #1a1442;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.mail-link-preview {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(26, 20, 66, 0.06);
+  font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  word-break: break-all;
+}
+
+.mail-link-preview-label {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 800;
+  opacity: .6;
 }
 
 #feedback {

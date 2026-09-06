@@ -1,0 +1,14 @@
+{
+  "payroll-update": {
+    "subject_label": "Payroll system update notice",
+    "reveal_note": "Both emails look professional, but the fake's sender and link domain (meridianfreiqht.com) swaps an 'i' for a lookalike character -- easy to miss at a glance, which is exactly the point."
+  },
+  "shared-document": {
+    "subject_label": "Shared document invite",
+    "reveal_note": "The fake's \"shared document\" link doesn't go to the real file-sharing provider at all -- it points to an unrelated domain disguised to look like one, a common way to harvest login credentials through a fake sign-in page."
+  },
+  "software-renewal": {
+    "subject_label": "Software license renewal notice",
+    "reveal_note": "The fake's invoice total and \"past due\" framing are meant to create urgency, the payment link goes to a generic lookalike domain rather than the vendor's own billing portal, and the attached \"invoice\" has a double file extension (.pdf.exe) -- a classic sign it's an executable, not a document."
+  }
+}

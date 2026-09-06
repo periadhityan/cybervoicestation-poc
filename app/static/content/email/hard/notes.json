@@ -1,0 +1,10 @@
+{
+  "invoice-approval": {
+    "subject_label": "Vendor invoice approval",
+    "reveal_note": "Everything reads professionally and the domain looks right at a glance -- the tell is subtle: the fake sender domain has an added hyphen (rossum-supply.com vs the vendor's real rossumsupply.com), and the bank details changed without a phone confirmation, which finance policy requires for exactly this reason."
+  },
+  "executive-travel-request": {
+    "subject_label": "Executive travel booking request",
+    "reveal_note": "The display name and writing style closely match the CFO, but the actual sender address is a personal Outlook account rather than the company one, and the request routes payment through personal Venmo instead of the corporate travel system finance normally uses."
+  }
+}

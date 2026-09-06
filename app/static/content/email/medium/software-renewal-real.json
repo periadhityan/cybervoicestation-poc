@@ -1,0 +1,10 @@
+{
+  "from_name": "DesignSuite Billing",
+  "from_email": "billing@designsuite.com",
+  "to": "accounts@meridianfreight.com",
+  "subject": "Your DesignSuite renewal is coming up",
+  "date": "Thu, Sep 17, 2026 9:00 AM",
+  "body": "Hi Meridian Freight Co.,\n\nYour DesignSuite Team plan (12 seats) renews on Oct 1, 2026 for $588.00/yr. No action is needed -- this will renew automatically on the payment method already on file.\n\nManage your subscription anytime from your account dashboard.\n\nDesignSuite Billing",
+  "link_text": "Manage Subscription",
+  "link_url": "https://designsuite.com/account/billing"
+}
