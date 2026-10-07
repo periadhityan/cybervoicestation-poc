@@ -10,5 +10,21 @@
   "suspicious-email": {
     "subject_label": "Reacting to a suspicious email",
     "reveal_note": "Look at the laptop screen and the person's hands -- AI-generated screens often show illegible text, and hand/finger positioning near a keyboard is a common tell."
+  },
+  "cafe-laptop": {
+    "subject_label": "Working on a laptop in a cafe",
+    "reveal_note": "The AI cafe looks cinematic, but the laptop screen is full of text-shaped smudges that don't say anything, the clutter at the bottom right of the table is a pile of shapes you can't name, and the people behind the window dissolve into blur. The real photo is a plain, sharp close-up where the watch strap and shirt stripes hold up."
+  },
+  "two-monitor-desk": {
+    "subject_label": "A desk with two monitors",
+    "reveal_note": "Look at the small objects on the desk. In the AI image the area by the lamp is crowded with things you can't name (a black gadget, a red bottle), there is an odd round puck under the left monitor, and both screens show code-shaped smudges rather than real text. Everything on the real desk, from the plant to the mug and notebook, is identifiable."
+  },
+  "security-gates": {
+    "subject_label": "Security gates at an entrance",
+    "reveal_note": "The AI gates look right until you study the hardware. The tall panels with three round holes above every gate have no clear purpose, the turnstile arms and rails differ from one unit to the next and don't connect to anything, and the green readers show no text or symbols. The real photo is a plain row of gates with readable signs."
+  },
+  "waiting-room": {
+    "subject_label": "Two people in a waiting room",
+    "reveal_note": "The seating doesn't hold together in the AI image: the bench, separate backrests and armrests merge into each other, and the man's crossed leg and the woman's feet sit at odd depths against the bench. Both devices are blank slabs with no visible screens, and the bright glass wall behind them is a washed-out blur with no structure."
   }
 }

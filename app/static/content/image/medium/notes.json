@@ -14,5 +14,21 @@
   "two-factor-auth": {
     "subject_label": "Entering a code on a phone",
     "reveal_note": "Look at the finger position and the phone screen's UI -- AI-generated phone screens often show illegible or inconsistent app interface elements."
+  },
+  "patch-panel": {
+    "subject_label": "A network patch panel",
+    "reveal_note": "The real rack has numbered, labelled ports you can read, with each cable running to its own port. The AI image has no readable labels at all, its connectors vary in size and blur into each other, and the bundle on the left becomes a wall of cable with no clear beginning or end."
+  },
+  "phone-desk": {
+    "subject_label": "A phone on a desk",
+    "reveal_note": "The AI phone's screen shows a text conversation, but none of the message text is readable: it is squiggles shaped like words. The stripes of sunlight and the dramatic shadows are also too perfect. The real photo is plain: a phone with its screen off, a notebook and a pen."
+  },
+  "whiteboard-diagram": {
+    "subject_label": "A whiteboard with a diagram",
+    "reveal_note": "Read the writing. The real whiteboard's flowchart is legible (\"Dashboard\", \"Budget\", \"Select Plan\"). On the AI wall every sticky note and diagram box is scribble that only looks like handwriting, the notes fold into odd tent shapes, and the markers in the tray melt into one lump."
+  },
+  "sticky-note": {
+    "subject_label": "A sticky note beside a keyboard",
+    "reveal_note": "The real photo is a plain, blank sticky pad next to a keyboard and phone. The AI version adds a line of handwriting that looks fluent from a distance but is meaningless squiggle up close, and the whole scene is arranged like a product shot, with razor-sharp window shadows and not a mark on anything."
   }
 }

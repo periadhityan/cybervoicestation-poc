@@ -292,12 +292,44 @@ window.CONTENT = {
    "fake": "content/media/image/medium/id-badge-fake.jpg"
   },
   {
+   "id": "image/medium/patch-panel",
+   "tier": "medium",
+   "label": "A network patch panel",
+   "note": "The real rack has numbered, labelled ports you can read, with each cable running to its own port. The AI image has no readable labels at all, its connectors vary in size and blur into each other, and the bundle on the left becomes a wall of cable with no clear beginning or end.",
+   "real": "content/media/image/medium/patch-panel-real.jpg",
+   "fake": "content/media/image/medium/patch-panel-fake.jpg"
+  },
+  {
+   "id": "image/medium/phone-desk",
+   "tier": "medium",
+   "label": "A phone on a desk",
+   "note": "The AI phone's screen shows a text conversation, but none of the message text is readable: it is squiggles shaped like words. The stripes of sunlight and the dramatic shadows are also too perfect. The real photo is plain: a phone with its screen off, a notebook and a pen.",
+   "real": "content/media/image/medium/phone-desk-real.jpg",
+   "fake": "content/media/image/medium/phone-desk-fake.jpg"
+  },
+  {
+   "id": "image/medium/sticky-note",
+   "tier": "medium",
+   "label": "A sticky note beside a keyboard",
+   "note": "The real photo is a plain, blank sticky pad next to a keyboard and phone. The AI version adds a line of handwriting that looks fluent from a distance but is meaningless squiggle up close, and the whole scene is arranged like a product shot, with razor-sharp window shadows and not a mark on anything.",
+   "real": "content/media/image/medium/sticky-note-real.jpg",
+   "fake": "content/media/image/medium/sticky-note-fake.jpg"
+  },
+  {
    "id": "image/medium/two-factor-auth",
    "tier": "medium",
    "label": "Entering a code on a phone",
    "note": "Look at the finger position and the phone screen's UI -- AI-generated phone screens often show illegible or inconsistent app interface elements.",
    "real": "content/media/image/medium/two-factor-auth-real.jpg",
    "fake": "content/media/image/medium/two-factor-auth-fake.jpg"
+  },
+  {
+   "id": "image/medium/whiteboard-diagram",
+   "tier": "medium",
+   "label": "A whiteboard with a diagram",
+   "note": "Read the writing. The real whiteboard's flowchart is legible (\"Dashboard\", \"Budget\", \"Select Plan\"). On the AI wall every sticky note and diagram box is scribble that only looks like handwriting, the notes fold into odd tent shapes, and the markers in the tray melt into one lump.",
+   "real": "content/media/image/medium/whiteboard-diagram-real.jpg",
+   "fake": "content/media/image/medium/whiteboard-diagram-fake.jpg"
   },
   {
    "id": "image/medium/wifi-router",
@@ -308,12 +340,28 @@ window.CONTENT = {
    "fake": "content/media/image/medium/wifi-router-fake.jpg"
   },
   {
+   "id": "image/hard/cafe-laptop",
+   "tier": "hard",
+   "label": "Working on a laptop in a cafe",
+   "note": "The AI cafe looks cinematic, but the laptop screen is full of text-shaped smudges that don't say anything, the clutter at the bottom right of the table is a pile of shapes you can't name, and the people behind the window dissolve into blur. The real photo is a plain, sharp close-up where the watch strap and shirt stripes hold up.",
+   "real": "content/media/image/hard/cafe-laptop-real.jpg",
+   "fake": "content/media/image/hard/cafe-laptop-fake.jpg"
+  },
+  {
    "id": "image/hard/fingerprint-scan",
    "tier": "hard",
    "label": "Fingerprint access control scanner",
    "note": "This one's subtle -- look closely at the scanner housing and mounting bracket; AI-generated hardware often has screws, seams, or edges that don't quite align.",
    "real": "content/media/image/hard/fingerprint-scan-real.jpg",
    "fake": "content/media/image/hard/fingerprint-scan-fake.jpg"
+  },
+  {
+   "id": "image/hard/security-gates",
+   "tier": "hard",
+   "label": "Security gates at an entrance",
+   "note": "The AI gates look right until you study the hardware. The tall panels with three round holes above every gate have no clear purpose, the turnstile arms and rails differ from one unit to the next and don't connect to anything, and the green readers show no text or symbols. The real photo is a plain row of gates with readable signs.",
+   "real": "content/media/image/hard/security-gates-real.jpg",
+   "fake": "content/media/image/hard/security-gates-fake.jpg"
   },
   {
    "id": "image/hard/suspicious-email",
@@ -324,12 +372,28 @@ window.CONTENT = {
    "fake": "content/media/image/hard/suspicious-email-fake.jpg"
   },
   {
+   "id": "image/hard/two-monitor-desk",
+   "tier": "hard",
+   "label": "A desk with two monitors",
+   "note": "Look at the small objects on the desk. In the AI image the area by the lamp is crowded with things you can't name (a black gadget, a red bottle), there is an odd round puck under the left monitor, and both screens show code-shaped smudges rather than real text. Everything on the real desk, from the plant to the mug and notebook, is identifiable.",
+   "real": "content/media/image/hard/two-monitor-desk-real.jpg",
+   "fake": "content/media/image/hard/two-monitor-desk-fake.jpg"
+  },
+  {
    "id": "image/hard/usb-drive",
    "tier": "hard",
    "label": "USB flash drive, close-up",
    "note": "A close, detailed shot like this is genuinely hard -- check the connector pins and any printed branding/text, which AI image generators frequently smear or duplicate at this zoom level.",
    "real": "content/media/image/hard/usb-drive-real.jpg",
    "fake": "content/media/image/hard/usb-drive-fake.jpg"
+  },
+  {
+   "id": "image/hard/waiting-room",
+   "tier": "hard",
+   "label": "Two people in a waiting room",
+   "note": "The seating doesn't hold together in the AI image: the bench, separate backrests and armrests merge into each other, and the man's crossed leg and the woman's feet sit at odd depths against the bench. Both devices are blank slabs with no visible screens, and the bright glass wall behind them is a washed-out blur with no structure.",
+   "real": "content/media/image/hard/waiting-room-real.jpg",
+   "fake": "content/media/image/hard/waiting-room-fake.jpg"
   }
  ]
 };
