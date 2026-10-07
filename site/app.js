@@ -302,7 +302,7 @@
     $$('.pick, .tile', stage).forEach((b) => b.classList.toggle('is-chosen', (b.dataset.pick || b.dataset.choice) === choice));
     const box = $('.pair, .answers', stage); if (box) box.classList.add('is-locked');
     const reduced = document.documentElement.dataset.motion === 'reduced';
-    const fx = !correct && choice && r.mode !== 'single' ? curStation().fakeEffect : '';
+    const fx = !correct && choice && (r.mode !== 'single' || r.answer === 'REAL') ? curStation().fakeEffect : '';
     if (fx && window.FX) {
       const tok = ++fxTok;
       state.advanceId = setTimeout(() => {
@@ -312,7 +312,7 @@
     }
     if (correct && window.FX) {
       const b = $('.pick.is-chosen, .tile.is-chosen', stage);
-      if (b) { const q = b.getBoundingClientRect(); FX.sparkle(q.left + q.width / 2, q.top + q.height / 2); }
+      if (b) { const q = b.getBoundingClientRect(); FX.sparkle(q.left + q.width / 2, q.top + q.height / 2, curStation().cinema ? { palette: ['#FFC24A', '#ffe29a', '#ffffff', '#EE133B'] } : undefined); }
     }
     state.advanceId = setTimeout(() => go('reveal'), reduced ? 120 : choice ? 420 : 250);
   }
@@ -321,6 +321,12 @@
 
   // What the "You got phished" screen says it stole, built from the email the player actually trusted.
   function takeoverCopy(fx, r) {
+    if (fx === 'real') {
+      const why = clean(r.weakness);
+      return { title: 'STRANGER<br>THAN FICTION', sub: 'You guessed a film. It really happened.', hold: 4800, gap: 520, firstLine: 800,
+        foot: 'Real incident. Tap anywhere to continue.',
+        lines: [{ t: `${r.reveal_title}, ${r.year}`, cls: 'bad' }, ...(why ? [{ t: why.length > 90 ? why.slice(0, 87).replace(/\s+\S*$/, '') + '...' : why }] : []), { t: 'Not a screenplay: a real report' }] };
+    }
     const fakeSlot = r.realSlot === 'A' ? 'B' : 'A', f = (r.items && r.items[fakeSlot]) || {};
     if (fx === 'ai') {
       const flags = (r.red_flags || []).slice(0, 2).map((t) => ({ t }));
@@ -402,6 +408,12 @@
   }
 
   const timerLabel = () => { const t = Number(S().timerSeconds) || 0; return t ? `${t}s` : 'Off'; };
+
+  // Reel or Real is a night at the pictures: every case is a ticket with a barcode strip on top.
+  const ticketBand = (extra = '') => {
+    const n = state.idx + 1;
+    return `<div class="ticket__band" aria-hidden="true"><b>Admit one</b><span>Screen ${n}</span><span>Row ${'ABCDEFGH'[state.idx % 8]}, seat ${String(n).padStart(2, '0')}</span>${extra}<i class="ticket__code"></i></div>`;
+  };
 
   const badgesHtml = (r) => {
     const d = diffOf(r), lvl = DIFFS.indexOf(d) + 1;
@@ -535,7 +547,8 @@
       return `<section class="screen" data-screen="round">
         ${bar({ now: true, timer: true, score: true })}
         <div class="round round--single">
-          <article class="case card fit">
+          <article class="case case--ticket card fit">
+            ${ticketBand()}
             <div class="badges">${badgesHtml(r)}</div>
             <p class="mono">${label}</p>
             <h1 class="case__title">${esc(r.label)}</h1>
@@ -543,10 +556,10 @@
           </article>
           <div class="answers" role="group" aria-label="Your answer">
             <button class="tile tile--reel" data-choice="REEL" aria-label="Reel: from a film (key 1)">
-              <kbd>1</kbd>${ICON.film}<span class="tile__word">Reel</span><span class="tile__sub">Straight from a film</span>
+              <kbd>1</kbd><span class="tile__stub" aria-hidden="true">Stub Nº ${String(state.idx + 1).padStart(4, '0')}</span>${ICON.film}<span class="tile__word">Reel</span><span class="tile__sub">Straight from a film</span>
             </button>
             <button class="tile tile--real" data-choice="REAL" aria-label="Real: it really happened (key 2)">
-              <kbd>2</kbd>${ICON.file}<span class="tile__word">Real</span><span class="tile__sub">It really happened</span>
+              <kbd>2</kbd><span class="tile__stub" aria-hidden="true">Stub Nº ${String(state.idx + 1).padStart(4, '0')}</span>${ICON.file}<span class="tile__word">Real</span><span class="tile__sub">It really happened</span>
               <span class="redact" aria-hidden="true"><i></i><i></i></span>
               <span class="declass" aria-hidden="true">Declassified</span>
               <span class="scan" aria-hidden="true"></span>
@@ -578,9 +591,10 @@
       let verdict;
       if (single) {
         const src = isReal && s.showSourcesOnReveal && r.sources.filter(clean).length ? `<p class="sources">Source: ${esc(r.sources.filter(clean)[0])}</p>` : '';
-        verdict = `<article class="verdict card fit">
+        verdict = `<article class="verdict verdict--ticket verdict--${isReal ? 'real' : 'reel'} card fit">
+            ${ticketBand()}
             <p class="mono">${isReal ? 'A real incident' : 'From the movies'}</p>
-            <div class="stamp ${isReal ? 'stamp--real' : 'stamp--reel'}">${isReal ? 'Real' : 'Reel'}</div>
+            <div class="stamp ${isReal ? 'stamp--real' : 'stamp--reel'}">${isReal ? 'Real' : 'Reel'}<small>${isReal ? 'Based on a true story' : 'Pure fiction'}</small></div>
             <h2 class="verdict__title">${esc(r.reveal_title)} <span class="yr">${esc(r.year)}</span></h2>
             ${clean(r.weakness) ? `<p class="verdict__why"><span class="mono">Why it worked</span>${esc(r.weakness)}</p>` : ''}
             ${src}
@@ -856,14 +870,18 @@
     const score = earned(), totalPts = maxScore(), ratio = totalPts ? score / totalPts : 0;
     const reduced = document.documentElement.dataset.motion === 'reduced';
     const perfect = totalPts > 0 && score >= totalPts;
-    if (perfect && card) card.insertAdjacentHTML('afterbegin', '<p class="perfect">Perfect score</p>');
+    const cinema = !!curStation().cinema;
+    if (perfect && card) card.insertAdjacentHTML('afterbegin', `<p class="perfect">${cinema ? 'Best picture' : 'Perfect score'}</p>`);
+    const curtains = perfect && cinema && !reduced && window.FX;
+    if (curtains) FX.curtains();
     const done = () => {
       if (!window.FX || state.screen !== 'final') return;
       if (ratio >= 0.85) FX.fireworks({ perfect });
       else if (ratio >= 0.6) FX.confetti();
     };
     if (!el || reduced || score === 0) { if (!reduced) setTimeout(done, 300); return; }
-    const t0 = performance.now(), dur = Math.min(1500, 500 + score * 12), tok = ++fxTok;
+    const t0Delay = curtains ? 1500 : 0;
+    const t0 = performance.now() + t0Delay, dur = Math.min(1500, 500 + score * 12), tok = ++fxTok;
     const tick = (now) => {
       if (tok !== fxTok || state.screen !== 'final' || !el.isConnected) return;
       const k = Math.min(1, (now - t0) / dur);
@@ -871,7 +889,7 @@
       if (k < 1) requestAnimationFrame(tick); else { card && card.classList.add('score--landed'); done(); }
     };
     el.textContent = '0';
-    requestAnimationFrame(tick);
+    if (curtains) setTimeout(() => requestAnimationFrame(tick), 1500); else requestAnimationFrame(tick);
   }
 
   function countdown(secs, label, done) {

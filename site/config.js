@@ -89,19 +89,21 @@ window.CONFIG = {
       icon: "film",
       tag: "Film or fact",
       title: "Reel or Real?",
-      sub: "Film plot or real cyber incident?",
+      sub: "Is it a plot twist or a press release?",
       question: "Film plot or real incident?",
       gameMix: { easy: 5, medium: 2, hard: 1 },
+      cinema: true,                   // ticket-stub styling, gold sparkles, curtains on a perfect score
+      fakeEffect: "real",             // guessing "film" for a real incident plays "Stranger than fiction"
       bankLabel: "Reel or Real bank",
       alwaysShowPolicy: true,
       policyLabel: "What policy, if implemented, could have fixed this?",
       policyPlaceholder: "Policy name goes here",
       defaultPolicy: "",              // one policy for every case, or leave "" and fill in each case
       ratings: [
-        { min: 0.85, name: "Reelity Check Master", line: "You can tell the screenplay from the security report. Share what you know with a colleague." },
-        { min: 0.60, name: "Threat Spotter",       line: "Sharp instincts. A few plot twists got you; the Control Shields are worth another look." },
-        { min: 0.35, name: "Plot Detective",       line: "You're getting warmer. Play again and see which clues tip you off." },
-        { min: 0.00, name: "Plot Twist",           line: "The best way to learn is to be surprised. Try another set; the lessons stick." }
+        { min: 0.85, name: "Best Director",           line: "You can tell the screenplay from the security report. Share what you know with a colleague." },
+        { min: 0.60, name: "Box Office Hit",          line: "Sharp instincts. A few plot twists got you; the Control Shields are worth another look." },
+        { min: 0.35, name: "Straight to Streaming",   line: "Not bad for a first run. Play again and see which clues tip you off." },
+        { min: 0.00, name: "Cut From The Final Edit", line: "The best way to learn is to be surprised. Try another set; the lessons stick." }
       ]
     }
   ],

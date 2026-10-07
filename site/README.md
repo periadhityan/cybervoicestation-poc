@@ -30,6 +30,11 @@ All in `effects.js`, no extra files:
 - **"You got phished"** takes over the screen when a player picks the phishing email. The fake terminal lists what
   *that* fake email would have done (its real domain, link, QR code or attachment). Picking the AI photo gets a milder "Fooled by AI".
   Tap, or press Enter, to skip; it moves on by itself after about 5 seconds. Turn it off per station by deleting `fakeEffect` in `config.js`.
+- **Reel or Real is a night at the pictures**: every case is a cinema ticket (barcode, screen, row and seat), the answers are
+  the Reel and Real stubs, and the verdict is stamped "Based on a true story" or "Pure fiction". Guessing "film" for a real incident
+  plays **"Stranger than fiction"** with the real case typed out. A perfect run opens red velvet curtains and shows **"Best picture"**.
+  The ratings are Best Director, Box Office Hit, Straight to Streaming and Cut From The Final Edit (all editable in `config.js`;
+  the station's `cinema: true` switches the look on).
 - Sparkles on a correct answer, a flame chip for 3 right in a row, and the score counting up.
 - Staff panel: **Animations Off** replaces everything with still versions (use it if anyone is sensitive to motion; it is also
   switched on automatically when the computer asks for reduced motion). **Sound effects** (off by default) adds synthesised

@@ -770,3 +770,54 @@ video.mini__media { object-fit: contain; }
 .takeover--still, .takeover--still *, .takeover--still::after { animation: none !important; }
 .takeover--still::after, .takeover--still .takeover__scan::after { display: none; }
 .takeover--still .takeover__title::before, .takeover--still .takeover__title::after { display: none; }
+
+/* ===================================================================== Reel or Real: the cinema ticket */
+.ticket__band {
+  position: relative; display: flex; align-items: center; gap: 2.4rem; flex: none;
+  margin: -3.25rem -3.75rem 2.2rem; padding: 1.1rem 3.75rem;
+  background: var(--red-press); color: #fff;
+  font-family: var(--mono); font-size: 1.5rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; white-space: nowrap;
+}
+.ticket__band b { font-weight: 900; letter-spacing: .26em; }
+.ticket__band::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; border-bottom: .3rem dashed rgba(255, 255, 255, .45); }
+.ticket__code {
+  margin-left: auto; width: 15rem; height: 2.6rem; opacity: .9;
+  background: repeating-linear-gradient(90deg, #fff 0 .2rem, transparent .2rem .5rem, #fff .5rem .9rem, transparent .9rem 1.1rem, #fff 1.1rem 1.2rem, transparent 1.2rem 1.7rem, #fff 1.7rem 2rem, transparent 2rem 2.4rem);
+}
+/* The tear-off edge: a perforated line with a bite out of the top and bottom corners. */
+.case--ticket::before { content: ""; position: absolute; right: 0; top: 7rem; bottom: 2rem; border-right: .35rem dashed var(--line); pointer-events: none; }
+.case--ticket::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(circle 1.7rem at 100% 0, var(--bg) 98%, transparent 100%), radial-gradient(circle 1.7rem at 100% 100%, var(--bg) 98%, transparent 100%);
+}
+.case--ticket { position: relative; }
+.round--single { gap: 2.2rem; }
+.tile__stub { position: absolute; left: 4.25rem; top: 1.9rem; font-family: var(--mono); font-size: 1.3rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; opacity: .65; }
+
+/* On the answer screen the ticket's band is charcoal for a film and red for a true story. */
+.verdict--ticket { position: relative; }
+.verdict--ticket .ticket__band { margin: -1.75rem -2.5rem 1.3rem; padding: .85rem 2.5rem; gap: 1.6rem; font-size: 1.3rem; }
+.verdict--ticket .ticket__code { width: 9rem; height: 2.2rem; }
+.verdict--reel .ticket__band { background: var(--reel); }
+.stamp small { display: block; margin-top: .5rem; font-size: 1.4rem; font-weight: 800; letter-spacing: .16em; }
+.stamp { padding-bottom: .5rem; }
+
+/* Best picture: red velvet curtains part over the score. */
+.curtains { position: fixed; inset: 0; z-index: 950; pointer-events: none; overflow: hidden; }
+.curtains i { position: absolute; top: 0; bottom: 0; width: 50.6%; will-change: transform;
+  background:
+    linear-gradient(0deg, rgba(0, 0, 0, .45), transparent 28%, transparent 80%, rgba(0, 0, 0, .35)),
+    repeating-linear-gradient(90deg, #5c0816 0 3.4rem, #a30f2b 3.4rem 7.2rem, #7d0b21 7.2rem 9.6rem, #5c0816 9.6rem 11rem);
+}
+.curtains__l { left: 0; border-right: .5rem solid #FFC24A; animation: curtainL 1.5s cubic-bezier(.65, 0, .3, 1) .75s both; }
+.curtains__r { right: 0; border-left: .5rem solid #FFC24A; animation: curtainR 1.5s cubic-bezier(.65, 0, .3, 1) .75s both; }
+@keyframes curtainL { to { transform: translateX(-104%); } }
+@keyframes curtainR { to { transform: translateX(104%); } }
+
+/* "Stranger than fiction": gold on a dark house, and a smaller headline because it is longer. */
+.takeover--real { --tk: #FFC24A; --tk-deep: #2e1d02; --tk-bg: #0e0802; --tk-glow: rgba(255, 194, 74, .5); }
+.takeover--real .takeover__title { font-size: 12rem; line-height: .95; }
+/* The stamp already says it, so the ticket verdict drops the small label above it and tightens up. */
+.verdict--ticket > .mono { display: none; }
+.verdict--ticket .stamp { font-size: 4.2rem; margin: .6rem 0 1rem .6rem; }
+.verdict--ticket .stamp small { font-size: 1.25rem; margin-top: .3rem; }

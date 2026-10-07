@@ -267,6 +267,7 @@
   let cancelTakeover = null;
   function stop() {
     if (cancelTakeover) cancelTakeover();
+    doc.querySelectorAll('.curtains').forEach((n) => n.remove());
     timers.forEach(clearTimeout); timers = [];
     parts = []; rockets = []; flashes = []; confetti = []; scrimTarget = 0; scrim = 0;
     if (canvas && ctx) ctx.clearRect(0, 0, W, H);
@@ -317,7 +318,7 @@
       rain.width = innerWidth; rain.height = innerHeight;
       const cols = Math.ceil(innerWidth / fs), drops = Array.from({ length: cols }, () => rnd(-30, 0));
       const chars = phish ? '01ABCDEF$#@%&{}<>/\\+=' : '01░▒▓';
-      const col = phish ? '255,45,85' : '34,211,238';
+      const col = { phish: '255,45,85', real: '255,194,74' }[theme] || '34,211,238';
       rainTimer = setInterval(() => {
         rc.fillStyle = 'rgba(8,2,5,.16)'; rc.fillRect(0, 0, rain.width, rain.height);
         rc.font = `${fs}px ui-monospace, Menlo, monospace`;
@@ -356,6 +357,17 @@
     });
   }
 
-  const FX = { fireworks, confetti: confettiBurst, sparkle, takeover, stop, sfx, soundEnabled: false, reduced };
+  // Red velvet curtains that part to reveal the score (a perfect run at the cinema station).
+  function curtains() {
+    if (reduced()) return;
+    const el = doc.createElement('div');
+    el.className = 'curtains'; el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = '<i class="curtains__l"></i><i class="curtains__r"></i>';
+    doc.body.appendChild(el);
+    sfx.fanfare();
+    setTimeout(() => el.remove(), 3400);
+  }
+
+  const FX = { curtains, fireworks, confetti: confettiBurst, sparkle, takeover, stop, sfx, soundEnabled: false, reduced };
   window.FX = FX;
 })();
