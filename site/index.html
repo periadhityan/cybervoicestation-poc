@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-motion="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Real or Fake? | Cyber Awareness</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="viewport">
+    <main id="stage" class="stage" tabindex="-1"></main>
+  </div>
+
+  <!-- Screen-reader announcements -->
+  <div id="sr" class="sr-only" role="status" aria-live="assertive"></div>
+
+  <!-- Staff panel (Shift+S, or press and hold the top-left label) -->
+  <div id="staff" class="staff" role="dialog" aria-modal="true" aria-label="Staff settings" hidden></div>
+
+  <!-- Photo zoom -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged photo" hidden>
+    <img alt="">
+    <button class="lightbox__close" aria-label="Close enlarged photo">Close</button>
+  </div>
+
+  <noscript><p style="padding:2rem;font:24px system-ui">This game needs JavaScript turned on.</p></noscript>
+
+  <script src="config.js"></script>
+  <script src="content/content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

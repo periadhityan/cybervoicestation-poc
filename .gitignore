@@ -25,6 +25,13 @@ env/
 deploy/aws/config.env
 deploy/aws/.env
 
+# --- Standalone "Real or Fake?" site (site/) build output ---
+# site/content/media/ is a generated copy of the video/photo files and dist/ holds the
+# zip / single-file builds -- both come from scripts/build_static_site.py, so neither
+# belongs in git. site/content/content.js (small, text) is kept so the folder opens as-is.
+site/content/media/
+dist/
+
 # --- Game content media (audio/video/image) ---
 # Real/fake round pairs live under app/static/content/ and are served either
 # from the local filesystem (native/mini-PC) or synced to S3 for the AWS

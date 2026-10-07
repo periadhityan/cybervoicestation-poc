@@ -61,6 +61,15 @@ so setup and deployment are both fast.
 
 ---
 
+## Standalone version (no install, no server)
+
+`site/` is a self-contained, double-click-to-open version with three of the games (phishing email,
+deepfake video, deepfake photo) in the Singtel booth design -- built to be sent to a company computer
+that has nothing installed. Build it, zip it, or flatten it to one file with
+`python3 scripts/build_static_site.py [--zip] [--single-file]`; see **[site/README.md](./site/README.md)**.
+
+---
+
 ## Run it natively
 
 Platform-specific launcher scripts live under `native/` -- `native/mac/` for
