@@ -42,8 +42,10 @@ OUT_CONTENT = SITE / "content"
 MEDIA_OUT = OUT_CONTENT / "media"
 DIST = ROOT / "dist"
 
+# Which content folders go into the site. The deepfake-video game is parked for now; to bring it back,
+# add "video" here AND put its station block back into site/config.js (see git history for the block).
 TIERS = ("easy", "medium", "hard")
-MODALITIES = ("email", "video", "image")
+MODALITIES = ("email", "image")
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp"}
 
 # Reuse the Flask app's own pair discovery so both builds always agree on what a

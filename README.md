@@ -63,9 +63,9 @@ so setup and deployment are both fast.
 
 ## Standalone version (no install, no server)
 
-`site/` is a self-contained, double-click-to-open version with four stations (phishing email,
-deepfake video, deepfake photo, and Reel or Real?) in the Singtel booth design -- built to be sent to a
-company computer that has nothing installed. Build it, zip it, or flatten it to one file with
+`site/` is a self-contained, double-click-to-open version with three stations (phishing email,
+deepfake photo, and Reel or Real?) in the Singtel booth design -- built to be sent to a company
+computer that has nothing installed. Build it, zip it, or flatten it to one file with
 `python3 scripts/build_static_site.py [--zip] [--single-file]`; see **[site/README.md](./site/README.md)**.
 
 ---

@@ -100,6 +100,17 @@
     return window.CONTENT && Array.isArray(window.CONTENT[key]) ? window.CONTENT[key] : [];
   }
   const isPlaceholder = (r) => /placeholder/i.test(r.label || '');
+  // Reel or Real's bank lists every case (even hidden ones, greyed out); a photo bank lists every pair.
+  const bankCount = (st) => (st.mode === 'single' ? REEL.length : poolOf(st.key).length);
+  function openBank(key) {
+    state.bankShow = false;
+    state.bankKey = key;
+    if (isSingle(key)) return go('bank');
+    const rank = (r) => DIFFS.indexOf(diffOf(r));
+    state.bankOrder = poolOf(key).slice().sort((a, b) => rank(a) - rank(b) || String(a.label).localeCompare(String(b.label)))
+      .map((r) => ({ r, realSide: Math.random() < 0.5 ? 'A' : 'B' }));
+    go('pbank');
+  }
 
   /* ------------------------------------------------------------------ validation */
   function validate() {
@@ -247,12 +258,18 @@
   }
   function hydrateMedia() {
     const r = cur();
-    if (!r || !r.items) return;
-    $$('[data-media]', stage).forEach((el) => { el.src = mediaSrc(r.items[el.dataset.media]); });
+    if (r && r.items) $$('[data-media]', stage).forEach((el) => { el.src = mediaSrc(r.items[el.dataset.media]); });
+    // Photo bank thumbnails: "<pair index>:<A|B>"; the real photo sits on a random side per pair.
+    $$('[data-bank]', stage).forEach((el) => {
+      const [i, side] = el.dataset.bank.split(':');
+      const e = state.bankOrder[Number(i)];
+      if (e) el.src = mediaSrc(e.r[e.realSide === side ? 'real' : 'fake']);
+    });
   }
+  const bankSrc = (idx, side) => { const e = state.bankOrder[Number(idx)]; return e ? mediaSrc(e.r[e.realSide === side ? 'real' : 'fake']) : ''; }
 
   /* ------------------------------------------------------------------ state */
-  const state = { screen: 'hub', station: null, rounds: [], points: [], idx: 0, results: [], locked: false, deadline: 0, timerId: 0, advanceId: 0, teaserId: 0, lastActive: Date.now(), errors: [], bankShow: false };
+  const state = { screen: 'hub', station: null, rounds: [], points: [], idx: 0, results: [], locked: false, deadline: 0, timerId: 0, advanceId: 0, teaserId: 0, lastActive: Date.now(), errors: [], bankShow: false, bankKey: null, bankOrder: [] };
   const cur = () => state.rounds[state.idx];
   const total = () => state.rounds.length;
   const curStation = () => stationCfg(state.station) || {};
@@ -298,7 +315,7 @@
     go('final');
   }
 
-  function toHub() { state.station = null; state.rounds = []; state.results = []; state.idx = 0; state.locked = false; go('hub'); }
+  function toHub() { state.station = null; state.rounds = []; state.results = []; state.idx = 0; state.locked = false; state.bankKey = null; state.bankOrder = []; go('hub'); }
 
   /* ------------------------------------------------------------------ timer */
   function startTimer() {
@@ -419,8 +436,7 @@
           <span class="station__go">${n ? `Play ${ICON.arrow}` : 'Coming soon'}</span>
         </button>`;
       }).join('');
-      const reelKey = reelStationKey();
-      const bank = reelKey && REEL.length ? `<button class="ghost" data-action="bank">${ICON.list}<span>Question bank</span><b>${REEL.length}</b></button>` : '';
+      const bank = stations().filter((st) => st.bankLabel && bankCount(st)).map((st) => `<button class="ghost" data-action="bank" data-station="${esc(st.key)}">${ICON.list}<span>${esc(st.bankLabel)}</span><b>${bankCount(st)}</b></button>`).join('');
       return `<section class="screen attract" data-screen="hub">
         ${brand()}
         <h1 class="attract__title" aria-label="${esc(s.title)}">${title}</h1>
@@ -604,9 +620,45 @@
             <div><h1 class="bank__title">Question bank</h1>
               <p class="bank__sum">Reel or Real? &nbsp;·&nbsp; ${all.length} questions &nbsp;·&nbsp; ${count((r) => r.answer === 'REEL')} Reel, ${count((r) => r.answer === 'REAL')} Real &nbsp;·&nbsp; ${DIFFS.map((d) => `${count((r) => diffOf(r) === d)} ${d}`).join(', ')}</p></div>
             <button class="ghost" data-action="bank-toggle" aria-pressed="${show}">${show ? 'Hide answers' : 'Show answers'}</button>
-            <button class="cta" data-action="station" data-station="${esc(reelStationKey())}" data-autofocus>Play ${ICON.arrow}</button>
+            <button class="cta" data-action="station" data-station="${esc(state.bankKey || reelStationKey())}" data-autofocus>Play ${ICON.arrow}</button>
           </div>
           <ol class="bank__list">${items}</ol>
+        </div>
+      </section>`;
+    },
+
+    // Photo bank: every photo pair, answers hidden until "Show answers".
+    pbank() {
+      const st = stationCfg(state.bankKey) || {}, pts = basePoints(), show = state.bankShow;
+      const noun = cap(st.noun || 'photo');
+      const items = state.bankOrder;
+      const count = (d) => items.filter((e) => diffOf(e.r) === d).length;
+      const cards = items.map(({ r, realSide }, i) => {
+        const d = diffOf(r);
+        const thumb = (side) => {
+          const real = side === realSide;
+          return `<button class="qp__thumb" data-bank-zoom="${i}:${side}" aria-label="Enlarge ${noun} ${side}: ${esc(r.label)}">
+            <img data-bank="${i}:${side}" alt="${noun} ${side}: ${esc(r.label)}${show ? (real ? ', the real one' : ', the fake') : ''}" loading="lazy" decoding="async" draggable="false">
+            <span class="qp__side">${side}</span>${show ? `<span class="tag tag--${real ? 'real' : 'fake'} qp__tag">${real ? 'Real' : 'Fake'}</span>` : ''}
+          </button>`;
+        };
+        return `<li class="qb qp">
+          <div class="qb__top"><span class="qb__num">${i + 1}</span><span class="chip chip--${d}">${cap(d)} · ${pts[d]} pts</span></div>
+          <p class="qb__title">${esc(r.label)}</p>
+          <div class="qp__thumbs">${thumb('A')}${thumb('B')}</div>
+          ${show ? `<p class="qp__note"><span class="mono">What gave it away</span>${esc(r.note)}</p>` : ''}
+        </li>`;
+      }).join('');
+      return `<section class="screen" data-screen="pbank">
+        ${bar({ pips: false })}
+        <div class="bank">
+          <div class="bank__head">
+            <div><h1 class="bank__title">${esc(st.bankLabel || 'Photo bank')}</h1>
+              <p class="bank__sum">${items.length} photo pairs &nbsp;·&nbsp; ${DIFFS.map((d) => `${count(d)} ${d}`).join(', ')} &nbsp;·&nbsp; one of each pair is AI-generated. Tap a photo to enlarge it.</p></div>
+            <button class="ghost" data-action="bank-toggle" aria-pressed="${show}">${show ? 'Hide answers' : 'Show answers'}</button>
+            <button class="cta" data-action="station" data-station="${esc(state.bankKey)}" data-autofocus>Play ${ICON.arrow}</button>
+          </div>
+          <ol class="bank__list bank__list--pairs">${cards}</ol>
         </div>
       </section>`;
     },
@@ -697,9 +749,13 @@
   let lastFocus = null;
   function openZoom(slot) {
     const r = cur(); if (!r || !r.items) return;
+    openZoomSrc(mediaSrc(r.items[slot]), `${cap((curStation().noun) || 'photo')} ${slot}, enlarged`);
+  }
+  function openZoomSrc(src, alt) {
+    if (!src) return;
     const img = $('img', lightbox);
-    img.src = mediaSrc(r.items[slot]);
-    img.alt = `${cap((curStation().noun) || 'photo')} ${slot}, enlarged`;
+    img.src = src;
+    img.alt = alt;
     lastFocus = document.activeElement;
     lightbox.hidden = false;
     const close = $('.lightbox__close', lightbox); if (close) close.focus({ preventScroll: true });
@@ -709,16 +765,17 @@
 
   /* ------------------------------------------------------------------ input */
   stage.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-pick], [data-choice], [data-zoom], [data-action]');
+    const t = e.target.closest('[data-pick], [data-choice], [data-zoom], [data-bank-zoom], [data-action]');
     if (!t) return;
     if (t.dataset.pick) answer(t.dataset.pick);
     else if (t.dataset.choice) answer(t.dataset.choice);
     else if (t.dataset.zoom) openZoom(t.dataset.zoom);
+    else if (t.dataset.bankZoom) { const [i, side] = t.dataset.bankZoom.split(':'); openZoomSrc(bankSrc(i, side), `Photo ${side}, enlarged`); }
     else if (t.dataset.action === 'station') startGame(t.dataset.station);
     else if (t.dataset.action === 'again') startGame(state.station);
     else if (t.dataset.action === 'next') next();
     else if (t.dataset.action === 'home') toHub();
-    else if (t.dataset.action === 'bank') { state.bankShow = false; go('bank'); }
+    else if (t.dataset.action === 'bank') openBank(t.dataset.station);
     else if (t.dataset.action === 'bank-toggle') { const y = ($('.bank__list', stage) || {}).scrollTop || 0; state.bankShow = !state.bankShow; render(); const l = $('.bank__list', stage); if (l) l.scrollTop = y; }
     else if (t.dataset.action === 'timer-up' || t.dataset.action === 'timer-down') stepTimer(t.dataset.action === 'timer-up' ? 1 : -1);
   });
@@ -750,7 +807,7 @@
       if (k === '1') answer(single ? 'REEL' : 'A'); else if (k === '2') answer(single ? 'REAL' : 'B');
       return;
     }
-    if (state.screen === 'bank') return;
+    if (state.screen === 'bank' || state.screen === 'pbank') return;
     if (k === 'Enter' || k === ' ') {
       const a = document.activeElement;
       if (a && a !== document.body && a !== stage && a.matches('button, video, input')) return; // native control handles it

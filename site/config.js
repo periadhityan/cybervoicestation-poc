@@ -4,13 +4,13 @@
  * "Cyber Awareness" label in the top-left corner for 1.5 seconds.
  *
  * The rounds themselves are NOT here:
- *   - Spot the Phish / Deepfake / Fake Shot: content/content.js, which
+ *   - Spot the Phish / Snapshot or Fake Shot: content/content.js, which
  *     scripts/build_static_site.py generates from app/static/content/.
  *   - Reel or Real?: reel-or-real/rounds.js (plus your own in reel-or-real/add-questions.js).
  */
 window.CONFIG = {
   title: "Pause. Think. Report.",
-  subtitle: "Four quick stations. Can you tell what's real?",
+  subtitle: "Three quick stations. Can you tell what's real?",
   tagline: "Pause. Think. Report.",
   eyebrow: "Cyber Awareness",          // small label top-left; "" to hide
   logoSrc: "assets/singtel-logo.svg",   // logo shown top-left on every screen; "" to hide
@@ -41,7 +41,7 @@ window.CONFIG = {
   theme: "light",                  // * "light" | "dark" | "auto"
   reducedMotion: false,            // * turn off animations
 
-  /* The four stations. Edit the wording freely; keep each `key` as it is
+  /* The three stations. Edit the wording freely; keep each `key` as it is
    * (it must match a folder name under app/static/content/). */
   stations: [
     {
@@ -59,20 +59,6 @@ window.CONFIG = {
       }
     },
     {
-      key: "video",
-      icon: "video",
-      tag: "Video",
-      title: "Deepfake or Real Take?",
-      sub: "Two clips. One is a deepfake.",
-      noun: "video",
-      fakeNoun: "deepfake",
-      question: "Which video is the real footage?",
-      shield: {
-        takeaway: "Seeing is no longer believing.",
-        todo: "Treat urgent requests as suspect even on video. Confirm through a separate channel you already trust."
-      }
-    },
-    {
       key: "image",
       icon: "image",
       tag: "Photo",
@@ -81,6 +67,7 @@ window.CONFIG = {
       noun: "photo",
       fakeNoun: "AI-generated photo",
       question: "Which photo is the real one?",
+      bankLabel: "Photo bank",         // adds a button on the home screen that lists every photo pair
       shield: {
         takeaway: "A photo is not proof of what happened.",
         todo: "Zoom in on hands, text and reflections. If a photo is part of a request you didn't expect, check it another way first."
@@ -96,6 +83,7 @@ window.CONFIG = {
       sub: "Film plot or real cyber incident?",
       question: "Film plot or real incident?",
       gameMix: { easy: 5, medium: 2, hard: 1 },
+      bankLabel: "Reel or Real bank",
       ratings: [
         { min: 0.85, name: "Reelity Check Master", line: "You can tell the screenplay from the security report. Share what you know with a colleague." },
         { min: 0.60, name: "Threat Spotter",       line: "Sharp instincts. A few plot twists got you; the Control Shields are worth another look." },
