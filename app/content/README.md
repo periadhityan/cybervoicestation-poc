@@ -147,7 +147,9 @@ cd ~/Repos/CyberVoiceStation
 python scripts/generate_placeholder_content.py
 ```
 
-This rebuilds the video/image placeholder content and `notes.json`
+**Careful: this overwrites each tier's `notes.json`**, including any labels and "what gave it away"
+notes you've written by hand (the photo game's are hand-written now). Only run it on a tier you
+are happy to reset. It rebuilds the video/image placeholder content and `notes.json`
 files from scratch (it doesn't touch `email/`, which ships hand-written
 example content instead of a synthetic placeholder -- see "The email
 game's content format" above). It only ever touches its own

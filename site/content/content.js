@@ -230,48 +230,48 @@ window.CONTENT = {
   {
    "id": "image/easy/handshake",
    "tier": "easy",
-   "label": "Handshake",
-   "note": "Look again -- lighting, hands, or background detail often gives a synthetic image away.",
+   "label": "A business handshake",
+   "note": "The real photo is a candid close-up: natural soft blur, and the paper on the desk has real lines of text. The AI version is a glossy portrait with a generic blurred skyline, and the clasped hands look small and soft next to the sharp faces and suits.",
    "real": "content/media/image/easy/handshake-real.jpg",
    "fake": "content/media/image/easy/handshake-fake.jpg"
   },
   {
    "id": "image/easy/laptop-typing",
    "tier": "easy",
-   "label": "Laptop typing",
-   "note": "Look again -- lighting, hands, or background detail often gives a synthetic image away.",
+   "label": "Typing on a laptop",
+   "note": "Check the keyboard. On the real laptop every key legend is crisp and the layout is consistent. On the AI laptop the key labels dissolve into smudges, and the screen reflects a keyboard and fingers that don't match what is in front of it.",
    "real": "content/media/image/easy/laptop-typing-real.jpg",
    "fake": "content/media/image/easy/laptop-typing-fake.jpg"
   },
   {
    "id": "image/easy/meeting-room",
    "tier": "easy",
-   "label": "Meeting room",
-   "note": "Look again -- lighting, hands, or background detail often gives a synthetic image away.",
+   "label": "An empty meeting room",
+   "note": "The real room is full of consistent, believable detail: ceiling grid and vents, a desk phone, and a frosted-glass pattern that repeats properly. The AI room is oddly clean and symmetrical, the ceiling light is a thin cross hanging from nothing, and the chairs don't quite match each other.",
    "real": "content/media/image/easy/meeting-room-real.jpg",
    "fake": "content/media/image/easy/meeting-room-fake.jpg"
   },
   {
    "id": "image/easy/phone-call",
    "tier": "easy",
-   "label": "Phone call",
-   "note": "Look again -- lighting, hands, or background detail often gives a synthetic image away.",
+   "label": "Taking a phone call at a desk",
+   "note": "The real photo is an unposed moment with messy, specific detail: sticky notes, a mug, paper trays and real icons on the monitor. The AI executive is stock-photo perfect, with flawless lighting, a generic skyline, and a chart and notebook that look right from a distance but say nothing up close.",
    "real": "content/media/image/easy/phone-call-real.jpg",
    "fake": "content/media/image/easy/phone-call-fake.jpg"
   },
   {
    "id": "image/easy/server-room",
    "tier": "easy",
-   "label": "Server room",
-   "note": "Look again -- lighting, hands, or background detail often gives a synthetic image away.",
+   "label": "Server racks",
+   "note": "The real shot is a soft close-up of one server with a few green status lights. The AI racks are packed with detail that doesn't hold up: cables that loop and tangle without clearly ending at a port, tiny screens and labels with no readable text, and units that don't line up.",
    "real": "content/media/image/easy/server-room-real.jpg",
    "fake": "content/media/image/easy/server-room-fake.jpg"
   },
   {
    "id": "image/easy/video-call",
    "tier": "easy",
-   "label": "Video call",
-   "note": "Look again -- lighting, hands, or background detail often gives a synthetic image away.",
+   "label": "A video call on a laptop",
+   "note": "The real photo shows a slightly blurry, awkward call, which is how video calls actually look. In the AI image the laptop is turned so its screen faces the camera rather than the person using it, and the call tiles are tiny and warped, with a stray white shape over the man in the bottom tile.",
    "real": "content/media/image/easy/video-call-real.jpg",
    "fake": "content/media/image/easy/video-call-fake.jpg"
   },

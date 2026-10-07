@@ -1,26 +1,26 @@
 {
-  "easy-1": {
-    "subject_label": "PLACEHOLDER EASY 1 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- easy tier. Replace before the event -- see app/content/README.md."
+  "handshake": {
+    "subject_label": "A business handshake",
+    "reveal_note": "The real photo is a candid close-up: natural soft blur, and the paper on the desk has real lines of text. The AI version is a glossy portrait with a generic blurred skyline, and the clasped hands look small and soft next to the sharp faces and suits."
   },
-  "easy-2": {
-    "subject_label": "PLACEHOLDER EASY 2 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- easy tier. Replace before the event -- see app/content/README.md."
+  "laptop-typing": {
+    "subject_label": "Typing on a laptop",
+    "reveal_note": "Check the keyboard. On the real laptop every key legend is crisp and the layout is consistent. On the AI laptop the key labels dissolve into smudges, and the screen reflects a keyboard and fingers that don't match what is in front of it."
   },
-  "easy-3": {
-    "subject_label": "PLACEHOLDER EASY 3 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- easy tier. Replace before the event -- see app/content/README.md."
+  "meeting-room": {
+    "subject_label": "An empty meeting room",
+    "reveal_note": "The real room is full of consistent, believable detail: ceiling grid and vents, a desk phone, and a frosted-glass pattern that repeats properly. The AI room is oddly clean and symmetrical, the ceiling light is a thin cross hanging from nothing, and the chairs don't quite match each other."
   },
-  "easy-4": {
-    "subject_label": "PLACEHOLDER EASY 4 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- easy tier. Replace before the event -- see app/content/README.md."
+  "phone-call": {
+    "subject_label": "Taking a phone call at a desk",
+    "reveal_note": "The real photo is an unposed moment with messy, specific detail: sticky notes, a mug, paper trays and real icons on the monitor. The AI executive is stock-photo perfect, with flawless lighting, a generic skyline, and a chart and notebook that look right from a distance but say nothing up close."
   },
-  "easy-5": {
-    "subject_label": "PLACEHOLDER EASY 5 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- easy tier. Replace before the event -- see app/content/README.md."
+  "server-room": {
+    "subject_label": "Server racks",
+    "reveal_note": "The real shot is a soft close-up of one server with a few green status lights. The AI racks are packed with detail that doesn't hold up: cables that loop and tangle without clearly ending at a port, tiny screens and labels with no readable text, and units that don't line up."
   },
-  "easy-6": {
-    "subject_label": "PLACEHOLDER EASY 6 -- replace before event",
-    "reveal_note": "Placeholder solid-color stills, not photos -- easy tier. Replace before the event -- see app/content/README.md."
+  "video-call": {
+    "subject_label": "A video call on a laptop",
+    "reveal_note": "The real photo shows a slightly blurry, awkward call, which is how video calls actually look. In the AI image the laptop is turned so its screen faces the camera rather than the person using it, and the call tiles are tiny and warped, with a stray white shape over the man in the bottom tile."
   }
 }
