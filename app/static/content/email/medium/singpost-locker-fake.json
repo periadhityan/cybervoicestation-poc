@@ -1,0 +1,18 @@
+{
+  "from_name": "SingPost Notice",
+  "from_email": "popstation@singpost-collect.top",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Parcel on hold: unpaid $2.40 delivery fee - scan to pay now",
+  "date": "Sat, Oct 3, 2026 11:04 AM",
+  "body": "Dear customer,\n\nYour parcel SP48213390SG is ON HOLD because a delivery fee of $2.40 is unpaid.\n\nScan the QR code below to pay now. Parcels not paid within 12 HOURS are returned to sender.",
+  "banner": "assets/singpost-locker-fake-banner.svg",
+  "qr": {
+    "src": "assets/singpost-locker-fake-qr.svg",
+    "caption": "Scan to pay $2.40",
+    "alt": "A QR code"
+  },
+  "landing": {
+    "src": "assets/singpost-locker-fake-landing.svg",
+    "alt": "A fake payment page on singpost-collect.top asking for card details"
+  }
+}

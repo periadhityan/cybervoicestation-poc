@@ -1,0 +1,14 @@
+{
+  "from_name": "Meridian Learning",
+  "from_email": "learning@meridianfreight.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Reminder: complete Data Protection training by 16 Oct",
+  "date": "Wed, Oct 7, 2026 9:00 AM",
+  "body": "Hi Jordan,\n\nYour annual Data Protection training is due on Fri, Oct 16, 2026. It takes about 20 minutes.\n\nSign in with your usual company SSO from the Learning portal. If you've already completed it, please ignore this reminder.\n\nThanks,\nPeople & Culture",
+  "link_text": "Open Learning portal",
+  "link_url": "https://learn.meridianfreight.com/courses/data-protection",
+  "landing": {
+    "src": "assets/compliance-training-real-landing.svg",
+    "alt": "The company's real Learning portal sign-in on meridianfreight.com"
+  }
+}

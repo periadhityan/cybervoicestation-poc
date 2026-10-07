@@ -1,0 +1,14 @@
+{
+  "from_name": "Alicia Tan via DocuSign",
+  "from_email": "docusign@docusign-secure-view.co",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "ACTION REQUIRED: Vendor Agreement 2026.pdf expires in 2 hours",
+  "date": "Thu, Oct 1, 2026 10:09 AM",
+  "body": "Alicia Tan sent you a document to review and sign.\n\nVendor Agreement 2026.pdf\nThis secure link EXPIRES IN 2 HOURS. Sign in with your work email to view the document.\n\nDocuSign Secure Mail",
+  "link_text": "VIEW DOCUMENT",
+  "link_url": "http://docusign-secure-view.co/doc/view?id=88213",
+  "landing": {
+    "src": "assets/docusign-review-fake-landing.svg",
+    "alt": "A fake DocuSign page on docusign-secure-view.co asking for your work email password"
+  }
+}

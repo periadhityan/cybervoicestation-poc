@@ -53,6 +53,8 @@ window.CONFIG = {
       noun: "email",
       fakeNoun: "phishing email",
       question: "Which email is the real one?",
+      bankLabel: "Phish bank",         // adds a button on the home screen listing every email pair
+      bankKind: "email",
       shield: {
         takeaway: "Looking legitimate is not proof of who sent it.",
         todo: "Check the sender's real address and where the link goes. If it feels rushed or off, report it with the Phish Alert button."
@@ -68,6 +70,7 @@ window.CONFIG = {
       fakeNoun: "AI-generated photo",
       question: "Which photo is the real one?",
       bankLabel: "Photo bank",         // adds a button on the home screen that lists every photo pair
+      bankKind: "photo",
       shield: {
         takeaway: "A photo is not proof of what happened.",
         todo: "Zoom in on hands, text and reflections. If a photo is part of a request you didn't expect, check it another way first."

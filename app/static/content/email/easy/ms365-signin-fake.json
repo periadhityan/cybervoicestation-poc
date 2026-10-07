@@ -1,0 +1,15 @@
+{
+  "from_name": "Microsoft Account Team",
+  "from_email": "security-alert@micros0ft-support-center.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "!! URGENT !! Your Microsoft account will be DELETED in 24 hours",
+  "date": "Tue, Sep 29, 2026 9:21 AM",
+  "body": "Dear User,\n\nWe have detected suspicious activity on you're Microsoft account. If you do not verify within 24 HOURS your account and all your files will be permanently DELETED.\n\nVerify your identity now to keep your access.\n\nMicrosoft Security Department",
+  "banner": "assets/ms365-signin-fake-banner.svg",
+  "link_text": "VERIFY NOW",
+  "link_url": "http://micros0ft-support-center.com/verify/login.php?user=8827",
+  "landing": {
+    "src": "assets/ms365-signin-fake-landing.svg",
+    "alt": "A fake sign-in page on micros0ft-support-center.com asking for password, phone and recovery email"
+  }
+}

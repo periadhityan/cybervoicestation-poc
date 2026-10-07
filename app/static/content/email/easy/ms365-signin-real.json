@@ -1,0 +1,15 @@
+{
+  "from_name": "Microsoft account team",
+  "from_email": "account-security-noreply@accountprotection.microsoft.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Microsoft account unusual sign-in activity",
+  "date": "Tue, Sep 29, 2026 9:12 AM",
+  "body": "Unusual sign-in activity\n\nWe detected something unusual about a recent sign-in to the Microsoft account j.alvarez@meridianfreight.com.\n\nCountry/region: Singapore\n\nIf this was you, you don't need to do anything. If not, we'll help you secure your account.\n\nThe Microsoft account team",
+  "banner": "assets/ms365-signin-real-banner.svg",
+  "link_text": "Review recent activity",
+  "link_url": "https://account.microsoft.com/activity",
+  "landing": {
+    "src": "assets/ms365-signin-real-landing.svg",
+    "alt": "The real Microsoft sign-in page at login.microsoftonline.com, with a padlock"
+  }
+}

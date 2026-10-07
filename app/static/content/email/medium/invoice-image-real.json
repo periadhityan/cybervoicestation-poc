@@ -1,0 +1,11 @@
+{
+  "from_name": "Adobe",
+  "from_email": "mail@mail.adobe.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your Adobe order receipt (IN-48213)",
+  "date": "Mon, Oct 5, 2026 8:15 AM",
+  "body": "Hi Jordan,\n\nThanks for your order. Here is your receipt.\n\nCreative Cloud All Apps (annual): $788.00\nStock credits x 10: $49.90\nTotal paid: $837.90\n\nManage your plan and download invoices any time from your Adobe account.",
+  "banner": "assets/invoice-image-real-banner.svg",
+  "link_text": "View in your account",
+  "link_url": "https://account.adobe.com/orders"
+}

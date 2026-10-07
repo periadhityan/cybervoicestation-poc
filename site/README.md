@@ -5,9 +5,10 @@ photos) and **Reel or Real?** (film plot or real cyber incident). Each game is w
 with a "Control Shield" lesson after every answer. The first two show two items and you pick the
 real one (7 rounds); Reel or Real? shows one case and you answer Reel or Real (8 cases).
 
-Two **question banks** on the home screen list everything in a game: the **Photo bank** shows every
-photo pair side by side (tap a photo to enlarge it, "Show answers" marks which is real and why), and the
-**Reel or Real bank** lists every case.
+Three **question banks** on the home screen list everything in a game. The **Phish bank** shows every email pair
+side by side (tap an email to open it in full, with the page its link opens; "Show answers" marks which is
+the phish, the techniques used, and the red flags). The **Photo bank** shows every photo pair (tap to enlarge).
+The **Reel or Real bank** lists every case.
 
 No install, no server, no internet. It is plain HTML/CSS/JS.
 
@@ -61,6 +62,9 @@ game's default tip on the answer screen.
 - `assets/singtel-logo.svg` -- set `logoSrc: ""` in `config.js` to hide it.
 
 ## Before sharing
+- **The newer phishing examples name real brands** (Microsoft, DHL, DocuSign, Google, Eventbrite, SingPost, Adobe).
+  The text is invented, the links are plain text, and the QR codes only contain a training message, but get
+  Comms/Legal sign-off before showing them, as with the Reel or Real cases that name companies.
 - **Reel or Real? needs a fact-check.** All 39 cases are still marked `status: "draft"` (written from
   memory, per the original project's notes) and 14 name real companies. Check each Real case against
   its listed source, then set `status: "approved"`. Case R16 (OCBC) is switched off pending Comms/Legal

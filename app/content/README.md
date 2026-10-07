@@ -74,7 +74,7 @@ for a first pass.
 
 ## The email game's content format
 
-The other three games' `<round-id>-real/fake.<ext>` files are media the
+The other two games' `<round-id>-real/fake.<ext>` files are media the
 browser plays or displays directly. The email game's are instead
 `<round-id>-real.json` / `<round-id>-fake.json` -- content_pool.py's
 real/fake pair discovery doesn't care about file extension, so the same
@@ -92,27 +92,45 @@ a mock inbox message. Fields:
   "body": "Dear Employee,\n\nOur records indicate ...",
   "link_text": "Verify My Password Now",
   "link_url": "http://meridian-it-helpdesk-secure.com/verify?id=8827",
-  "attachment_name": "Invoice_DS-88213.pdf.exe"
+  "attachment_name": "Invoice_DS-88213.pdf.exe",
+  "banner": "assets/it-password-reset-fake-banner.svg",
+  "images": [{"src": "assets/invoice-image-fake-invoice.svg", "alt": "Image of an invoice notice"}],
+  "qr": {"src": "assets/singpost-locker-fake-qr.svg", "caption": "Scan to pay $2.40", "alt": "A QR code"},
+  "landing": {"src": "assets/ms365-signin-fake-landing.svg", "alt": "The fake sign-in page the link opens"}
 }
 ```
 
-`from_name`, `from_email`, `subject`, and `body` are required. `to`,
-`date`, `link_text`/`link_url` (a pair -- include both or neither), and
-`attachment_name` are all optional and simply don't render if omitted. The
+`from_name`, `from_email`, and `subject` are required (`body` may be empty for an image-only email). `to`,
+`date`, `link_text`/`link_url` (a pair -- include both or neither), `attachment_name`, and the
+picture fields below are all optional and simply don't render if omitted. The
 game deliberately shows the link's real destination next to it (as a
 "Link goes to:" line, since hover tooltips don't work on a touchscreen
 kiosk) -- that mismatch between link text and destination is one of the
 core phishing tells this game teaches, so make it count in your fake
 rounds' `link_url`.
 
-Unlike the other three games, this one ships with hand-written example
-content by default rather than synthetic placeholders -- text is cheap to
-write meaningfully, so there's no need for a generator script here. Feel
-free to replace the shipped pairs with your own scenarios (or your
-security-awareness vendor's) the same way: add/replace the JSON pairs, no
-code change needed. Keep any real company or person out of it the same way
-the other games do (see "Sourcing real content safely" below) -- invented
-companies and names work just as well for teaching the tells.
+**The picture fields.** `banner` is a header image shown at the top of the message; `images` are inline
+pictures (an image-only phishing email has an empty `body` and one image); `qr` is a QR code with a caption;
+`landing` is a screenshot of the page the link opens -- it's not shown in a round, only in the Phish bank's
+full-email viewer under "Where the link goes". Paths are relative to the email's tier folder
+(`app/static/content/email/<tier>/assets/`). Keep the real and fake emails of a pair similar in length, or the
+longer one will force the text smaller (the build is checked so every pair fits on screen).
+
+**`notes.json` for emails** takes the usual `subject_label` and `reveal_note`, plus:
+`techniques` (short tags such as "Urgency", "QR code", shown in the Phish bank), `red_flags` (a list of the
+fake's giveaways, also shown in the bank) and `what_you_can_do` (the tip on the answer screen).
+
+**Making the pictures.** `scripts/make_phish_assets.py` generates all of the SVG assets (needs
+`pip install segno`; only for generating, not for running the game). Nothing in them reproduces a real logo --
+banners are plain wordmarks, and the "fake" ones are deliberately blurry or mis-spelt. **QR codes always
+encode a harmless training message, never a web address**: people will scan them with their phones.
+
+**Content and real brands.** The first nine pairs use an invented company ("Meridian Freight Co."). The
+newer ones (Microsoft, DHL, DocuSign, Google, Eventbrite, SingPost, Adobe) imitate real brands' *genuine
+sender domains* for the real emails, and sloppy lookalike domains for the phishing ones -- as awareness
+training does -- but all the text is invented, the links are plain text and never clickable, and no
+real person is named. Because they name real companies, **get Comms/Legal sign-off before showing them
+publicly**, the same as for any named-company case. Replace them with invented companies if you prefer.
 
 ## How many pairs you need
 

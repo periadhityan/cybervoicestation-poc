@@ -1,0 +1,15 @@
+{
+  "from_name": "DHL Express",
+  "from_email": "noreply@dhl.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your DHL shipment 4821 3390 55 is on its way",
+  "date": "Wed, Sep 30, 2026 7:40 AM",
+  "body": "Hi Jordan,\n\nYour shipment is on its way.\n\nTracking number: 4821 3390 55\nEstimated delivery: Thu, Oct 1, 2026 by 6:00 PM\n\nFollow it any time from the link below. No payment is needed.\n\nDHL Express",
+  "banner": "assets/dhl-redelivery-real-banner.svg",
+  "link_text": "Track your shipment",
+  "link_url": "https://www.dhl.com/sg-en/home/tracking.html?tracking-id=4821339055",
+  "landing": {
+    "src": "assets/dhl-redelivery-real-landing.svg",
+    "alt": "The real DHL tracking page at dhl.com"
+  }
+}

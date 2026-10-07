@@ -1,0 +1,20 @@
+{
+  "from_name": "Eventbrite",
+  "from_email": "orders@eventbrite.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your tickets for Singapore Cyber Summit 2026 (Order #48213)",
+  "date": "Tue, Oct 6, 2026 9:50 AM",
+  "body": "You're going to Singapore Cyber Summit 2026!\n\nOrder #48213 · 1 x General Admission\nSat, 17 Oct 2026 · Suntec Convention Centre\n\nShow the QR code below at the entrance.",
+  "banner": "assets/eventbrite-ticket-real-banner.svg",
+  "qr": {
+    "src": "assets/eventbrite-ticket-real-qr.svg",
+    "caption": "Entry ticket, Order #48213",
+    "alt": "A QR code"
+  },
+  "link_text": "View your order",
+  "link_url": "https://www.eventbrite.com/orders/48213",
+  "landing": {
+    "src": "assets/eventbrite-ticket-real-landing.svg",
+    "alt": "The real Eventbrite login page at eventbrite.com"
+  }
+}

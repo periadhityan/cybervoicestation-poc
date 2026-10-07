@@ -1,0 +1,15 @@
+{
+  "from_name": "Adobe Billing",
+  "from_email": "billing@adobe-invoice-center.net",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Invoice IN-48213 - Payment Failed",
+  "date": "Mon, Oct 5, 2026 8:02 AM",
+  "body": "",
+  "images": [
+    {
+      "src": "assets/invoice-image-fake-invoice.svg",
+      "alt": "Image of an invoice notice with an Update Payment Method button"
+    }
+  ],
+  "attachment_name": "Invoice_IN-48213.html"
+}

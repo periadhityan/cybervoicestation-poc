@@ -1,18 +1,99 @@
 {
   "it-password-reset": {
     "subject_label": "IT password expiration notice",
-    "reveal_note": "The fake email's sender domain (meridian-it-helpdesk.com) isn't the company's real domain, and the threat of 'permanent suspension in 24 hours' is designed to make you click before you look closely."
+    "reveal_note": "The fake email's sender domain (meridian-it-helpdesk.com) isn't the company's real domain, and the threat of 'permanent suspension in 24 hours' is designed to make you click before you look closely.",
+    "techniques": [
+      "Urgency",
+      "Credential harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Sender domain meridian-it-helpdesk.com is not meridianfreight.com",
+      "Threat of permanent suspension in 24 hours",
+      "Generic 'Dear Employee' greeting",
+      "Link goes to a different domain over plain http"
+    ]
   },
   "package-delivery": {
     "subject_label": "Package delivery notification",
-    "reveal_note": "The fake uses a generic courier name, a link to an unrelated .top domain, and manufactures urgency about a 'failed delivery attempt' -- the real courier always references your specific order number and links to its own known domain."
+    "reveal_note": "The fake uses a generic courier name, a link to an unrelated .top domain, and manufactures urgency about a 'failed delivery attempt' -- the real courier always references your specific order number and links to its own known domain.",
+    "techniques": [
+      "Urgency",
+      "Payment harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Sender domain parcel-status.top is not the courier's",
+      "Generic sender name 'Delivery Service' and no order number",
+      "A redelivery fee and a 24-hour deadline",
+      "Link goes to an unrelated domain over http"
+    ]
   },
   "gift-card-request": {
     "subject_label": "Request from \"the boss\"",
-    "reveal_note": "The fake comes from a free webmail address instead of a company account, asks for gift cards (a classic irreversible-payment scam), and pressures secrecy -- a real request for a purchase goes through the normal expense process, never gift cards over email."
+    "reveal_note": "The fake comes from a free webmail address instead of a company account, asks for gift cards (a classic irreversible-payment scam), and pressures secrecy -- a real request for a purchase goes through the normal expense process, never gift cards over email.",
+    "techniques": [
+      "Authority",
+      "Secrecy",
+      "Gift cards"
+    ],
+    "red_flags": [
+      "Sent from a free webmail address, not the company's",
+      "Asks for gift card codes, which can't be traced or reversed",
+      "'Keep this between us' stops you checking",
+      "Pressure: needed quietly and quickly"
+    ]
   },
   "account-suspended": {
     "subject_label": "Bank account security alert",
-    "reveal_note": "The fake's sender address is a lookalike domain (secure-harborline.com vs the bank's real harborlinebank.com) and links straight to a login page, instead of pointing you to open the app or type the bank's URL yourself."
+    "reveal_note": "The fake's sender address is a lookalike domain (secure-harborline.com vs the bank's real harborlinebank.com) and links straight to a login page, instead of pointing you to open the app or type the bank's URL yourself.",
+    "techniques": [
+      "Urgency",
+      "Credential harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Sender domain secure-harborline.com is not harborlinebank.com",
+      "Account 'suspended' with a 12-hour deadline",
+      "Generic 'Dear Customer' greeting",
+      "Link goes straight to a login page over http"
+    ]
+  },
+  "ms365-signin": {
+    "subject_label": "Microsoft account sign-in alert",
+    "reveal_note": "The fake comes from micros0ft-support-center.com (a zero for the o), not microsoft.com. It threatens deletion in 24 hours, and its link opens a different site over plain http asking for your password, phone and recovery email.",
+    "techniques": [
+      "Urgency",
+      "Credential harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Sender domain micros0ft-support-center.com is not microsoft.com (a zero for the 'o')",
+      "Threat: account deleted in 24 hours",
+      "Generic 'Dear User' and a spelling mistake ('you're')",
+      "Blurry, misspelt logo banner",
+      "Link opens a different site over plain http",
+      "The page asks for password, phone number and recovery email"
+    ],
+    "what_you_can_do": "Don't click. Type the Microsoft account address yourself to check, and report the email."
+  },
+  "dhl-redelivery": {
+    "subject_label": "Parcel delivery notice",
+    "reveal_note": "The fake comes from dhI-express-parcel.xyz (a capital I for the l), not dhl.com, asks for a $1.99 'fee' with a 24-hour threat, and its page wants your card details. The real notice asks for no payment and links to dhl.com.",
+    "techniques": [
+      "Urgency",
+      "Payment harvesting",
+      "Lookalike domain",
+      "Poor spelling"
+    ],
+    "red_flags": [
+      "Domain dhI-express-parcel.xyz is not dhl.com (capital 'I' for 'l')",
+      "Asks you to pay a small fee to release a parcel",
+      "Spelling mistake ('tryed')",
+      "Blurry banner that reads 'DHI'",
+      "Link goes to dhl-parcel-release.xyz over http",
+      "The page asks for card number and CVV"
+    ],
+    "what_you_can_do": "Never pay a fee from an email link. Track the parcel on the courier's own site."
   }
 }

@@ -1,10 +1,67 @@
 {
   "invoice-approval": {
     "subject_label": "Vendor invoice approval",
-    "reveal_note": "Everything reads professionally and the domain looks right at a glance -- the tell is subtle: the fake sender domain has an added hyphen (rossum-supply.com vs the vendor's real rossumsupply.com), and the bank details changed without a phone confirmation, which finance policy requires for exactly this reason."
+    "reveal_note": "Everything reads professionally and the domain looks right at a glance. The tell is subtle: the fake domain has an added hyphen (rossum-supply.com vs rossumsupply.com), and the bank details changed without the phone confirmation finance policy requires.",
+    "techniques": [
+      "Payment fraud",
+      "Lookalike domain",
+      "Changed bank details"
+    ],
+    "red_flags": [
+      "Sender domain rossum-supply.com has an extra hyphen",
+      "Bank details changed with no phone confirmation",
+      "Sent late in the day to catch finance in a rush"
+    ]
   },
   "executive-travel-request": {
     "subject_label": "Executive travel booking request",
-    "reveal_note": "The display name and writing style closely match the CFO, but the actual sender address is a personal Outlook account rather than the company one, and the request routes payment through personal Venmo instead of the corporate travel system finance normally uses."
+    "reveal_note": "The display name and writing style closely match the CFO, but the actual sender address is a personal Outlook account rather than the company one, and the request routes payment through personal Venmo instead of the corporate travel system finance normally uses.",
+    "techniques": [
+      "Authority",
+      "Personal email address",
+      "Payment diversion"
+    ],
+    "red_flags": [
+      "Sent from a personal Outlook address, not the company's",
+      "Asks you to pay by Venmo and skip the travel system",
+      "Urgent and 'no time' for the normal process"
+    ]
+  },
+  "eventbrite-ticket": {
+    "subject_label": "An event ticket with a QR code",
+    "reveal_note": "The real ticket has an entry QR code and a link to eventbrite.com. The fake, from eventbrite-entry-pass.top, says your ticket is invalid and has no link, only a QR code that hides where it leads.",
+    "techniques": [
+      "QR code",
+      "Urgency",
+      "Credential harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Sender domain eventbrite-entry-pass.top is not eventbrite.com",
+      "A ticket 'problem' with a 15-minute countdown",
+      "No link, only a QR code: you can't see the destination",
+      "Banner misspelt 'eventbrlte'",
+      "The QR leads to a sign-in page for your password"
+    ],
+    "what_you_can_do": "Don't scan a QR code from an email that asks you to sign in. Open the Eventbrite app or site yourself."
+  },
+  "compliance-training": {
+    "subject_label": "A compliance training reminder",
+    "reveal_note": "The fake borrows the CEO's title to scare you, but comes from meridianfreight-hr.com, not meridianfreight.com, orders you not to discuss it, and links to a login page over http.",
+    "techniques": [
+      "Authority",
+      "Urgency",
+      "Credential harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Sender domain meridianfreight-hr.com is not meridianfreight.com",
+      "Uses the CEO's authority and a threat of discipline",
+      "'Do not discuss this with colleagues' stops you checking",
+      "Deadline of 'today by 5pm'",
+      "'Sent from my iPhone' is a cheap trust trick",
+      "Link opens a login page over plain http"
+    ],
+    "what_you_can_do": "Check with the sender or IT on a channel you already trust. A genuine directive never needs you to hide it."
   }
 }

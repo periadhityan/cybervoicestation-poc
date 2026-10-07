@@ -1,0 +1,18 @@
+{
+  "from_name": "Eventbrite Tickets",
+  "from_email": "tickets@eventbrite-entry-pass.top",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Ticket problem: scan to re-validate your entry within 15 minutes",
+  "date": "Tue, Oct 6, 2026 9:38 AM",
+  "body": "Hi,\n\nWe could not validate your ticket for Singapore Cyber Summit 2026 (Order #48213). Tickets that are not re-validated are CANCELLED and refunded at 50%.\n\nTo keep your seat, scan the QR code below with your phone and sign in to re-validate within 15 MINUTES.",
+  "banner": "assets/eventbrite-ticket-fake-banner.svg",
+  "qr": {
+    "src": "assets/eventbrite-ticket-fake-qr.svg",
+    "caption": "Scan to re-validate, expires 15:00",
+    "alt": "A QR code"
+  },
+  "landing": {
+    "src": "assets/eventbrite-ticket-fake-landing.svg",
+    "alt": "A fake sign-in page on eventbrite-entry-pass.top"
+  }
+}

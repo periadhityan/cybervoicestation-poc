@@ -1,0 +1,20 @@
+{
+  "from_name": "SingPost",
+  "from_email": "noreply@singpost.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your parcel is ready to collect at POPStation",
+  "date": "Sat, Oct 3, 2026 11:20 AM",
+  "body": "Hi Jordan,\n\nYour parcel (SP48213390SG) is ready to collect at POPStation @ Bukit Batok MRT.\n\nShow the QR code below to the locker's scanner to open your compartment. Please collect within 3 days.",
+  "banner": "assets/singpost-locker-real-banner.svg",
+  "qr": {
+    "src": "assets/singpost-locker-real-qr.svg",
+    "caption": "Collection code, valid 3 days",
+    "alt": "A QR code"
+  },
+  "link_text": "Track your parcel",
+  "link_url": "https://www.singpost.com/track-items",
+  "landing": {
+    "src": "assets/singpost-locker-real-landing.svg",
+    "alt": "The real SingPost tracking page at singpost.com"
+  }
+}

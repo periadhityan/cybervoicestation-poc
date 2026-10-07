@@ -1,0 +1,14 @@
+{
+  "from_name": "Daniel Koh, Chief Executive Officer",
+  "from_email": "daniel.koh@meridianfreight-hr.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "MANDATORY - complete today by order of the CEO",
+  "date": "Wed, Oct 7, 2026 8:41 AM",
+  "body": "All staff,\n\nPer my direct instruction, everyone must verify their login on the compliance portal TODAY. Anyone who has not done so by 5pm will be reported to the board and may face disciplinary action.\n\nThis is not optional. Do not discuss this with colleagues.\n\nDaniel Koh\nChief Executive Officer\nSent from my iPhone",
+  "link_text": "Compliance portal",
+  "link_url": "http://meridianfreight-hr.com/compliance",
+  "landing": {
+    "src": "assets/compliance-training-fake-landing.svg",
+    "alt": "A fake company login page on meridianfreight-hr.com"
+  }
+}

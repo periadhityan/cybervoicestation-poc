@@ -1,0 +1,15 @@
+{
+  "from_name": "DHL Express Delivery",
+  "from_email": "redelivery@dhI-express-parcel.xyz",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Delivery FAILED - pay $1.99 to release your parcel NOW",
+  "date": "Wed, Sep 30, 2026 7:12 AM",
+  "body": "Dear customer,\n\nWe tryed to deliver your parcel but nobody was home. A small customs fee of $1.99 is required to release it.\n\nYour parcel will be RETURNED TO SENDER in 24 HRS if you do not pay.\n\nDHL Delivery Team",
+  "banner": "assets/dhl-redelivery-fake-banner.svg",
+  "link_text": "Pay customs fee",
+  "link_url": "http://dhl-parcel-release.xyz/pay",
+  "landing": {
+    "src": "assets/dhl-redelivery-fake-landing.svg",
+    "alt": "A fake payment page on dhl-parcel-release.xyz asking for card details"
+  }
+}

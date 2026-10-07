@@ -109,7 +109,7 @@
     const rank = (r) => DIFFS.indexOf(diffOf(r));
     state.bankOrder = poolOf(key).slice().sort((a, b) => rank(a) - rank(b) || String(a.label).localeCompare(String(b.label)))
       .map((r) => ({ r, realSide: Math.random() < 0.5 ? 'A' : 'B' }));
-    go('pbank');
+    go((stationCfg(key) || {}).bankKind === 'email' ? 'ebank' : 'pbank');
   }
 
   /* ------------------------------------------------------------------ validation */
@@ -374,25 +374,32 @@
   };
 
   /* ---- the two things a pair round compares ---- */
-  function mailHtml(m) {
+  // compact = in a game round: the To and Date lines carry no tells, so leave them out to give the email more room.
+  function mailHtml(m, compact = false) {
     const row = (label, val, cls = '') => `<div class="mail__row ${cls}"><span class="mail__label">${label}</span><span class="mail__val">${val}</span></div>`;
     let head = row('From', `${esc(m.from_name)} &lt;${esc(m.from_email)}&gt;`);
-    if (m.to) head += row('To', esc(m.to));
+    if (m.to && !compact) head += row('To', esc(m.to));
     head += row('Subject', esc(m.subject), 'mail__row--subject');
-    if (m.date) head += row('Date', esc(m.date));
+    if (m.date && !compact) head += row('Date', esc(m.date));
     let foot = '';
     if (m.attachment_name) foot += `<span class="mail__attach">📎 ${esc(m.attachment_name)}</span>`;
     if (m.link_text && m.link_url) foot += `<span class="mail__btn">${esc(m.link_text)}</span><p class="mail__url"><span class="mono">Link goes to</span>${esc(m.link_url)}</p>`;
-    return `<div class="mail"><div class="mail__head">${head}</div><div class="mail__body">${esc(m.body)}</div>${foot ? `<div class="mail__foot">${foot}</div>` : ''}</div>`;
+    const banner = m.banner ? `<img class="mail__banner" src="${esc(m.banner)}" alt="${esc(m.from_name)} logo banner" draggable="false">` : '';
+    const body = m.body ? `<div class="mail__body">${esc(m.body)}</div>` : '';
+    const imgs = (m.images || []).length ? `<div class="mail__imgs">${m.images.map((i) => `<img class="mail__img" src="${esc(i.src)}" alt="${esc(i.alt || '')}" draggable="false">`).join('')}</div>` : '';
+    const qr = m.qr ? `<div class="mail__qr"><img src="${esc(m.qr.src)}" alt="${esc(m.qr.alt || 'A QR code')}" draggable="false"><p>${esc(m.qr.caption || '')}</p></div>` : '';
+    return `<div class="mail"><div class="mail__head">${head}</div>${banner}${body}${imgs}${qr}${foot ? `<div class="mail__foot">${foot}</div>` : ''}</div>`;
   }
 
+  const linkHost = (u) => { try { return new URL(u).hostname; } catch (e) { return String(u || ''); } };
+
   function paneHtml(key, noun, slot) {
-    if (key === 'email') return `<div class="pane card fit" role="group" aria-label="${noun} ${slot}">${mailHtml(cur().items[slot])}</div>`;
+    if (key === 'email') return `<div class="pane card fit" role="group" aria-label="${noun} ${slot}">${mailHtml(cur().items[slot], true)}</div>`;
     if (key === 'video') return `<div class="pane pane--media card" role="group" aria-label="${noun} ${slot}"><video data-media="${slot}" controls preload="metadata" playsinline aria-label="${noun} ${slot}"></video></div>`;
     return `<div class="pane pane--media card" role="group" aria-label="${noun} ${slot}"><button class="zoom" data-zoom="${slot}" aria-label="Enlarge ${noun} ${slot}"><img data-media="${slot}" alt="${noun} ${slot}" draggable="false"><span class="zoom__hint">${ICON.zoom} Tap to enlarge</span></button></div>`;
   }
 
-  const emailDomain = (addr) => { const i = String(addr || '').lastIndexOf('@'); return i < 0 ? esc(addr) : `${esc(addr.slice(0, i))}@<b>${esc(addr.slice(i + 1))}</b>`; };
+  const emailDomain = (addr) => { const i = String(addr || '').lastIndexOf('@'); return i < 0 ? esc(addr) : `${esc(addr.slice(0, i))}@<wbr><b>${esc(addr.slice(i + 1))}</b>`; };
 
   function miniHtml(key, noun, slot, picked) {
     const r = cur(), item = r.items[slot], real = slot === r.realSlot;
@@ -401,7 +408,8 @@
     let body;
     if (key === 'email') {
       body = `<p class="mini__line"><span class="mono">From</span>${emailDomain(item.from_email)}</p>`
-        + `<p class="mini__line"><span class="mono">Link goes to</span>${item.link_url ? esc(item.link_url) : 'No link'}</p>`
+        + `<p class="mini__line"><span class="mono">Link goes to</span>${item.link_url ? esc(item.link_url) : (item.qr ? 'Hidden inside a QR code' : 'No link')}</p>`
+        + (!item.body && (item.images || []).length ? `<p class="mini__line"><span class="mono">Message</span>One picture, no text</p>` : '')
         + (item.attachment_name ? `<p class="mini__line"><span class="mono">Attachment</span>${esc(item.attachment_name)}</p>` : '');
     } else if (key === 'video') body = `<video class="mini__media" data-media="${slot}" controls preload="metadata" playsinline aria-label="${noun} ${slot}, ${real ? 'real' : 'fake'}"></video>`;
     else body = `<img class="mini__media" data-media="${slot}" alt="${noun} ${slot}, ${real ? 'real' : 'fake'}" draggable="false">`;
@@ -627,6 +635,55 @@
       </section>`;
     },
 
+    // Phish bank: every email pair side by side, answers hidden until "Show answers".
+    ebank() {
+      const st = stationCfg(state.bankKey) || {}, pts = basePoints(), show = state.bankShow;
+      const items = state.bankOrder;
+      const count = (d) => items.filter((e) => diffOf(e.r) === d).length;
+      const preview = (r, side, realSide, i) => {
+        const m = side === realSide ? r.real : r.fake, real = side === realSide;
+        const snippet = (m.body || '').replace(/\s+/g, ' ').slice(0, 120);
+        const chips = [(m.banner || (m.images || []).length) ? 'Image' : '', m.qr ? 'QR code' : '', m.attachment_name ? 'Attachment' : '', m.landing ? 'Opens a page' : ''].filter(Boolean)
+          .map((c) => `<span class="chip">${c}</span>`).join('');
+        return `<button class="ep" data-mail="${i}:${side}" aria-label="Open email ${side}, ${esc(m.subject)}, in full">
+          <span class="ep__top"><span class="mini__name">Email ${side}</span>${show ? `<span class="tag tag--${real ? 'real' : 'fake'}">${real ? 'Real' : 'Fake'}</span>` : ''}</span>
+          <span class="ep__from">${esc(m.from_name)}</span>
+          <span class="ep__addr">${emailDomain(m.from_email)}</span>
+          <span class="ep__subj">${esc(m.subject)}</span>
+          <span class="ep__snip">${esc(snippet)}${(m.body || '').length > 120 ? '…' : ''}${!m.body && (m.images || []).length ? '(the message is one picture)' : ''}</span>
+          <span class="ep__link"><span class="mono">Link</span>${m.link_url ? esc(linkHost(m.link_url)) : (m.qr ? 'hidden in a QR code' : 'none')}</span>
+          <span class="ep__chips">${chips}</span>
+          <span class="ep__open">${ICON.zoom} Open full email</span>
+        </button>`;
+      };
+      const cards = items.map(({ r, realSide }, i) => {
+        const d = diffOf(r);
+        const tech = show && (r.techniques || []).length ? `<div class="qe__tech">${r.techniques.map((t) => `<span class="chip chip--hard">${esc(t)}</span>`).join('')}</div>` : '';
+        const flags = show && (r.red_flags || []).length ? `<div class="qe__flags"><p class="mono">Red flags in the fake</p><ul>${r.red_flags.map((f) => `<li>${esc(f)}</li>`).join('')}</ul></div>` : '';
+        const note = show ? `<p class="qp__note"><span class="mono">What gave it away</span>${esc(r.note)}</p>` : '';
+        const todo = show && clean(r.todo) ? `<p class="qe__todo"><span class="mono">What you can do</span>${esc(r.todo)}</p>` : '';
+        return `<li class="qb qe">
+          <div class="qb__top"><span class="qb__num">${i + 1}</span><span class="chip chip--${d}">${cap(d)} · ${pts[d]} pts</span></div>
+          <p class="qb__title">${esc(r.label)}</p>
+          ${tech}
+          <div class="qe__pair">${preview(r, 'A', realSide, i)}${preview(r, 'B', realSide, i)}</div>
+          ${note}${flags}${todo}
+        </li>`;
+      }).join('');
+      return `<section class="screen" data-screen="ebank">
+        ${bar({ pips: false })}
+        <div class="bank">
+          <div class="bank__head">
+            <div><h1 class="bank__title">${esc(st.bankLabel || 'Phish bank')}</h1>
+              <p class="bank__sum">${items.length} email pairs &nbsp;·&nbsp; ${DIFFS.map((d) => `${count(d)} ${d}`).join(', ')} &nbsp;·&nbsp; one email in each pair is a phish. Tap an email to open it in full.</p></div>
+            <button class="ghost" data-action="bank-toggle" aria-pressed="${show}">${show ? 'Hide answers' : 'Show answers'}</button>
+            <button class="cta" data-action="station" data-station="${esc(state.bankKey)}" data-autofocus>Play ${ICON.arrow}</button>
+          </div>
+          <ol class="bank__list bank__list--pairs">${cards}</ol>
+        </div>
+      </section>`;
+    },
+
     // Photo bank: every photo pair, answers hidden until "Show answers".
     pbank() {
       const st = stationCfg(state.bankKey) || {}, pts = basePoints(), show = state.bankShow;
@@ -763,13 +820,30 @@
   function closeZoom() { lightbox.hidden = true; if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true }); }
   lightbox.addEventListener('click', closeZoom);
 
+  // Full-size email viewer for the phish bank: the whole email, plus the page its link opens.
+  const mailview = $('#mailview');
+  let mailFocus = null;
+  function openMail(idx, side) {
+    const e = state.bankOrder[Number(idx)]; if (!e) return;
+    const m = side === e.realSide ? e.r.real : e.r.fake, real = side === e.realSide;
+    const tag = state.bankShow ? `<span class="tag tag--${real ? 'real' : 'fake'}">${real ? 'Real' : 'Fake'}</span>` : '';
+    const land = m.landing && m.landing.src ? `<div class="mailview__landing"><p class="mono">Where the link goes</p><img src="${esc(m.landing.src)}" alt="${esc(m.landing.alt || 'The page the link opens')}" draggable="false"></div>` : '';
+    $('.mailview__panel', mailview).innerHTML = `<div class="mailview__head"><p class="mono">Email ${side}</p>${tag}</div><div class="card mailview__card" style="--fit:1">${mailHtml(m)}</div>${land}`;
+    mailFocus = document.activeElement;
+    mailview.hidden = false;
+    $('.mailview__close', mailview).focus({ preventScroll: true });
+  }
+  function closeMail() { mailview.hidden = true; if (mailFocus && mailFocus.focus) mailFocus.focus({ preventScroll: true }); }
+  mailview.addEventListener('click', (e) => { if (e.target === mailview || e.target.closest('.mailview__close')) closeMail(); });
+
   /* ------------------------------------------------------------------ input */
   stage.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-pick], [data-choice], [data-zoom], [data-bank-zoom], [data-action]');
+    const t = e.target.closest('[data-pick], [data-choice], [data-zoom], [data-bank-zoom], [data-mail], [data-action]');
     if (!t) return;
     if (t.dataset.pick) answer(t.dataset.pick);
     else if (t.dataset.choice) answer(t.dataset.choice);
     else if (t.dataset.zoom) openZoom(t.dataset.zoom);
+    else if (t.dataset.mail) { const [i, side] = t.dataset.mail.split(':'); openMail(i, side); }
     else if (t.dataset.bankZoom) { const [i, side] = t.dataset.bankZoom.split(':'); openZoomSrc(bankSrc(i, side), `Photo ${side}, enlarged`); }
     else if (t.dataset.action === 'station') startGame(t.dataset.station);
     else if (t.dataset.action === 'again') startGame(state.station);
@@ -794,6 +868,7 @@
   document.addEventListener('keydown', (e) => {
     state.lastActive = Date.now();
     if (!lightbox.hidden) { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closeZoom(); } return; }
+    if (!mailview.hidden) { if (e.key === 'Escape') { e.preventDefault(); closeMail(); } return; }
     if (!$('#staff').hidden) { if (e.key === 'Escape') closeStaff(); return; }
     if (e.shiftKey && (e.key === 'S' || e.key === 's')) { e.preventDefault(); openStaff(); return; }
     if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -807,7 +882,7 @@
       if (k === '1') answer(single ? 'REEL' : 'A'); else if (k === '2') answer(single ? 'REAL' : 'B');
       return;
     }
-    if (state.screen === 'bank' || state.screen === 'pbank') return;
+    if (state.screen === 'bank' || state.screen === 'pbank' || state.screen === 'ebank') return;
     if (k === 'Enter' || k === ' ') {
       const a = document.activeElement;
       if (a && a !== document.body && a !== stage && a.matches('button, video, input')) return; // native control handles it
@@ -831,7 +906,7 @@
   // Walk-away reset
   setInterval(() => {
     const secs = Number(S().idleResetSeconds) || 0;
-    if (!secs || state.screen === 'hub' || state.errors.length || !$('#staff').hidden || !lightbox.hidden) return;
+    if (!secs || state.screen === 'hub' || state.errors.length || !$('#staff').hidden || !lightbox.hidden || !mailview.hidden) return;
     if (Date.now() - state.lastActive > secs * 1000) toHub();
   }, 1000);
 

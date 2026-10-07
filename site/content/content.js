@@ -7,6 +7,17 @@ window.CONTENT = {
    "tier": "easy",
    "label": "Bank account security alert",
    "note": "The fake's sender address is a lookalike domain (secure-harborline.com vs the bank's real harborlinebank.com) and links straight to a login page, instead of pointing you to open the app or type the bank's URL yourself.",
+   "techniques": [
+    "Urgency",
+    "Credential harvesting",
+    "Lookalike domain"
+   ],
+   "red_flags": [
+    "Sender domain secure-harborline.com is not harborlinebank.com",
+    "Account 'suspended' with a 12-hour deadline",
+    "Generic 'Dear Customer' greeting",
+    "Link goes straight to a login page over http"
+   ],
    "real": {
     "from_name": "Harborline Bank",
     "from_email": "alerts@harborlinebank.com",
@@ -29,10 +40,72 @@ window.CONTENT = {
    }
   },
   {
+   "id": "email/easy/dhl-redelivery",
+   "tier": "easy",
+   "label": "Parcel delivery notice",
+   "note": "The fake comes from dhI-express-parcel.xyz (a capital I for the l), not dhl.com, asks for a $1.99 'fee' with a 24-hour threat, and its page wants your card details. The real notice asks for no payment and links to dhl.com.",
+   "todo": "Never pay a fee from an email link. Track the parcel on the courier's own site.",
+   "techniques": [
+    "Urgency",
+    "Payment harvesting",
+    "Lookalike domain",
+    "Poor spelling"
+   ],
+   "red_flags": [
+    "Domain dhI-express-parcel.xyz is not dhl.com (capital 'I' for 'l')",
+    "Asks you to pay a small fee to release a parcel",
+    "Spelling mistake ('tryed')",
+    "Blurry banner that reads 'DHI'",
+    "Link goes to dhl-parcel-release.xyz over http",
+    "The page asks for card number and CVV"
+   ],
+   "real": {
+    "from_name": "DHL Express",
+    "from_email": "noreply@dhl.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Your DHL shipment 4821 3390 55 is on its way",
+    "date": "Wed, Sep 30, 2026 7:40 AM",
+    "body": "Hi Jordan,\n\nYour shipment is on its way.\n\nTracking number: 4821 3390 55\nEstimated delivery: Thu, Oct 1, 2026 by 6:00 PM\n\nFollow it any time from the link below. No payment is needed.\n\nDHL Express",
+    "banner": "content/media/email/easy/assets/dhl-redelivery-real-banner.svg",
+    "link_text": "Track your shipment",
+    "link_url": "https://www.dhl.com/sg-en/home/tracking.html?tracking-id=4821339055",
+    "landing": {
+     "src": "content/media/email/easy/assets/dhl-redelivery-real-landing.svg",
+     "alt": "The real DHL tracking page at dhl.com"
+    }
+   },
+   "fake": {
+    "from_name": "DHL Express Delivery",
+    "from_email": "redelivery@dhI-express-parcel.xyz",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Delivery FAILED - pay $1.99 to release your parcel NOW",
+    "date": "Wed, Sep 30, 2026 7:12 AM",
+    "body": "Dear customer,\n\nWe tryed to deliver your parcel but nobody was home. A small customs fee of $1.99 is required to release it.\n\nYour parcel will be RETURNED TO SENDER in 24 HRS if you do not pay.\n\nDHL Delivery Team",
+    "banner": "content/media/email/easy/assets/dhl-redelivery-fake-banner.svg",
+    "link_text": "Pay customs fee",
+    "link_url": "http://dhl-parcel-release.xyz/pay",
+    "landing": {
+     "src": "content/media/email/easy/assets/dhl-redelivery-fake-landing.svg",
+     "alt": "A fake payment page on dhl-parcel-release.xyz asking for card details"
+    }
+   }
+  },
+  {
    "id": "email/easy/gift-card-request",
    "tier": "easy",
    "label": "Request from \"the boss\"",
    "note": "The fake comes from a free webmail address instead of a company account, asks for gift cards (a classic irreversible-payment scam), and pressures secrecy -- a real request for a purchase goes through the normal expense process, never gift cards over email.",
+   "techniques": [
+    "Authority",
+    "Secrecy",
+    "Gift cards"
+   ],
+   "red_flags": [
+    "Sent from a free webmail address, not the company's",
+    "Asks for gift card codes, which can't be traced or reversed",
+    "'Keep this between us' stops you checking",
+    "Pressure: needed quietly and quickly"
+   ],
    "real": {
     "from_name": "Dana Whitfield",
     "from_email": "d.whitfield@meridianfreight.com",
@@ -55,6 +128,17 @@ window.CONTENT = {
    "tier": "easy",
    "label": "IT password expiration notice",
    "note": "The fake email's sender domain (meridian-it-helpdesk.com) isn't the company's real domain, and the threat of 'permanent suspension in 24 hours' is designed to make you click before you look closely.",
+   "techniques": [
+    "Urgency",
+    "Credential harvesting",
+    "Lookalike domain"
+   ],
+   "red_flags": [
+    "Sender domain meridian-it-helpdesk.com is not meridianfreight.com",
+    "Threat of permanent suspension in 24 hours",
+    "Generic 'Dear Employee' greeting",
+    "Link goes to a different domain over plain http"
+   ],
    "real": {
     "from_name": "Meridian IT Help Desk",
     "from_email": "helpdesk@meridianfreight.com",
@@ -77,10 +161,71 @@ window.CONTENT = {
    }
   },
   {
+   "id": "email/easy/ms365-signin",
+   "tier": "easy",
+   "label": "Microsoft account sign-in alert",
+   "note": "The fake comes from micros0ft-support-center.com (a zero for the o), not microsoft.com. It threatens deletion in 24 hours, and its link opens a different site over plain http asking for your password, phone and recovery email.",
+   "todo": "Don't click. Type the Microsoft account address yourself to check, and report the email.",
+   "techniques": [
+    "Urgency",
+    "Credential harvesting",
+    "Lookalike domain"
+   ],
+   "red_flags": [
+    "Sender domain micros0ft-support-center.com is not microsoft.com (a zero for the 'o')",
+    "Threat: account deleted in 24 hours",
+    "Generic 'Dear User' and a spelling mistake ('you're')",
+    "Blurry, misspelt logo banner",
+    "Link opens a different site over plain http",
+    "The page asks for password, phone number and recovery email"
+   ],
+   "real": {
+    "from_name": "Microsoft account team",
+    "from_email": "account-security-noreply@accountprotection.microsoft.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Microsoft account unusual sign-in activity",
+    "date": "Tue, Sep 29, 2026 9:12 AM",
+    "body": "Unusual sign-in activity\n\nWe detected something unusual about a recent sign-in to the Microsoft account j.alvarez@meridianfreight.com.\n\nCountry/region: Singapore\n\nIf this was you, you don't need to do anything. If not, we'll help you secure your account.\n\nThe Microsoft account team",
+    "banner": "content/media/email/easy/assets/ms365-signin-real-banner.svg",
+    "link_text": "Review recent activity",
+    "link_url": "https://account.microsoft.com/activity",
+    "landing": {
+     "src": "content/media/email/easy/assets/ms365-signin-real-landing.svg",
+     "alt": "The real Microsoft sign-in page at login.microsoftonline.com, with a padlock"
+    }
+   },
+   "fake": {
+    "from_name": "Microsoft Account Team",
+    "from_email": "security-alert@micros0ft-support-center.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "!! URGENT !! Your Microsoft account will be DELETED in 24 hours",
+    "date": "Tue, Sep 29, 2026 9:21 AM",
+    "body": "Dear User,\n\nWe have detected suspicious activity on you're Microsoft account. If you do not verify within 24 HOURS your account and all your files will be permanently DELETED.\n\nVerify your identity now to keep your access.\n\nMicrosoft Security Department",
+    "banner": "content/media/email/easy/assets/ms365-signin-fake-banner.svg",
+    "link_text": "VERIFY NOW",
+    "link_url": "http://micros0ft-support-center.com/verify/login.php?user=8827",
+    "landing": {
+     "src": "content/media/email/easy/assets/ms365-signin-fake-landing.svg",
+     "alt": "A fake sign-in page on micros0ft-support-center.com asking for password, phone and recovery email"
+    }
+   }
+  },
+  {
    "id": "email/easy/package-delivery",
    "tier": "easy",
    "label": "Package delivery notification",
    "note": "The fake uses a generic courier name, a link to an unrelated .top domain, and manufactures urgency about a 'failed delivery attempt' -- the real courier always references your specific order number and links to its own known domain.",
+   "techniques": [
+    "Urgency",
+    "Payment harvesting",
+    "Lookalike domain"
+   ],
+   "red_flags": [
+    "Sender domain parcel-status.top is not the courier's",
+    "Generic sender name 'Delivery Service' and no order number",
+    "A redelivery fee and a 24-hour deadline",
+    "Link goes to an unrelated domain over http"
+   ],
    "real": {
     "from_name": "Coastline Parcel",
     "from_email": "tracking@coastlineparcel.com",
@@ -103,10 +248,161 @@ window.CONTENT = {
    }
   },
   {
+   "id": "email/medium/docusign-review",
+   "tier": "medium",
+   "label": "A DocuSign request from a colleague",
+   "note": "The fake keeps the colleague's name, but its address is docusign-secure-view.co, not docusign.net, and it adds a 2-hour expiry. Its link opens a page asking for your work email password.",
+   "todo": "Check with Alicia on a channel you trust, or open DocuSign yourself, before signing in anywhere.",
+   "techniques": [
+    "Urgency",
+    "Credential harvesting",
+    "Lookalike domain",
+    "Impersonated colleague"
+   ],
+   "red_flags": [
+    "Sender domain docusign-secure-view.co is not docusign.net",
+    "'Expires in 2 hours' to rush you",
+    "Link goes to a different domain over plain http",
+    "The page asks for your work email password, which DocuSign never needs to view a document"
+   ],
+   "real": {
+    "from_name": "Alicia Tan via DocuSign",
+    "from_email": "dse@docusign.net",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Please review and sign: Vendor Agreement 2026.pdf",
+    "date": "Thu, Oct 1, 2026 10:05 AM",
+    "body": "Alicia Tan sent you a document to review and sign.\n\nVendor Agreement 2026.pdf\nPlease review and sign by Fri, Oct 9, 2026.\n\nDo not share this email or the access code with anyone. If you do not recognise the sender, do not click the link.\n\nDocuSign, Inc.",
+    "link_text": "REVIEW DOCUMENT",
+    "link_url": "https://app.docusign.com/documents/details/6f1c2a90",
+    "landing": {
+     "src": "content/media/email/medium/assets/docusign-review-real-landing.svg",
+     "alt": "The real DocuSign login at account.docusign.com"
+    }
+   },
+   "fake": {
+    "from_name": "Alicia Tan via DocuSign",
+    "from_email": "docusign@docusign-secure-view.co",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "ACTION REQUIRED: Vendor Agreement 2026.pdf expires in 2 hours",
+    "date": "Thu, Oct 1, 2026 10:09 AM",
+    "body": "Alicia Tan sent you a document to review and sign.\n\nVendor Agreement 2026.pdf\nThis secure link EXPIRES IN 2 HOURS. Sign in with your work email to view the document.\n\nDocuSign Secure Mail",
+    "link_text": "VIEW DOCUMENT",
+    "link_url": "http://docusign-secure-view.co/doc/view?id=88213",
+    "landing": {
+     "src": "content/media/email/medium/assets/docusign-review-fake-landing.svg",
+     "alt": "A fake DocuSign page on docusign-secure-view.co asking for your work email password"
+    }
+   }
+  },
+  {
+   "id": "email/medium/gdrive-share",
+   "tier": "medium",
+   "label": "A Google Drive share from a colleague",
+   "note": "The fake uses goog1e-docs-viewer.com (a digit 1 for the l), not google.com. Its page even shows a padlock, which only means the connection is encrypted, not that the site is genuine.",
+   "todo": "Open Drive from your own bookmark or the app instead of the email link.",
+   "techniques": [
+    "Credential harvesting",
+    "Lookalike domain",
+    "Padlock on a fake site",
+    "Urgency"
+   ],
+   "red_flags": [
+    "Sender and link domain goog1e-docs-viewer.com (a digit 1 for the 'l')",
+    "'This link will expire in 1 hour'",
+    "The page has a padlock, which proves nothing about who runs it",
+    "It asks you to sign in again to 'confirm access'"
+   ],
+   "real": {
+    "from_name": "Priya Nandakumar (via Google Drive)",
+    "from_email": "drive-shares-dm-noreply@google.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Priya Nandakumar shared a document with you: Q3 Vendor Contracts",
+    "date": "Fri, Oct 2, 2026 2:30 PM",
+    "body": "Priya Nandakumar (p.nandakumar@meridianfreight.com) has invited you to view the following document:\n\nQ3 Vendor Contracts\n\nGoogle LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\nYou have received this email because someone shared a document with you from Google Drive.",
+    "link_text": "Open",
+    "link_url": "https://docs.google.com/document/d/1x9Fq2LmNpWk7/edit?usp=sharing",
+    "landing": {
+     "src": "content/media/email/medium/assets/gdrive-share-real-landing.svg",
+     "alt": "The real Google sign-in page at accounts.google.com"
+    }
+   },
+   "fake": {
+    "from_name": "Priya Nandakumar (via Google Drive)",
+    "from_email": "share@goog1e-docs-viewer.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Priya Nandakumar shared a document with you: Q3 Vendor Contracts",
+    "date": "Fri, Oct 2, 2026 2:33 PM",
+    "body": "Priya Nandakumar (p.nandakumar@meridianfreight.com) has invited you to view the following document:\n\nQ3 Vendor Contracts\n\nThis link will expire in 1 hour. Sign in to confirm access.",
+    "link_text": "Open in Docs",
+    "link_url": "https://goog1e-docs-viewer.com/d/1x9Fq/open",
+    "landing": {
+     "src": "content/media/email/medium/assets/gdrive-share-fake-landing.svg",
+     "alt": "A fake Google sign-in on goog1e-docs-viewer.com, which still shows a padlock"
+    }
+   }
+  },
+  {
+   "id": "email/medium/invoice-image",
+   "tier": "medium",
+   "label": "A subscription invoice",
+   "note": "The fake is one big picture with no text, which slips past text filters, from adobe-invoice-center.net, with an .html attachment (a common fake-login trick). The real receipt is ordinary text from adobe.com.",
+   "todo": "Never open an .html attachment. Check billing in your Adobe account directly.",
+   "techniques": [
+    "Image-only email",
+    "Urgency",
+    "Risky attachment",
+    "Lookalike domain"
+   ],
+   "red_flags": [
+    "Sender domain adobe-invoice-center.net is not adobe.com",
+    "The whole message is one image: no real text or link",
+    "A spelling mistake inside the picture ('becuase')",
+    "A blurry picture",
+    "Attachment is an .html file",
+    "Threat that the service will be stopped"
+   ],
+   "real": {
+    "from_name": "Adobe",
+    "from_email": "mail@mail.adobe.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Your Adobe order receipt (IN-48213)",
+    "date": "Mon, Oct 5, 2026 8:15 AM",
+    "body": "Hi Jordan,\n\nThanks for your order. Here is your receipt.\n\nCreative Cloud All Apps (annual): $788.00\nStock credits x 10: $49.90\nTotal paid: $837.90\n\nManage your plan and download invoices any time from your Adobe account.",
+    "banner": "content/media/email/medium/assets/invoice-image-real-banner.svg",
+    "link_text": "View in your account",
+    "link_url": "https://account.adobe.com/orders"
+   },
+   "fake": {
+    "from_name": "Adobe Billing",
+    "from_email": "billing@adobe-invoice-center.net",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Invoice IN-48213 - Payment Failed",
+    "date": "Mon, Oct 5, 2026 8:02 AM",
+    "body": "",
+    "images": [
+     {
+      "src": "content/media/email/medium/assets/invoice-image-fake-invoice.svg",
+      "alt": "Image of an invoice notice with an Update Payment Method button"
+     }
+    ],
+    "attachment_name": "Invoice_IN-48213.html"
+   }
+  },
+  {
    "id": "email/medium/payroll-update",
    "tier": "medium",
    "label": "Payroll system update notice",
-   "note": "Both emails look professional, but the fake's sender and link domain (meridianfreiqht.com) swaps an 'i' for a lookalike character -- easy to miss at a glance, which is exactly the point.",
+   "note": "Both emails look professional, but the fake's sender and link domain (meridianfreiqht.com) swaps the g in 'freight' for a q -- easy to miss at a glance, which is exactly the point.",
+   "techniques": [
+    "Credential harvesting",
+    "Lookalike domain"
+   ],
+   "red_flags": [
+    "Sender and link domain meridianfreiqht.com (q instead of g)",
+    "Asks you to 're-confirm' bank details",
+    "Deadline of Friday 5pm",
+    "Link goes to a subdomain of the lookalike domain"
+   ],
    "real": {
     "from_name": "Meridian Payroll Team",
     "from_email": "payroll@meridianfreight.com",
@@ -131,6 +427,16 @@ window.CONTENT = {
    "tier": "medium",
    "label": "Shared document invite",
    "note": "The fake's \"shared document\" link doesn't go to the real file-sharing provider at all -- it points to an unrelated domain disguised to look like one, a common way to harvest login credentials through a fake sign-in page.",
+   "techniques": [
+    "Credential harvesting",
+    "Lookalike domain",
+    "Urgency"
+   ],
+   "red_flags": [
+    "Sender domain clouddocs-share.net is not clouddocs.com",
+    "'Expires in 24 hours' to rush you",
+    "Link goes to a login page over plain http"
+   ],
    "real": {
     "from_name": "Priya Nandakumar via CloudDocs",
     "from_email": "no-reply@clouddocs.com",
@@ -153,10 +459,80 @@ window.CONTENT = {
    }
   },
   {
+   "id": "email/medium/singpost-locker",
+   "tier": "medium",
+   "label": "A parcel locker collection notice",
+   "note": "The real QR code is a collection code you show to the locker. The fake asks you to scan a QR code to pay $2.40 within 12 hours, from singpost-collect.top rather than singpost.com, and leads to a card payment page.",
+   "todo": "Check the parcel on singpost.com or in the SingPost app, never by scanning a code from an email.",
+   "techniques": [
+    "QR code",
+    "Urgency",
+    "Payment harvesting",
+    "Lookalike domain"
+   ],
+   "red_flags": [
+    "Sender domain singpost-collect.top is not singpost.com",
+    "A QR code that asks you to pay is a warning sign",
+    "'ON HOLD' and a 12-hour deadline",
+    "Blurry banner that reads 'SingP0st' with a zero",
+    "The QR hides where it leads",
+    "The page asks for card details"
+   ],
+   "real": {
+    "from_name": "SingPost",
+    "from_email": "noreply@singpost.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Your parcel is ready to collect at POPStation",
+    "date": "Sat, Oct 3, 2026 11:20 AM",
+    "body": "Hi Jordan,\n\nYour parcel (SP48213390SG) is ready to collect at POPStation @ Bukit Batok MRT.\n\nShow the QR code below to the locker's scanner to open your compartment. Please collect within 3 days.",
+    "banner": "content/media/email/medium/assets/singpost-locker-real-banner.svg",
+    "qr": {
+     "src": "content/media/email/medium/assets/singpost-locker-real-qr.svg",
+     "caption": "Collection code, valid 3 days",
+     "alt": "A QR code"
+    },
+    "link_text": "Track your parcel",
+    "link_url": "https://www.singpost.com/track-items",
+    "landing": {
+     "src": "content/media/email/medium/assets/singpost-locker-real-landing.svg",
+     "alt": "The real SingPost tracking page at singpost.com"
+    }
+   },
+   "fake": {
+    "from_name": "SingPost Notice",
+    "from_email": "popstation@singpost-collect.top",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Parcel on hold: unpaid $2.40 delivery fee - scan to pay now",
+    "date": "Sat, Oct 3, 2026 11:04 AM",
+    "body": "Dear customer,\n\nYour parcel SP48213390SG is ON HOLD because a delivery fee of $2.40 is unpaid.\n\nScan the QR code below to pay now. Parcels not paid within 12 HOURS are returned to sender.",
+    "banner": "content/media/email/medium/assets/singpost-locker-fake-banner.svg",
+    "qr": {
+     "src": "content/media/email/medium/assets/singpost-locker-fake-qr.svg",
+     "caption": "Scan to pay $2.40",
+     "alt": "A QR code"
+    },
+    "landing": {
+     "src": "content/media/email/medium/assets/singpost-locker-fake-landing.svg",
+     "alt": "A fake payment page on singpost-collect.top asking for card details"
+    }
+   }
+  },
+  {
    "id": "email/medium/software-renewal",
    "tier": "medium",
    "label": "Software license renewal notice",
    "note": "The fake's invoice total and \"past due\" framing are meant to create urgency, the payment link goes to a generic lookalike domain rather than the vendor's own billing portal, and the attached \"invoice\" has a double file extension (.pdf.exe) -- a classic sign it's an executable, not a document.",
+   "techniques": [
+    "Urgency",
+    "Risky attachment",
+    "Lookalike domain"
+   ],
+   "red_flags": [
+    "Sender domain designsuite-billing.net is not designsuite.com",
+    "'Past due' and service suspended in 48 hours",
+    "Attachment ends in .pdf.exe: it's a program, not a document",
+    "Payment link goes to the lookalike domain"
+   ],
    "real": {
     "from_name": "DesignSuite Billing",
     "from_email": "billing@designsuite.com",
@@ -180,10 +556,127 @@ window.CONTENT = {
    }
   },
   {
+   "id": "email/hard/compliance-training",
+   "tier": "hard",
+   "label": "A compliance training reminder",
+   "note": "The fake borrows the CEO's title to scare you, but comes from meridianfreight-hr.com, not meridianfreight.com, orders you not to discuss it, and links to a login page over http.",
+   "todo": "Check with the sender or IT on a channel you already trust. A genuine directive never needs you to hide it.",
+   "techniques": [
+    "Authority",
+    "Urgency",
+    "Credential harvesting",
+    "Lookalike domain"
+   ],
+   "red_flags": [
+    "Sender domain meridianfreight-hr.com is not meridianfreight.com",
+    "Uses the CEO's authority and a threat of discipline",
+    "'Do not discuss this with colleagues' stops you checking",
+    "Deadline of 'today by 5pm'",
+    "'Sent from my iPhone' is a cheap trust trick",
+    "Link opens a login page over plain http"
+   ],
+   "real": {
+    "from_name": "Meridian Learning",
+    "from_email": "learning@meridianfreight.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Reminder: complete Data Protection training by 16 Oct",
+    "date": "Wed, Oct 7, 2026 9:00 AM",
+    "body": "Hi Jordan,\n\nYour annual Data Protection training is due on Fri, Oct 16, 2026. It takes about 20 minutes.\n\nSign in with your usual company SSO from the Learning portal. If you've already completed it, please ignore this reminder.\n\nThanks,\nPeople & Culture",
+    "link_text": "Open Learning portal",
+    "link_url": "https://learn.meridianfreight.com/courses/data-protection",
+    "landing": {
+     "src": "content/media/email/hard/assets/compliance-training-real-landing.svg",
+     "alt": "The company's real Learning portal sign-in on meridianfreight.com"
+    }
+   },
+   "fake": {
+    "from_name": "Daniel Koh, Chief Executive Officer",
+    "from_email": "daniel.koh@meridianfreight-hr.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "MANDATORY - complete today by order of the CEO",
+    "date": "Wed, Oct 7, 2026 8:41 AM",
+    "body": "All staff,\n\nPer my direct instruction, everyone must verify their login on the compliance portal TODAY. Anyone who has not done so by 5pm will be reported to the board and may face disciplinary action.\n\nThis is not optional. Do not discuss this with colleagues.\n\nDaniel Koh\nChief Executive Officer\nSent from my iPhone",
+    "link_text": "Compliance portal",
+    "link_url": "http://meridianfreight-hr.com/compliance",
+    "landing": {
+     "src": "content/media/email/hard/assets/compliance-training-fake-landing.svg",
+     "alt": "A fake company login page on meridianfreight-hr.com"
+    }
+   }
+  },
+  {
+   "id": "email/hard/eventbrite-ticket",
+   "tier": "hard",
+   "label": "An event ticket with a QR code",
+   "note": "The real ticket has an entry QR code and a link to eventbrite.com. The fake, from eventbrite-entry-pass.top, says your ticket is invalid and has no link, only a QR code that hides where it leads.",
+   "todo": "Don't scan a QR code from an email that asks you to sign in. Open the Eventbrite app or site yourself.",
+   "techniques": [
+    "QR code",
+    "Urgency",
+    "Credential harvesting",
+    "Lookalike domain"
+   ],
+   "red_flags": [
+    "Sender domain eventbrite-entry-pass.top is not eventbrite.com",
+    "A ticket 'problem' with a 15-minute countdown",
+    "No link, only a QR code: you can't see the destination",
+    "Banner misspelt 'eventbrlte'",
+    "The QR leads to a sign-in page for your password"
+   ],
+   "real": {
+    "from_name": "Eventbrite",
+    "from_email": "orders@eventbrite.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Your tickets for Singapore Cyber Summit 2026 (Order #48213)",
+    "date": "Tue, Oct 6, 2026 9:50 AM",
+    "body": "You're going to Singapore Cyber Summit 2026!\n\nOrder #48213 · 1 x General Admission\nSat, 17 Oct 2026 · Suntec Convention Centre\n\nShow the QR code below at the entrance.",
+    "banner": "content/media/email/hard/assets/eventbrite-ticket-real-banner.svg",
+    "qr": {
+     "src": "content/media/email/hard/assets/eventbrite-ticket-real-qr.svg",
+     "caption": "Entry ticket, Order #48213",
+     "alt": "A QR code"
+    },
+    "link_text": "View your order",
+    "link_url": "https://www.eventbrite.com/orders/48213",
+    "landing": {
+     "src": "content/media/email/hard/assets/eventbrite-ticket-real-landing.svg",
+     "alt": "The real Eventbrite login page at eventbrite.com"
+    }
+   },
+   "fake": {
+    "from_name": "Eventbrite Tickets",
+    "from_email": "tickets@eventbrite-entry-pass.top",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Ticket problem: scan to re-validate your entry within 15 minutes",
+    "date": "Tue, Oct 6, 2026 9:38 AM",
+    "body": "Hi,\n\nWe could not validate your ticket for Singapore Cyber Summit 2026 (Order #48213). Tickets that are not re-validated are CANCELLED and refunded at 50%.\n\nTo keep your seat, scan the QR code below with your phone and sign in to re-validate within 15 MINUTES.",
+    "banner": "content/media/email/hard/assets/eventbrite-ticket-fake-banner.svg",
+    "qr": {
+     "src": "content/media/email/hard/assets/eventbrite-ticket-fake-qr.svg",
+     "caption": "Scan to re-validate, expires 15:00",
+     "alt": "A QR code"
+    },
+    "landing": {
+     "src": "content/media/email/hard/assets/eventbrite-ticket-fake-landing.svg",
+     "alt": "A fake sign-in page on eventbrite-entry-pass.top"
+    }
+   }
+  },
+  {
    "id": "email/hard/executive-travel-request",
    "tier": "hard",
    "label": "Executive travel booking request",
    "note": "The display name and writing style closely match the CFO, but the actual sender address is a personal Outlook account rather than the company one, and the request routes payment through personal Venmo instead of the corporate travel system finance normally uses.",
+   "techniques": [
+    "Authority",
+    "Personal email address",
+    "Payment diversion"
+   ],
+   "red_flags": [
+    "Sent from a personal Outlook address, not the company's",
+    "Asks you to pay by Venmo and skip the travel system",
+    "Urgent and 'no time' for the normal process"
+   ],
    "real": {
     "from_name": "Marcus Feld (CFO)",
     "from_email": "m.feld@meridianfreight.com",
@@ -205,7 +698,17 @@ window.CONTENT = {
    "id": "email/hard/invoice-approval",
    "tier": "hard",
    "label": "Vendor invoice approval",
-   "note": "Everything reads professionally and the domain looks right at a glance -- the tell is subtle: the fake sender domain has an added hyphen (rossum-supply.com vs the vendor's real rossumsupply.com), and the bank details changed without a phone confirmation, which finance policy requires for exactly this reason.",
+   "note": "Everything reads professionally and the domain looks right at a glance. The tell is subtle: the fake domain has an added hyphen (rossum-supply.com vs rossumsupply.com), and the bank details changed without the phone confirmation finance policy requires.",
+   "techniques": [
+    "Payment fraud",
+    "Lookalike domain",
+    "Changed bank details"
+   ],
+   "red_flags": [
+    "Sender domain rossum-supply.com has an extra hyphen",
+    "Bank details changed with no phone confirmation",
+    "Sent late in the day to catch finance in a rush"
+   ],
    "real": {
     "from_name": "Rossum Industrial Supply",
     "from_email": "accounts@rossumsupply.com",

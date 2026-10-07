@@ -1,0 +1,14 @@
+{
+  "from_name": "Alicia Tan via DocuSign",
+  "from_email": "dse@docusign.net",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Please review and sign: Vendor Agreement 2026.pdf",
+  "date": "Thu, Oct 1, 2026 10:05 AM",
+  "body": "Alicia Tan sent you a document to review and sign.\n\nVendor Agreement 2026.pdf\nPlease review and sign by Fri, Oct 9, 2026.\n\nDo not share this email or the access code with anyone. If you do not recognise the sender, do not click the link.\n\nDocuSign, Inc.",
+  "link_text": "REVIEW DOCUMENT",
+  "link_url": "https://app.docusign.com/documents/details/6f1c2a90",
+  "landing": {
+    "src": "assets/docusign-review-real-landing.svg",
+    "alt": "The real DocuSign login at account.docusign.com"
+  }
+}

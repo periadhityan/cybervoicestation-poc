@@ -79,7 +79,28 @@ def copy_media(src: Path, dst: Path, max_width: int) -> None:
 
 
 def media_url(modality: str, tier: str, filename: str) -> str:
-    return f"content/media/{modality}/{tier}/{quote(filename)}"
+    return f"content/media/{modality}/{tier}/{quote(filename, safe='/')}"
+
+
+def localise_email_assets(email: dict, tier_dir: Path, tier: str, round_id: str) -> None:
+    """Copy the pictures an email refers to (banner, images, qr, landing) into the site and
+    point the email at the copies. Paths in the email JSON are relative to its tier folder."""
+    def copy(rel: str) -> str:
+        src = tier_dir / rel
+        if not src.is_file():
+            raise FileNotFoundError(f"email {round_id}: {rel} is referenced but {src} does not exist")
+        dst = MEDIA_OUT / "email" / tier / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dst)
+        return media_url("email", tier, rel)
+
+    if email.get("banner"):
+        email["banner"] = copy(email["banner"])
+    for img in email.get("images") or []:
+        img["src"] = copy(img["src"])
+    for key in ("qr", "landing"):
+        if isinstance(email.get(key), dict) and email[key].get("src"):
+            email[key]["src"] = copy(email[key]["src"])
 
 
 def build_content(max_image_width: int) -> tuple[dict, list[str]]:
@@ -101,10 +122,15 @@ def build_content(max_image_width: int) -> tuple[dict, list[str]]:
                 }
                 if extra.get("what_you_can_do"):
                     entry["todo"] = extra["what_you_can_do"]
+                # shown in the question bank (email game)
+                for key in ("techniques", "red_flags"):
+                    if extra.get(key):
+                        entry[key] = extra[key]
 
                 if modality == "email":
                     for kind in ("real", "fake"):
                         entry[kind] = json.loads((tier_dir / pair[f"{kind}_file"]).read_text(encoding="utf-8"))
+                        localise_email_assets(entry[kind], tier_dir, tier, pair["id"])
                 else:
                     for kind in ("real", "fake"):
                         filename = pair[f"{kind}_file"]

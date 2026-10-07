@@ -1,14 +1,117 @@
 {
   "payroll-update": {
     "subject_label": "Payroll system update notice",
-    "reveal_note": "Both emails look professional, but the fake's sender and link domain (meridianfreiqht.com) swaps an 'i' for a lookalike character -- easy to miss at a glance, which is exactly the point."
+    "reveal_note": "Both emails look professional, but the fake's sender and link domain (meridianfreiqht.com) swaps the g in 'freight' for a q -- easy to miss at a glance, which is exactly the point.",
+    "techniques": [
+      "Credential harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Sender and link domain meridianfreiqht.com (q instead of g)",
+      "Asks you to 're-confirm' bank details",
+      "Deadline of Friday 5pm",
+      "Link goes to a subdomain of the lookalike domain"
+    ]
   },
   "shared-document": {
     "subject_label": "Shared document invite",
-    "reveal_note": "The fake's \"shared document\" link doesn't go to the real file-sharing provider at all -- it points to an unrelated domain disguised to look like one, a common way to harvest login credentials through a fake sign-in page."
+    "reveal_note": "The fake's \"shared document\" link doesn't go to the real file-sharing provider at all -- it points to an unrelated domain disguised to look like one, a common way to harvest login credentials through a fake sign-in page.",
+    "techniques": [
+      "Credential harvesting",
+      "Lookalike domain",
+      "Urgency"
+    ],
+    "red_flags": [
+      "Sender domain clouddocs-share.net is not clouddocs.com",
+      "'Expires in 24 hours' to rush you",
+      "Link goes to a login page over plain http"
+    ]
   },
   "software-renewal": {
     "subject_label": "Software license renewal notice",
-    "reveal_note": "The fake's invoice total and \"past due\" framing are meant to create urgency, the payment link goes to a generic lookalike domain rather than the vendor's own billing portal, and the attached \"invoice\" has a double file extension (.pdf.exe) -- a classic sign it's an executable, not a document."
+    "reveal_note": "The fake's invoice total and \"past due\" framing are meant to create urgency, the payment link goes to a generic lookalike domain rather than the vendor's own billing portal, and the attached \"invoice\" has a double file extension (.pdf.exe) -- a classic sign it's an executable, not a document.",
+    "techniques": [
+      "Urgency",
+      "Risky attachment",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Sender domain designsuite-billing.net is not designsuite.com",
+      "'Past due' and service suspended in 48 hours",
+      "Attachment ends in .pdf.exe: it's a program, not a document",
+      "Payment link goes to the lookalike domain"
+    ]
+  },
+  "docusign-review": {
+    "subject_label": "A DocuSign request from a colleague",
+    "reveal_note": "The fake keeps the colleague's name, but its address is docusign-secure-view.co, not docusign.net, and it adds a 2-hour expiry. Its link opens a page asking for your work email password.",
+    "techniques": [
+      "Urgency",
+      "Credential harvesting",
+      "Lookalike domain",
+      "Impersonated colleague"
+    ],
+    "red_flags": [
+      "Sender domain docusign-secure-view.co is not docusign.net",
+      "'Expires in 2 hours' to rush you",
+      "Link goes to a different domain over plain http",
+      "The page asks for your work email password, which DocuSign never needs to view a document"
+    ],
+    "what_you_can_do": "Check with Alicia on a channel you trust, or open DocuSign yourself, before signing in anywhere."
+  },
+  "gdrive-share": {
+    "subject_label": "A Google Drive share from a colleague",
+    "reveal_note": "The fake uses goog1e-docs-viewer.com (a digit 1 for the l), not google.com. Its page even shows a padlock, which only means the connection is encrypted, not that the site is genuine.",
+    "techniques": [
+      "Credential harvesting",
+      "Lookalike domain",
+      "Padlock on a fake site",
+      "Urgency"
+    ],
+    "red_flags": [
+      "Sender and link domain goog1e-docs-viewer.com (a digit 1 for the 'l')",
+      "'This link will expire in 1 hour'",
+      "The page has a padlock, which proves nothing about who runs it",
+      "It asks you to sign in again to 'confirm access'"
+    ],
+    "what_you_can_do": "Open Drive from your own bookmark or the app instead of the email link."
+  },
+  "singpost-locker": {
+    "subject_label": "A parcel locker collection notice",
+    "reveal_note": "The real QR code is a collection code you show to the locker. The fake asks you to scan a QR code to pay $2.40 within 12 hours, from singpost-collect.top rather than singpost.com, and leads to a card payment page.",
+    "techniques": [
+      "QR code",
+      "Urgency",
+      "Payment harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Sender domain singpost-collect.top is not singpost.com",
+      "A QR code that asks you to pay is a warning sign",
+      "'ON HOLD' and a 12-hour deadline",
+      "Blurry banner that reads 'SingP0st' with a zero",
+      "The QR hides where it leads",
+      "The page asks for card details"
+    ],
+    "what_you_can_do": "Check the parcel on singpost.com or in the SingPost app, never by scanning a code from an email."
+  },
+  "invoice-image": {
+    "subject_label": "A subscription invoice",
+    "reveal_note": "The fake is one big picture with no text, which slips past text filters, from adobe-invoice-center.net, with an .html attachment (a common fake-login trick). The real receipt is ordinary text from adobe.com.",
+    "techniques": [
+      "Image-only email",
+      "Urgency",
+      "Risky attachment",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Sender domain adobe-invoice-center.net is not adobe.com",
+      "The whole message is one image: no real text or link",
+      "A spelling mistake inside the picture ('becuase')",
+      "A blurry picture",
+      "Attachment is an .html file",
+      "Threat that the service will be stopped"
+    ],
+    "what_you_can_do": "Never open an .html attachment. Check billing in your Adobe account directly."
   }
 }
