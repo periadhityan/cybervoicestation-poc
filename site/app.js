@@ -416,11 +416,15 @@
     return `<div class="mini mini--${real ? 'real' : 'fake'}"><div class="mini__top"><span class="mini__name">${noun} ${slot}</span>${tag}</div>${pick}${body}</div>`;
   }
 
-  // The "related policy" box: the case's own policy, else defaultPolicy, else nothing.
-  function policyHtml(r) {
+  // The "related policy" box: the case's own policy, else the station's / global defaultPolicy. With none set it
+  // shows a dashed placeholder if the station asks for one (alwaysShowPolicy), otherwise nothing.
+  function policyHtml(r, st = {}) {
     const s = S();
-    const pol = clean(r.policy) || clean(s.defaultPolicy);
-    return pol ? `<div class="policy">${ICON.doc}<div><p class="policy__label">${esc(s.policyLabel || 'The policy that protects us')}</p><p class="policy__text">${esc(pol)}</p></div></div>` : '';
+    const pol = clean(r.policy) || clean(st.defaultPolicy) || clean(s.defaultPolicy);
+    if (!pol && !st.alwaysShowPolicy) return '';
+    const label = st.policyLabel || s.policyLabel || 'The policy that protects us';
+    const text = pol || clean(st.policyPlaceholder) || clean(s.policyPlaceholder) || 'Policy name goes here';
+    return `<div class="policy${pol ? '' : ' policy--empty'}">${ICON.doc}<div><p class="policy__label">${esc(label)}</p><p class="policy__text">${esc(text)}</p></div></div>`;
   }
 
   /* ------------------------------------------------------------------ screens */
@@ -533,7 +537,7 @@
       const shield = st.shield || {};
       const takeaway = clean(r.takeaway) || clean(shield.takeaway);
       const todo = clean(r.todo) || clean(shield.todo);
-      const policy = policyHtml(r);
+      const policy = policyHtml(r, st);
       const last = state.idx + 1 >= total();
       let verdict;
       if (single) {

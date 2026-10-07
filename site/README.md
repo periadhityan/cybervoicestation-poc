@@ -33,6 +33,11 @@ your usual file share or a USB stick instead.
 
 **Reel or Real?** has its own files, edited by hand (no build step needed, just refresh):
 - `reel-or-real/rounds.js` -- all 39 cases. Keep the same fields; `enabled: false` hides a case.
+- **The policy box.** Every Reel or Real answer screen has a box titled "What policy, if implemented, could have
+  fixed this?". It shows a dashed **"Policy name goes here"** placeholder until you fill it in. Set a policy
+  for one case with `policy_reference` in `rounds.js` (or `policy:` in `add-questions.js`), or one policy for
+  all cases with `defaultPolicy` in the Reel or Real station of `config.js`. The wording and placeholder are
+  `policyLabel` / `policyPlaceholder` there too.
 - `reel-or-real/add-questions.js` -- the easy way to add your own: copy the template at the top,
   fill in 7 fields, save. Mistakes show a "Setup problem" screen naming the case and field.
 - The home screen's **Question bank** lists every case; the staff panel shows how many are still draft.
@@ -57,7 +62,7 @@ game's default tip on the answer screen.
 
 ## Change the wording, scoring or look
 - `config.js` -- titles, subtitles, the three game cards, the lesson text, scoring, ratings, default
-  timer, idle reset, theme. Set `defaultPolicy` to show "The policy that protects us" on every answer screen.
+  timer, idle reset, theme. Set a station's `defaultPolicy` (or the global one) to show a policy box on that station's answer screens.
 - `styles.css` -- colours are the variables at the top (Singtel red `#EE133B`, charcoal `#1E191A`).
 - `assets/singtel-logo.svg` -- set `logoSrc: ""` in `config.js` to hide it.
 

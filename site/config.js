@@ -34,9 +34,13 @@ window.CONFIG = {
   includeTechnical: false,         // * Reel or Real?: also use cases tagged technical-only
   showSourcesOnReveal: true,       // Reel or Real?: show the source line under Real answers
 
-  /* "Related policy" box on every answer screen. Leave defaultPolicy "" to hide the box. */
+  /* "Related policy" box on the answer screen. A station only shows it if it has a policy to show, or
+   * if it sets alwaysShowPolicy (Reel or Real? does, so the box always appears, as a dashed placeholder
+   * until a policy is filled in). Fill it in per case (policy_reference in reel-or-real/rounds.js, or
+   * policy: in reel-or-real/add-questions.js), or set one defaultPolicy here / on a station for all its cases. */
   defaultPolicy: "",
   policyLabel: "The policy that protects us",
+  policyPlaceholder: "Policy name goes here",
 
   theme: "light",                  // * "light" | "dark" | "auto"
   reducedMotion: false,            // * turn off animations
@@ -87,6 +91,10 @@ window.CONFIG = {
       question: "Film plot or real incident?",
       gameMix: { easy: 5, medium: 2, hard: 1 },
       bankLabel: "Reel or Real bank",
+      alwaysShowPolicy: true,
+      policyLabel: "What policy, if implemented, could have fixed this?",
+      policyPlaceholder: "Policy name goes here",
+      defaultPolicy: "",              // one policy for every case, or leave "" and fill in each case
       ratings: [
         { min: 0.85, name: "Reelity Check Master", line: "You can tell the screenplay from the security report. Share what you know with a colleague." },
         { min: 0.60, name: "Threat Spotter",       line: "Sharp instincts. A few plot twists got you; the Control Shields are worth another look." },
