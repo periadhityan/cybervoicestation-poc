@@ -201,6 +201,7 @@ def build_single_file(content: dict) -> Path:
     css = (SITE / "styles.css").read_text(encoding="utf-8")
     config = (SITE / "config.js").read_text(encoding="utf-8")
     app = (SITE / "app.js").read_text(encoding="utf-8")
+    effects = (SITE / "effects.js").read_text(encoding="utf-8")
     rounds = (SITE / "reel-or-real" / "rounds.js").read_text(encoding="utf-8")
     my_questions = (SITE / "reel-or-real" / "add-questions.js").read_text(encoding="utf-8")
 
@@ -216,6 +217,7 @@ def build_single_file(content: dict) -> Path:
         '<script src="content/content.js"></script>': inline_script(embedded),
         '<script src="reel-or-real/rounds.js"></script>': inline_script(rounds),
         '<script src="reel-or-real/add-questions.js"></script>': inline_script(my_questions),
+        '<script src="effects.js"></script>': inline_script(effects),
         '<script src="app.js"></script>': inline_script(app),
     }
     for needle, replacement in replacements.items():

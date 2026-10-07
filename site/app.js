@@ -302,7 +302,40 @@
     $$('.pick, .tile', stage).forEach((b) => b.classList.toggle('is-chosen', (b.dataset.pick || b.dataset.choice) === choice));
     const box = $('.pair, .answers', stage); if (box) box.classList.add('is-locked');
     const reduced = document.documentElement.dataset.motion === 'reduced';
+    const fx = !correct && choice && r.mode !== 'single' ? curStation().fakeEffect : '';
+    if (fx && window.FX) {
+      const tok = ++fxTok;
+      state.advanceId = setTimeout(() => {
+        FX.takeover(fx, takeoverCopy(fx, r)).then((ok) => { if (ok && tok === fxTok && state.screen === 'round') go('reveal'); });
+      }, reduced ? 0 : 320);
+      return;
+    }
+    if (correct && window.FX) {
+      const b = $('.pick.is-chosen, .tile.is-chosen', stage);
+      if (b) { const q = b.getBoundingClientRect(); FX.sparkle(q.left + q.width / 2, q.top + q.height / 2); }
+    }
     state.advanceId = setTimeout(() => go('reveal'), reduced ? 120 : choice ? 420 : 250);
+  }
+
+  let fxTok = 0;
+
+  // What the "You got phished" screen says it stole, built from the email the player actually trusted.
+  function takeoverCopy(fx, r) {
+    const fakeSlot = r.realSlot === 'A' ? 'B' : 'A', f = (r.items && r.items[fakeSlot]) || {};
+    if (fx === 'ai') {
+      const flags = (r.red_flags || []).slice(0, 2).map((t) => ({ t }));
+      return { title: 'FOOLED<br>BY AI', sub: `You picked the generated ${esc((curStation().noun || 'photo'))}. The real one was ${r.realSlot}.`, hold: 4200, gap: 520, firstLine: 700,
+        foot: 'Training moment. Tap anywhere to continue.',
+        lines: [{ t: `Photo ${fakeSlot}: AI-generated`, cls: 'bad' }, ...flags, { t: 'Look closer next time: hands, text, reflections' }] };
+    }
+    const lines = [];
+    if (f.link_url) lines.push({ t: `Link opened: ${linkHost(f.link_url)}` });
+    else if (f.qr) lines.push({ t: 'QR code scanned: fake sign-in page' });
+    else if (f.attachment_name) lines.push({ t: `Attachment opened: ${f.attachment_name}` });
+    else lines.push({ t: 'Reply sent: the attacker now has your answer' });
+    lines.push({ t: `Sender was ${f.from_email || 'unknown'}`, cls: 'bad' });
+    lines.push({ t: 'Password typed into a fake page' }, { t: 'Your whole team is next', cls: 'bad' });
+    return { title: 'YOU GOT<br>PHISHED!', sub: 'You picked the fake email.', lines, hold: 4800 };
   }
 
   function next() {
@@ -593,7 +626,7 @@
         <div class="final">
           <article class="score card">
             <p class="mono">${esc(st.title || 'Your score')}</p>
-            <p class="score__num">${score}<small>/ ${totalPts}</small></p>
+            <p class="score__num"><span id="scoreN">${score}</span><small>/ ${totalPts}</small></p>
             <p class="score__count">${right} of ${total()} correct</p>
             <h1 class="score__rating">${esc(rating.name)}</h1>
             <p class="score__line">${esc(rating.line)}</p>
@@ -738,6 +771,7 @@
     const root = document.documentElement;
     root.dataset.theme = s.theme === 'auto' ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : (s.theme === 'dark' ? 'dark' : 'light');
     root.dataset.motion = s.reducedMotion ? 'reduced' : 'full';
+    if (window.FX) FX.soundEnabled = !!s.sound;
   }
 
   // Dense cards (emails, clue lists, lessons) shrink their text a little rather than overflow; a card that
@@ -761,6 +795,7 @@
   }
 
   function render() {
+    if (window.FX) FX.stop();
     applyEnv();
     stage.innerHTML = state.errors.length ? SCREENS.error(state.errors) : SCREENS[state.screen]();
     hydrateMedia();
@@ -795,10 +830,48 @@
       const secs = Number(s.revealAutoAdvanceSeconds) || 0;
       if (secs) countdown(secs, (left) => `Next in ${left}s`, next);
     }
+    if (state.screen === 'reveal') streakChip();
     if (state.screen === 'final') {
+      celebrate();
       const secs = Number(s.finalAutoResetSeconds) || 0;
       if (secs) countdown(secs, (left) => `Next player in ${left}s`, toHub);
     }
+  }
+
+  // Three or more right in a row earns a small flame chip on the reveal screen.
+  function streakChip() {
+    let n = 0;
+    for (let i = state.idx; i >= 0 && state.results[i] && state.results[i].correct; i--) n++;
+    if (n < 3) return;
+    const chip = document.createElement('div');
+    chip.className = 'streak';
+    chip.setAttribute('aria-hidden', 'true');
+    chip.innerHTML = `<svg viewBox="0 0 24 32" aria-hidden="true"><path d="M12 1c1 6 8 9 8 18a8 8 0 0 1-16 0c0-4 2-6 3-8 .5 3 2 4 3 4 0-5-1-9 2-14z"/></svg><b>${n}</b> in a row`;
+    stage.appendChild(chip);
+  }
+
+  // Final screen: the score counts up, then the room celebrates in proportion to how well they did.
+  function celebrate() {
+    const el = $('#scoreN'), card = $('.score', stage);
+    const score = earned(), totalPts = maxScore(), ratio = totalPts ? score / totalPts : 0;
+    const reduced = document.documentElement.dataset.motion === 'reduced';
+    const perfect = totalPts > 0 && score >= totalPts;
+    if (perfect && card) card.insertAdjacentHTML('afterbegin', '<p class="perfect">Perfect score</p>');
+    const done = () => {
+      if (!window.FX || state.screen !== 'final') return;
+      if (ratio >= 0.85) FX.fireworks({ perfect });
+      else if (ratio >= 0.6) FX.confetti();
+    };
+    if (!el || reduced || score === 0) { if (!reduced) setTimeout(done, 300); return; }
+    const t0 = performance.now(), dur = Math.min(1500, 500 + score * 12), tok = ++fxTok;
+    const tick = (now) => {
+      if (tok !== fxTok || state.screen !== 'final' || !el.isConnected) return;
+      const k = Math.min(1, (now - t0) / dur);
+      el.textContent = Math.round(score * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(tick); else { card && card.classList.add('score--landed'); done(); }
+    };
+    el.textContent = '0';
+    requestAnimationFrame(tick);
   }
 
   function countdown(secs, label, done) {
@@ -927,6 +1000,7 @@
     ['idleResetSeconds', 'Walk-away reset', [[0, 'Never'], [60, '60s'], [90, '90s'], [180, '3 min']]],
     ['theme', 'Theme', [['light', 'Light'], ['dark', 'Dark'], ['auto', 'Auto']]],
     ['reducedMotion', 'Animations', [[false, 'On'], [true, 'Off']]],
+    ['sound', 'Sound effects', [[false, 'Off'], [true, 'On']]],
     ['includeTechnical', 'Technical cases', [[false, 'Hide'], [true, 'Include']]],
   ];
 

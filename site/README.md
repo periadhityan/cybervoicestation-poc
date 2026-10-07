@@ -24,6 +24,18 @@ Keys: `1`-`3` pick a game on the home screen; `1` = left item / Reel, `2` = righ
 Touchscreen: press and hold the small "Cyber Awareness" label (top-left) for 1.5 s for the staff panel.
 Only anonymous counters (plays, best score, recently shown rounds) are kept, in the browser's localStorage.
 
+## The visual effects
+All in `effects.js`, no extra files:
+- **Fireworks** on the score screen at 85% or above (a shield-shaped burst at a perfect 100, with a "Perfect score" badge); **confetti** from 60%.
+- **"You got phished"** takes over the screen when a player picks the phishing email. The fake terminal lists what
+  *that* fake email would have done (its real domain, link, QR code or attachment). Picking the AI photo gets a milder "Fooled by AI".
+  Tap, or press Enter, to skip; it moves on by itself after about 5 seconds. Turn it off per station by deleting `fakeEffect` in `config.js`.
+- Sparkles on a correct answer, a flame chip for 3 right in a row, and the score counting up.
+- Staff panel: **Animations Off** replaces everything with still versions (use it if anyone is sensitive to motion; it is also
+  switched on automatically when the computer asks for reduced motion). **Sound effects** (off by default) adds synthesised
+  pops, booms and a fanfare; browsers only allow sound after someone has touched the screen.
+- Safety by design: nothing flashes more than twice a second, no full-screen strobe, and the one colour burst when the takeover lands fades once.
+
 ## Send it to another computer
 Send **`CyberRoom.zip`** (the whole folder, about 5 MB) or the single **`CyberRoom.html`** (about 8 MB).
 Nothing else needs installing on the other computer. If email blocks the attachment, share it through

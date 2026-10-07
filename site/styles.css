@@ -660,3 +660,113 @@ video.mini__media { object-fit: contain; }
   .tile--real:hover .redact { opacity: 0; }
   .tile--real:hover .declass { opacity: 1; }
 }
+
+/* ===================================================================== effects (effects.js) */
+.fx-canvas { position: fixed; inset: 0; z-index: 900; pointer-events: none; }
+
+/* Three or more correct in a row. */
+.streak {
+  position: absolute; top: 3.3rem; right: 6rem; z-index: 5;
+  display: inline-flex; align-items: center; gap: .9rem;
+  padding: .9rem 2rem .9rem 1.4rem; border-radius: 99rem;
+  background: linear-gradient(135deg, #FF8A3D, var(--red)); color: #fff;
+  font-size: 2.2rem; font-weight: 800; letter-spacing: .01em;
+  box-shadow: 0 .6rem 2rem rgba(238, 19, 59, .35);
+  animation: streakIn .6s cubic-bezier(.2, 1.4, .4, 1) both;
+}
+.streak svg { width: 2rem; height: 2.6rem; fill: #FFE29A; transform-origin: 50% 90%; animation: flame 1.1s ease-in-out infinite; }
+.streak b { font-size: 3rem; line-height: 1; }
+@keyframes streakIn { from { transform: translateY(-1.5rem) scale(.6); opacity: 0; } }
+@keyframes flame { 50% { transform: scale(1.12, 1.2) rotate(-4deg); } }
+
+/* A perfect score. */
+.perfect {
+  position: absolute; top: 2.4rem; right: 2.6rem; margin: 0; padding: .6rem 2rem; border-radius: 99rem;
+  font-size: 1.7rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #3b2600; transform-origin: 100% 0;
+  background: linear-gradient(100deg, #FFC24A 0%, #FFF0B8 45%, #FFC24A 60%, #E39A12 100%); background-size: 220% 100%;
+  box-shadow: 0 0 0 .3rem rgba(255, 194, 74, .3), 0 .8rem 2.4rem rgba(227, 154, 18, .35);
+  animation: perfectIn .7s cubic-bezier(.2, 1.4, .4, 1) both, sheen 3.2s ease-in-out .8s infinite;
+}
+@keyframes perfectIn { from { transform: scale(.4) rotate(-6deg); opacity: 0; } }
+@keyframes sheen { 0%, 55% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+.score { position: relative; }
+.score--landed .score__num { animation: landed .5s ease-out; }
+@keyframes landed { 40% { transform: scale(1.12); } }
+
+/* ---------------------------------------------------------------- takeover */
+.takeover {
+  --tk: #FF2D55; --tk-deep: #3a0612; --tk-bg: #12030a; --tk-glow: rgba(255, 45, 85, .55);
+  position: fixed; inset: 0; z-index: 1000; overflow: hidden; cursor: pointer;
+  display: grid; grid-template-rows: 1fr auto auto; justify-items: center; align-items: center;
+  padding: 4rem 6rem 3rem;
+  background: radial-gradient(ellipse at 50% 40%, var(--tk-deep) 0%, var(--tk-bg) 70%);
+  color: #fff; font-family: var(--font);
+  animation: tkIn .18s ease-out both, tkShake .5s cubic-bezier(.36, .07, .19, .97) .05s both;
+}
+.takeover--ai { --tk: #22D3EE; --tk-deep: #06222d; --tk-bg: #03090d; --tk-glow: rgba(34, 211, 238, .5); }
+.takeover--out { animation: tkOut .38s ease-in both; }
+@keyframes tkIn { from { opacity: 0; } }
+@keyframes tkOut { to { opacity: 0; transform: scale(1.04); } }
+@keyframes tkShake {
+  10%, 90% { transform: translate(-.2rem, 0); } 20%, 80% { transform: translate(.5rem, .3rem); }
+  30%, 50%, 70% { transform: translate(-.9rem, -.3rem); } 40%, 60% { transform: translate(.9rem, .2rem); }
+}
+/* One soft burst of colour as it lands, fading over half a second. Never repeated. */
+.takeover::after { content: ""; position: absolute; inset: 0; background: var(--tk); mix-blend-mode: screen; opacity: 0; pointer-events: none; animation: tkImpact .55s ease-out .05s both; }
+@keyframes tkImpact { from { opacity: .5; } to { opacity: 0; } }
+
+.takeover__rain { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .55; }
+.takeover__scan { position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .22) 0 .2rem, transparent .2rem .5rem); }
+.takeover__scan::after { content: ""; position: absolute; left: 0; right: 0; height: 14rem; top: -14rem; background: linear-gradient(180deg, transparent, var(--tk-glow), transparent); opacity: .35; animation: tkSweep 4.2s linear infinite; }
+@keyframes tkSweep { to { transform: translateY(110rem); } }
+.takeover__vignette { position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 22rem 4rem var(--tk-glow); animation: tkBreathe 1.4s ease-in-out infinite; }
+@keyframes tkBreathe { 50% { opacity: .45; } }
+
+.takeover__main { position: relative; text-align: center; align-self: end; padding-bottom: 1.4rem; }
+.takeover__title {
+  position: relative; margin: 0; font-size: 17rem; line-height: .86; font-weight: 900; letter-spacing: -.02em; text-transform: uppercase;
+  color: #fff; text-shadow: 0 0 2.4rem var(--tk-glow), 0 0 7rem var(--tk);
+  animation: tkSlam .5s cubic-bezier(.2, 1.6, .35, 1) .05s both;
+}
+@keyframes tkSlam { from { transform: scale(3.2); opacity: 0; filter: blur(1.2rem); } 60% { filter: none; } }
+/* Colour-split ghost layers that twitch sideways: small, spatial, and never a flash. */
+.takeover__title::before, .takeover__title::after {
+  content: attr(data-text); white-space: pre; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen; text-shadow: none;
+}
+.takeover__title::before { color: #00F0FF; animation: tkGlitchA 2.4s steps(1) .6s infinite; }
+.takeover__title::after { color: #FF2D55; animation: tkGlitchB 2.4s steps(1) .7s infinite; }
+@keyframes tkGlitchA {
+  0%, 100% { transform: none; clip-path: inset(0 0 100% 0); } 8% { transform: translate(-.9rem, .2rem); clip-path: inset(10% 0 62% 0); }
+  16% { transform: translate(.8rem, 0); clip-path: inset(58% 0 12% 0); } 24% { transform: none; clip-path: inset(0 0 100% 0); }
+  62% { transform: translate(-1.2rem, 0); clip-path: inset(34% 0 38% 0); } 70% { transform: none; clip-path: inset(0 0 100% 0); }
+}
+@keyframes tkGlitchB {
+  0%, 100% { transform: none; clip-path: inset(0 0 100% 0); } 12% { transform: translate(1rem, -.2rem); clip-path: inset(46% 0 24% 0); }
+  20% { transform: translate(-.7rem, 0); clip-path: inset(6% 0 70% 0); } 28% { transform: none; clip-path: inset(0 0 100% 0); }
+  66% { transform: translate(1.3rem, 0); clip-path: inset(70% 0 6% 0); } 74% { transform: none; clip-path: inset(0 0 100% 0); }
+}
+.takeover__sub { position: relative; margin: 1.8rem 0 0; font-size: 3rem; font-weight: 700; color: #fff; text-shadow: 0 .2rem 1.2rem rgba(0, 0, 0, .8); animation: rise .5s ease-out .7s both; }
+
+.takeover__log {
+  position: relative; list-style: none; margin: 0; padding: 1.6rem 2.4rem; width: 88rem; min-height: 16rem;
+  background: rgba(0, 0, 0, .62); border: .2rem solid var(--tk); border-radius: 1rem;
+  font-family: var(--mono); font-size: 2.1rem; line-height: 1.6; color: #fff; text-align: left;
+  box-shadow: 0 0 3rem var(--tk-glow);
+}
+.takeover__log li { animation: tkType .35s steps(14) both; overflow-wrap: anywhere; }
+.takeover__log li.bad { color: var(--tk); font-weight: 700; }
+.takeover__log li:last-child::after { content: "\2588"; margin-left: .5rem; animation: tkCaret 1s steps(1) infinite; }
+@keyframes tkType { from { clip-path: inset(0 100% 0 0); } }
+@keyframes tkCaret { 50% { opacity: 0; } }
+.takeover__sim { position: relative; margin: 1.6rem 0 0; padding: .6rem 2rem; font-family: var(--mono); font-size: 1.7rem; font-weight: 700; letter-spacing: .06em; color: #fff; background: rgba(255, 255, 255, .14); border-radius: 99rem; }
+
+/* The phished fish, dangling from the top on a line. */
+.takeover__hook { position: absolute; top: 0; right: 9rem; width: 12rem; height: auto; transform-origin: 50% 0; animation: tkSwing 2.6s ease-in-out infinite alternate; filter: drop-shadow(0 0 1.4rem var(--tk-glow)); }
+.takeover__fish { animation: tkWiggle .9s ease-in-out infinite alternate; transform-origin: 80px 270px; }
+@keyframes tkSwing { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
+@keyframes tkWiggle { from { transform: rotate(-6deg); } to { transform: rotate(6deg); } }
+
+/* Animations off (staff panel or the computer's setting): the same message as a still card. */
+.takeover--still, .takeover--still *, .takeover--still::after { animation: none !important; }
+.takeover--still::after, .takeover--still .takeover__scan::after { display: none; }
+.takeover--still .takeover__title::before, .takeover--still .takeover__title::after { display: none; }
