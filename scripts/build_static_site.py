@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the standalone "Real or Fake?" site in site/ from the shared content library.
+"""Build the standalone Cyber Awareness site in site/ from the shared content library.
 
 The site is plain HTML/CSS/JS that opens by double-clicking site/index.html -- no
 server, no install, no network. A page opened from file:// can't list folders or
@@ -173,6 +173,8 @@ def build_single_file(content: dict) -> Path:
     css = (SITE / "styles.css").read_text(encoding="utf-8")
     config = (SITE / "config.js").read_text(encoding="utf-8")
     app = (SITE / "app.js").read_text(encoding="utf-8")
+    rounds = (SITE / "reel-or-real" / "rounds.js").read_text(encoding="utf-8")
+    my_questions = (SITE / "reel-or-real" / "add-questions.js").read_text(encoding="utf-8")
 
     logo = SITE / "assets" / "singtel-logo.svg"
     if logo.exists():
@@ -184,6 +186,8 @@ def build_single_file(content: dict) -> Path:
         '<link rel="stylesheet" href="styles.css">': "<style>\n" + css + "\n</style>",
         '<script src="config.js"></script>': inline_script(config),
         '<script src="content/content.js"></script>': inline_script(embedded),
+        '<script src="reel-or-real/rounds.js"></script>': inline_script(rounds),
+        '<script src="reel-or-real/add-questions.js"></script>': inline_script(my_questions),
         '<script src="app.js"></script>': inline_script(app),
     }
     for needle, replacement in replacements.items():

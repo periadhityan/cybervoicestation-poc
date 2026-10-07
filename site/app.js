@@ -1,6 +1,7 @@
-/* Real or Fake? - Cyber Awareness station. Plain JS, no dependencies, works from file://.
- * Game engine adapted from the "Reel or Real?" booth project; rounds here compare two
- * items (A and B) and the player picks which one is real. */
+/* Cyber Awareness station. Plain JS, no dependencies, works from file://.
+ * Game engine adapted from the "Reel or Real?" booth project. Two kinds of station:
+ *   - "pair" (default): two items, A and B, and the player picks which one is real.
+ *   - "single" (Reel or Real?): one case, and the player answers Reel or Real. */
 (() => {
   'use strict';
 
@@ -8,6 +9,7 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  // Placeholders such as "[POLICY / STANDARD NAME]" must never reach the screen.
   const clean = (v) => { if (typeof v !== 'string') return ''; const t = v.trim(); return !t || t.startsWith('[') ? '' : t; };
   const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -21,6 +23,9 @@
     mail: svg('<rect x="5" y="10" width="38" height="28" rx="4"/><path d="M6 14l18 14 18-14"/>', 'ico'),
     video: svg('<rect x="5" y="10" width="38" height="28" rx="5"/><path d="M20 18l11 6-11 6z" fill="currentColor"/>', 'ico'),
     image: svg('<rect x="5" y="9" width="38" height="30" rx="4"/><circle cx="17" cy="19" r="3.5"/><path d="M7 35l11-10 8 7 6-6 11 10"/>', 'ico'),
+    // Film reel: the spokes group spins while the Reel tile is hovered.
+    film: svg('<path d="M24 42h20"/><circle cx="24" cy="24" r="18"/><g class="reel-spin"><circle cx="24" cy="14" r="4"/><circle cx="33.5" cy="20.9" r="4"/><circle cx="29.9" cy="32.1" r="4"/><circle cx="18.1" cy="32.1" r="4"/><circle cx="14.5" cy="20.9" r="4"/><circle cx="24" cy="24" r="1.5" fill="currentColor"/></g>', 'ico'),
+    file: svg('<path d="M6 15a3 3 0 0 1 3-3h10l4 5h16a3 3 0 0 1 3 3v17a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3z"/><path d="M13 26h14M13 33h8" stroke-width="4"/>', 'ico'),
     shield: svg('<path d="M24 5l15 5.5V22c0 9-6 15.5-15 20C15 37.500 9 31 9 22V10.500z"/><path d="M17 24l5 5 9-10"/>'),
     check: svg('<circle cx="24" cy="24" r="18"/><path d="M15 25l6 6 12-13"/>'),
     cross: svg('<circle cx="24" cy="24" r="18"/><path d="M17 17l14 14M31 17L17 31"/>'),
@@ -28,6 +33,7 @@
     clock: svg('<circle cx="24" cy="24" r="18"/><path d="M24 13v11l7 5"/>'),
     arrow: svg('<path d="M10 24h27M27 14l10 10-10 10"/>'),
     home: svg('<path d="M7 22L24 8l17 14"/><path d="M12 19v20h9V29h6v10h9V19"/>'),
+    list: svg('<path d="M18 13h22M18 24h22M18 35h22"/><path d="M9 13v0M9 24v0M9 35v0" stroke-width="5"/>'),
     replay: svg('<path d="M10 24a14 14 0 1 0 5-10.700"/><path d="M10 8v9h9"/>'),
     zoom: svg('<circle cx="21" cy="21" r="12"/><path d="M30 30l11 11M15 21h12M21 15v12"/>'),
   };
@@ -45,23 +51,90 @@
   const S = () => Object.assign({}, CFG, P.settings);
   const stations = () => (Array.isArray(CFG.stations) ? CFG.stations : []);
   const stationCfg = (key) => stations().find((s) => s.key === key);
-  const poolOf = (key) => (window.CONTENT && Array.isArray(window.CONTENT[key]) ? window.CONTENT[key] : []);
+  const isSingle = (key) => (stationCfg(key) || {}).mode === 'single';
+  const DIFFS = ['easy', 'medium', 'hard'];
+  const diffOf = (r) => (DIFFS.includes(r.tier) ? r.tier : 'medium');
+
+  /* ------------------------------------------------------------------ Reel or Real: add-questions.js merged into ROUNDS, then normalised */
+  const addErrs = [];
+  function mergeMyQuestions() {
+    const list = window.MY_QUESTIONS;
+    if (list == null || !Array.isArray(window.ROUNDS)) return;
+    if (!Array.isArray(list)) { addErrs.push('add-questions.js: MY_QUESTIONS must be a list: [ ... ].'); return; }
+    list.forEach((q, i) => {
+      const tag = `add-questions.js, question ${i + 1}${q && q.title ? ` ("${q.title}")` : ''}`;
+      if (!q || typeof q !== 'object') { addErrs.push(`${tag}: is not a { ... } block.`); return; }
+      const ans = String(q.answer || '').trim().toUpperCase();
+      const missing = ['answer', 'title', 'clues', 'reveal', 'year', 'lesson', 'todo'].filter((k) => q[k] == null || q[k] === '');
+      if (missing.length) addErrs.push(`${tag}: missing ${missing.map((k) => `"${k}"`).join(', ')}.`);
+      if (q.answer && ans !== 'REEL' && ans !== 'REAL') addErrs.push(`${tag}: answer must be "REEL" or "REAL".`);
+      if (q.clues != null && (!Array.isArray(q.clues) || q.clues.length < 3 || q.clues.length > 4)) addErrs.push(`${tag}: needs 3 or 4 clues.`);
+      window.ROUNDS.push({
+        id: q.id || `ADD-${String(i + 1).padStart(2, '0')}`, added: true,
+        enabled: q.off !== true, status: q.status || 'draft',
+        mystery_title: q.title, answer: ans, difficulty: q.difficulty || 'medium', audience: ['all'], themes: q.themes || [],
+        clue: q.hint || '', evidence: q.clues, reveal_title: q.reveal, year: q.year,
+        weakness: q.why || '', control_theme: '', control_shield: q.shield || '',
+        what_you_can_do: q.todo, takeaway: q.lesson,
+        sources: q.source ? [q.source] : [], sensitivity: 'low', policy_reference: q.policy || null,
+      });
+    });
+  }
+
+  // Reel or Real cases use their own field names; map them onto the fields the engine shares with the other stations.
+  const normalizeReel = (r) => ({
+    mode: 'single', id: r.id, added: !!r.added,
+    tier: DIFFS.includes(r.difficulty) ? r.difficulty : 'medium',
+    label: r.mystery_title, clue: r.clue || '', evidence: Array.isArray(r.evidence) ? r.evidence : [],
+    answer: r.answer, reveal_title: r.reveal_title, year: r.year, weakness: r.weakness || '',
+    takeaway: r.takeaway || '', todo: r.what_you_can_do || '', theme: r.control_theme || '',
+    sources: Array.isArray(r.sources) ? r.sources : [], policy: r.policy_reference || null,
+    status: r.status, enabled: r.enabled !== false, audience: r.audience || ['all'], themes: r.themes || [],
+  });
+  let REEL = [];
+
+  /* ------------------------------------------------------------------ pools */
+  const reelStationKey = () => (stations().find((s) => s.mode === 'single') || {}).key;
+  function poolOf(key) {
+    if (isSingle(key)) return REEL.filter((r) => r.enabled && (S().includeTechnical || r.audience.includes('all')));
+    return window.CONTENT && Array.isArray(window.CONTENT[key]) ? window.CONTENT[key] : [];
+  }
   const isPlaceholder = (r) => /placeholder/i.test(r.label || '');
 
   /* ------------------------------------------------------------------ validation */
   function validate() {
-    const errs = [];
+    const errs = addErrs.slice();
     if (!window.CONFIG) errs.push('config.js is missing or has an error.');
     else if (!stations().length) errs.push('config.js has no "stations" list.');
     if (!window.CONTENT) errs.push('content/content.js is missing. Run: python3 scripts/build_static_site.py');
-    else if (!stations().some((s) => poolOf(s.key).length)) errs.push('content/content.js has no rounds. Add content under app/static/content/ and run: python3 scripts/build_static_site.py');
+    if (window.ROUNDS != null) {
+      if (!Array.isArray(window.ROUNDS)) errs.push('reel-or-real/rounds.js: ROUNDS must be a list.');
+      else {
+        const ids = new Set();
+        window.ROUNDS.forEach((r, i) => {
+          const tag = r && r.id ? r.id : `round #${i + 1}`;
+          if (r && r.added) { if (ids.has(r.id)) errs.push(`${tag}: duplicate id.`); ids.add(r.id); return; } // checked in mergeMyQuestions
+          ['id', 'mystery_title', 'answer', 'evidence', 'reveal_title', 'year', 'takeaway', 'what_you_can_do'].forEach((k) => { if (r[k] == null || r[k] === '') errs.push(`reel-or-real/rounds.js, ${tag}: missing "${k}".`); });
+          if (r.answer !== 'REEL' && r.answer !== 'REAL') errs.push(`${tag}: answer must be "REEL" or "REAL".`);
+          if (!Array.isArray(r.evidence) || r.evidence.length < 3 || r.evidence.length > 4) errs.push(`${tag}: needs 3 or 4 evidence bullets.`);
+          if (ids.has(r.id)) errs.push(`${tag}: duplicate id.`);
+          ids.add(r.id);
+        });
+      }
+    }
+    if (!errs.length && !stations().some((s) => poolOf(s.key).length)) errs.push('No rounds are available. Run: python3 scripts/build_static_site.py');
     return errs;
   }
 
   /* ------------------------------------------------------------------ difficulty mix + points */
-  const DIFFS = ['easy', 'medium', 'hard'];
-  const diffOf = (r) => (DIFFS.includes(r.tier) ? r.tier : 'medium');
-  function gameMix() { const m = S().gameMix || {}; const o = {}; DIFFS.forEach((d) => (o[d] = Math.max(0, Number(m[d]) || 0))); if (!DIFFS.some((d) => o[d])) Object.assign(o, { easy: 4, medium: 2, hard: 1 }); return o; }
+  function gameMix(key) {
+    const m = (stationCfg(key) || {}).gameMix || S().gameMix || {};
+    const o = {};
+    DIFFS.forEach((d) => (o[d] = Math.max(0, Number(m[d]) || 0)));
+    if (!DIFFS.some((d) => o[d])) Object.assign(o, { easy: 4, medium: 2, hard: 1 });
+    return o;
+  }
+  const gameSize = (key) => DIFFS.reduce((a, d) => a + gameMix(key)[d], 0);
   const basePoints = () => Object.assign({ easy: 10, medium: 15, hard: 20 }, S().points || {});
   const maxScore = () => Number(S().totalScore) || 100;
 
@@ -79,9 +152,9 @@
   const earned = () => state.results.reduce((a, r, i) => a + (r && r.correct ? state.points[i] || 0 : 0), 0);
 
   /* ------------------------------------------------------------------ round selection */
-  // Per tier: prefer rounds this computer hasn't shown recently, then fill up from the rest.
-  function pickRounds(key) {
-    const pool = poolOf(key), m = gameMix();
+  // Pair stations: per tier, prefer rounds this computer hasn't shown recently, then fill from the rest.
+  function pickPair(key) {
+    const pool = poolOf(key), m = gameMix(key);
     const seen = new Set(P.seen[key] || []);
     const picks = [];
     DIFFS.forEach((d) => {
@@ -104,11 +177,53 @@
     return out;
   }
 
+  // Reel or Real: order a game easy -> medium -> hard where possible, never 3 identical answers in a row.
+  function orderedSingle(list) {
+    const rank = (r) => DIFFS.indexOf(diffOf(r));
+    let best = null, bestInv = Infinity;
+    for (let t = 0; t < 120; t++) {
+      const o = t < 40 ? shuffle(list).sort((a, b) => rank(a) - rank(b)) : shuffle(list);
+      if (o.length > 1 && rank(o[0]) === 2 && !o.every((r) => rank(r) === 2)) continue;
+      let ok = true;
+      for (let i = 2; ok && i < o.length; i++) if (o[i].answer === o[i - 1].answer && o[i].answer === o[i - 2].answer) ok = false;
+      if (!ok) continue;
+      let inv = 0;
+      for (let i = 0; i < o.length; i++) for (let j = i + 1; j < o.length; j++) if (rank(o[i]) > rank(o[j])) inv++;
+      if (inv < bestInv) { best = o; bestInv = inv; if (!inv) break; }
+    }
+    return best;
+  }
+
+  // Reel or Real: a balanced draw. About half Reel / half Real, at most 2 per theme, prefers cases not seen recently.
+  function pickSingle(key) {
+    const pool = poolOf(key), m = gameMix(key), n = gameSize(key);
+    const seen = new Set(P.seen[key] || []);
+    let best = null, bestScore = -Infinity;
+    for (let a = 0; a < 300; a++) {
+      const picks = [];
+      let short = false;
+      DIFFS.forEach((d) => { const c = shuffle(pool.filter((r) => diffOf(r) === d)).slice(0, m[d]); if (c.length < m[d]) short = true; picks.push(...c); });
+      if (short) break;
+      const o = orderedSingle(picks);
+      if (!o) continue;
+      const reel = o.filter((r) => r.answer === 'REEL').length;
+      const themes = {};
+      o.forEach((r) => { const t = r.themes[0] || r.id; themes[t] = (themes[t] || 0) + 1; });
+      let score = Object.keys(themes).length;
+      if (Object.values(themes).some((c) => c > 2)) score -= 100;
+      score -= Math.max(0, Math.abs(reel - (o.length - reel)) - 1) * 60;
+      score -= o.filter((r) => seen.has(r.id)).length * 10;
+      if (score > bestScore) { bestScore = score; best = o; }
+    }
+    return best || shuffle(pool).slice(0, n);
+  }
+
   function buildRounds(key) {
-    const picks = pickRounds(key);
+    if (isSingle(key)) return pickSingle(key);
+    const picks = pickPair(key);
     const sides = assignSides(picks.length);
     return picks.map((r, i) => ({
-      id: r.id, tier: r.tier, label: r.label, note: r.note, todo: r.todo || '',
+      mode: 'pair', id: r.id, tier: r.tier, label: r.label, note: r.note, todo: r.todo || '',
       realSlot: sides[i],
       items: sides[i] === 'A' ? { A: r.real, B: r.fake } : { A: r.fake, B: r.real },
     }));
@@ -132,12 +247,12 @@
   }
   function hydrateMedia() {
     const r = cur();
-    if (!r) return;
+    if (!r || !r.items) return;
     $$('[data-media]', stage).forEach((el) => { el.src = mediaSrc(r.items[el.dataset.media]); });
   }
 
   /* ------------------------------------------------------------------ state */
-  const state = { screen: 'hub', station: null, rounds: [], points: [], idx: 0, results: [], locked: false, deadline: 0, timerId: 0, advanceId: 0, teaserId: 0, lastActive: Date.now(), errors: [] };
+  const state = { screen: 'hub', station: null, rounds: [], points: [], idx: 0, results: [], locked: false, deadline: 0, timerId: 0, advanceId: 0, teaserId: 0, lastActive: Date.now(), errors: [], bankShow: false };
   const cur = () => state.rounds[state.idx];
   const total = () => state.rounds.length;
   const curStation = () => stationCfg(state.station) || {};
@@ -152,7 +267,7 @@
     if (!state.rounds.length) return;
     state.points = computePoints(state.rounds);
     state.idx = 0; state.results = []; state.locked = false;
-    P.seen[key] = [...state.rounds.map((r) => r.id), ...(P.seen[key] || [])].slice(0, state.rounds.length * 2);
+    P.seen[key] = [...state.rounds.map((r) => r.id), ...(P.seen[key] || [])].slice(0, Math.max(12, state.rounds.length * 2));
     save();
     go('round');
   }
@@ -162,10 +277,10 @@
     state.locked = true;
     clearInterval(state.timerId); state.timerId = 0;
     const r = cur();
-    const correct = !!choice && choice === r.realSlot;
+    const correct = !!choice && choice === (r.mode === 'single' ? r.answer : r.realSlot);
     state.results[state.idx] = { id: r.id, choice: choice || null, correct, timedOut: !choice };
-    $$('.pick', stage).forEach((b) => b.classList.toggle('is-chosen', b.dataset.pick === choice));
-    const pair = $('.pair', stage); if (pair) pair.classList.add('is-locked');
+    $$('.pick, .tile', stage).forEach((b) => b.classList.toggle('is-chosen', (b.dataset.pick || b.dataset.choice) === choice));
+    const box = $('.pair, .answers', stage); if (box) box.classList.add('is-locked');
     const reduced = document.documentElement.dataset.motion === 'reduced';
     state.advanceId = setTimeout(() => go('reveal'), reduced ? 120 : choice ? 420 : 250);
   }
@@ -228,14 +343,20 @@
   function bar(opts = {}) {
     const timer = opts.timer && Number(S().timerSeconds) ? `<div class="timer" aria-hidden="true"><svg viewBox="0 0 100 100"><circle class="timer__track" cx="50" cy="50" r="40"/><circle class="timer__arc" cx="50" cy="50" r="40"/></svg><div class="timer__num">${Number(S().timerSeconds)}</div></div>` : '';
     const score = opts.score ? `<span class="scorechip" aria-label="Score ${earned()} of ${maxScore()}"><span class="mono">Score</span><b>${earned()}</b></span>` : '';
-    const home = `<button class="home" data-action="home" aria-label="Home: back to all games (key H)">${ICON.home}<span>Home</span></button>`;
+    const home = `<button class="home" data-action="home" aria-label="Home: back to all stations (key H)">${ICON.home}<span>Home</span></button>`;
     const middle = opts.pips === false ? '<div></div>' : pips(opts.now);
     return `<header class="bar"><div class="bar__left">${brand()}${home}</div>${middle}<div class="bar__right">${score}${timer}</div></header>`;
   }
 
   const timerLabel = () => { const t = Number(S().timerSeconds) || 0; return t ? `${t}s` : 'Off'; };
 
-  /* ---- the two things a round compares ---- */
+  const badgesHtml = (r) => {
+    const d = diffOf(r), lvl = DIFFS.indexOf(d) + 1;
+    const meter = DIFFS.map((_, i) => `<i class="${i < lvl ? 'on' : ''}"></i>`).join('');
+    return `<span class="diff diff--${d}"><span class="diff__meter" aria-hidden="true">${meter}</span>${cap(d)}</span><span class="worth">Worth <b>${state.points[state.idx] || 0}</b> points</span>`;
+  };
+
+  /* ---- the two things a pair round compares ---- */
   function mailHtml(m) {
     const row = (label, val, cls = '') => `<div class="mail__row ${cls}"><span class="mail__label">${label}</span><span class="mail__val">${val}</span></div>`;
     let head = row('From', `${esc(m.from_name)} &lt;${esc(m.from_email)}&gt;`);
@@ -270,23 +391,36 @@
     return `<div class="mini mini--${real ? 'real' : 'fake'}"><div class="mini__top"><span class="mini__name">${noun} ${slot}</span>${tag}</div>${pick}${body}</div>`;
   }
 
+  // The "related policy" box: the case's own policy, else defaultPolicy, else nothing.
+  function policyHtml(r) {
+    const s = S();
+    const pol = clean(r.policy) || clean(s.defaultPolicy);
+    return pol ? `<div class="policy">${ICON.doc}<div><p class="policy__label">${esc(s.policyLabel || 'The policy that protects us')}</p><p class="policy__text">${esc(pol)}</p></div></div>` : '';
+  }
+
   /* ------------------------------------------------------------------ screens */
   const SCREENS = {
     hub() {
       const s = S();
       const stats = P.stats.plays ? `&nbsp;·&nbsp; Today: ${P.stats.plays} ${P.stats.plays === 1 ? 'play' : 'plays'} &nbsp;·&nbsp; Best score: ${P.stats.best}/${P.stats.bestOf}` : '';
       const m = /^(.*?)\s+or\s+(.*)$/i.exec(s.title || '');
-      const title = m ? `${esc(m[1])}<span class="or"> or </span><span class="fake">${esc(m[2])}</span>` : esc(s.title);
+      const words = String(s.title || '').split(' ');
+      const last = words.pop();
+      const title = m ? `${esc(m[1])}<span class="or"> or </span><span class="fake">${esc(m[2])}</span>` : `${esc(words.join(' '))}${words.length ? ' ' : ''}<span class="fake">${esc(last)}</span>`;
       const cards = stations().map((st, i) => {
         const n = poolOf(st.key).length;
         return `<button class="station" data-action="station" data-station="${esc(st.key)}"${n ? '' : ' disabled'} aria-label="${esc(st.title)}. ${esc(st.sub)}">
           ${ICON[st.icon] || ICON.mail}
-          <p class="mono">Station ${i + 1} &nbsp;·&nbsp; ${esc(st.tag)}</p>
-          <h2 class="station__title">${esc(st.title)}</h2>
-          <p class="station__sub">${esc(n ? st.sub : 'No rounds loaded yet.')}</p>
+          <div class="station__text">
+            <p class="mono">Station ${i + 1} &nbsp;·&nbsp; ${esc(st.tag)}</p>
+            <h2 class="station__title">${esc(st.title)}</h2>
+            <p class="station__sub">${esc(n ? st.sub : 'No rounds loaded yet.')}</p>
+          </div>
           <span class="station__go">${n ? `Play ${ICON.arrow}` : 'Coming soon'}</span>
         </button>`;
       }).join('');
+      const reelKey = reelStationKey();
+      const bank = reelKey && REEL.length ? `<button class="ghost" data-action="bank">${ICON.list}<span>Question bank</span><b>${REEL.length}</b></button>` : '';
       return `<section class="screen attract" data-screen="hub">
         ${brand()}
         <h1 class="attract__title" aria-label="${esc(s.title)}">${title}</h1>
@@ -300,16 +434,16 @@
             <output class="stepper__val" id="timerVal" aria-live="polite">${timerLabel()}</output>
             <button data-action="timer-up" aria-label="More time">+</button>
           </div>
+          ${bank}
         </div>
         <p class="attract__stats">${esc(s.tagline || '')}${stats}</p>
       </section>`;
     },
 
     round() {
-      const r = cur(), st = curStation(), noun = cap(st.noun || 'item');
-      const d = diffOf(r), lvl = DIFFS.indexOf(d) + 1;
-      const meter = DIFFS.map((_, i) => `<i class="${i < lvl ? 'on' : ''}"></i>`).join('');
-      const badges = `<span class="diff diff--${d}"><span class="diff__meter" aria-hidden="true">${meter}</span>${cap(d)}</span><span class="worth">Worth <b>${state.points[state.idx] || 0}</b> points</span>`;
+      const r = cur(), st = curStation();
+      if (r.mode === 'single') return SCREENS.roundSingle(r, st);
+      const noun = cap(st.noun || 'item');
       const slot = (side) => `<div class="slot">
           <p class="slot__name mono">${noun} ${side}</p>
           ${paneHtml(state.station, noun, side)}
@@ -323,18 +457,49 @@
               <p class="mono">${esc(st.tag)} &nbsp;·&nbsp; Round ${state.idx + 1} of ${total()} &nbsp;·&nbsp; <b>${esc(st.question || '')}</b></p>
               <h1 class="meta__title">${esc(r.label)}</h1>
             </div>
-            ${badges}
+            ${badgesHtml(r)}
           </div>
           <div class="pair" role="group" aria-label="Your answer">${slot('A')}${slot('B')}</div>
         </div>
       </section>`;
     },
 
+    // Reel or Real: one case card with clues, and two big answer tiles.
+    roundSingle(r, st) {
+      const label = `Case ${state.idx + 1} of ${total()}${clean(r.clue) ? ' &nbsp;·&nbsp; <b>' + esc(r.clue) + '</b>' : ''}`;
+      const clues = r.evidence.map((e, i) => `<li style="--i:${i}">${esc(e)}</li>`).join('');
+      return `<section class="screen" data-screen="round">
+        ${bar({ now: true, timer: true, score: true })}
+        <div class="round round--single">
+          <article class="case card fit">
+            <div class="badges">${badgesHtml(r)}</div>
+            <p class="mono">${label}</p>
+            <h1 class="case__title">${esc(r.label)}</h1>
+            <ul class="clues">${clues}</ul>
+          </article>
+          <div class="answers" role="group" aria-label="Your answer">
+            <button class="tile tile--reel" data-choice="REEL" aria-label="Reel: from a film (key 1)">
+              <kbd>1</kbd>${ICON.film}<span class="tile__word">Reel</span><span class="tile__sub">Straight from a film</span>
+            </button>
+            <button class="tile tile--real" data-choice="REAL" aria-label="Real: it really happened (key 2)">
+              <kbd>2</kbd>${ICON.file}<span class="tile__word">Real</span><span class="tile__sub">It really happened</span>
+              <span class="redact" aria-hidden="true"><i></i><i></i></span>
+              <span class="declass" aria-hidden="true">Declassified</span>
+              <span class="scan" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+        <p class="hint">${Number(S().timerSeconds) ? 'Movie plot or real incident? Make the call before time runs out.' : 'Movie plot or real incident? Tap your answer.'}</p>
+      </section>`;
+    },
+
     reveal() {
       const r = cur(), res = state.results[state.idx] || {}, st = curStation(), s = S();
+      const single = r.mode === 'single';
       const noun = cap(st.noun || 'item');
       const won = res.correct ? state.points[state.idx] || 0 : 0;
-      const what = `${noun} ${r.realSlot} was the real one.`;
+      const isReal = single && r.answer === 'REAL';
+      const what = single ? (isReal ? 'It really happened.' : "It's from a film.") : `${noun} ${r.realSlot} was the real one.`;
       const head = res.timedOut ? `${ICON.clock}<span><b>Time's up!</b> ${what}</span>` : res.correct ? `${ICON.check}<span><b>Correct!</b> ${what}</span>` : `${ICON.cross}<span><b>Not quite!</b> ${what}</span>`;
       const result = `<div class="result ${res.correct ? 'result--ok' : 'result--miss'}" role="status">
             <p class="result__head">${head}</p>
@@ -342,29 +507,42 @@
             <p class="result__total">Score<b>${earned()}<small> / ${maxScore()}</small></b></p>
           </div>`;
       const shield = st.shield || {};
+      const takeaway = clean(r.takeaway) || clean(shield.takeaway);
       const todo = clean(r.todo) || clean(shield.todo);
-      const pol = clean(s.defaultPolicy);
-      const policy = pol ? `<div class="policy">${ICON.doc}<div><p class="policy__label">${esc(s.policyLabel || 'The policy that protects us')}</p><p class="policy__text">${esc(pol)}</p></div></div>` : '';
+      const policy = policyHtml(r);
       const last = state.idx + 1 >= total();
-      return `<section class="screen" data-screen="reveal">
-        ${bar({ now: false, timer: false })}
-        ${result}
-        <div class="reveal">
-          <article class="verdict card fit">
+      let verdict;
+      if (single) {
+        const src = isReal && s.showSourcesOnReveal && r.sources.filter(clean).length ? `<p class="sources">Source: ${esc(r.sources.filter(clean)[0])}</p>` : '';
+        verdict = `<article class="verdict card fit">
+            <p class="mono">${isReal ? 'A real incident' : 'From the movies'}</p>
+            <div class="stamp ${isReal ? 'stamp--real' : 'stamp--reel'}">${isReal ? 'Real' : 'Reel'}</div>
+            <h2 class="verdict__title">${esc(r.reveal_title)} <span class="yr">${esc(r.year)}</span></h2>
+            ${clean(r.weakness) ? `<p class="verdict__why"><span class="mono">Why it worked</span>${esc(r.weakness)}</p>` : ''}
+            ${src}
+          </article>`;
+      } else {
+        verdict = `<article class="verdict card fit">
             <p class="mono">Which one was the ${esc(st.fakeNoun || 'fake')}?</p>
             <div class="compare">${miniHtml(state.station, noun, 'A', res.choice === 'A')}${miniHtml(state.station, noun, 'B', res.choice === 'B')}</div>
             <p class="verdict__why"><span class="mono">What gave it away</span>${esc(r.note)}</p>
-          </article>
+          </article>`;
+      }
+      return `<section class="screen" data-screen="reveal">
+        ${bar({ now: false, timer: false })}
+        ${result}
+        <div class="reveal${single ? ' reveal--single' : ''}">
+          ${verdict}
           <article class="shield card fit">
             <p class="mono">${ICON.shield} Control Shield</p>
-            <h2 class="shield__takeaway">${esc(shield.takeaway || '')}</h2>
+            <h2 class="shield__takeaway">${esc(takeaway)}</h2>
             <div class="do"><p class="mono">What you can do</p><p class="do__text">${esc(todo)}</p></div>
           </article>
         </div>
         <footer class="foot${policy ? ' foot--policy' : ''}">
           ${policy}
           <span class="foot__note" id="adv"></span>
-          <button class="cta" data-action="next" data-autofocus>${last ? 'See my score' : 'Next round'} ${ICON.arrow}</button>
+          <button class="cta" data-action="next" data-autofocus>${last ? 'See my score' : (single ? 'Next case' : 'Next round')} ${ICON.arrow}</button>
         </footer>
       </section>`;
     },
@@ -374,7 +552,7 @@
       const score = earned(), totalPts = maxScore();
       const right = state.results.filter((r) => r && r.correct).length;
       const ratio = totalPts ? score / totalPts : 0;
-      const rating = (s.ratings || []).slice().sort((a, b) => b.min - a.min).find((x) => ratio >= x.min) || { name: '', line: '' };
+      const rating = (st.ratings || s.ratings || []).slice().sort((a, b) => b.min - a.min).find((x) => ratio >= x.min) || { name: '', line: '' };
       const missed = state.results.map((r, i) => (r && !r.correct ? state.rounds[i] : null)).filter(Boolean);
       const pick = shuffle(missed.length ? missed : state.rounds)[0];
       const todo = clean(pick.todo) || clean((st.shield || {}).todo);
@@ -391,16 +569,45 @@
           </article>
           <article class="next card fit">
             <p class="mono">${ICON.shield} One thing to do this week</p>
-            <div class="do"><p class="mono">${esc(st.tag || 'Stay safe')}</p><p class="do__text">${esc(todo)}</p></div>
-            <p class="next__why">From round: ${esc(pick.label)}</p>
+            <div class="do"><p class="mono">${esc(clean(pick.theme) || st.tag || 'Stay safe')}</p><p class="do__text">${esc(todo)}</p></div>
+            <p class="next__why">From ${pick.mode === 'single' ? 'case' : 'round'}: ${esc(pick.label)}</p>
             ${report}
           </article>
         </div>
         <footer class="foot">
           <span class="foot__note" id="adv"></span>
-          <button class="cta cta--quiet" data-action="home">All games</button>
+          <button class="cta cta--quiet" data-action="home">All stations</button>
           <button class="cta" data-action="again" data-autofocus>${ICON.replay} Play again</button>
         </footer>
+      </section>`;
+    },
+
+    // Question bank: every Reel or Real case, answers hidden until "Show answers".
+    bank() {
+      const pts = basePoints(), show = state.bankShow;
+      const all = REEL;
+      const count = (f) => all.filter(f).length;
+      const items = all.map((r, i) => {
+        const d = diffOf(r);
+        const off = !r.enabled ? 'Hidden' : !r.audience.includes('all') ? 'Technical' : '';
+        const ans = r.answer === 'REAL' ? 'Real' : 'Reel';
+        return `<li class="qb${off ? ' qb--off' : ''}">
+          <div class="qb__top"><span class="qb__num">${i + 1}</span><span class="chip chip--${d}">${cap(d)} · ${pts[d]} pts</span>${off ? `<span class="chip">${off}</span>` : ''}${show ? `<span class="chip chip--${ans.toLowerCase()}">${ans}</span>` : ''}</div>
+          <p class="qb__title">${esc(r.label)}</p>
+          ${show ? `<p class="qb__ans">${esc(r.reveal_title)} <span>${esc(r.year)}</span></p>` : ''}
+        </li>`;
+      }).join('');
+      return `<section class="screen" data-screen="bank">
+        ${bar({ pips: false })}
+        <div class="bank">
+          <div class="bank__head">
+            <div><h1 class="bank__title">Question bank</h1>
+              <p class="bank__sum">Reel or Real? &nbsp;·&nbsp; ${all.length} questions &nbsp;·&nbsp; ${count((r) => r.answer === 'REEL')} Reel, ${count((r) => r.answer === 'REAL')} Real &nbsp;·&nbsp; ${DIFFS.map((d) => `${count((r) => diffOf(r) === d)} ${d}`).join(', ')}</p></div>
+            <button class="ghost" data-action="bank-toggle" aria-pressed="${show}">${show ? 'Hide answers' : 'Show answers'}</button>
+            <button class="cta" data-action="station" data-station="${esc(reelStationKey())}" data-autofocus>Play ${ICON.arrow}</button>
+          </div>
+          <ol class="bank__list">${items}</ol>
+        </div>
       </section>`;
     },
 
@@ -417,7 +624,7 @@
     root.dataset.motion = s.reducedMotion ? 'reduced' : 'full';
   }
 
-  // Dense cards (emails, lessons) shrink their text a little rather than overflow; a card that
+  // Dense cards (emails, clue lists, lessons) shrink their text a little rather than overflow; a card that
   // still doesn't fit at the floor scrolls instead of clipping.
   function fit() {
     $$('.fit', stage).forEach((el) => {
@@ -458,14 +665,19 @@
     }
     if (state.screen === 'round') {
       startTimer();
-      const st = curStation();
-      sr.textContent = `Round ${state.idx + 1} of ${total()}: ${cur().label}. ${st.question || ''}`;
+      const st = curStation(), r = cur();
+      sr.textContent = r.mode === 'single'
+        ? `Case ${state.idx + 1} of ${total()}: ${r.label}. Reel or Real?`
+        : `Round ${state.idx + 1} of ${total()}: ${r.label}. ${st.question || ''}`;
     }
     if (state.screen === 'reveal') {
       const r = cur(), res = state.results[state.idx] || {}, st = curStation();
-      sr.textContent = `${res.timedOut ? "Time's up." : res.correct ? `Correct, plus ${state.points[state.idx] || 0} points.` : 'Not quite, 0 points.'} Score ${earned()} of ${maxScore()}. ${cap(st.noun || 'item')} ${r.realSlot} was the real one. ${r.note}`;
+      const verdict = r.mode === 'single'
+        ? `It was ${r.answer === 'REAL' ? 'Real' : 'Reel'}: ${r.reveal_title}, ${r.year}. ${r.takeaway}`
+        : `${cap(st.noun || 'item')} ${r.realSlot} was the real one. ${r.note}`;
+      sr.textContent = `${res.timedOut ? "Time's up." : res.correct ? `Correct, plus ${state.points[state.idx] || 0} points.` : 'Not quite, 0 points.'} Score ${earned()} of ${maxScore()}. ${verdict}`;
       const secs = Number(s.revealAutoAdvanceSeconds) || 0;
-      if (secs) countdown(secs, (left) => `Next round in ${left}s`, next);
+      if (secs) countdown(secs, (left) => `Next in ${left}s`, next);
     }
     if (state.screen === 'final') {
       const secs = Number(s.finalAutoResetSeconds) || 0;
@@ -484,7 +696,7 @@
   const lightbox = $('#lightbox');
   let lastFocus = null;
   function openZoom(slot) {
-    const r = cur(); if (!r) return;
+    const r = cur(); if (!r || !r.items) return;
     const img = $('img', lightbox);
     img.src = mediaSrc(r.items[slot]);
     img.alt = `${cap((curStation().noun) || 'photo')} ${slot}, enlarged`;
@@ -497,14 +709,17 @@
 
   /* ------------------------------------------------------------------ input */
   stage.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-pick], [data-zoom], [data-action]');
+    const t = e.target.closest('[data-pick], [data-choice], [data-zoom], [data-action]');
     if (!t) return;
     if (t.dataset.pick) answer(t.dataset.pick);
+    else if (t.dataset.choice) answer(t.dataset.choice);
     else if (t.dataset.zoom) openZoom(t.dataset.zoom);
     else if (t.dataset.action === 'station') startGame(t.dataset.station);
     else if (t.dataset.action === 'again') startGame(state.station);
     else if (t.dataset.action === 'next') next();
     else if (t.dataset.action === 'home') toHub();
+    else if (t.dataset.action === 'bank') { state.bankShow = false; go('bank'); }
+    else if (t.dataset.action === 'bank-toggle') { const y = ($('.bank__list', stage) || {}).scrollTop || 0; state.bankShow = !state.bankShow; render(); const l = $('.bank__list', stage); if (l) l.scrollTop = y; }
     else if (t.dataset.action === 'timer-up' || t.dataset.action === 'timer-down') stepTimer(t.dataset.action === 'timer-up' ? 1 : -1);
   });
 
@@ -530,7 +745,12 @@
     if ((k === 'h' || k === 'H') && state.screen !== 'hub') { toHub(); return; }
     if (state.errors.length) return;
     if (state.screen === 'hub') { const st = stations()[Number(k) - 1]; if (st) startGame(st.key); return; }
-    if (state.screen === 'round') { if (k === '1') answer('A'); else if (k === '2') answer('B'); return; }
+    if (state.screen === 'round') {
+      const single = cur().mode === 'single';
+      if (k === '1') answer(single ? 'REEL' : 'A'); else if (k === '2') answer(single ? 'REAL' : 'B');
+      return;
+    }
+    if (state.screen === 'bank') return;
     if (k === 'Enter' || k === ' ') {
       const a = document.activeElement;
       if (a && a !== document.body && a !== stage && a.matches('button, video, input')) return; // native control handles it
@@ -568,23 +788,30 @@
     ['idleResetSeconds', 'Walk-away reset', [[0, 'Never'], [60, '60s'], [90, '90s'], [180, '3 min']]],
     ['theme', 'Theme', [['light', 'Light'], ['dark', 'Dark'], ['auto', 'Auto']]],
     ['reducedMotion', 'Animations', [[false, 'On'], [true, 'Off']]],
+    ['includeTechnical', 'Technical cases', [[false, 'Hide'], [true, 'Include']]],
   ];
 
   function openStaff() {
     const el = $('#staff');
     const s = S();
-    const rows = OPTS.map(([k, label, vals]) => `<div class="staff__row"><span>${label}</span><div class="seg" data-key="${k}">${vals.map(([v, t]) => `<button data-val='${JSON.stringify(v)}' aria-pressed="${s[k] === v}">${t}</button>`).join('')}</div></div>`).join('');
+    const rows = OPTS.map(([k, label, vals]) => `<div class="staff__row"><span>${label}</span><div class="seg" data-key="${k}">${vals.map(([v, t]) => `<button data-val='${JSON.stringify(v)}' aria-pressed="${!!s[k] === v || s[k] === v}">${t}</button>`).join('')}</div></div>`).join('');
     const pools = stations().map((st) => {
       const pool = poolOf(st.key);
       const ph = pool.filter(isPlaceholder).length;
-      return `${esc(st.tag)}: ${pool.length} rounds (${DIFFS.map((d) => `${pool.filter((r) => diffOf(r) === d).length} ${d}`).join(', ')})${ph ? ` <b>${ph} still placeholder</b>` : ''}`;
+      const m = gameMix(st.key);
+      let line = `${esc(st.tag)}: ${pool.length} rounds (${DIFFS.map((d) => `${pool.filter((r) => diffOf(r) === d).length} ${d}`).join(', ')}); a game uses ${DIFFS.map((d) => `${m[d]} ${d}`).join(', ')}`;
+      if (st.mode === 'single') {
+        const draft = pool.filter((r) => r.status !== 'approved').length;
+        const noSrc = pool.filter((r) => r.answer === 'REAL' && !r.sources.filter(clean).length).length;
+        line += `<br>&nbsp;&nbsp;<b>Still draft:</b> ${draft} of ${pool.length}${draft ? ' (fact-check, then set status "approved" in reel-or-real/rounds.js)' : ''}. <b>Real cases without a source:</b> ${noSrc}.`;
+      }
+      return line + (ph ? ` <b>${ph} still placeholder</b>` : '');
     }).join('<br>');
-    const m = gameMix();
     el.innerHTML = `<div class="staff__panel">
       <h2>Staff settings</h2><p class="sm">Saved on this computer. Close with Esc.</p>
       ${rows}
       <div class="staff__info"><b>Rounds available</b><br>${pools}<br>
-        <b>Each game:</b> ${DIFFS.map((d) => `${m[d]} ${d}`).join(', ')}, ${maxScore()} points max.<br>
+        <b>Scoring:</b> ${maxScore()} points max per game.<br>
         <b>Today:</b> ${P.stats.plays} plays${P.stats.plays ? `, best ${P.stats.best}/${P.stats.bestOf}` : ''}.</div>
       <div class="staff__actions"><button class="primary" data-act="close">Done</button><button data-act="fs">Fullscreen</button><button data-act="reset">Reset today's counters</button><button data-act="home">Back to home screen</button></div>
     </div>`;
@@ -603,7 +830,9 @@
   });
 
   /* ------------------------------------------------------------------ boot */
+  mergeMyQuestions();
   state.errors = validate();
+  if (!state.errors.length) REEL = Array.isArray(window.ROUNDS) ? window.ROUNDS.map(normalizeReel) : [];
   render();
   wake();
 
