@@ -153,7 +153,10 @@
   function computePoints(rounds) {
     const pts = basePoints(), totalPts = maxScore();
     const raw = rounds.map((r) => Math.max(0, Number(pts[diffOf(r)]) || 0));
-    const sum = raw.reduce((a, b) => a + b, 0) || 1;
+    // If nothing in this game is worth any points (all weights 0, or only weights for tiers it doesn't contain),
+    // treat every round as equal so a perfect game still adds up to the total.
+    if (!raw.some((v) => v > 0)) raw.fill(1);
+    const sum = raw.reduce((a, b) => a + b, 0);
     const exact = raw.map((v) => (v * totalPts) / sum);
     const out = exact.map(Math.floor);
     let left = totalPts - out.reduce((a, b) => a + b, 0);
