@@ -6,7 +6,6 @@ import secrets
 
 from flask import Flask, jsonify, redirect, render_template, request, session, url_for
 
-from spot_the_fake import bp as spot_the_fake_bp
 from spot_the_fake_email import bp as spot_the_fake_email_bp
 from spot_the_fake_image import bp as spot_the_fake_image_bp
 from spot_the_fake_video import bp as spot_the_fake_video_bp
@@ -33,7 +32,6 @@ app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 # plain-HTTP local/native run where a Secure cookie would just never stick.
 app.config["SESSION_COOKIE_SECURE"] = bool(SITE_PASSCODE)
 
-app.register_blueprint(spot_the_fake_bp)
 app.register_blueprint(spot_the_fake_video_bp)
 app.register_blueprint(spot_the_fake_image_bp)
 app.register_blueprint(spot_the_fake_email_bp)

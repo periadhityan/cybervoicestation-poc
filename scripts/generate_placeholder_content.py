@@ -1,4 +1,4 @@
-"""Generate placeholder content POOLS for all three Which Is Fake? games.
+"""Generate placeholder content POOLS for the video and picture Which Is Fake? games.
 
 Each difficulty tier (easy/medium/hard) gets a pool of several candidate
 real/fake pairs, not just one. The Flask routes randomly sample a fresh
@@ -10,12 +10,12 @@ shoulder-surf the answers from the person ahead of them.
 Content lives as plain files, discovered by folder convention -- no
 manifest JSON. This script writes into:
 
-    app/static/content/<audio|video|image>/<easy|medium|hard>/
+    app/static/content/<video|image>/<easy|medium|hard>/
         <round-id>-real.<ext>
         <round-id>-fake.<ext>
         notes.json          (subject_label + reveal_note per round-id)
 
-Run this once to (re)generate all three pools and their placeholder media:
+Run this once to (re)generate both pools and their placeholder media:
     python scripts/generate_placeholder_content.py
 
 Requires ffmpeg on PATH. Safe to re-run -- it overwrites existing
@@ -24,7 +24,7 @@ touches files matching its own `<tier>-<n>-real/fake.<ext>` naming and its
 own `notes.json`, so hand-added real content using different round-id names
 is untouched by a re-run.
 
-This only ever produces synthetic placeholder content (tones, test
+This only ever produces synthetic placeholder content (test
 patterns, solid colors) -- never real speech, footage, or photos of anyone.
 Replace pool entries with real content before the event; see
 app/content/README.md for how and where to source it safely.
@@ -58,43 +58,6 @@ def clean_stale(tier_dir: Path) -> None:
 
 def write_notes(tier_dir: Path, notes: dict) -> None:
     (tier_dir / "notes.json").write_text(json.dumps(notes, indent=2) + "\n")
-
-
-# ---------------------------------------------------------------- audio ---
-
-def build_audio() -> None:
-    modality_dir = CONTENT_ROOT / "audio"
-    tier_gap = {"easy": 380, "medium": 70, "hard": 10}
-    tier_base = {"easy": 260, "medium": 380, "hard": 430}
-
-    total = 0
-    for tier, n in POOL_SIZES.items():
-        tier_dir = modality_dir / tier
-        clean_stale(tier_dir)
-        notes = {}
-        for i in range(1, n + 1):
-            real_freq = tier_base[tier] + (i - 1) * 15
-            fake_freq = real_freq + tier_gap[tier]
-            duration = 4 + (i % 3)
-            round_id = f"{tier}-{i}"
-            real_file, fake_file = f"{round_id}-real.mp3", f"{round_id}-fake.mp3"
-
-            run(["ffmpeg", "-y", "-f", "lavfi", "-i", f"sine=frequency={real_freq}:duration={duration}",
-                 "-ar", "44100", str(tier_dir / real_file)])
-            run(["ffmpeg", "-y", "-f", "lavfi", "-i", f"sine=frequency={fake_freq}:duration={duration}",
-                 "-ar", "44100", str(tier_dir / fake_file)])
-
-            notes[round_id] = {
-                "subject_label": f"PLACEHOLDER {tier.upper()} {i} -- replace before event",
-                "reveal_note": (
-                    f"Placeholder tones, not speech -- {tier} tier "
-                    f"({tier_gap[tier]}Hz gap). Replace before the event -- "
-                    "see app/content/README.md."
-                ),
-            }
-        write_notes(tier_dir, notes)
-        total += n
-    print(f"audio pool written: {total} pairs")
 
 
 # ---------------------------------------------------------------- video ---
@@ -189,7 +152,6 @@ def build_image() -> None:
 
 
 if __name__ == "__main__":
-    build_audio()
     build_video()
     build_image()
     print("Done. Restart the Flask app to pick up the new content.")

@@ -1,15 +1,27 @@
-"""'Which Is Fake? (Video)' -- same pool-sampling pattern as spot_the_fake.py
-(audio), for short video clips instead. See that module's docstring for the
-sampling rationale, app/content_pool.py for the shared discovery logic
-(local folder or S3, depending on CONTENT_BACKEND), and
-app/content/README.md for the shared design rationale and content-sourcing
-guidance -- which applies even more strongly to video than audio, since
-face-swap/deepfake video of a real, identifiable person is a materially
-higher-risk category to produce than a synthetic voice clip alone.
+"""'Which Is Fake? (Video)' -- plays a real clip and a synthetic/deepfaked one
+side by side and asks the participant to guess which is real, then reveals
+the answer with a short explanation of what gave the fake away.
 
-This module only serves a randomly-sampled slice of the content pool and
-lets the browser play two clips side by side; it does not generate video
-deepfakes.
+Content is discovered by app/content_pool.py, which abstracts over where
+the media actually lives (local folder, or an S3 bucket -- see that
+module's docstring and app/content/README.md for the full "how to add a
+round" guide). Every request to /api/spot-the-fake-video/rounds randomly
+samples a fresh subset from each difficulty tier's pool -- so the next
+player in line sees a different set of clips than the player before them,
+and can't just memorize the previous player's answers. The tier order
+(easy, then medium, then hard) is always preserved; only which specific
+pairs get used within each tier varies. The other game blueprints
+(spot_the_fake_image.py, spot_the_fake_email.py) follow this same pattern.
+
+app/content/README.md also covers content sourcing, which applies strongly
+to video: face-swap/deepfake video of a real, identifiable person is a
+materially higher-risk category to produce than a still image.
+
+Deliberately stateless otherwise: no participant identity or per-visitor
+progress is tracked server-side. Answer-checking happens entirely
+client-side once the round data is fetched. This module only serves a
+randomly-sampled slice of the content pool and lets the browser play two
+clips side by side; it does not generate video deepfakes.
 """
 
 from __future__ import annotations

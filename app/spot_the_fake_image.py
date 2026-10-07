@@ -1,5 +1,5 @@
 """'Which Is Fake? (Picture)' -- same pool-sampling pattern as
-spot_the_fake.py (audio), for still images instead. See that module's
+spot_the_fake_video.py, for still images instead. See that module's
 docstring for the sampling rationale, app/content_pool.py for the shared
 discovery logic (local folder or S3, depending on CONTENT_BACKEND), and
 app/content/README.md for the shared design rationale and content-sourcing

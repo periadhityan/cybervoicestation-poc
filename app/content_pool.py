@@ -1,4 +1,4 @@
-"""Shared content discovery for all three "Which Is Fake?" games.
+"""Shared content discovery for all "Which Is Fake?" games.
 
 Two interchangeable backends, chosen by the CONTENT_BACKEND env var:
 
@@ -58,7 +58,6 @@ PAIR_RE = re.compile(r"^(?P<id>.+)-(?P<kind>real|fake)\.(?P<ext>[A-Za-z0-9]+)$")
 SELECT_COUNTS = [("easy", 4), ("medium", 2), ("hard", 1)]
 
 DEFAULT_REVEAL_NOTES = {
-    "audio": "Listen again -- pacing, tone, or background noise often gives a synthetic clip away.",
     "video": "Watch again -- lighting, blinking, or lip-sync often gives a synthetic clip away.",
     "image": "Look again -- lighting, hands, or background detail often gives a synthetic image away.",
     "email": "Check the sender's actual address, where any link really goes, and whether urgency is being used to rush you -- these are the tells that separate a phishing email from the real thing.",

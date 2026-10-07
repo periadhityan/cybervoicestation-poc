@@ -1,15 +1,11 @@
 # "Which Is Fake?" content
 
-Four independent games, one per modality. Content for all four lives as
+Three independent games, one per modality. Content for all three lives as
 plain files under `app/static/content/`, discovered automatically by
 folder convention -- **there is no manifest JSON to hand-edit.**
 
 ```
 app/static/content/
-  audio/
-    easy/     round-id-real.mp3   round-id-fake.mp3   notes.json (optional)
-    medium/   ...
-    hard/     ...
   video/
     easy/     round-id-real.mp4   round-id-fake.mp4   notes.json (optional)
     medium/   ...
@@ -24,7 +20,7 @@ app/static/content/
     hard/     ...
 ```
 
-The `email` game (phishing emails) works the same way as the other three,
+The `email` game (phishing emails) works the same way as the other two,
 just with `.json` files describing a mock email instead of a media file --
 see "The email game's content format" below for that file's fields.
 
@@ -39,8 +35,8 @@ Drop two files into the right `<modality>/<difficulty>/` folder, named:
 
 `<round-id>` can be anything filesystem-safe (letters, numbers, hyphens,
 underscores) as long as it's the same on both files -- e.g.
-`ceo-voicemail-real.mp3` / `ceo-voicemail-fake.mp3`. `<ext>` can be whatever
-format you're using (`mp3`/`wav` for audio, `mp4`/`webm` for video,
+`ceo-video-call-real.mp4` / `ceo-video-call-fake.mp4`. `<ext>` can be whatever
+format you're using (`mp4`/`webm` for video,
 `jpg`/`png` for images, `json` for email -- anything a browser can play,
 display, or fetch natively).
 
@@ -53,16 +49,16 @@ its partner shows up -- it won't crash the game or show a broken pair.
 ## Optional: nicer labels with `notes.json`
 
 By default, a round gets an auto-generated label from its id (e.g.
-`ceo-voicemail-real.mp3` becomes the label "Ceo voicemail") and a generic
+`ceo-video-call-real.mp4` becomes the label "Ceo video call") and a generic
 reveal note for its modality. To supply a proper label and a specific
 "what gave it away" explanation instead, add a `notes.json` file in the
 same tier folder:
 
 ```json
 {
-  "ceo-voicemail": {
-    "subject_label": "CEO voicemail asking for a wire transfer",
-    "reveal_note": "The real clip has natural pauses and breath sounds; the fake one is a little too evenly paced."
+  "ceo-video-call": {
+    "subject_label": "CEO video call asking for a wire transfer",
+    "reveal_note": "The real clip has natural blinking and lip movement; in the fake one the lips drift slightly out of sync."
   },
   "another-round-id": {
     "subject_label": "...",
@@ -128,15 +124,15 @@ variety** -- the whole point is that two players in a row, or the same
 player hitting "Play Again," see a different set of clips, so nobody can
 memorize the previous player's answers by watching or overhearing them.
 More pairs per tier = less repetition. The shipped placeholder content has
-6 easy / 4 medium / 3 hard pairs for audio/video/image, and 4 easy / 3
+6 easy / 4 medium / 3 hard pairs for video/image, and 4 easy / 3
 medium / 2 hard for email, as a starting point -- add more freely, the
 sampling logic doesn't care how large a tier folder gets.
 
 ## The placeholder content
 
-The audio/video/image pairs shipped out of the box are synthetic test
-content (tones for audio, test-pattern clips for video, solid-color stills
-for images) -- not real speech, footage, or photos of anyone. They exist
+The video/image pairs shipped out of the box are synthetic test
+content (test-pattern clips for video, solid-color stills for images) --
+not real footage or photos of anyone. They exist
 only to prove each game's plumbing (including the random sampling) works
 end to end. **Replace them with real rounds before the event.** You can mix
 real and placeholder pairs in the same tier folder while you're still
@@ -151,7 +147,7 @@ cd ~/Repos/CyberVoiceStation
 python scripts/generate_placeholder_content.py
 ```
 
-This rebuilds the audio/video/image placeholder content and `notes.json`
+This rebuilds the video/image placeholder content and `notes.json`
 files from scratch (it doesn't touch `email/`, which ships hand-written
 example content instead of a synthetic placeholder -- see "The email
 game's content format" above). It only ever touches its own

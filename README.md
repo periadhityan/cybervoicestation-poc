@@ -1,14 +1,14 @@
 # CyberVoiceStation — "Which Is Fake?" Cyber Room PoC
 
-Four lightweight, self-contained "spot the fake" games for the Cyber Room
-station at Cybersecurity Awareness Month 2026: audio, video, picture, and
+Three lightweight, self-contained "spot the fake" games for the Cyber Room
+station at Cybersecurity Awareness Month 2026: video, picture, and
 phishing email. Each game plays (or shows) a real item and a fake one side
 by side and asks the participant to guess which is real, then reveals what
 gave the fake away. No participant data collected, no files stored --
 answers and scores exist only in the browser tab.
 
 *(This repo previously also included a live voice-cloning station, "Hear
-Yourself Hacked." That's been removed -- this build is just the four
+Yourself Hacked." That's been removed -- this build is just the three
 "Which Is Fake?" games.)*
 
 For the full architecture, deployment topology, and security model, see
@@ -19,16 +19,16 @@ start.
 
 ## What's in this repo
 
-- A small Flask app (`app/app.py`) serving the homepage hub and the four
-  game blueprints (`spot_the_fake.py`, `spot_the_fake_video.py`,
-  `spot_the_fake_image.py`, `spot_the_fake_email.py`).
+- A small Flask app (`app/app.py`) serving the homepage hub and the three
+  game blueprints (`spot_the_fake_video.py`, `spot_the_fake_image.py`,
+  `spot_the_fake_email.py`).
 - Each game samples a random subset of real/fake pairs from its own content
   pool per difficulty tier (easy/medium/hard) on every page load, so two
   participants back to back don't see the exact same rounds.
-- Placeholder content (synthetic tones/patterns/colors for audio/video/
-  image, hand-written example phishing emails for the email game) is one
+- Placeholder content (synthetic patterns/colors for video/image,
+  hand-written example phishing emails for the email game) is one
   command away (`python scripts/generate_placeholder_content.py` for the
-  first three) so the app is fully playable with zero real content sourced
+  first two) so the app is fully playable with zero real content sourced
   yet -- game media itself isn't committed to git (see `.gitignore`), only
   the code that generates or loads it, so run that once after cloning.
   Content is just files dropped into folders
@@ -200,16 +200,16 @@ ARCHITECTURE.md       Full architecture, deployment, and security reference
 
 ## Loading real content before the event
 
-The four games ship with placeholder content (synthetic tones, geometric
-patterns, and solid colors for audio/video/image; hand-written example
+The three games ship with placeholder content (synthetic test patterns
+and solid colors for video/image; hand-written example
 phishing emails for the email game) so the app is fully playable today.
 Swapping in real real/fake pairs is just dropping two files into the right
-`app/static/content/<audio|video|image|email>/<easy|medium|hard>/` folder,
+`app/static/content/<video|image|email>/<easy|medium|hard>/` folder,
 named `<round-id>-real.<ext>` and `<round-id>-fake.<ext>` -- no manifest to
 edit, no restart needed. See `app/content/README.md` for the full convention
 (including the optional `notes.json` for custom labels) and the Content
 Loading Guide project doc for a phased, week-by-week sourcing plan per game
-(audio/video/picture).
+(video/picture/phishing).
 
 ---
 

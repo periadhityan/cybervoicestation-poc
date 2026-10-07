@@ -1,5 +1,5 @@
 """'Which Is Fake? (Email)' -- same pool-sampling pattern as
-spot_the_fake.py (audio), for phishing emails instead of media. See that
+spot_the_fake_video.py, for phishing emails instead of media. See that
 module's docstring for the sampling rationale, app/content_pool.py for the
 shared discovery logic (local folder or S3, depending on CONTENT_BACKEND),
 and app/content/README.md for the shared design rationale and
