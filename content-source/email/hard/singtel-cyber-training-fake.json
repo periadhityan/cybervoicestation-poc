@@ -1,0 +1,31 @@
+{
+  "format": "mobile",
+  "from_name": "Singtel Cybersecurity",
+  "from_email": "cybersecurity@singtel-learning.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Annual cybersecurity training due 31 Oct",
+  "date": "Wed, Oct 14, 2026 1:05 PM",
+  "body": "Hi Jordan,\n\nYour annual cybersecurity training is due on 31 Oct. It takes about 20 minutes.\n\nStart it now with your staff login.",
+  "link_text": "Start training",
+  "link_url": "https://singtel-learning.com/cyber-awareness-2026",
+  "landing": {
+    "src": "assets/singtel-cyber-training-fake-landing.svg",
+    "alt": "A fake page on singtel-learning.com"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "singtel-learning.com",
+      "text": "Not singtel.com"
+    },
+    {
+      "on": "body",
+      "mark": "with your staff login",
+      "text": "Asks for your staff login"
+    },
+    {
+      "on": "link_url",
+      "text": "Not your learning portal"
+    }
+  ]
+}

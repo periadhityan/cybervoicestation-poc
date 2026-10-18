@@ -1,0 +1,31 @@
+{
+  "from_name": "Singtel Corporate Communications",
+  "from_email": "corporatecomms@singtei.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Town hall: submit your questions by 20 Oct",
+  "date": "Tue, Oct 13, 2026 4:12 PM",
+  "body": "Hi Jordan,\n\nThe Group CEO fireside chat is on 22 Oct at 3:00 PM, in the auditorium and online.\n\nRegister and submit your questions with your staff login by 20 Oct.\n\nCorporate Communications",
+  "banner": "assets/singtel-town-hall-fake-banner.svg",
+  "link_text": "Register now",
+  "link_url": "https://singtei.com/townhall/register",
+  "landing": {
+    "src": "assets/singtel-town-hall-fake-landing.svg",
+    "alt": "A fake page on singtei.com"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "singtei.com",
+      "text": "An i where the l should be"
+    },
+    {
+      "on": "body",
+      "mark": "with your staff login",
+      "text": "Wants a login to register"
+    },
+    {
+      "on": "link_url",
+      "text": "Not a singtel.com address"
+    }
+  ]
+}

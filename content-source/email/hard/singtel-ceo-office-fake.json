@@ -1,0 +1,26 @@
+{
+  "from_name": "Group CEO Office",
+  "from_email": "ceo.office@singtel-group.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Call with the Group CEO today",
+  "date": "Fri, Oct 16, 2026 11:33 AM",
+  "body": "Hi Jordan,\n\nThe Group CEO would like a short call with you today about the Q3 results. Please reply with your mobile number and a time that suits you.\n\nGroup CEO Office",
+  "banner": "assets/singtel-ceo-office-fake-banner.svg",
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "singtel-group.com",
+      "text": "Not singtel.com"
+    },
+    {
+      "on": "subject",
+      "mark": "today",
+      "text": "Pressure to act today"
+    },
+    {
+      "on": "body",
+      "mark": "reply with your mobile number",
+      "text": "Asks for your mobile number"
+    }
+  ]
+}

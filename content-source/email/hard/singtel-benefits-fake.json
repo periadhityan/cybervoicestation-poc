@@ -1,0 +1,31 @@
+{
+  "format": "mobile",
+  "from_name": "Singtel HR Benefits",
+  "from_email": "benefits@singte1.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Confirm your dependants for 2027 benefits",
+  "date": "Mon, Oct 12, 2026 2:41 PM",
+  "body": "Hi Jordan,\n\nBenefits for 2027 open on 1 Nov. Please review your dependants before 30 Oct.\n\nYou can do this using the link below.",
+  "link_text": "Review dependants",
+  "link_url": "https://singte1.com/hr/benefits",
+  "landing": {
+    "src": "assets/singtel-benefits-fake-landing.svg",
+    "alt": "A fake page on singte1.com"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "singte1.com",
+      "text": "A 1 where the l should be"
+    },
+    {
+      "on": "body",
+      "mark": "using the link below",
+      "text": "A link, not your bookmark"
+    },
+    {
+      "on": "link_url",
+      "text": "Not an HR portal address"
+    }
+  ]
+}

@@ -4606,6 +4606,229 @@ window.CONTENT = {
    }
   },
   {
+   "id": "email/hard/singtel-benefits",
+   "tier": "hard",
+   "label": "A Singtel benefits email, on your phone",
+   "note": "The sender name matches on a phone. The real email says to use the HR portal from your bookmark. The fake comes from singte1.com, with a 1 in place of the l, and gives you a link.",
+   "todo": "Tap the sender name to read the address letter by letter. Open the HR portal from your own bookmark.",
+   "techniques": [
+    "Credential harvesting",
+    "Homoglyph domain",
+    "Internal impersonation"
+   ],
+   "red_flags": [
+    "A 1 where the l should be",
+    "A link, not your bookmark",
+    "Not an HR portal address"
+   ],
+   "real": {
+    "format": "mobile",
+    "from_name": "Singtel HR Benefits",
+    "from_email": "benefits@singtel.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Confirm your dependants for 2027 benefits",
+    "date": "Mon, Oct 12, 2026 9:14 AM",
+    "body": "Hi Jordan,\n\nBenefits for 2027 open on 1 Nov. Please review your dependants before 30 Oct.\n\nYou can do this in the HR portal, from your usual bookmark."
+   },
+   "fake": {
+    "format": "mobile",
+    "from_name": "Singtel HR Benefits",
+    "from_email": "benefits@singte1.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Confirm your dependants for 2027 benefits",
+    "date": "Mon, Oct 12, 2026 2:41 PM",
+    "body": "Hi Jordan,\n\nBenefits for 2027 open on 1 Nov. Please review your dependants before 30 Oct.\n\nYou can do this using the link below.",
+    "link_text": "Review dependants",
+    "link_url": "https://singte1.com/hr/benefits",
+    "landing": {
+     "src": "content/media/email/hard/assets/singtel-benefits-fake-landing.svg",
+     "alt": "A fake page on singte1.com"
+    },
+    "flags": [
+     {
+      "on": "from_email",
+      "mark": "singte1.com",
+      "text": "A 1 where the l should be"
+     },
+     {
+      "on": "body",
+      "mark": "using the link below",
+      "text": "A link, not your bookmark"
+     },
+     {
+      "on": "link_url",
+      "text": "Not an HR portal address"
+     }
+    ]
+   }
+  },
+  {
+   "id": "email/hard/singtel-ceo-office",
+   "tier": "hard",
+   "label": "An email from the Group CEO Office",
+   "note": "The real email only says thank you and needs no action. The fake comes from singtel-group.com and asks for your mobile number, the first step of a phone scam.",
+   "todo": "Executives' offices don't ask for your number by email. Check with your manager before you reply.",
+   "techniques": [
+    "Authority",
+    "Impersonated executive",
+    "Lookalike domain"
+   ],
+   "red_flags": [
+    "Not singtel.com",
+    "Pressure to act today",
+    "Asks for your mobile number"
+   ],
+   "real": {
+    "from_name": "Group CEO Office",
+    "from_email": "ceo.office@singtel.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Thank you for the Q3 results effort",
+    "date": "Thu, Oct 15, 2026 7:48 AM",
+    "body": "Hi team,\n\nThank you for your work on the Q3 results. The Group CEO would like to recognise the teams involved at the town hall on 22 Oct.\n\nNo action is needed.\n\nGroup CEO Office",
+    "banner": "content/media/email/hard/assets/singtel-ceo-office-real-banner.svg"
+   },
+   "fake": {
+    "from_name": "Group CEO Office",
+    "from_email": "ceo.office@singtel-group.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Call with the Group CEO today",
+    "date": "Fri, Oct 16, 2026 11:33 AM",
+    "body": "Hi Jordan,\n\nThe Group CEO would like a short call with you today about the Q3 results. Please reply with your mobile number and a time that suits you.\n\nGroup CEO Office",
+    "banner": "content/media/email/hard/assets/singtel-ceo-office-fake-banner.svg",
+    "flags": [
+     {
+      "on": "from_email",
+      "mark": "singtel-group.com",
+      "text": "Not singtel.com"
+     },
+     {
+      "on": "subject",
+      "mark": "today",
+      "text": "Pressure to act today"
+     },
+     {
+      "on": "body",
+      "mark": "reply with your mobile number",
+      "text": "Asks for your mobile number"
+     }
+    ]
+   }
+  },
+  {
+   "id": "email/hard/singtel-cyber-training",
+   "tier": "hard",
+   "label": "A Singtel training reminder, on your phone",
+   "note": "Both look the same on a phone. The real email tells you to use your own bookmark. The fake comes from singtel-learning.com and gives you a link that asks for your staff login.",
+   "todo": "Tap the sender name to check the address, then open the learning portal from your own bookmark.",
+   "techniques": [
+    "Credential harvesting",
+    "Lookalike domain",
+    "Internal impersonation"
+   ],
+   "red_flags": [
+    "Not singtel.com",
+    "Asks for your staff login",
+    "Not your learning portal"
+   ],
+   "real": {
+    "format": "mobile",
+    "from_name": "Singtel Cybersecurity",
+    "from_email": "cybersecurity@singtel.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Annual cybersecurity training due 31 Oct",
+    "date": "Wed, Oct 14, 2026 10:26 AM",
+    "body": "Hi Jordan,\n\nYour annual cybersecurity training is due on 31 Oct. It takes about 20 minutes.\n\nOpen the learning portal from your usual bookmark and look for Cyber Awareness 2026."
+   },
+   "fake": {
+    "format": "mobile",
+    "from_name": "Singtel Cybersecurity",
+    "from_email": "cybersecurity@singtel-learning.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Annual cybersecurity training due 31 Oct",
+    "date": "Wed, Oct 14, 2026 1:05 PM",
+    "body": "Hi Jordan,\n\nYour annual cybersecurity training is due on 31 Oct. It takes about 20 minutes.\n\nStart it now with your staff login.",
+    "link_text": "Start training",
+    "link_url": "https://singtel-learning.com/cyber-awareness-2026",
+    "landing": {
+     "src": "content/media/email/hard/assets/singtel-cyber-training-fake-landing.svg",
+     "alt": "A fake page on singtel-learning.com"
+    },
+    "flags": [
+     {
+      "on": "from_email",
+      "mark": "singtel-learning.com",
+      "text": "Not singtel.com"
+     },
+     {
+      "on": "body",
+      "mark": "with your staff login",
+      "text": "Asks for your staff login"
+     },
+     {
+      "on": "link_url",
+      "text": "Not your learning portal"
+     }
+    ]
+   }
+  },
+  {
+   "id": "email/hard/singtel-town-hall",
+   "tier": "hard",
+   "label": "A Singtel town hall invitation",
+   "note": "The real email is from singtel.com and points you to the staff intranet. The fake comes from singtei.com, with an i in place of the l, and asks you to register with your staff login.",
+   "todo": "Use the staff intranet from your own bookmark. Read an address letter by letter before you sign in.",
+   "techniques": [
+    "Credential harvesting",
+    "Typosquatting",
+    "Internal impersonation"
+   ],
+   "red_flags": [
+    "An i where the l should be",
+    "Wants a login to register",
+    "Not a singtel.com address"
+   ],
+   "real": {
+    "from_name": "Singtel Corporate Communications",
+    "from_email": "corporatecomms@singtel.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Town hall: submit your questions by 20 Oct",
+    "date": "Tue, Oct 13, 2026 8:02 AM",
+    "body": "Hi Jordan,\n\nThe Group CEO fireside chat is on 22 Oct at 3:00 PM, in the auditorium and online.\n\nSubmit your questions for the Q&A on the staff intranet by 20 Oct.\n\nCorporate Communications",
+    "banner": "content/media/email/hard/assets/singtel-town-hall-real-banner.svg"
+   },
+   "fake": {
+    "from_name": "Singtel Corporate Communications",
+    "from_email": "corporatecomms@singtei.com",
+    "to": "j.alvarez@meridianfreight.com",
+    "subject": "Town hall: submit your questions by 20 Oct",
+    "date": "Tue, Oct 13, 2026 4:12 PM",
+    "body": "Hi Jordan,\n\nThe Group CEO fireside chat is on 22 Oct at 3:00 PM, in the auditorium and online.\n\nRegister and submit your questions with your staff login by 20 Oct.\n\nCorporate Communications",
+    "banner": "content/media/email/hard/assets/singtel-town-hall-fake-banner.svg",
+    "link_text": "Register now",
+    "link_url": "https://singtei.com/townhall/register",
+    "landing": {
+     "src": "content/media/email/hard/assets/singtel-town-hall-fake-landing.svg",
+     "alt": "A fake page on singtei.com"
+    },
+    "flags": [
+     {
+      "on": "from_email",
+      "mark": "singtei.com",
+      "text": "An i where the l should be"
+     },
+     {
+      "on": "body",
+      "mark": "with your staff login",
+      "text": "Wants a login to register"
+     },
+     {
+      "on": "link_url",
+      "text": "Not a singtel.com address"
+     }
+    ]
+   }
+  },
+  {
    "id": "email/hard/sms-ceo-newnumber",
    "tier": "hard",
    "label": "A text from your CEO",

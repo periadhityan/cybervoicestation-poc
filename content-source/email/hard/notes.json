@@ -411,5 +411,65 @@
       "Not your company's address"
     ],
     "what_you_can_do": "IT never sends installers by email link. Raise a ticket on the Service Desk portal from your own bookmark."
+  },
+  "singtel-town-hall": {
+    "subject_label": "A Singtel town hall invitation",
+    "reveal_note": "The real email is from singtel.com and points you to the staff intranet. The fake comes from singtei.com, with an i in place of the l, and asks you to register with your staff login.",
+    "techniques": [
+      "Credential harvesting",
+      "Typosquatting",
+      "Internal impersonation"
+    ],
+    "red_flags": [
+      "An i where the l should be",
+      "Wants a login to register",
+      "Not a singtel.com address"
+    ],
+    "what_you_can_do": "Use the staff intranet from your own bookmark. Read an address letter by letter before you sign in."
+  },
+  "singtel-cyber-training": {
+    "subject_label": "A Singtel training reminder, on your phone",
+    "reveal_note": "Both look the same on a phone. The real email tells you to use your own bookmark. The fake comes from singtel-learning.com and gives you a link that asks for your staff login.",
+    "techniques": [
+      "Credential harvesting",
+      "Lookalike domain",
+      "Internal impersonation"
+    ],
+    "red_flags": [
+      "Not singtel.com",
+      "Asks for your staff login",
+      "Not your learning portal"
+    ],
+    "what_you_can_do": "Tap the sender name to check the address, then open the learning portal from your own bookmark."
+  },
+  "singtel-ceo-office": {
+    "subject_label": "An email from the Group CEO Office",
+    "reveal_note": "The real email only says thank you and needs no action. The fake comes from singtel-group.com and asks for your mobile number, the first step of a phone scam.",
+    "techniques": [
+      "Authority",
+      "Impersonated executive",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Not singtel.com",
+      "Pressure to act today",
+      "Asks for your mobile number"
+    ],
+    "what_you_can_do": "Executives' offices don't ask for your number by email. Check with your manager before you reply."
+  },
+  "singtel-benefits": {
+    "subject_label": "A Singtel benefits email, on your phone",
+    "reveal_note": "The sender name matches on a phone. The real email says to use the HR portal from your bookmark. The fake comes from singte1.com, with a 1 in place of the l, and gives you a link.",
+    "techniques": [
+      "Credential harvesting",
+      "Homoglyph domain",
+      "Internal impersonation"
+    ],
+    "red_flags": [
+      "A 1 where the l should be",
+      "A link, not your bookmark",
+      "Not an HR portal address"
+    ],
+    "what_you_can_do": "Tap the sender name to read the address letter by letter. Open the HR portal from your own bookmark."
   }
 }
