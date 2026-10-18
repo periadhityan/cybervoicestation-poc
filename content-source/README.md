@@ -1,86 +1,58 @@
-# "Which Is Fake?" content
+# Content source for Cyberroom
 
-Three independent games, one per modality. Content for all three lives as
-plain files under `app/static/content/`, discovered automatically by
-folder convention -- **there is no manifest JSON to hand-edit.**
+The questions for **Spot the Phish** and **Snapshot or Fake Shot?** live here as plain files. There is no list to
+edit by hand: put files in the right folder, run the build, and the game picks them up. (Reel or Real keeps its cases in
+`Cyberroom/reel-or-real/rounds.js` and `add-questions.js`.)
 
 ```
-app/static/content/
-  video/
-    easy/     round-id-real.mp4   round-id-fake.mp4   notes.json (optional)
+content-source/
+  email/
+    easy/     round-id-real.json  round-id-fake.json  notes.json  assets/*.svg
     medium/   ...
     hard/     ...
   image/
-    easy/     round-id-real.jpg   round-id-fake.jpg   notes.json (optional)
-    medium/   ...
-    hard/     ...
-  email/
-    easy/     round-id-real.json  round-id-fake.json  notes.json (optional)
+    easy/     round-id-real.jpg   round-id-fake.jpg   notes.json
     medium/   ...
     hard/     ...
 ```
 
-The `email` game (phishing emails) works the same way as the other two,
-just with `.json` files describing a mock email instead of a media file --
-see "The email game's content format" below for that file's fields.
+After any change, rebuild the site (this regenerates `Cyberroom/content/content.js` and copies the photos in):
 
-## Adding a round
-
-Drop two files into the right `<modality>/<difficulty>/` folder, named:
-
-```
-<round-id>-real.<ext>
-<round-id>-fake.<ext>
+```bash
+python3 tools/build_static_site.py                 # refresh Cyberroom/content/
+python3 tools/build_static_site.py --zip           # also dist/Cyberroom.zip
+python3 tools/build_static_site.py --single-file   # also dist/Cyberroom.html
 ```
 
-`<round-id>` can be anything filesystem-safe (letters, numbers, hyphens,
-underscores) as long as it's the same on both files -- e.g.
-`ceo-video-call-real.mp4` / `ceo-video-call-fake.mp4`. `<ext>` can be whatever
-format you're using (`mp4`/`webm` for video,
-`jpg`/`png` for images, `json` for email -- anything a browser can play,
-display, or fetch natively).
+## Adding a pair
 
-That's it. The pair is picked up automatically the next time someone loads
-the game -- no code change, no JSON to edit, no server restart needed
-(Flask discovers the files fresh on every request). If you only add one of
-the two files (say you're mid-upload), that round is silently skipped until
-its partner shows up -- it won't crash the game or show a broken pair.
+Put two files in the right `<email|image>/<easy|medium|hard>/` folder, named `<round-id>-real.<ext>` and
+`<round-id>-fake.<ext>` (`json` for email, `jpg` or `png` for photos). The id can be anything filesystem-safe as long as
+it matches on both files. A pair with only one file is skipped. For photos, `tools/make_photo_pair.py` resizes and
+names a real photo and its AI twin for you. Photos are not kept in git (the big originals stay on your machine);
+notes, emails and the SVG pictures are.
 
-## Optional: nicer labels with `notes.json`
+## notes.json
 
-By default, a round gets an auto-generated label from its id (e.g.
-`ceo-video-call-real.mp4` becomes the label "Ceo video call") and a generic
-reveal note for its modality. To supply a proper label and a specific
-"what gave it away" explanation instead, add a `notes.json` file in the
-same tier folder:
+One per tier folder. Only the ids you want to describe need an entry:
 
 ```json
 {
-  "ceo-video-call": {
-    "subject_label": "CEO video call asking for a wire transfer",
-    "reveal_note": "The real clip has natural blinking and lip movement; in the fake one the lips drift slightly out of sync."
-  },
-  "another-round-id": {
-    "subject_label": "...",
-    "reveal_note": "..."
+  "round-id": {
+    "subject_label": "What the player sees above the pair",
+    "reveal_note": "What gave the fake away (one or two sentences)",
+    "what_you_can_do": "The tip on the answer screen",
+    "techniques": ["Urgency", "Lookalike domain"],
+    "red_flags": ["short sentences for the Phish bank"]
   }
 }
 ```
 
-Only round-ids you actually want to override need an entry -- anything not
-listed just falls back to the auto-generated default, so you can add
-`notes.json` entries incrementally as you get to them, or skip it entirely
-for a first pass.
+`techniques` and `red_flags` are used by the Phish bank (emails only). `what_you_can_do` replaces the station's generic tip.
 
-## The email game's content format
+## The email format
 
-The other two games' `<round-id>-real/fake.<ext>` files are media the
-browser plays or displays directly. The email game's are instead
-`<round-id>-real.json` / `<round-id>-fake.json` -- content_pool.py's
-real/fake pair discovery doesn't care about file extension, so the same
-convention applies unmodified; the browser just fetches the JSON file
-itself (instead of, say, an `<img>` tag fetching a photo) and renders it as
-a mock inbox message. Fields:
+Each email is a JSON file. Fields:
 
 ```json
 {
@@ -109,146 +81,48 @@ kiosk) -- that mismatch between link text and destination is one of the
 core phishing tells this game teaches, so make it count in your fake
 rounds' `link_url`.
 
+**Phone view and red flags.** Add `"format": "mobile"` to *both* emails of a pair to show them as they look in a phone's
+mail app: only the display name is visible until the player taps "Details", links show as coloured text with no address,
+and the screen is narrow. Add a `flags` list to the *fake* email to number its giveaways on the answer screen:
+`{ "on": "from_email", "mark": "micros0ft-support-center.com", "text": "Not microsoft.com (zero for o)" }`. `on` is the
+field (`from_name`, `from_email`, `subject`, `body`, `link_text`, `link_url`, `attachment_name`, or a picture:
+`banner`, `qr`, `images`); `mark` is the exact words to highlight (omit it to flag the whole field or picture). **Keep it to
+3-4 flags, each `text` at most 30 characters so it stays on one line**; the build warns if not.
+
+**Text messages and QR signs.** Two more `"format"` values turn a pair into something that is not an email.
+`"sms"`: `from_name` is the sender the phone shows (a name like `DBS`, or a number), `date` is `"Today 9:41 AM"`, and `body` is the
+text with its link written out in full; `subject` is just a preview for the bank. `"qr"`: a sign, sticker or card in the real world.
+`from_name` is where it is, `subject` the headline, `body` the small print, `printed_url` the line printed under the code,
+`scan_url` where the QR really leads (shown on the answer screen for the fake), `qr` the picture and caption, and `sticker`
+(`1` or `2` for a more obvious one) draws it stuck over another sign. Flags on these use `from_name`, `subject`, `body`,
+`printed_url` or `qr` for `on`. The game calls them messages and signs instead of emails, and a "Which kind is it?"
+mix is chosen automatically.
+
 **The picture fields.** `banner` is a header image shown at the top of the message; `images` are inline
 pictures (an image-only phishing email has an empty `body` and one image); `qr` is a QR code with a caption;
 `landing` is a screenshot of the page the link opens -- it's not shown in a round, only in the Phish bank's
 full-email viewer under "Where the link goes". Paths are relative to the email's tier folder
-(`app/static/content/email/<tier>/assets/`). Keep the real and fake emails of a pair similar in length, or the
+(`content-source/email/<tier>/assets/`). Keep the real and fake emails of a pair similar in length, or the
 longer one will force the text smaller (the build is checked so every pair fits on screen).
 
 **`notes.json` for emails** takes the usual `subject_label` and `reveal_note`, plus:
 `techniques` (short tags such as "Urgency", "QR code", shown in the Phish bank), `red_flags` (a list of the
 fake's giveaways, also shown in the bank) and `what_you_can_do` (the tip on the answer screen).
 
-**Making the pictures.** `scripts/make_phish_assets.py` generates all of the SVG assets (needs
+**Making the pictures.** `tools/make_phish_assets.py` generates all of the SVG assets (needs
 `pip install segno`; only for generating, not for running the game). Nothing in them reproduces a real logo --
 banners are plain wordmarks, and the "fake" ones are deliberately blurry or mis-spelt. **QR codes always
 encode a harmless training message, never a web address**: people will scan them with their phones.
 
-**Content and real brands.** The first nine pairs use an invented company ("Meridian Freight Co."). The
-newer ones (Microsoft, DHL, DocuSign, Google, Eventbrite, SingPost, Adobe) imitate real brands' *genuine
+**Content and real brands.** A handful of pairs use an invented company ("Meridian Freight Co."). Most of the rest (Microsoft, Amazon, PayPal, Apple, DBS, ...) imitate real brands' *genuine
 sender domains* for the real emails, and sloppy lookalike domains for the phishing ones -- as awareness
 training does -- but all the text is invented, the links are plain text and never clickable, and no
 real person is named. Because they name real companies, **get Comms/Legal sign-off before showing them
 publicly**, the same as for any named-company case. Replace them with invented companies if you prefer.
 
+
 ## How many pairs you need
 
-On every page load, the Flask route for each game randomly samples **4
-easy + 2 medium + 1 hard** pair from whatever's in each tier folder (see
-`SELECT_COUNTS` in `app/content_pool.py`), always served in that tier
-order. **Each tier folder needs at least that many pairs to have any real
-variety** -- the whole point is that two players in a row, or the same
-player hitting "Play Again," see a different set of clips, so nobody can
-memorize the previous player's answers by watching or overhearing them.
-More pairs per tier = less repetition. The shipped placeholder content has
-6 easy / 4 medium / 3 hard pairs for video/image, and 4 easy / 3
-medium / 2 hard for email, as a starting point -- add more freely, the
-sampling logic doesn't care how large a tier folder gets.
-
-## The placeholder content
-
-The video/image pairs shipped out of the box are synthetic test
-content (test-pattern clips for video, solid-color stills for images) --
-not real footage or photos of anyone. They exist
-only to prove each game's plumbing (including the random sampling) works
-end to end. **Replace them with real rounds before the event.** You can mix
-real and placeholder pairs in the same tier folder while you're still
-filling it in -- just delete the placeholder pair for a tier once you've
-replaced it with enough real ones.
-
-To regenerate a clean set of placeholders at any point (e.g. after
-clearing out a tier to start over):
-
-```bash
-cd ~/Repos/CyberVoiceStation
-python scripts/generate_placeholder_content.py
-```
-
-**Careful: this overwrites each tier's `notes.json`**, including any labels and "what gave it away"
-notes you've written by hand (the photo game's are hand-written now). Only run it on a tier you
-are happy to reset. It rebuilds the video/image placeholder content and `notes.json`
-files from scratch (it doesn't touch `email/`, which ships hand-written
-example content instead of a synthetic placeholder -- see "The email
-game's content format" above). It only ever touches its own
-`<tier>-<n>-real/fake.*` filenames and its own `notes.json` in each tier
-folder, so real content using different round-id names is left alone by a
-re-run -- just don't name a real round `easy-1`, `medium-2`, `hard-3`, etc.
-(anything that collides with the generator's own naming) if you want it to
-survive a re-generation.
-
-## Sourcing real content safely
-
-Two safe paths, both of which avoid generating unlicensed synthetic media
-of real, named people without consent:
-
-1. **Consenting internal volunteers.** A volunteer explicitly agrees ahead
-   of time to have a short "fake" clip made of themselves (or to be filmed/
-   photographed for a fake image/video pair), paired with a genuine
-   recording, photo, or clip of them. This tends to land harder than a
-   stranger would, since it shows that even someone the participant
-   actually knows can be convincingly faked.
-
-2. **Licensed content from your security awareness vendor.** The vendor
-   running the deepfake/social-engineering/AI-phishing webinar likely
-   already has example real/fake pairs -- across audio, video, and image --
-   built for exactly this kind of game as part of their commercial
-   offering. Worth asking before sourcing anything from scratch, especially
-   for video.
-
-Avoid generating deepfaked audio, video, or images of real, named public
-figures (celebrities, executives at other companies, etc.) without their
-consent -- unlike a volunteer's own likeness used with their own informed
-consent, that crosses into unauthorized synthetic media of an identifiable
-person, with real legal/publicity-rights exposure if it were ever used
-outside this internal training context.
-
-**Video specifically is a higher-risk category than audio or stills.**
-Face-swap/deepfake video of a real person is both more convincing and more
-damaging if it were ever leaked or misused than a short voice clip or
-still image, and the consent/publicity-rights exposure is correspondingly
-higher. This app has no built-in generation capability for any modality --
-it only plays back whatever real/fake pairs you supply. If you want a video
-round, source it from your vendor or through a carefully consented,
-professionally produced volunteer session.
-
-See the Content Loading Guide project doc for a phased, week-by-week plan
-for sourcing and loading content ahead of the event.
-
-## Two storage backends: local folders or S3
-
-Everything above describes the **local** backend (`CONTENT_BACKEND=local`,
-the default) -- content lives on disk under `app/static/content/`. This is
-what local/native and mini-PC deployments always use, and it's the fastest
-loop for content-loading work (drop files in, refresh the browser, done).
-
-The AWS deployment can instead run with `CONTENT_BACKEND=s3`, where the
-exact same `<round-id>-real/fake.<ext>` + optional `notes.json` convention
-applies, just as S3 object keys under `content/<modality>/<difficulty>/`
-in a private bucket instead of local folders. Nothing about *how* you name
-or organize content changes -- only where it physically lives and how you
-get it there:
-
-```bash
-./scripts/sync_content_to_s3.sh <bucket-name>
-```
-
-uploads whatever's currently in your local `app/static/content/` to the
-bucket, mirroring the same folder structure as S3 key prefixes. New or
-changed content shows up live within about a minute (a short server-side
-cache), with no redeploy, rebuild, or restart of the AWS instance needed --
-unlike the local backend baked into the Docker image, S3 content updates
-are fully decoupled from the app itself.
-
-**Why you'd want this:** a large, growing content library (lots of video
-especially) bloats the git repo permanently, can hit GitHub's 100MB
-per-file limit, and makes every content change require a full Docker
-rebuild on the instance. S3 sidesteps all three. See the S3 Content Storage
-project doc for the one-time setup (bucket, IAM role, enabling
-`CONTENT_BACKEND=s3`) and `ARCHITECTURE.md` §2.2/§4.3 for how it works
-under the hood -- notably, the bucket is never publicly readable; the app
-serves each round's media as a short-lived presigned URL, generated only
-after the site's passcode gate has already authenticated the request.
-
-For a modest library (a few dozen pairs per game), the local backend is
-simpler and there's no need to bother with S3 at all.
+A game uses 4 easy, 2 medium and 1 hard pair. The more pairs in each tier, the less often a player sees a repeat. The game
+also remembers what a player has just seen and mixes the four kinds (desktop email, phone email, text message, QR sign)
+in every game. See `Cyberroom/README.md` for the full picture.

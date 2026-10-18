@@ -5,7 +5,12 @@ photos) and **Reel or Real?** (film plot or real cyber incident). Each game is w
 with a "Control Shield" lesson after every answer. The first two show two items and you pick the
 real one (7 rounds); Reel or Real? shows one case and you answer Reel or Real (8 cases).
 
-Three **question banks** on the home screen list everything in a game. The **Phish bank** shows every email pair
+Spot the Phish has **81 pairs, 27 per difficulty**, in four kinds: emails on a desktop, emails as they look in a phone's mail
+app (you only see the sender's name until you tap Details), **text messages** (smishing), and **QR codes out in the world**
+(car park stickers, table codes, Wi-Fi cards; four email pairs also carry a QR). Every game is built to mix them: the game
+scores hundreds of random line-ups and keeps one with all four kinds, no more than 3 of one kind, and pairs the player
+hasn't just seen (in a 400-game test, every game had at least one text, one QR and one phone email). After you answer, the fake is shown again with its **3-4 red flags
+numbered on the email itself**. Three **question banks** on the home screen list everything in a game. The **Phish bank** shows every email pair
 side by side (tap an email to open it in full, with the page its link opens; "Show answers" marks which is
 the phish, the techniques used, and the red flags). The **Photo bank** shows every photo pair (tap to enlarge).
 The **Reel or Real bank** lists every case.
@@ -13,11 +18,11 @@ The **Reel or Real bank** lists every case.
 No install, no server, no internet. It is plain HTML/CSS/JS.
 
 ## Run it
-1. Unzip `CyberRoom.zip` (or just open the `site/` folder).
+1. Unzip `Cyberroom.zip` (or just open the `Cyberroom/` folder).
 2. Double-click `index.html` (Chrome or Edge recommended).
 3. Press **F** for fullscreen.
 
-Prefer one file? Open `CyberRoom.html` instead -- everything (photos, videos, logo) is inside it.
+Prefer one file? Open `Cyberroom.html` instead -- everything (photos, videos, logo) is inside it.
 
 Keys: `1`-`3` pick a game on the home screen; `1` = left item / Reel, `2` = right item / Real during a round;
 `Enter`/`Space` = next, `H` = home, `F` = fullscreen, `Shift+S` = staff panel.
@@ -42,7 +47,7 @@ All in `effects.js`, no extra files:
 - Safety by design: nothing flashes more than twice a second, no full-screen strobe, and the one colour burst when the takeover lands fades once.
 
 ## Send it to another computer
-Send **`CyberRoom.zip`** (the whole folder, about 5 MB) or the single **`CyberRoom.html`** (about 8 MB).
+Send **`Cyberroom.zip`** (the whole folder, about 5 MB) or the single **`Cyberroom.html`** (about 7 MB).
 Nothing else needs installing on the other computer. If email blocks the attachment, share it through
 your usual file share or a USB stick instead.
 
@@ -59,20 +64,20 @@ your usual file share or a USB stick instead.
   fill in 7 fields, save. Mistakes show a "Setup problem" screen naming the case and field.
 - The home screen's **Question bank** lists every case; the staff panel shows how many are still draft.
 
-**Spot the Phish and Snapshot or Fake Shot** come from the same content library as the Flask version:
-`app/static/content/<email|image>/<easy|medium|hard>/` with `<round-id>-real.<ext>` /
-`<round-id>-fake.<ext>` pairs and an optional `notes.json` (see `app/content/README.md`).
+**Spot the Phish and Snapshot or Fake Shot** are built from `content-source/` (next to this folder, not inside it):
+`content-source/<email|image>/<easy|medium|hard>/` with `<round-id>-real.<ext>` /
+`<round-id>-fake.<ext>` pairs and an optional `notes.json` (see `content-source/README.md`).
 Then rebuild:
 
 ```bash
-python3 scripts/build_static_site.py                 # refresh site/content/
-python3 scripts/build_static_site.py --zip           # also dist/CyberRoom.zip
-python3 scripts/build_static_site.py --single-file   # also dist/CyberRoom.html
+python3 tools/build_static_site.py                 # refresh Cyberroom/content/
+python3 tools/build_static_site.py --zip           # also dist/Cyberroom.zip
+python3 tools/build_static_site.py --single-file   # also dist/Cyberroom.html
 ```
 
 Only Python 3 is needed, and only on the computer that builds. Photos wider than 1600 px are shrunk in
 the *copy* that goes into the site (needs `ffmpeg`; originals are never changed).
-`site/content/` is generated -- don't edit it by hand.
+`Cyberroom/content/` is generated -- don't edit it by hand.
 
 For email rounds, `notes.json` can also carry a per-round `"what_you_can_do"` line that replaces the
 game's default tip on the answer screen.
@@ -84,18 +89,19 @@ game's default tip on the answer screen.
 - `assets/singtel-logo.svg` -- set `logoSrc: ""` in `config.js` to hide it.
 
 ## Before sharing
-- **The newer phishing examples name real brands** (Microsoft, DHL, DocuSign, Google, Eventbrite, SingPost, Adobe).
-  The text is invented, the links are plain text, and the QR codes only contain a training message, but get
-  Comms/Legal sign-off before showing them, as with the Reel or Real cases that name companies.
+- **Most phishing pairs name real brands** (Microsoft, Amazon, PayPal, Apple, DBS, OCBC, Singtel, IRAS, CPF, Maersk
+  and more). The real emails use each brand's genuine sender *domain* (the part after the @; the part before it
+  is illustrative), the fakes use lookalike domains, the text is invented, links are plain text, and QR codes only
+  contain a training message. This build is meant for internal use; get Comms/Legal sign-off before showing it
+  anywhere public, as with the Reel or Real cases that name companies.
 - **Reel or Real? needs a fact-check.** All 39 cases are still marked `status: "draft"` (written from
   memory, per the original project's notes) and 14 name real companies. Check each Real case against
   its listed source, then set `status: "approved"`. Case R16 (OCBC) is switched off pending Comms/Legal
   clearance -- get clearance for any named-company case before enabling it. R18 and R26 are
   physical-security cases, also switched off because this is a cyber-only station.
-- **The deepfake-video game is parked.** Its content is still in `app/static/content/video/` and the Flask app
-  still serves it, but the site leaves it out (its clips are placeholder test patterns). To bring it back, add
-  `"video"` to `MODALITIES` in `scripts/build_static_site.py` and restore its station block in `config.js`
-  (copy it from git history: `git log -p -- site/config.js`).
+- **The deepfake-video game is parked.** Its placeholder clips are in `archive/app/static/content/video/`. To bring it
+  back, copy them to `content-source/video/`, add `"video"` to `MODALITIES` in `tools/build_static_site.py` and restore
+  its station block in `config.js` (copy it from git history: `git log -p -- site/config.js`).
 - **Photo pairs:** the bank is only as good as its notes. Each pair's `notes.json` entry gives its label and
   the "what gave it away" text, so write one whenever you add a pair.
 - Emails are written around an invented company ("Meridian Freight Co."), not a real organisation.

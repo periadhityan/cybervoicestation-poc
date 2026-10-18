@@ -117,7 +117,7 @@
     const errs = addErrs.slice();
     if (!window.CONFIG) errs.push('config.js is missing or has an error.');
     else if (!stations().length) errs.push('config.js has no "stations" list.');
-    if (!window.CONTENT) errs.push('content/content.js is missing. Run: python3 scripts/build_static_site.py');
+    if (!window.CONTENT) errs.push('content/content.js is missing. Run: python3 tools/build_static_site.py');
     if (window.ROUNDS != null) {
       if (!Array.isArray(window.ROUNDS)) errs.push('reel-or-real/rounds.js: ROUNDS must be a list.');
       else {
@@ -133,7 +133,7 @@
         });
       }
     }
-    if (!errs.length && !stations().some((s) => poolOf(s.key).length)) errs.push('No rounds are available. Run: python3 scripts/build_static_site.py');
+    if (!errs.length && !stations().some((s) => poolOf(s.key).length)) errs.push('No rounds are available. Run: python3 tools/build_static_site.py');
     return errs;
   }
 
@@ -167,17 +167,42 @@
 
   /* ------------------------------------------------------------------ round selection */
   // Pair stations: per tier, prefer rounds this computer hasn't shown recently, then fill from the rest.
+  // Pairs come in different kinds (desktop email, email on a phone, text message, QR code). A game is built to mix them:
+  // many random candidate games are scored, and the best is kept. A game that has one of each kind scores highest, no kind
+  // may dominate, and pairs the player saw recently are avoided. A pool with only one kind is not affected.
+  const WANT = ['sms', 'qr', 'phone'];
+  function scoreGame(picks, seen) {
+    const kinds = {};
+    picks.forEach((r) => { const k = kindOfPair(r); kinds[k] = (kinds[k] || 0) + 1; });
+    let score = Object.keys(kinds).length * 10;
+    WANT.forEach((k) => { if (kinds[k]) score += 8; });
+    if (kinds.desktop) score += 4;
+    Object.values(kinds).forEach((c) => { if (c > 3) score -= 25 * (c - 3); });
+    return score - picks.filter((r) => seen.has(r.id)).length * 10;
+  }
+  // Within each difficulty the order is shuffled so the same kind rarely appears twice in a row.
+  function spreadKinds(picks) {
+    let best = picks, bestRuns = Infinity;
+    for (let t = 0; t < 60; t++) {
+      const o = [];
+      DIFFS.forEach((d) => o.push(...shuffle(picks.filter((r) => diffOf(r) === d))));
+      let runs = 0;
+      for (let i = 1; i < o.length; i++) if (kindOfPair(o[i]) === kindOfPair(o[i - 1])) runs++;
+      if (runs < bestRuns) { best = o; bestRuns = runs; if (!runs) break; }
+    }
+    return best;
+  }
   function pickPair(key) {
     const pool = poolOf(key), m = gameMix(key);
     const seen = new Set(P.seen[key] || []);
-    const picks = [];
-    DIFFS.forEach((d) => {
-      const tier = pool.filter((r) => diffOf(r) === d);
-      const fresh = shuffle(tier.filter((r) => !seen.has(r.id)));
-      const stale = shuffle(tier.filter((r) => seen.has(r.id)));
-      picks.push(...fresh.concat(stale).slice(0, m[d]));
-    });
-    return picks;
+    let best = null, bestScore = -Infinity;
+    for (let a = 0; a < 300; a++) {
+      const picks = [];
+      DIFFS.forEach((d) => picks.push(...shuffle(pool.filter((r) => diffOf(r) === d)).slice(0, m[d])));
+      const sc = scoreGame(picks, seen);
+      if (sc > bestScore) { best = picks; bestScore = sc; }
+    }
+    return spreadKinds(best || []);
   }
 
   // Which side the real item sits on, never the same side three rounds running.
@@ -335,6 +360,15 @@
         lines: [{ t: `Photo ${fakeSlot}: AI-generated`, cls: 'bad' }, ...flags, { t: 'Look closer next time: hands, text, reflections' }] };
     }
     const lines = [];
+    if (f.format === 'sms') {
+      const u = urlIn(f.body);
+      lines.push({ t: u ? `Link tapped: ${linkHost(u.startsWith('http') ? u : 'http://' + u)}` : 'Reply sent: the attacker has your number' }, { t: `Sender was ${f.from_name || 'unknown'}`, cls: 'bad' }, { t: 'Code or password typed in' }, { t: 'Your phone is now a target', cls: 'bad' });
+      return { title: 'YOU GOT<br>PHISHED!', sub: 'You picked the fake text message.', lines, hold: 4800 };
+    }
+    if (f.format === 'qr') {
+      lines.push({ t: `QR scanned: ${f.scan_url ? linkHost(f.scan_url.startsWith('http') ? f.scan_url : 'http://' + f.scan_url) : 'unknown page'}` }, { t: 'You could not see it before you scanned', cls: 'bad' }, { t: 'Card or login typed in' }, { t: 'Money or access gone', cls: 'bad' });
+      return { title: 'YOU GOT<br>PHISHED!', sub: 'You picked the fake QR sign.', lines, hold: 4800 };
+    }
     if (f.link_url) lines.push({ t: `Link opened: ${linkHost(f.link_url)}` });
     else if (f.qr) lines.push({ t: 'QR code scanned: fake sign-in page' });
     else if (f.attachment_name) lines.push({ t: `Attachment opened: ${f.attachment_name}` });
@@ -418,31 +452,139 @@
   const badgesHtml = (r) => {
     const d = diffOf(r), lvl = DIFFS.indexOf(d) + 1;
     const meter = DIFFS.map((_, i) => `<i class="${i < lvl ? 'on' : ''}"></i>`).join('');
-    return `<span class="diff diff--${d}"><span class="diff__meter" aria-hidden="true">${meter}</span>${cap(d)}</span><span class="worth">Worth <b>${state.points[state.idx] || 0}</b> points</span>`;
+    return `<span class="diff diff--${d}"><span class="diff__meter" aria-hidden="true">${meter}</span>${cap(d)}</span><span class="worth">Worth <b>${state.points[state.idx] || 0}</b> points</span>${(() => { const f = r.items && r.items.A && r.items.A.format; return f === 'mobile' ? '<span class="diff diff--phone">On a phone</span>' : f === 'sms' || f === 'qr' ? `<span class="diff diff--phone">${FMT[f].badge}</span>` : (r.items && ((r.items.A || {}).qr || (r.items.B || {}).qr) ? '<span class="diff diff--phone">QR code</span>' : ''); })()}`;
   };
 
   /* ---- the two things a pair round compares ---- */
+  /* Red flags made visible. A fake email's JSON can carry `flags`: [{ on: "from_email", mark: "micros0ft-support-center.com", text: "Not microsoft.com" }].
+     `on` is the field the flag sits on (from_name, from_email, subject, body, link_text, link_url, attachment_name, banner, qr, images, landing),
+     `mark` is the exact words to highlight (leave it out to flag the whole field or picture). Each flag gets a number; the legend lists them. */
+  const flagNo = (n, cls = '') => `<i class="rf__n${cls}" aria-hidden="true">${n}</i>`;
+  function rfText(text, F, field) {
+    const raw = String(text == null ? '' : text);
+    const list = F.filter((f) => f.on === field);
+    if (!list.length) return esc(raw);
+    const hits = [];
+    list.forEach((f) => {
+      const i = f.mark ? raw.indexOf(f.mark) : 0;
+      if (i < 0) return;
+      const len = f.mark ? f.mark.length : raw.length;
+      if (!hits.some((h) => i < h.i + h.len && h.i < i + len)) hits.push({ i, len, n: f.n });
+    });
+    hits.sort((x, y) => x.i - y.i);
+    let out = '', at = 0;
+    hits.forEach((h) => { out += esc(raw.slice(at, h.i)) + `<mark class="rf">${flagNo(h.n)}${esc(raw.slice(h.i, h.i + h.len))}</mark>`; at = h.i + h.len; });
+    return out + esc(raw.slice(at));
+  }
+  // A picture (banner, QR code, inline image, landing page) with a numbered pin and an outline.
+  const rfBox = (inner, F, field) => {
+    const f = F.find((x) => x.on === field);
+    return f ? `<div class="rf-box">${inner}${flagNo(f.n, ' rf__n--img')}</div>` : inner;
+  };
+  const withNo = (flags) => (flags || []).map((f, i) => Object.assign({ n: i + 1 }, f));
+  const flagList = (flags) => flags && flags.length
+    ? `<ol class="rf-list" aria-label="Red flags in the fake">${withNo(flags).map((f) => `<li>${flagNo(f.n)}<span>${esc(f.text)}</span></li>`).join('')}</ol>` : '';
+
+  // The kinds of "email" a pair can be. Text messages and QR signs are not emails, so the screens call them by their own name.
+  const FMT = {
+    sms: { noun: 'Message', q: 'Which message is the real one?', fake: 'fake text message', badge: 'Text message' },
+    qr: { noun: 'Sign', q: 'Which QR sign is the real one?', fake: 'fake QR sign', badge: 'QR sign' },
+  };
+  const fmtOfItem = (m) => FMT[(m || {}).format] || null;
+  const fmtOfRound = (r) => (r && r.items ? fmtOfItem(r.items.A) : null);
+  const urlIn = (text) => (String(text || '').match(/https?:\/\/[^\s]+|\b[a-z0-9-]+(?:\.[a-z0-9-]+)+\/[^\s]*/i) || [''])[0];
+  // What the player sees as the "kind" of a pair, so a game can be balanced: text, QR, phone email or desktop email.
+  const kindOfPair = (r) => {
+    const f = (r && r.fake) || {};
+    if (f.format === 'sms') return 'sms';
+    if (f.format === 'qr' || f.qr) return 'qr';
+    if (f.format === 'mobile') return 'phone';
+    return 'desktop';
+  };
+
   // compact = in a game round: the To and Date lines carry no tells, so leave them out to give the email more room.
-  function mailHtml(m, compact = false) {
+  // flags = annotate the email with its red flags (the reveal screen).
+  function mailHtml(m, compact = false, flags = null) {
+    if (m.format === 'mobile') return phoneHtml(m, flags);
+    if (m.format === 'sms') return smsHtml(m, flags);
+    if (m.format === 'qr') return signHtml(m, flags);
+    const F = withNo(flags);
     const row = (label, val, cls = '') => `<div class="mail__row ${cls}"><span class="mail__label">${label}</span><span class="mail__val">${val}</span></div>`;
-    let head = row('From', `${esc(m.from_name)} &lt;${esc(m.from_email)}&gt;`);
+    let head = row('From', `${rfText(m.from_name, F, 'from_name')} &lt;${rfText(m.from_email, F, 'from_email')}&gt;`);
     if (m.to && !compact) head += row('To', esc(m.to));
-    head += row('Subject', esc(m.subject), 'mail__row--subject');
+    head += row('Subject', rfText(m.subject, F, 'subject'), 'mail__row--subject');
     if (m.date && !compact) head += row('Date', esc(m.date));
     let foot = '';
-    if (m.attachment_name) foot += `<span class="mail__attach">📎 ${esc(m.attachment_name)}</span>`;
-    if (m.link_text && m.link_url) foot += `<span class="mail__btn">${esc(m.link_text)}</span><p class="mail__url"><span class="mono">Link goes to</span>${esc(m.link_url)}</p>`;
-    const banner = m.banner ? `<img class="mail__banner" src="${esc(m.banner)}" alt="${esc(m.from_name)} logo banner" draggable="false">` : '';
-    const body = m.body ? `<div class="mail__body">${esc(m.body)}</div>` : '';
-    const imgs = (m.images || []).length ? `<div class="mail__imgs">${m.images.map((i) => `<img class="mail__img" src="${esc(i.src)}" alt="${esc(i.alt || '')}" draggable="false">`).join('')}</div>` : '';
-    const qr = m.qr ? `<div class="mail__qr"><img src="${esc(m.qr.src)}" alt="${esc(m.qr.alt || 'A QR code')}" draggable="false"><p>${esc(m.qr.caption || '')}</p></div>` : '';
+    if (m.attachment_name) foot += `<span class="mail__attach">📎 ${rfText(m.attachment_name, F, 'attachment_name')}</span>`;
+    if (m.link_text && m.link_url) foot += `<span class="mail__btn">${rfText(m.link_text, F, 'link_text')}</span><p class="mail__url"><span class="mono">Link goes to</span>${rfText(m.link_url, F, 'link_url')}</p>`;
+    const banner = m.banner ? rfBox(`<img class="mail__banner" src="${esc(m.banner)}" alt="${esc(m.from_name)} logo banner" draggable="false">`, F, 'banner') : '';
+    const body = m.body ? `<div class="mail__body">${rfText(m.body, F, 'body')}</div>` : '';
+    const imgs = (m.images || []).length ? rfBox(`<div class="mail__imgs">${m.images.map((i) => `<img class="mail__img" src="${esc(i.src)}" alt="${esc(i.alt || '')}" draggable="false">`).join('')}</div>`, F, 'images') : '';
+    const qr = m.qr ? rfBox(`<div class="mail__qr"><img src="${esc(m.qr.src)}" alt="${esc(m.qr.alt || 'A QR code')}" draggable="false"><p>${esc(m.qr.caption || '')}</p></div>`, F, 'qr') : '';
     return `<div class="mail"><div class="mail__head">${head}</div>${banner}${body}${imgs}${qr}${foot ? `<div class="mail__foot">${foot}</div>` : ''}</div>`;
+  }
+
+  // A text message: the sender is whatever the network shows (a name or a number), the link is the whole address in the text.
+  function smsHtml(m, flags = null) {
+    const F = withNo(flags);
+    const who = String(m.from_name || '');
+    const bubbles = rfText(m.body, F, 'body').split(/\n\n/).map((t) => `<div class="sms__bubble">${t}</div>`).join('');
+    return `<div class="phone phone--sms" role="group" aria-label="Text message as seen on a phone">
+      <div class="phone__status" aria-hidden="true"><b>${esc((String(m.date || '').match(/\d{1,2}:\d{2}\s*[AP]M/i) || ['9:41'])[0])}</b><span class="phone__sig"><i></i><i></i><i></i><i></i></span></div>
+      <div class="sms__head"><span class="sms__back" aria-hidden="true">‹</span><div class="sms__who"><span class="phone__avatar" aria-hidden="true">${/^\+?\d/.test(who) ? '#' : esc(who.charAt(0).toUpperCase())}</span><b>${rfText(who, F, 'from_name')}</b></div><span class="sms__back" aria-hidden="true"></span></div>
+      <p class="sms__date">${esc(m.date || 'Today')}</p>
+      <div class="sms__bubbles">${bubbles}</div>
+    </div>`;
+  }
+
+  // A QR code out in the world: a sign, sticker or card. The QR itself reveals nothing; the printed words around it do.
+  function signHtml(m, flags = null) {
+    const F = withNo(flags);
+    const qr = m.qr ? rfBox(`<div class="sign__qr${m.sticker ? ' sign__qr--sticker' + (m.sticker === 2 ? ' sign__qr--loud' : '') : ''}"><img src="${esc(m.qr.src)}" alt="${esc(m.qr.alt || 'A QR code')}" draggable="false"><p>${esc(m.qr.caption || '')}</p></div>`, F, 'qr') : '';
+    return `<div class="sign" role="group" aria-label="A sign with a QR code">
+      <div class="sign__place">${rfText(m.from_name, F, 'from_name')}</div>
+      <h3 class="sign__title">${rfText(m.subject, F, 'subject')}</h3>
+      ${m.body ? `<p class="sign__body">${rfText(m.body, F, 'body')}</p>` : ''}
+      ${qr}
+      ${m.printed_url ? `<p class="sign__printed">${rfText(m.printed_url, F, 'printed_url')}</p>` : ''}
+    </div>`;
+  }
+
+  // The same email as it looks in a phone's mail app: the sender is only a display name until you tap "Details", the
+  // link is a bit of coloured text with no address, and everything is squeezed into a narrow screen. That is the whole point:
+  // on a phone the tells are hidden, so the player has to know where to look.
+  function phoneHtml(m, flags = null) {
+    const F = withNo(flags), annotate = F.length > 0;
+    const initial = esc(String(m.from_name || '?').trim().charAt(0).toUpperCase());
+    const time = esc((String(m.date || '').match(/\d{1,2}:\d{2}\s*[AP]M/i) || [''])[0]);
+    const attach = m.attachment_name ? `<span class="phone__attach">📎 ${rfText(m.attachment_name, F, 'attachment_name')}</span>` : '';
+    const link = m.link_text ? `${annotate && !F.some((f) => f.on === 'link_text') ? '' : `<p class="phone__link">${rfText(m.link_text, F, 'link_text')}</p>`}${annotate && m.link_url ? `<p class="phone__url"><span class="mono">Link goes to</span>${rfText(m.link_url, F, 'link_url')}</p>` : ''}` : '';
+    const qr = m.qr ? rfBox(`<div class="phone__qr"><img src="${esc(m.qr.src)}" alt="${esc(m.qr.alt || 'A QR code')}" draggable="false"><p>${esc(m.qr.caption || '')}</p></div>`, F, 'qr') : '';
+    const banner = m.banner ? rfBox(`<img class="phone__banner" src="${esc(m.banner)}" alt="" draggable="false">`, F, 'banner') : '';
+    return `<div class="phone" role="group" aria-label="Email as seen on a phone">
+      <div class="phone__status" aria-hidden="true"><b>${time || '9:41'}</b><span class="phone__sig"><i></i><i></i><i></i><i></i></span></div>
+      <div class="phone__nav" aria-hidden="true"><span>‹ Inbox</span><span>⌃ ⌄</span></div>
+      <h3 class="phone__subject">${rfText(m.subject, F, 'subject')}</h3>
+      <div class="phone__sender${annotate ? ' is-open' : ''}">
+        <span class="phone__avatar" aria-hidden="true">${initial}</span>
+        <div class="phone__who">
+          <b>${rfText(m.from_name, F, 'from_name')}</b>
+          <span class="phone__to">to me</span>
+          <button class="phone__details" type="button" data-details aria-expanded="${annotate}">Details</button>
+          <p class="phone__addr">${rfText(m.from_email, F, 'from_email')}</p>
+        </div>
+        <time>${time}</time>
+      </div>
+      ${banner}
+      ${m.body ? `<div class="phone__body">${rfText(m.body, F, 'body')}</div>` : ''}
+      ${qr}${link}${attach}
+    </div>`;
   }
 
   const linkHost = (u) => { try { return new URL(u).hostname; } catch (e) { return String(u || ''); } };
 
   function paneHtml(key, noun, slot) {
-    if (key === 'email') return `<div class="pane card fit" role="group" aria-label="${noun} ${slot}">${mailHtml(cur().items[slot], true)}</div>`;
+    if (key === 'email') { const m = cur().items[slot]; return `<div class="pane ${m.format === 'qr' ? 'pane--sign' : m.format === 'mobile' || m.format === 'sms' ? 'pane--phone' : 'card'} fit" role="group" aria-label="${noun} ${slot}">${mailHtml(m, true)}</div>`; }
     if (key === 'video') return `<div class="pane pane--media card" role="group" aria-label="${noun} ${slot}"><video data-media="${slot}" controls preload="metadata" playsinline aria-label="${noun} ${slot}"></video></div>`;
     return `<div class="pane pane--media card" role="group" aria-label="${noun} ${slot}"><button class="zoom" data-zoom="${slot}" aria-label="Enlarge ${noun} ${slot}"><img data-media="${slot}" alt="${noun} ${slot}" draggable="false"><span class="zoom__hint">${ICON.zoom} Tap to enlarge</span></button></div>`;
   }
@@ -461,7 +603,8 @@
         + (item.attachment_name ? `<p class="mini__line"><span class="mono">Attachment</span>${esc(item.attachment_name)}</p>` : '');
     } else if (key === 'video') body = `<video class="mini__media" data-media="${slot}" controls preload="metadata" playsinline aria-label="${noun} ${slot}, ${real ? 'real' : 'fake'}"></video>`;
     else body = `<img class="mini__media" data-media="${slot}" alt="${noun} ${slot}, ${real ? 'real' : 'fake'}" draggable="false">`;
-    return `<div class="mini mini--${real ? 'real' : 'fake'}"><div class="mini__top"><span class="mini__name">${noun} ${slot}</span>${tag}</div>${pick}${body}</div>`;
+    const photo = key !== 'email' && key !== 'video' ? ' mini--photo' : '';
+    return `<div class="mini mini--${real ? 'real' : 'fake'}${photo}"><div class="mini__top"><span class="mini__name">${noun} ${slot}</span>${tag}</div>${pick}${body}</div>`;
   }
 
   // The "related policy" box: the case's own policy, else the station's / global defaultPolicy. With none set it
@@ -519,7 +662,8 @@
     round() {
       const r = cur(), st = curStation();
       if (r.mode === 'single') return SCREENS.roundSingle(r, st);
-      const noun = cap(st.noun || 'item');
+      const fmt = fmtOfRound(r);
+      const noun = fmt ? fmt.noun : cap(st.noun || 'item');
       const slot = (side) => `<div class="slot">
           <p class="slot__name mono">${noun} ${side}</p>
           ${paneHtml(state.station, noun, side)}
@@ -530,7 +674,7 @@
         <div class="round">
           <div class="meta">
             <div class="meta__text">
-              <p class="mono">${esc(st.tag)} &nbsp;·&nbsp; Round ${state.idx + 1} of ${total()} &nbsp;·&nbsp; <b>${esc(st.question || '')}</b></p>
+              <p class="mono">${esc(fmt ? fmt.badge : st.tag)} &nbsp;·&nbsp; Round ${state.idx + 1} of ${total()} &nbsp;·&nbsp; <b>${esc(fmt ? fmt.q : st.question || '')}</b></p>
               <h1 class="meta__title">${esc(r.label)}</h1>
             </div>
             ${badgesHtml(r)}
@@ -573,7 +717,8 @@
     reveal() {
       const r = cur(), res = state.results[state.idx] || {}, st = curStation(), s = S();
       const single = r.mode === 'single';
-      const noun = cap(st.noun || 'item');
+      const fmtR = fmtOfRound(r);
+      const noun = fmtR ? fmtR.noun : cap(st.noun || 'item');
       const won = res.correct ? state.points[state.idx] || 0 : 0;
       const isReal = single && r.answer === 'REAL';
       const what = single ? (isReal ? 'It really happened.' : "It's from a film.") : `${noun} ${r.realSlot} was the real one.`;
@@ -599,6 +744,19 @@
             ${clean(r.weakness) ? `<p class="verdict__why"><span class="mono">Why it worked</span>${esc(r.weakness)}</p>` : ''}
             ${src}
           </article>`;
+      } else if (state.station === 'email' && ((r.items[r.realSlot === 'A' ? 'B' : 'A'] || {}).flags || []).length) {
+        const fakeSlot = r.realSlot === 'A' ? 'B' : 'A', fake = r.items[fakeSlot], real = r.items[r.realSlot], fl = fake.flags;
+        verdict = `<article class="verdict verdict--flags card fit">
+            <p class="mono">Where ${noun.toLowerCase()} ${fakeSlot} gave itself away${res.choice === fakeSlot ? ' <span class="verdict__you">&nbsp;·&nbsp; your pick</span>' : ''}</p>
+            <div class="flagview">
+              <div class="flagview__mail${['mobile', 'sms', 'qr'].includes(fake.format) ? ' flagview__mail--phone' : ''}">${mailHtml(fake, true, fl)}</div>
+              <div class="flagview__side">
+                ${flagList(fl)}
+                <p class="verdict__real"><span class="tag tag--real">Real</span> <b>${esc(real.format === 'sms' ? real.from_name : real.format === 'qr' ? real.printed_url : String(real.from_email).split('@').pop())}</b></p>
+                ${fake.scan_url ? `<p class="verdict__scan"><span class="mono">Scanning the fake opens</span>${esc(fake.scan_url)}</p>` : ''}
+              </div>
+            </div>
+          </article>`;
       } else {
         verdict = `<article class="verdict card fit">
             <p class="mono">Which one was the ${esc(st.fakeNoun || 'fake')}?</p>
@@ -609,7 +767,7 @@
       return `<section class="screen" data-screen="reveal">
         ${bar({ now: false, timer: false })}
         ${result}
-        <div class="reveal${single ? ' reveal--single' : ''}">
+        <div class="reveal${single ? ' reveal--single' : ''}${!single && state.station === 'email' && ((r.items[r.realSlot === 'A' ? 'B' : 'A'] || {}).flags || []).length ? ' reveal--flags' : ''}">
           ${verdict}
           <article class="shield card fit">
             <p class="mono">${ICON.shield} Control Shield</p>
@@ -697,17 +855,19 @@
       const preview = (r, side, realSide, i) => {
         const m = side === realSide ? r.real : r.fake, real = side === realSide;
         const snippet = (m.body || '').replace(/\s+/g, ' ').slice(0, 120);
-        const chips = [(m.banner || (m.images || []).length) ? 'Image' : '', m.qr ? 'QR code' : '', m.attachment_name ? 'Attachment' : '', m.landing ? 'Opens a page' : ''].filter(Boolean)
+        const fm = fmtOfItem(m), ntext = fm ? fm.noun : 'Email';
+        const chips = [(m.banner || (m.images || []).length) ? 'Image' : '', m.qr ? 'QR code' : '', m.attachment_name ? 'Attachment' : '', m.landing ? 'Opens a page' : '', m.format === 'sms' ? 'Text message' : m.format === 'mobile' ? 'On a phone' : ''].filter(Boolean)
           .map((c) => `<span class="chip">${c}</span>`).join('');
-        return `<button class="ep" data-mail="${i}:${side}" aria-label="Open email ${side}, ${esc(m.subject)}, in full">
-          <span class="ep__top"><span class="mini__name">Email ${side}</span>${show ? `<span class="tag tag--${real ? 'real' : 'fake'}">${real ? 'Real' : 'Fake'}</span>` : ''}</span>
+        const linkLine = m.format === 'sms' ? (urlIn(m.body) ? esc(urlIn(m.body).replace(/^https?:\/\//, '').split('/')[0]) : 'none') : m.format === 'qr' ? esc(m.printed_url || 'a QR code') : (m.link_url ? esc(linkHost(m.link_url)) : (m.qr ? 'hidden in a QR code' : 'none'));
+        return `<button class="ep" data-mail="${i}:${side}" aria-label="Open ${ntext.toLowerCase()} ${side}, ${esc(m.subject)}, in full">
+          <span class="ep__top"><span class="mini__name">${ntext} ${side}</span>${show ? `<span class="tag tag--${real ? 'real' : 'fake'}">${real ? 'Real' : 'Fake'}</span>` : ''}</span>
           <span class="ep__from">${esc(m.from_name)}</span>
-          <span class="ep__addr">${emailDomain(m.from_email)}</span>
+          <span class="ep__addr">${m.from_email ? emailDomain(m.from_email) : ''}</span>
           <span class="ep__subj">${esc(m.subject)}</span>
           <span class="ep__snip">${esc(snippet)}${(m.body || '').length > 120 ? '…' : ''}${!m.body && (m.images || []).length ? '(the message is one picture)' : ''}</span>
-          <span class="ep__link"><span class="mono">Link</span>${m.link_url ? esc(linkHost(m.link_url)) : (m.qr ? 'hidden in a QR code' : 'none')}</span>
+          <span class="ep__link"><span class="mono">Link</span>${linkLine}</span>
           <span class="ep__chips">${chips}</span>
-          <span class="ep__open">${ICON.zoom} Open full email</span>
+          <span class="ep__open">${ICON.zoom} Open in full</span>
         </button>`;
       };
       const cards = items.map(({ r, realSide }, i) => {
@@ -729,7 +889,7 @@
         <div class="bank">
           <div class="bank__head">
             <div><h1 class="bank__title">${esc(st.bankLabel || 'Phish bank')}</h1>
-              <p class="bank__sum">${items.length} email pairs &nbsp;·&nbsp; ${DIFFS.map((d) => `${count(d)} ${d}`).join(', ')} &nbsp;·&nbsp; one email in each pair is a phish. Tap an email to open it in full.</p></div>
+              <p class="bank__sum">${items.length} pairs &nbsp;·&nbsp; ${DIFFS.map((d) => `${count(d)} ${d}`).join(', ')} &nbsp;·&nbsp; one in each pair is a phish. Tap one to open it in full.</p></div>
             <button class="ghost" data-action="bank-toggle" aria-pressed="${show}">${show ? 'Hide answers' : 'Show answers'}</button>
             <button class="cta" data-action="station" data-station="${esc(state.bankKey)}" data-autofocus>Play ${ICON.arrow}</button>
           </div>
@@ -765,7 +925,7 @@
         <div class="bank">
           <div class="bank__head">
             <div><h1 class="bank__title">${esc(st.bankLabel || 'Photo bank')}</h1>
-              <p class="bank__sum">${items.length} photo pairs &nbsp;·&nbsp; ${DIFFS.map((d) => `${count(d)} ${d}`).join(', ')} &nbsp;·&nbsp; one of each pair is AI-generated. Tap a photo to enlarge it.</p></div>
+              <p class="bank__sum">${items.length} pairs &nbsp;·&nbsp; ${DIFFS.map((d) => `${count(d)} ${d}`).join(', ')} &nbsp;·&nbsp; one in each pair is AI-generated. Tap a photo to enlarge.</p></div>
             <button class="ghost" data-action="bank-toggle" aria-pressed="${show}">${show ? 'Hide answers' : 'Show answers'}</button>
             <button class="cta" data-action="station" data-station="${esc(state.bankKey)}" data-autofocus>Play ${ICON.arrow}</button>
           </div>
@@ -833,13 +993,13 @@
       const st = curStation(), r = cur();
       sr.textContent = r.mode === 'single'
         ? `Case ${state.idx + 1} of ${total()}: ${r.label}. Reel or Real?`
-        : `Round ${state.idx + 1} of ${total()}: ${r.label}. ${st.question || ''}`;
+        : `Round ${state.idx + 1} of ${total()}: ${r.label}. ${(fmtOfRound(r) || {}).q || st.question || ''}`;
     }
     if (state.screen === 'reveal') {
       const r = cur(), res = state.results[state.idx] || {}, st = curStation();
       const verdict = r.mode === 'single'
         ? `It was ${r.answer === 'REAL' ? 'Real' : 'Reel'}: ${r.reveal_title}, ${r.year}. ${r.takeaway}`
-        : `${cap(st.noun || 'item')} ${r.realSlot} was the real one. ${r.note}`;
+        : `${(fmtOfRound(r) || {}).noun || cap(st.noun || 'item')} ${r.realSlot} was the real one. ${r.note}`;
       sr.textContent = `${res.timedOut ? "Time's up." : res.correct ? `Correct, plus ${state.points[state.idx] || 0} points.` : 'Not quite, 0 points.'} Score ${earned()} of ${maxScore()}. ${verdict}`;
       const secs = Number(s.revealAutoAdvanceSeconds) || 0;
       if (secs) countdown(secs, (left) => `Next in ${left}s`, next);
@@ -925,17 +1085,23 @@
     const e = state.bankOrder[Number(idx)]; if (!e) return;
     const m = side === e.realSide ? e.r.real : e.r.fake, real = side === e.realSide;
     const tag = state.bankShow ? `<span class="tag tag--${real ? 'real' : 'fake'}">${real ? 'Real' : 'Fake'}</span>` : '';
-    const land = m.landing && m.landing.src ? `<div class="mailview__landing"><p class="mono">Where the link goes</p><img src="${esc(m.landing.src)}" alt="${esc(m.landing.alt || 'The page the link opens')}" draggable="false"></div>` : '';
-    $('.mailview__panel', mailview).innerHTML = `<div class="mailview__head"><p class="mono">Email ${side}</p>${tag}</div><div class="card mailview__card" style="--fit:1">${mailHtml(m)}</div>${land}`;
+    const land = m.landing && m.landing.src ? `<div class="mailview__landing"><p class="mono">${m.format === 'qr' ? 'Where the QR code leads' : 'Where the link goes'}</p><img src="${esc(m.landing.src)}" alt="${esc(m.landing.alt || 'The page the link opens')}" draggable="false"></div>` : '';
+    $('.mailview__panel', mailview).innerHTML = `<div class="mailview__head"><p class="mono">${(fmtOfItem(m) || { noun: 'Email' }).noun} ${side}</p>${tag}</div><div class="card mailview__card${['mobile', 'sms', 'qr'].includes(m.format) ? ' mailview__card--device' : ''}" style="--fit:1">${mailHtml(m, false, state.bankShow && !real && (m.flags || []).length ? m.flags : null)}</div>${state.bankShow && !real && (m.flags || []).length ? `<div class="card mailview__flags" style="--fit:1"><p class="mono">Red flags in the fake</p>${flagList(m.flags)}</div>` : ''}${land}`;
     mailFocus = document.activeElement;
     mailview.hidden = false;
     $('.mailview__close', mailview).focus({ preventScroll: true });
   }
   function closeMail() { mailview.hidden = true; if (mailFocus && mailFocus.focus) mailFocus.focus({ preventScroll: true }); }
+  mailview.addEventListener('click', (e) => {
+    const det = e.target.closest('[data-details]');
+    if (det) { const open = det.closest('.phone__sender').classList.toggle('is-open'); det.setAttribute('aria-expanded', open); }
+  });
   mailview.addEventListener('click', (e) => { if (e.target === mailview || e.target.closest('.mailview__close')) closeMail(); });
 
   /* ------------------------------------------------------------------ input */
   stage.addEventListener('click', (e) => {
+    const det = e.target.closest('[data-details]');
+    if (det) { const box = det.closest('.phone__sender'); const open = box.classList.toggle('is-open'); det.setAttribute('aria-expanded', open); return; }
     const t = e.target.closest('[data-pick], [data-choice], [data-zoom], [data-bank-zoom], [data-mail], [data-action]');
     if (!t) return;
     if (t.dataset.pick) answer(t.dataset.pick);
@@ -1030,24 +1196,27 @@
       const pool = poolOf(st.key);
       const ph = pool.filter(isPlaceholder).length;
       const m = gameMix(st.key);
-      let line = `${esc(st.tag)}: ${pool.length} rounds (${DIFFS.map((d) => `${pool.filter((r) => diffOf(r) === d).length} ${d}`).join(', ')}); a game uses ${DIFFS.map((d) => `${m[d]} ${d}`).join(', ')}`;
+      let line = `<b>${esc(st.tag)}:</b> ${pool.length} rounds (${DIFFS.map((d) => `${pool.filter((r) => diffOf(r) === d).length} ${d}`).join(', ')}); a game uses ${DIFFS.map((d) => `${m[d]} ${d}`).join(', ')}.`;
       if (st.mode === 'single') {
         const draft = pool.filter((r) => r.status !== 'approved').length;
         const noSrc = pool.filter((r) => r.answer === 'REAL' && !r.sources.filter(clean).length).length;
-        line += `<br>&nbsp;&nbsp;<b>Still draft:</b> ${draft} of ${pool.length}${draft ? ' (fact-check, then set status "approved" in reel-or-real/rounds.js)' : ''}. <b>Real cases without a source:</b> ${noSrc}.`;
+        line += ` ${draft} of ${pool.length} still draft${draft ? ' (fact-check, then set status "approved" in reel-or-real/rounds.js)' : ''}; ${noSrc} real cases without a source.`;
+      } else if (st.bankKind === 'email') {
+        const k = {};
+        pool.forEach((r) => { const n = kindOfPair(r); k[n] = (k[n] || 0) + 1; });
+        line += ` Kinds: ${k.desktop || 0} desktop email, ${k.phone || 0} phone email, ${k.sms || 0} text message, ${k.qr || 0} QR code; every game mixes them.`;
       }
-      return line + (ph ? ` <b>${ph} still placeholder</b>` : '');
-    }).join('<br>');
+      return `<p>${line}${ph ? ` <b>${ph} still placeholder.</b>` : ''}</p>`;
+    }).join('');
     el.innerHTML = `<div class="staff__panel">
       <h2>Staff settings</h2><p class="sm">Saved on this computer. Close with Esc.</p>
       ${rows}
-      <div class="staff__info"><b>Rounds available</b><br>${pools}<br>
-        <b>Scoring:</b> ${maxScore()} points max per game.<br>
-        <b>Today:</b> ${P.stats.plays} plays${P.stats.plays ? `, best ${P.stats.best}/${P.stats.bestOf}` : ''}.</div>
+      <div class="staff__info"><p class="staff__h">Rounds available</p>${pools}<p><b>Scoring:</b> ${maxScore()} points max per game. <b>Today:</b> ${P.stats.plays} plays${P.stats.plays ? `, best ${P.stats.best}/${P.stats.bestOf}` : ''}.</p></div>
       <div class="staff__actions"><button class="primary" data-act="close">Done</button><button data-act="fs">Fullscreen</button><button data-act="reset">Reset today's counters</button><button data-act="home">Back to home screen</button></div>
     </div>`;
     el.hidden = false;
-    const first = $('.staff__actions .primary', el); if (first) first.focus();
+    const first = $('.staff__actions .primary', el); if (first) first.focus({ preventScroll: true });
+    $('.staff__panel', el).scrollTop = 0;
   }
   function closeStaff() { $('#staff').hidden = true; applyEnv(); state.lastActive = Date.now(); if (state.screen === 'hub') render(); }
 

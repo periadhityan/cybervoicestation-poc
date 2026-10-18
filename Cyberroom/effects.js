@@ -303,7 +303,7 @@
       <div class="takeover__vignette" aria-hidden="true"></div>
       ${phish ? FISH : ''}
       <div class="takeover__main">
-        <h1 class="takeover__title" data-text="${esc(o.title)}">${o.title}</h1>
+        <h1 class="takeover__title" data-text="${esc(String(o.title).replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "&#10;")}">${o.title}</h1>
         <p class="takeover__sub">${esc(o.sub)}</p>
       </div>
       <ul class="takeover__log" aria-label="What the attacker just got"></ul>

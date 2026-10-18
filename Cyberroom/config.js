@@ -5,7 +5,7 @@
  *
  * The rounds themselves are NOT here:
  *   - Spot the Phish / Snapshot or Fake Shot: content/content.js, which
- *     scripts/build_static_site.py generates from app/static/content/.
+ *     tools/build_static_site.py generates from content-source/.
  *   - Reel or Real?: reel-or-real/rounds.js (plus your own in reel-or-real/add-questions.js).
  */
 window.CONFIG = {
@@ -46,7 +46,7 @@ window.CONFIG = {
   reducedMotion: false,            // * turn off animations
 
   /* The three stations. Edit the wording freely; keep each `key` as it is
-   * (it must match a folder name under app/static/content/). */
+   * (it must match a folder name under content-source/). */
   stations: [
     {
       key: "email",
