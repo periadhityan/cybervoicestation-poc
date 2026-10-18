@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """Turn one real photo and one AI image into a photo-game pair that gives nothing away.
 
-    python3 scripts/make_photo_pair.py --id sticky-note --tier medium \\
+    python3 tools/make_photo_pair.py --id sticky-note --tier medium \\
         --real ~/Downloads/real.jpg --fake ~/Downloads/midjourney.png
 
 Both images get exactly the same treatment so that only what is *in* the picture can
 tell them apart: the same 3:2 crop, the same pixel size, the same JPEG quality, and no
 metadata (camera EXIF or AI-generator tags would be a giveaway). The result is written to
 
-    app/static/content/image/<tier>/<id>-real.jpg
-    app/static/content/image/<tier>/<id>-fake.jpg
+    content-source/image/<tier>/<id>-real.jpg
+    content-source/image/<tier>/<id>-fake.jpg
 
-after which `python3 scripts/build_static_site.py` picks the pair up. Write the pair's
+after which `python3 tools/build_static_site.py` picks the pair up. Write the pair's
 label and "what gave it away" text in that tier's notes.json.
 
 Needs Pillow (pip install pillow). Originals are never modified.
@@ -26,7 +26,7 @@ from pathlib import Path
 from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
-CONTENT = ROOT / "app" / "static" / "content" / "image"
+CONTENT = ROOT / "content-source" / "image"
 RATIO = 3 / 2
 
 

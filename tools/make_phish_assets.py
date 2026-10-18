@@ -3,10 +3,10 @@
 
 Writes small SVG files next to the email content:
 
-    app/static/content/email/<tier>/assets/<round-id>-<real|fake>-banner.svg    header banner
-    app/static/content/email/<tier>/assets/<round-id>-<real|fake>-landing.svg   "where the link goes" page
-    app/static/content/email/<tier>/assets/<round-id>-<real|fake>-qr.svg        QR code
-    app/static/content/email/<tier>/assets/<round-id>-fake-invoice.svg          image-only email body
+    content-source/email/<tier>/assets/<round-id>-<real|fake>-banner.svg    header banner
+    content-source/email/<tier>/assets/<round-id>-<real|fake>-landing.svg   "where the link goes" page
+    content-source/email/<tier>/assets/<round-id>-<real|fake>-qr.svg        QR code
+    content-source/email/<tier>/assets/<round-id>-fake-invoice.svg          image-only email body
 
 SVG keeps them tiny, crisp at any size, and tracked in git (PNG/JPG under content/ is gitignored).
 Nothing here reproduces a real company's logo: banners are plain wordmarks in a rough brand colour.
@@ -18,7 +18,7 @@ their phones, and a lookalike domain inside a QR code could lead somewhere real.
 Run (needs the `segno` package, only for generating -- not needed to run the game):
 
     pip install segno
-    python3 scripts/make_phish_assets.py
+    python3 tools/make_phish_assets.py
 """
 
 from __future__ import annotations
@@ -34,7 +34,7 @@ except ImportError:
     sys.exit("This script needs the 'segno' package: pip install segno")
 
 ROOT = Path(__file__).resolve().parent.parent
-EMAIL = ROOT / "app" / "static" / "content" / "email"
+EMAIL = ROOT / "content-source" / "email"
 FONT = "'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif"
 QR_TEXT = ("TRAINING DEMO: this QR code is a prop. In real life you cannot tell where a QR code leads "
            "until after you scan it. Pause. Think. Report.")
@@ -220,7 +220,7 @@ def main() -> int:
         out.mkdir(parents=True, exist_ok=True)
         (out / name).write_text(content, encoding="utf-8")
     total = sum(len(c) for c in ASSETS.values())
-    print(f"wrote {len(ASSETS)} SVG files ({total // 1024} KB) under app/static/content/email/<tier>/assets/")
+    print(f"wrote {len(ASSETS)} SVG files ({total // 1024} KB) under content-source/email/<tier>/assets/")
     return 0
 
 

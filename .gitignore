@@ -25,27 +25,34 @@ env/
 deploy/aws/config.env
 deploy/aws/.env
 
-# --- Standalone "Real or Fake?" site (site/) build output ---
-# site/content/media/ is a generated copy of the video/photo files and dist/ holds the
-# zip / single-file builds -- both come from scripts/build_static_site.py, so neither
-# belongs in git. site/content/content.js (small, text) is kept so the folder opens as-is.
-site/content/media/
+# --- Cyberroom build output ---
+# Cyberroom/content/media/ is a generated copy of the photo files and dist/ holds the zip /
+# single-file builds -- both come from tools/build_static_site.py, so neither belongs in git.
+# Cyberroom/content/content.js (small, text) is kept so the folder opens as-is.
+Cyberroom/content/media/
 dist/
 
-# --- Game content media (audio/video/image) ---
-# Real/fake round pairs live under app/static/content/ and are served either
-# from the local filesystem (native/mini-PC) or synced to S3 for the AWS
-# deployment (see scripts/sync_content_to_s3.sh) -- either way they don't
-# need to be committed, and keeping large/growing media out of git avoids
-# unbounded repo growth and GitHub's 100MB per-file limit as the library
-# grows. notes.json (the small per-tier label/reveal-note file) is
-# intentionally NOT matched below -- that's plain text worth keeping in git.
-app/static/content/**/*.mp3
-app/static/content/**/*.wav
-app/static/content/**/*.mp4
-app/static/content/**/*.webm
-app/static/content/**/*.mov
-app/static/content/**/*.jpg
-app/static/content/**/*.jpeg
-app/static/content/**/*.png
-app/static/content/**/*.webp
+# --- Game content media (images) ---
+# Photo pairs live under content-source/ and are copied (and shrunk) into Cyberroom/ by
+# the build, so the big originals stay out of git. notes.json, the email JSON and the SVG
+# pictures are plain text and ARE kept.
+content-source/**/*.jpg
+content-source/**/*.jpeg
+content-source/**/*.png
+content-source/**/*.webp
+
+# --- Archive: the retired Flask / native / AWS version ---
+archive/.venv/
+# AWS deployment config / secrets (account-specific, not for git)
+archive/deploy/aws/config.env
+archive/deploy/aws/.env
+archive/app/static/content/**/*.mp3
+archive/app/static/content/**/*.wav
+archive/app/static/content/**/*.mp4
+archive/app/static/content/**/*.webm
+archive/app/static/content/**/*.mov
+archive/app/static/content/**/*.jpg
+archive/app/static/content/**/*.jpeg
+archive/app/static/content/**/*.png
+archive/app/static/content/**/*.webp
+archive/site.zip
