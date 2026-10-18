@@ -1,0 +1,31 @@
+{
+  "from_name": "Meridian IT Service Desk",
+  "from_email": "meridianfreight@service-now.co",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "INC0048213 has been resolved",
+  "date": "Tue, Oct 13, 2026 4:12 PM",
+  "body": "Hi Jordan,\n\nYour incident INC0048213 (Laptop VPN not connecting) has been resolved. Please confirm the fix by signing in with your network password.\n\nIT Service Desk",
+  "banner": "assets/servicenow-ticket-fake-banner.svg",
+  "link_text": "Confirm fix",
+  "link_url": "https://service-now.co/meridianfreight/confirm",
+  "landing": {
+    "src": "assets/servicenow-ticket-fake-landing.svg",
+    "alt": "A fake page on service-now.co"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "service-now.co",
+      "text": "Ends in .co, not .com"
+    },
+    {
+      "on": "body",
+      "mark": "signing in with your network password",
+      "text": "Asks for your password"
+    },
+    {
+      "on": "link_url",
+      "text": "Not service-now.com"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "from_name": "CPF Board",
+  "from_email": "noreply@cpf.gov.sg",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your CPF contribution statement for September",
+  "date": "Mon, Oct 12, 2026 9:14 AM",
+  "body": "Dear Member,\n\nYour CPF contribution for September 2026 has been credited. View your statement at cpf.gov.sg with Singpass.\n\nCPF will never ask for your Singpass password or bank details by email.\n\nCPF Board",
+  "banner": "assets/cpf-statement-real-banner.svg",
+  "link_text": "Go to CPF",
+  "link_url": "https://www.cpf.gov.sg/member",
+  "landing": {
+    "src": "assets/cpf-statement-real-landing.svg",
+    "alt": "The real page on www.cpf.gov.sg"
+  }
+}

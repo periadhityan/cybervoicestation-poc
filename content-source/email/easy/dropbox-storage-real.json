@@ -1,0 +1,15 @@
+{
+  "from_name": "Dropbox",
+  "from_email": "no-reply@dropbox.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "You're almost out of space in your Dropbox",
+  "date": "Wed, Oct 14, 2026 10:26 AM",
+  "body": "Hi Jordan,\n\nYou've used 95% of your Dropbox storage. You can free up space by deleting files, or see plans at dropbox.com/plans.\n\nNothing will be deleted from your account.",
+  "banner": "assets/dropbox-storage-real-banner.svg",
+  "link_text": "See plans",
+  "link_url": "https://www.dropbox.com/plans",
+  "landing": {
+    "src": "assets/dropbox-storage-real-landing.svg",
+    "alt": "The real page on www.dropbox.com"
+  }
+}

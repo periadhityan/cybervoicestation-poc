@@ -10,5 +10,26 @@
   "landing": {
     "src": "assets/gdrive-share-fake-landing.svg",
     "alt": "A fake Google sign-in on goog1e-docs-viewer.com, which still shows a padlock"
-  }
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "goog1e-docs-viewer.com",
+      "text": "A digit 1 for the l"
+    },
+    {
+      "on": "body",
+      "mark": "This link will expire in 1 hour",
+      "text": "1-hour deadline"
+    },
+    {
+      "on": "body",
+      "mark": "Sign in to confirm access",
+      "text": "Asks you to sign in again"
+    },
+    {
+      "on": "link_url",
+      "text": "Not a google.com page"
+    }
+  ]
 }

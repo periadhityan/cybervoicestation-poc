@@ -1,0 +1,31 @@
+{
+  "from_name": "SAP Ariba",
+  "from_email": "invoices@ariba-approvals.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Invoice INV-8821 awaits your approval",
+  "date": "Mon, Oct 12, 2026 2:41 PM",
+  "body": "Hello Jordan,\n\nInvoice INV-8821 from Rossum Industrial Supply for $9,640.00 is awaiting your approval.\n\nReview and approve it below.\n\nSAP Ariba",
+  "banner": "assets/ariba-approval-fake-banner.svg",
+  "link_text": "Review invoice",
+  "link_url": "https://ariba-approvals.com/invoices/INV-8821",
+  "landing": {
+    "src": "assets/ariba-approval-fake-landing.svg",
+    "alt": "A fake page on ariba-approvals.com"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "ariba-approvals.com",
+      "text": "Not ariba.com"
+    },
+    {
+      "on": "body",
+      "mark": "Review and approve it below",
+      "text": "A link, not your bookmark"
+    },
+    {
+      "on": "link_url",
+      "text": "Not an Ariba address"
+    }
+  ]
+}

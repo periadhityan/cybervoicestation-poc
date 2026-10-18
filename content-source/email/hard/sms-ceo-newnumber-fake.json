@@ -1,0 +1,24 @@
+{
+  "format": "sms",
+  "from_name": "+65 8555 0142",
+  "subject": "Hi Jordan, it's Daniel. This is my new n",
+  "date": "Today 4:02 PM",
+  "body": "Hi Jordan, it's Daniel. This is my new number, please save it. I need a quick favour, are you free right now?",
+  "flags": [
+    {
+      "on": "from_name",
+      "mark": "+65 8555 0142",
+      "text": "A number, not your contact"
+    },
+    {
+      "on": "body",
+      "mark": "my new number",
+      "text": "A classic new-number opener"
+    },
+    {
+      "on": "body",
+      "mark": "I need a quick favour",
+      "text": "A vague ask to hook you"
+    }
+  ]
+}

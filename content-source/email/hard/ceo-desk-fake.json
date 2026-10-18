@@ -1,0 +1,31 @@
+{
+  "format": "mobile",
+  "from_name": "Daniel Koh",
+  "from_email": "daniel.koh@meridianfreight.co",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Quick favour",
+  "date": "Tue, Oct 13, 2026 4:12 PM",
+  "body": "Jordan,\n\nAre you at your desk? I need you to do something for me and I'd rather not call. Reply as soon as you see this.\n\nDaniel\nSent from my iPhone",
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "meridianfreight.co",
+      "text": "Ends in .co, not .com"
+    },
+    {
+      "on": "subject",
+      "mark": "Quick favour",
+      "text": "A vague, urgent opener"
+    },
+    {
+      "on": "body",
+      "mark": "I'd rather not call",
+      "text": "Avoids a phone call"
+    },
+    {
+      "on": "body",
+      "mark": "Reply as soon as you see this",
+      "text": "Pressure to reply fast"
+    }
+  ]
+}

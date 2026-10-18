@@ -1,0 +1,36 @@
+{
+  "format": "mobile",
+  "from_name": "Apple Support",
+  "from_email": "apple-id-locked@apple-support-verify.top",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your Apple ID has been LOCKED",
+  "date": "Fri, Oct 16, 2026 11:33 AM",
+  "body": "Dear Customer,\n\nYour Apple ID has been locked for security reasons. Verify your account within 24 hours or it will be disabled permanently.",
+  "link_text": "Unlock Apple ID",
+  "link_url": "http://apple-support-verify.top/unlock",
+  "landing": {
+    "src": "assets/apple-id-locked-fake-landing.svg",
+    "alt": "A fake page on apple-support-verify.top"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "apple-support-verify.top",
+      "text": "Not apple.com"
+    },
+    {
+      "on": "subject",
+      "mark": "LOCKED",
+      "text": "Shouting and a threat"
+    },
+    {
+      "on": "body",
+      "mark": "Dear Customer",
+      "text": "Generic greeting"
+    },
+    {
+      "on": "link_url",
+      "text": "Unknown site, plain http"
+    }
+  ]
+}

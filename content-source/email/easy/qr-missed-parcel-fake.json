@@ -1,0 +1,40 @@
+{
+  "format": "qr",
+  "from_name": "Courier: Sorry we missed you",
+  "subject": "PAY $2.99 to redeliver",
+  "body": "Your parcel will be sent back in 24 hours unless you pay the redelivery fee.",
+  "printed_url": "sp-redeliver.top",
+  "scan_url": "http://sp-redeliver.top/pay",
+  "sticker": 2,
+  "qr": {
+    "src": "assets/qr-missed-parcel-fake-qr.svg",
+    "caption": "Scan to pay",
+    "alt": "A QR code"
+  },
+  "landing": {
+    "src": "assets/qr-missed-parcel-fake-landing.svg",
+    "alt": "A fake page on sp-redeliver.top"
+  },
+  "flags": [
+    {
+      "on": "subject",
+      "mark": "PAY $2.99 to redeliver",
+      "text": "A fee to get your parcel"
+    },
+    {
+      "on": "body",
+      "mark": "sent back in 24 hours",
+      "text": "24-hour deadline"
+    },
+    {
+      "on": "printed_url",
+      "mark": "sp-redeliver.top",
+      "text": "Not singpost.com"
+    },
+    {
+      "on": "from_name",
+      "mark": "Courier",
+      "text": "No courier name"
+    }
+  ]
+}

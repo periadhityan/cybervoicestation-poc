@@ -1,0 +1,31 @@
+{
+  "from_name": "Amazon Web Services",
+  "from_email": "no-reply@amazon-aws-security.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "AWS Notification: MFA device removed from IAM user",
+  "date": "Mon, Oct 12, 2026 2:41 PM",
+  "body": "Hello,\n\nAn MFA device was removed from IAM user jalvarez at 2026-10-13 09:41 UTC.\n\nIf you did not make this change, secure your account now.\n\nAmazon Web Services",
+  "banner": "assets/aws-mfa-fake-banner.svg",
+  "link_text": "Secure account",
+  "link_url": "https://amazon-aws-security.com/iam/secure",
+  "landing": {
+    "src": "assets/aws-mfa-fake-landing.svg",
+    "alt": "A fake page on amazon-aws-security.com"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "amazon-aws-security.com",
+      "text": "Not amazon.com"
+    },
+    {
+      "on": "body",
+      "mark": "secure your account now",
+      "text": "A link, not your bookmark"
+    },
+    {
+      "on": "link_url",
+      "text": "Not an aws.amazon.com page"
+    }
+  ]
+}

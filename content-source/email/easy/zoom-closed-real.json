@@ -1,0 +1,15 @@
+{
+  "from_name": "Zoom",
+  "from_email": "no-reply@zoom.us",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Meeting invitation: Q4 Planning",
+  "date": "Mon, Oct 12, 2026 9:14 AM",
+  "body": "Hi Jordan,\n\nDana Whitfield is inviting you to a scheduled Zoom meeting.\n\nTopic: Q4 Planning\nTime: Oct 14, 2026 03:00 PM Singapore\n\nJoin from the Zoom app or the link below.",
+  "banner": "assets/zoom-closed-real-banner.svg",
+  "link_text": "Join meeting",
+  "link_url": "https://zoom.us/j/84213390551",
+  "landing": {
+    "src": "assets/zoom-closed-real-landing.svg",
+    "alt": "The real page on zoom.us"
+  }
+}

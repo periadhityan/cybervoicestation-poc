@@ -11,5 +11,25 @@
       "alt": "Image of an invoice notice with an Update Payment Method button"
     }
   ],
-  "attachment_name": "Invoice_IN-48213.html"
+  "attachment_name": "Invoice_IN-48213.html",
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "adobe-invoice-center.net",
+      "text": "Not adobe.com"
+    },
+    {
+      "on": "subject",
+      "mark": "Payment Failed",
+      "text": "A payment-failed scare"
+    },
+    {
+      "on": "images",
+      "text": "The message is one picture"
+    },
+    {
+      "on": "attachment_name",
+      "text": "Attachment is an .html file"
+    }
+  ]
 }

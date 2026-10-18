@@ -1,0 +1,17 @@
+{
+  "format": "qr",
+  "from_name": "Level 4 meeting room",
+  "subject": "Guest Wi-Fi",
+  "body": "Network: Meridian-Guest. Scan to connect. Guests need no account.",
+  "printed_url": "meridianfreight.com/guestwifi",
+  "scan_url": "https://meridianfreight.com/guestwifi",
+  "qr": {
+    "src": "assets/qr-guest-wifi-real-qr.svg",
+    "caption": "Join Wi-Fi",
+    "alt": "A QR code"
+  },
+  "landing": {
+    "src": "assets/qr-guest-wifi-real-landing.svg",
+    "alt": "The real page on meridianfreight.com"
+  }
+}

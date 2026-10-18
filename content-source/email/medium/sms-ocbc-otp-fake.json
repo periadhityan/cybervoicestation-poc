@@ -1,0 +1,24 @@
+{
+  "format": "sms",
+  "from_name": "OCBC",
+  "subject": "OCBC: A payment to GRAB was blocked. Re-",
+  "date": "Today 11:20 AM",
+  "body": "OCBC: A payment to GRAB was blocked. Re-enter your OTP at ocbc-secure.net within 10 minutes to confirm it was you.",
+  "flags": [
+    {
+      "on": "body",
+      "mark": "ocbc-secure.net",
+      "text": "Not ocbc.com"
+    },
+    {
+      "on": "body",
+      "mark": "Re-enter your OTP",
+      "text": "Asks you to hand over an OTP"
+    },
+    {
+      "on": "body",
+      "mark": "within 10 minutes",
+      "text": "10-minute deadline"
+    }
+  ]
+}

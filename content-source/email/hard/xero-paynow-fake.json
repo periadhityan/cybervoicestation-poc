@@ -1,0 +1,30 @@
+{
+  "from_name": "Xero",
+  "from_email": "messaging-service@post-xero.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Invoice INV-0412 from Rossum Industrial Supply",
+  "date": "Mon, Oct 12, 2026 2:41 PM",
+  "body": "Hi Jordan,\n\nRossum Industrial Supply sent you an invoice for $2,460.00 due Oct 30.\n\nScan the PayNow QR code to pay it now.\n\nXero",
+  "banner": "assets/xero-paynow-fake-banner.svg",
+  "qr": {
+    "src": "assets/xero-paynow-fake-qr.svg",
+    "caption": "Scan to pay with PayNow",
+    "alt": "A QR code"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "post-xero.com",
+      "text": "Not post.xero.com"
+    },
+    {
+      "on": "body",
+      "mark": "Scan the PayNow QR code",
+      "text": "Asks you to pay by QR"
+    },
+    {
+      "on": "qr",
+      "text": "A QR hides who gets paid"
+    }
+  ]
+}

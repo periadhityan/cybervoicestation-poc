@@ -1,0 +1,15 @@
+{
+  "from_name": "Carousell",
+  "from_email": "no-reply@carousell.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Someone made an offer on your listing",
+  "date": "Wed, Oct 14, 2026 10:26 AM",
+  "body": "Hi Jordan,\n\nPriya offered $120 for your 'Standing desk'.\n\nOpen the Carousell app to accept, decline or chat. Always meet in person and pay on collection.",
+  "banner": "assets/carousell-offer-real-banner.svg",
+  "link_text": "View offer",
+  "link_url": "https://www.carousell.sg/inbox",
+  "landing": {
+    "src": "assets/carousell-offer-real-landing.svg",
+    "alt": "The real page on www.carousell.sg"
+  }
+}

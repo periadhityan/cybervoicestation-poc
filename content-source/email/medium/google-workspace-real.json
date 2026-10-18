@@ -1,0 +1,9 @@
+{
+  "format": "mobile",
+  "from_name": "Google Workspace",
+  "from_email": "workspace-noreply@google.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Security alert: your password was changed",
+  "date": "Thu, Oct 15, 2026 7:48 AM",
+  "body": "Hi Jordan,\n\nThe password for j.alvarez@meridianfreight.com was changed on Oct 13.\n\nIf this was you, there's nothing to do. If not, go to myaccount.google.com/security to secure your account."
+}

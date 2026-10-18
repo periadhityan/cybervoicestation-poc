@@ -14,5 +14,26 @@
   "landing": {
     "src": "assets/eventbrite-ticket-fake-landing.svg",
     "alt": "A fake sign-in page on eventbrite-entry-pass.top"
-  }
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "eventbrite-entry-pass.top",
+      "text": "Not eventbrite.com"
+    },
+    {
+      "on": "subject",
+      "mark": "within 15 minutes",
+      "text": "15-minute countdown"
+    },
+    {
+      "on": "body",
+      "mark": "sign in to re-validate",
+      "text": "Wants a sign-in to continue"
+    },
+    {
+      "on": "qr",
+      "text": "QR hides where it leads"
+    }
+  ]
 }

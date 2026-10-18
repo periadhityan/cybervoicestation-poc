@@ -10,5 +10,26 @@
   "landing": {
     "src": "assets/compliance-training-fake-landing.svg",
     "alt": "A fake company login page on meridianfreight-hr.com"
-  }
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "meridianfreight-hr.com",
+      "text": "Not meridianfreight.com"
+    },
+    {
+      "on": "body",
+      "mark": "Do not discuss this with colleagues",
+      "text": "Told to keep it secret"
+    },
+    {
+      "on": "body",
+      "mark": "reported to the board and may face disciplinary action",
+      "text": "Threat of discipline"
+    },
+    {
+      "on": "link_url",
+      "text": "Login page over plain http"
+    }
+  ]
 }

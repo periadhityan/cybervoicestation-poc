@@ -1,0 +1,17 @@
+{
+  "format": "qr",
+  "from_name": "Hawker Centre, Stall 14",
+  "subject": "Scan to see today's menu",
+  "body": "Order at the stall. Pay when you collect.",
+  "printed_url": "stall14menu.sg",
+  "scan_url": "https://stall14menu.sg",
+  "qr": {
+    "src": "assets/qr-hawker-menu-real-qr.svg",
+    "caption": "Menu",
+    "alt": "A QR code"
+  },
+  "landing": {
+    "src": "assets/qr-hawker-menu-real-landing.svg",
+    "alt": "The real page on stall14menu.sg"
+  }
+}

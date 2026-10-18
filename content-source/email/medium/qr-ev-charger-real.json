@@ -1,0 +1,17 @@
+{
+  "format": "qr",
+  "from_name": "Basement 2, Bay 14",
+  "subject": "Start charging",
+  "body": "Scan to start a session with the Shell Recharge app. Card payment is handled in the app.",
+  "printed_url": "shellrecharge.com",
+  "scan_url": "https://www.shellrecharge.com",
+  "qr": {
+    "src": "assets/qr-ev-charger-real-qr.svg",
+    "caption": "Open Shell Recharge",
+    "alt": "A QR code"
+  },
+  "landing": {
+    "src": "assets/qr-ev-charger-real-landing.svg",
+    "alt": "The real page on www.shellrecharge.com"
+  }
+}

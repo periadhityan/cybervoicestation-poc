@@ -1,0 +1,36 @@
+{
+  "format": "mobile",
+  "from_name": "Shopee Refunds",
+  "from_email": "refund@shopee-refund-sg.xyz",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Order cancelled - refund of $89.00 pending",
+  "date": "Tue, Oct 13, 2026 4:12 PM",
+  "body": "Dear Customer,\n\nYour order was cancelled. A refund of $89.00 is pending. Confirm your card details within 24 hours to recieve it.",
+  "link_text": "Get my refund",
+  "link_url": "http://shopee-refund-sg.xyz/refund",
+  "landing": {
+    "src": "assets/shopee-refund-fake-landing.svg",
+    "alt": "A fake page on shopee-refund-sg.xyz"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "shopee-refund-sg.xyz",
+      "text": "Not shopee.sg"
+    },
+    {
+      "on": "body",
+      "mark": "Confirm your card details",
+      "text": "Asks for card details"
+    },
+    {
+      "on": "body",
+      "mark": "recieve",
+      "text": "Spelling mistake"
+    },
+    {
+      "on": "link_url",
+      "text": "Unknown site, plain http"
+    }
+  ]
+}

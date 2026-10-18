@@ -1,0 +1,30 @@
+{
+  "format": "qr",
+  "from_name": "Kopi Corner",
+  "subject": "Pay with PayNow",
+  "body": "Scan with your banking app and check the name shows Kopi Corner before you pay.",
+  "printed_url": "UEN 202377801Z",
+  "scan_url": "PayNow to a private individual",
+  "sticker": 1,
+  "qr": {
+    "src": "assets/qr-paynow-counter-fake-qr.svg",
+    "caption": "PayNow",
+    "alt": "A QR code"
+  },
+  "flags": [
+    {
+      "on": "qr",
+      "text": "A sticker over the real code"
+    },
+    {
+      "on": "printed_url",
+      "mark": "UEN 202377801Z",
+      "text": "A different UEN"
+    },
+    {
+      "on": "subject",
+      "mark": "Pay with PayNow",
+      "text": "Same words as the real one"
+    }
+  ]
+}

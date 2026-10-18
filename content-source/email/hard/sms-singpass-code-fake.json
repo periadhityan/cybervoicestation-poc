@@ -1,0 +1,24 @@
+{
+  "format": "sms",
+  "from_name": "SINGPASS",
+  "subject": "Singpass: unusual login detected. Verify",
+  "date": "Today 9:10 AM",
+  "body": "Singpass: unusual login detected. Verify within 30 minutes at singpass-verify.sg to keep your account active.",
+  "flags": [
+    {
+      "on": "body",
+      "mark": "singpass-verify.sg",
+      "text": "Not singpass.gov.sg"
+    },
+    {
+      "on": "body",
+      "mark": "unusual login detected",
+      "text": "An alarm, then a link"
+    },
+    {
+      "on": "body",
+      "mark": "within 30 minutes",
+      "text": "30-minute deadline"
+    }
+  ]
+}

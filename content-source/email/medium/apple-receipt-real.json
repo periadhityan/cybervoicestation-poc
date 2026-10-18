@@ -1,0 +1,15 @@
+{
+  "from_name": "Apple",
+  "from_email": "no_reply@email.apple.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your receipt from Apple",
+  "date": "Tue, Oct 13, 2026 8:02 AM",
+  "body": "Hi Jordan,\n\nHere's your receipt for iCloud+ 200 GB: $4.28.\n\nBilled to the card ending 4821. If you didn't make this purchase, report it at reportaproblem.apple.com.",
+  "banner": "assets/apple-receipt-real-banner.svg",
+  "link_text": "Report a problem",
+  "link_url": "https://reportaproblem.apple.com",
+  "landing": {
+    "src": "assets/apple-receipt-real-landing.svg",
+    "alt": "The real page on reportaproblem.apple.com"
+  }
+}

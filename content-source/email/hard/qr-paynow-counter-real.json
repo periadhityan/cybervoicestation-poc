@@ -1,0 +1,13 @@
+{
+  "format": "qr",
+  "from_name": "Kopi Corner",
+  "subject": "Pay with PayNow",
+  "body": "Scan with your banking app and check the name shows Kopi Corner before you pay.",
+  "printed_url": "UEN 201912345K",
+  "scan_url": "PayNow to Kopi Corner Pte Ltd",
+  "qr": {
+    "src": "assets/qr-paynow-counter-real-qr.svg",
+    "caption": "PayNow",
+    "alt": "A QR code"
+  }
+}

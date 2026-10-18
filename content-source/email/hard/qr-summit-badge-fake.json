@@ -1,0 +1,33 @@
+{
+  "format": "qr",
+  "from_name": "Singapore Cyber Summit",
+  "subject": "Scan for the agenda",
+  "body": "Scan to see today's sessions and speakers. Sign in with LinkedIn to continue.",
+  "printed_url": "sgcybersumit.sg",
+  "scan_url": "https://sgcybersumit.sg/agenda",
+  "qr": {
+    "src": "assets/qr-summit-badge-fake-qr.svg",
+    "caption": "Agenda",
+    "alt": "A QR code"
+  },
+  "landing": {
+    "src": "assets/qr-summit-badge-fake-landing.svg",
+    "alt": "A fake page on sgcybersumit.sg"
+  },
+  "flags": [
+    {
+      "on": "printed_url",
+      "mark": "sgcybersumit.sg",
+      "text": "One letter missing: sumit"
+    },
+    {
+      "on": "body",
+      "mark": "Sign in with LinkedIn",
+      "text": "Asks for a login"
+    },
+    {
+      "on": "qr",
+      "text": "QR can't show where it leads"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "format": "sms",
+  "from_name": "Lazada",
+  "subject": "Lazada: delivery failed for order #LZ482",
+  "date": "Today 10:48 AM",
+  "body": "Lazada: delivery failed for order #LZ4821. Reschedule at http://lazada-redeliver.com/sg to avoid return.",
+  "landing": {
+    "src": "assets/sms-lazada-redeliver-fake-landing.svg",
+    "alt": "A fake page on lazada-redeliver.com"
+  },
+  "flags": [
+    {
+      "on": "body",
+      "mark": "lazada-redeliver.com",
+      "text": "Not lazada.sg"
+    },
+    {
+      "on": "body",
+      "mark": "delivery failed",
+      "text": "A failed delivery bait"
+    },
+    {
+      "on": "body",
+      "mark": "Reschedule at",
+      "text": "A link instead of the app"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "from_name": "Meridian IT Service Desk",
+  "from_email": "servicedesk@meridianfreight-vpn.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "VPN certificate renewal on 20 Oct",
+  "date": "Tue, Oct 13, 2026 4:12 PM",
+  "body": "Hi Jordan,\n\nYour VPN certificate has expired. Reinstall it today to keep working remotely.\n\nIT Service Desk",
+  "banner": "assets/it-vpn-certificate-fake-banner.svg",
+  "link_text": "Reinstall certificate",
+  "link_url": "https://meridianfreight-vpn.com/cert/install",
+  "landing": {
+    "src": "assets/it-vpn-certificate-fake-landing.svg",
+    "alt": "A fake page on meridianfreight-vpn.com"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "meridianfreight-vpn.com",
+      "text": "Not meridianfreight.com"
+    },
+    {
+      "on": "body",
+      "mark": "has expired",
+      "text": "Invents a problem"
+    },
+    {
+      "on": "body",
+      "mark": "Reinstall it today",
+      "text": "Installs something by link"
+    },
+    {
+      "on": "link_url",
+      "text": "Not your company's address"
+    }
+  ]
+}

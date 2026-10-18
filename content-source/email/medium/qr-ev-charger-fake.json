@@ -1,0 +1,34 @@
+{
+  "format": "qr",
+  "from_name": "Basement 2, Bay 14",
+  "subject": "Start charging",
+  "body": "Scan to start a session. Enter your card on the next page to pay.",
+  "printed_url": "shell-recharge-pay.com",
+  "scan_url": "https://shell-recharge-pay.com/charge",
+  "sticker": 1,
+  "qr": {
+    "src": "assets/qr-ev-charger-fake-qr.svg",
+    "caption": "Scan to charge",
+    "alt": "A QR code"
+  },
+  "landing": {
+    "src": "assets/qr-ev-charger-fake-landing.svg",
+    "alt": "A fake page on shell-recharge-pay.com"
+  },
+  "flags": [
+    {
+      "on": "qr",
+      "text": "A sticker over the real code"
+    },
+    {
+      "on": "printed_url",
+      "mark": "shell-recharge-pay.com",
+      "text": "Not shellrecharge.com"
+    },
+    {
+      "on": "body",
+      "mark": "Enter your card on the next page",
+      "text": "Card form on an odd site"
+    }
+  ]
+}

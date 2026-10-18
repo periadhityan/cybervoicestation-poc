@@ -1,0 +1,31 @@
+{
+  "format": "mobile",
+  "from_name": "Microsoft account team",
+  "from_email": "account-security-noreply@accountprotection.microsft.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "New app connected to your Microsoft account",
+  "date": "Fri, Oct 16, 2026 11:33 AM",
+  "body": "Hi Jordan,\n\nThe app \"Calendly\" was given access to read your calendar.\n\nIf this wasn't you, remove its access now.",
+  "link_text": "Remove access",
+  "link_url": "https://accountprotection.microsft.com/apps/revoke",
+  "landing": {
+    "src": "assets/oauth-consent-fake-landing.svg",
+    "alt": "A fake page on accountprotection.microsft.com"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "microsft.com",
+      "text": "An o is missing: microsft"
+    },
+    {
+      "on": "body",
+      "mark": "remove its access now",
+      "text": "A link, not the site"
+    },
+    {
+      "on": "link_url",
+      "text": "Same lookalike domain"
+    }
+  ]
+}

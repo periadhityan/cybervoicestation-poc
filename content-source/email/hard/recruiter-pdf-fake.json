@@ -1,0 +1,32 @@
+{
+  "format": "mobile",
+  "from_name": "Sarah Lim, Maersk Talent",
+  "from_email": "s.lim@maersk-careers.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Confidential: Head of Logistics role (Singapore)",
+  "date": "Mon, Oct 12, 2026 2:41 PM",
+  "body": "Hi Jordan,\n\nI'm recruiting for a confidential Head of Logistics role at Maersk. Your profile stood out. The job description is attached; please review it today.\n\nSarah Lim\nTalent Acquisition",
+  "attachment_name": "JD_HeadOfLogistics.pdf.html",
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "maersk-careers.com",
+      "text": "Not maersk.com"
+    },
+    {
+      "on": "subject",
+      "mark": "Confidential",
+      "text": "Flattery and secrecy"
+    },
+    {
+      "on": "attachment_name",
+      "mark": ".pdf.html",
+      "text": "A .pdf that is really .html"
+    },
+    {
+      "on": "body",
+      "mark": "review it today",
+      "text": "Pushes you to hurry"
+    }
+  ]
+}

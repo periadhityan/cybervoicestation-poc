@@ -1,0 +1,37 @@
+{
+  "from_name": "Singtel IT Help",
+  "from_email": "servicedesk@singtel-it-help.top",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your staff account will be LOCKED today",
+  "date": "Fri, Oct 16, 2026 11:33 AM",
+  "body": "Dear Employee,\n\nYour staff account will be locked today because your details are out of date. Re-verify your staff ID and password now to keep access.\n\nIT Service Desk",
+  "banner": "assets/singtel-it-laptop-fake-banner.svg",
+  "link_text": "Re-verify now",
+  "link_url": "http://singtel-it-help.top/login",
+  "landing": {
+    "src": "assets/singtel-it-laptop-fake-landing.svg",
+    "alt": "A fake page on singtel-it-help.top"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "singtel-it-help.top",
+      "text": "Not singtel.com"
+    },
+    {
+      "on": "subject",
+      "mark": "LOCKED",
+      "text": "Shouting and a threat"
+    },
+    {
+      "on": "body",
+      "mark": "Dear Employee",
+      "text": "Generic greeting"
+    },
+    {
+      "on": "body",
+      "mark": "staff ID and password",
+      "text": "Asks for your password"
+    }
+  ]
+}

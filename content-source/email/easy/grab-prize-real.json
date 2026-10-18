@@ -1,0 +1,9 @@
+{
+  "from_name": "Grab",
+  "from_email": "no-reply@grab.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your Grab E-Receipt",
+  "date": "Mon, Oct 12, 2026 9:14 AM",
+  "body": "Hi Jordan,\n\nThanks for riding with Grab. Your fare was $14.20.\n\nPickup: Raffles Place MRT\nDrop-off: Meridian Freight, Tampines\n\nYou can see this trip in the Grab app under Activity.",
+  "banner": "assets/grab-prize-real-banner.svg"
+}

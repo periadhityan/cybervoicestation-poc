@@ -1,0 +1,33 @@
+{
+  "format": "sms",
+  "from_name": "+65 8777 0021",
+  "subject": "GrabRewards: You won $200! Claim your pr",
+  "date": "Today 6:30 PM",
+  "body": "GrabRewards: You won $200! Claim your prize now at http://grab-win.top before it expires today!",
+  "landing": {
+    "src": "assets/sms-grab-prize-fake-landing.svg",
+    "alt": "A fake page on grab-win.top"
+  },
+  "flags": [
+    {
+      "on": "from_name",
+      "mark": "+65 8777 0021",
+      "text": "A random mobile number"
+    },
+    {
+      "on": "body",
+      "mark": "You won $200",
+      "text": "A prize you never entered"
+    },
+    {
+      "on": "body",
+      "mark": "grab-win.top",
+      "text": "Not grab.com"
+    },
+    {
+      "on": "body",
+      "mark": "expires today",
+      "text": "Pushes you to hurry"
+    }
+  ]
+}

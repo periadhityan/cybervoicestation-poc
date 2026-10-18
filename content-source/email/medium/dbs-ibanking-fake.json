@@ -1,0 +1,36 @@
+{
+  "from_name": "DBS iBanking",
+  "from_email": "ibanking.alert@dbs-secure-alerts.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "DBS iBanking: Transaction alert - verify payee",
+  "date": "Mon, Oct 12, 2026 2:41 PM",
+  "body": "Dear Jordan,\n\nA transaction of SGD 1,980.00 was made on your DBS account ending 4821 on 13 Oct 2026. The payee has not been verified.\n\nIf you do not recognise this transaction, verify your payee within 2 hours to avoid a hold on your account.\n\nDBS Bank Ltd",
+  "banner": "assets/dbs-ibanking-fake-banner.svg",
+  "link_text": "Verify payee",
+  "link_url": "https://dbs-secure-alerts.com.login-verify.top/payee",
+  "landing": {
+    "src": "assets/dbs-ibanking-fake-landing.svg",
+    "alt": "A fake page on dbs-secure-alerts.com.login-verify.top"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "dbs-secure-alerts.com",
+      "text": "Not dbs.com"
+    },
+    {
+      "on": "body",
+      "mark": "within 2 hours",
+      "text": "2-hour deadline"
+    },
+    {
+      "on": "body",
+      "mark": "SGD 1,980.00",
+      "text": "A big charge to alarm you"
+    },
+    {
+      "on": "link_url",
+      "text": "Real host: login-verify.top"
+    }
+  ]
+}

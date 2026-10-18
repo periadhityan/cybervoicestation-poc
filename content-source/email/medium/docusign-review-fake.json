@@ -10,5 +10,26 @@
   "landing": {
     "src": "assets/docusign-review-fake-landing.svg",
     "alt": "A fake DocuSign page on docusign-secure-view.co asking for your work email password"
-  }
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "docusign-secure-view.co",
+      "text": "Not docusign.net"
+    },
+    {
+      "on": "subject",
+      "mark": "expires in 2 hours",
+      "text": "2-hour deadline"
+    },
+    {
+      "on": "body",
+      "mark": "Sign in with your work email",
+      "text": "Asks for your work login"
+    },
+    {
+      "on": "link_url",
+      "text": "Different site, plain http"
+    }
+  ]
 }

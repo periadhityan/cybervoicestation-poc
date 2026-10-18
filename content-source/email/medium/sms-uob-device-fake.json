@@ -1,0 +1,28 @@
+{
+  "format": "sms",
+  "from_name": "UOB",
+  "subject": "UOB: A new device was added to your UOB ",
+  "date": "Today 7:55 PM",
+  "body": "UOB: A new device was added to your UOB TMRW app. Not you? Cancel it within 15 min: uob-cancel.net/x",
+  "landing": {
+    "src": "assets/sms-uob-device-fake-landing.svg",
+    "alt": "A fake page on uob-cancel.net"
+  },
+  "flags": [
+    {
+      "on": "body",
+      "mark": "uob-cancel.net",
+      "text": "Not uob.com.sg"
+    },
+    {
+      "on": "body",
+      "mark": "within 15 min",
+      "text": "15-minute deadline"
+    },
+    {
+      "on": "body",
+      "mark": "Not you? Cancel it",
+      "text": "A link replaces the phone call"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "format": "mobile",
+  "from_name": "Zoom",
+  "from_email": "no-reply@zoom-recordings.net",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Cloud Recording: Q4 Planning - expires in 24 hours",
+  "date": "Mon, Oct 12, 2026 2:41 PM",
+  "body": "Hi Jordan,\n\nThe cloud recording for Q4 Planning will be deleted in 24 hours. Sign in to download it now.",
+  "link_text": "Download recording",
+  "link_url": "https://zoom-recordings.net/rec/download",
+  "landing": {
+    "src": "assets/zoom-recording-fake-landing.svg",
+    "alt": "A fake page on zoom-recordings.net"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "zoom-recordings.net",
+      "text": "Not zoom.us"
+    },
+    {
+      "on": "subject",
+      "mark": "expires in 24 hours",
+      "text": "24-hour deadline"
+    },
+    {
+      "on": "body",
+      "mark": "Sign in to download it now",
+      "text": "Asks for a sign-in"
+    },
+    {
+      "on": "link_url",
+      "text": "Not a zoom.us page"
+    }
+  ]
+}

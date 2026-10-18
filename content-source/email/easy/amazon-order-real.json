@@ -1,0 +1,15 @@
+{
+  "from_name": "Amazon.com",
+  "from_email": "shipment-tracking@amazon.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Shipped: Sony WH-1000XM5 Headphones",
+  "date": "Mon, Oct 12, 2026 9:14 AM",
+  "body": "Hi Jordan,\n\nYour package has shipped and is on its way. It should arrive on Thursday, Oct 15.\n\nTo see your order or track it, open Your Orders in the Amazon app or at amazon.com.",
+  "banner": "assets/amazon-order-real-banner.svg",
+  "link_text": "Track package",
+  "link_url": "https://www.amazon.com/gp/your-account/order-history",
+  "landing": {
+    "src": "assets/amazon-order-real-landing.svg",
+    "alt": "The real page on www.amazon.com"
+  }
+}

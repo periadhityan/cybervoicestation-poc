@@ -1,0 +1,39 @@
+{
+  "format": "qr",
+  "from_name": "Hawker Centre, Stall 14",
+  "subject": "50% OFF your meal today!",
+  "body": "Scan and enter your card to claim. Offer ends in 10 minutes!",
+  "printed_url": "hawker-deals.top",
+  "scan_url": "http://hawker-deals.top/claim",
+  "sticker": 2,
+  "qr": {
+    "src": "assets/qr-hawker-menu-fake-qr.svg",
+    "caption": "Claim 50% off",
+    "alt": "A QR code"
+  },
+  "landing": {
+    "src": "assets/qr-hawker-menu-fake-landing.svg",
+    "alt": "A fake page on hawker-deals.top"
+  },
+  "flags": [
+    {
+      "on": "qr",
+      "text": "A sticker on the table"
+    },
+    {
+      "on": "subject",
+      "mark": "50% OFF",
+      "text": "A too-good offer"
+    },
+    {
+      "on": "body",
+      "mark": "enter your card",
+      "text": "Asks for card details"
+    },
+    {
+      "on": "printed_url",
+      "mark": "hawker-deals.top",
+      "text": "Not the stall's website"
+    }
+  ]
+}

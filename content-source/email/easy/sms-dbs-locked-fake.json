@@ -1,0 +1,33 @@
+{
+  "format": "sms",
+  "from_name": "+65 9012 3345",
+  "subject": "DBS Alert: Your account is locked. Verif",
+  "date": "Today 2:15 PM",
+  "body": "DBS Alert: Your account is locked. Verify now at http://dbs-unlock.xyz to avoid closure.",
+  "landing": {
+    "src": "assets/sms-dbs-locked-fake-landing.svg",
+    "alt": "A fake page on dbs-unlock.xyz"
+  },
+  "flags": [
+    {
+      "on": "from_name",
+      "mark": "+65 9012 3345",
+      "text": "Not DBS' sender name"
+    },
+    {
+      "on": "body",
+      "mark": "dbs-unlock.xyz",
+      "text": "Not dbs.com"
+    },
+    {
+      "on": "body",
+      "mark": "is locked",
+      "text": "A scary lock-out claim"
+    },
+    {
+      "on": "body",
+      "mark": "to avoid closure",
+      "text": "Threat of closure"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "from_name": "Amazon Web Services",
+  "from_email": "no-reply-aws@amazon.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your AWS bill for September is available",
+  "date": "Wed, Oct 14, 2026 10:26 AM",
+  "body": "Hello,\n\nYour AWS bill for September 2026 is now available. Total: $1,284.19.\n\nSign in to the AWS Billing console from your usual bookmark to view details. AWS will never ask for your password by email.",
+  "banner": "assets/aws-bill-real-banner.svg",
+  "link_text": "Open Billing console",
+  "link_url": "https://console.aws.amazon.com/billing/home",
+  "landing": {
+    "src": "assets/aws-bill-real-landing.svg",
+    "alt": "The real page on console.aws.amazon.com"
+  }
+}

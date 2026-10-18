@@ -11,5 +11,26 @@
   "landing": {
     "src": "assets/ms365-signin-fake-landing.svg",
     "alt": "A fake sign-in page on micros0ft-support-center.com asking for password, phone and recovery email"
-  }
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "micros0ft-support-center.com",
+      "text": "Fake domain (zero for o)"
+    },
+    {
+      "on": "subject",
+      "mark": "!! URGENT !!",
+      "text": "Shouting and a threat"
+    },
+    {
+      "on": "body",
+      "mark": "Dear User",
+      "text": "Generic greeting"
+    },
+    {
+      "on": "link_url",
+      "text": "Unknown site, plain http"
+    }
+  ]
 }

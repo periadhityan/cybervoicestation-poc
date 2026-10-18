@@ -11,5 +11,26 @@
   "landing": {
     "src": "assets/dhl-redelivery-fake-landing.svg",
     "alt": "A fake payment page on dhl-parcel-release.xyz asking for card details"
-  }
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "dhI-express-parcel.xyz",
+      "text": "Capital I standing in for l"
+    },
+    {
+      "on": "subject",
+      "mark": "pay $1.99",
+      "text": "Asks for a small fee"
+    },
+    {
+      "on": "body",
+      "mark": "tryed",
+      "text": "Spelling mistake"
+    },
+    {
+      "on": "link_url",
+      "text": "Card page, plain http"
+    }
+  ]
 }

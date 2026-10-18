@@ -1,0 +1,36 @@
+{
+  "from_name": "AWS Billing",
+  "from_email": "billing@aws-billing-center.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "AWS: unusual charges of $4,812.00 on your account",
+  "date": "Wed, Oct 14, 2026 1:05 PM",
+  "body": "Hello,\n\nWe detected unusual charges of $4,812.00 on your AWS account. To dispute them, sign in to the AWS Billing console within 24 hours.\n\nAmazon Web Services",
+  "banner": "assets/aws-bill-fake-banner.svg",
+  "link_text": "Open Billing console",
+  "link_url": "https://aws-billing-center.com/console/billing",
+  "landing": {
+    "src": "assets/aws-bill-fake-landing.svg",
+    "alt": "A fake page on aws-billing-center.com"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "aws-billing-center.com",
+      "text": "Not amazon.com"
+    },
+    {
+      "on": "subject",
+      "mark": "unusual charges of $4,812.00",
+      "text": "A big charge to alarm you"
+    },
+    {
+      "on": "body",
+      "mark": "within 24 hours",
+      "text": "24-hour deadline"
+    },
+    {
+      "on": "link_url",
+      "text": "Not console.aws.amazon.com"
+    }
+  ]
+}

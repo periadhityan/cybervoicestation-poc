@@ -1,0 +1,15 @@
+{
+  "from_name": "Workday",
+  "from_email": "noreply@workday.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Action required: Expense Report ER-4821 awaits approval",
+  "date": "Wed, Oct 14, 2026 10:26 AM",
+  "body": "Hello Jordan,\n\nExpense Report ER-4821 submitted by Priya Nair ($412.60) is awaiting your approval.\n\nOpen your Workday Inbox to review it.\n\nWorkday",
+  "banner": "assets/workday-expense-real-banner.svg",
+  "link_text": "Open Workday Inbox",
+  "link_url": "https://wd3.myworkday.com/meridianfreight/inbox",
+  "landing": {
+    "src": "assets/workday-expense-real-landing.svg",
+    "alt": "The real page on wd3.myworkday.com"
+  }
+}

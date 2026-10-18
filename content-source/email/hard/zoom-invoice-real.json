@@ -1,0 +1,9 @@
+{
+  "format": "mobile",
+  "from_name": "Zoom",
+  "from_email": "billing@zoom.us",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your Zoom invoice for October",
+  "date": "Wed, Oct 14, 2026 10:26 AM",
+  "body": "Hi Jordan,\n\nYour Zoom invoice INV-48213 for $159.90 is ready. Sign in to zoom.us and open Billing to view or download it."
+}

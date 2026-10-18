@@ -1,0 +1,37 @@
+{
+  "from_name": "IRAS Refunds",
+  "from_email": "refund@iras-taxrefund.top",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "IRAS: You are eligible for a tax refund of $1,284.00",
+  "date": "Mon, Oct 12, 2026 2:41 PM",
+  "body": "Dear Taxpayer,\n\nAfter our annual calculations you are eligable for a tax refund of $1,284.00. Submit your bank details within 48 hours to recieve it.\n\nInland Revenue",
+  "banner": "assets/iras-refund-fake-banner.svg",
+  "link_text": "Claim refund",
+  "link_url": "http://iras-taxrefund.top/claim",
+  "landing": {
+    "src": "assets/iras-refund-fake-landing.svg",
+    "alt": "A fake page on iras-taxrefund.top"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "iras-taxrefund.top",
+      "text": "Not iras.gov.sg"
+    },
+    {
+      "on": "subject",
+      "mark": "tax refund of $1,284.00",
+      "text": "Money you didn't expect"
+    },
+    {
+      "on": "body",
+      "mark": "eligable",
+      "text": "Spelling mistake"
+    },
+    {
+      "on": "body",
+      "mark": "bank details",
+      "text": "Asks for bank details"
+    }
+  ]
+}

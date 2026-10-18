@@ -1,0 +1,9 @@
+{
+  "from_name": "Amazon Web Services",
+  "from_email": "no-reply-aws@amazon.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "AWS Notification: MFA device removed from IAM user",
+  "date": "Mon, Oct 12, 2026 9:14 AM",
+  "body": "Hello,\n\nAn MFA device was removed from IAM user jalvarez at 2026-10-13 09:41 UTC.\n\nIf you made this change, no action is needed. If not, sign in to the IAM console from your bookmark and review recent activity.\n\nAmazon Web Services",
+  "banner": "assets/aws-mfa-real-banner.svg"
+}

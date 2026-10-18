@@ -1,0 +1,37 @@
+{
+  "from_name": "Amazon Security",
+  "from_email": "service@amaz0n-security.xyz",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your Amazon order is LOCKED - verify payment now",
+  "date": "Mon, Oct 12, 2026 2:41 PM",
+  "body": "Dear Customer,\n\nYour recent order #112-8429315 has been LOCKED because your payment could not be verfied. If you do not update your payment details within 12 hours your order will be CANCELLED.\n\nAmazon Customer Service",
+  "banner": "assets/amazon-order-fake-banner.svg",
+  "link_text": "Update payment",
+  "link_url": "http://amaz0n-security.xyz/verify/payment.php",
+  "landing": {
+    "src": "assets/amazon-order-fake-landing.svg",
+    "alt": "A fake page on amaz0n-security.xyz"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "amaz0n-security.xyz",
+      "text": "Not amazon.com (zero for o)"
+    },
+    {
+      "on": "subject",
+      "mark": "LOCKED",
+      "text": "Shouting and a threat"
+    },
+    {
+      "on": "body",
+      "mark": "Dear Customer",
+      "text": "Generic greeting"
+    },
+    {
+      "on": "body",
+      "mark": "verfied",
+      "text": "Spelling mistake"
+    }
+  ]
+}

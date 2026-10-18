@@ -1,0 +1,31 @@
+{
+  "from_name": "Apple",
+  "from_email": "receipt@apple-billing-support.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your receipt from Apple - $1,299.00",
+  "date": "Tue, Oct 13, 2026 4:12 PM",
+  "body": "Hi Jordan,\n\nHere's your receipt for MacBook Pro 16-inch: $1,299.00.\n\nIf you didn't make this purchase, call Apple Billing on +1 (888) 555-0142 within 24 hours to cancel it.",
+  "banner": "assets/apple-receipt-fake-banner.svg",
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "apple-billing-support.com",
+      "text": "Not apple.com"
+    },
+    {
+      "on": "subject",
+      "mark": "$1,299.00",
+      "text": "A big charge to alarm you"
+    },
+    {
+      "on": "body",
+      "mark": "call Apple Billing",
+      "text": "Tells you to phone a number"
+    },
+    {
+      "on": "body",
+      "mark": "within 24 hours",
+      "text": "24-hour deadline"
+    }
+  ]
+}

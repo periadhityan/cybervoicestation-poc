@@ -1,0 +1,31 @@
+{
+  "format": "mobile",
+  "from_name": "Microsoft Teams",
+  "from_email": "noreply@email-teams-microsoft.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Priya Nair invited you to a Teams meeting",
+  "date": "Fri, Oct 16, 2026 11:33 AM",
+  "body": "Hi Jordan,\n\nPriya Nair invited you to a meeting: Vendor review, Thursday 3:00 PM.\n\nSign in to join.",
+  "link_text": "Join meeting",
+  "link_url": "https://email-teams-microsoft.com/meet/join",
+  "landing": {
+    "src": "assets/teams-guest-fake-landing.svg",
+    "alt": "A fake page on email-teams-microsoft.com"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "email-teams-microsoft.com",
+      "text": "Dots swapped for hyphens"
+    },
+    {
+      "on": "body",
+      "mark": "Sign in to join",
+      "text": "Asks for a sign-in first"
+    },
+    {
+      "on": "link_url",
+      "text": "Not a microsoft.com page"
+    }
+  ]
+}

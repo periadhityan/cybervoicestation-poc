@@ -1,0 +1,37 @@
+{
+  "format": "mobile",
+  "from_name": "Singtel HR Portal",
+  "from_email": "hr-notice@singtel-hr-portal.top",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your leave balance will be CANCELLED",
+  "date": "Wed, Oct 14, 2026 1:05 PM",
+  "body": "Dear Employee,\n\nYour annual leave balance will be cancelled within 24 hours. Confirm your staff ID and password now to keep it.",
+  "link_text": "Confirm now",
+  "link_url": "http://singtel-hr-portal.top/login",
+  "landing": {
+    "src": "assets/singtel-hr-leave-fake-landing.svg",
+    "alt": "A fake page on singtel-hr-portal.top"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "singtel-hr-portal.top",
+      "text": "Not singtel.com"
+    },
+    {
+      "on": "subject",
+      "mark": "CANCELLED",
+      "text": "Shouting and a threat"
+    },
+    {
+      "on": "body",
+      "mark": "Dear Employee",
+      "text": "Generic greeting"
+    },
+    {
+      "on": "body",
+      "mark": "staff ID and password",
+      "text": "Asks for your password"
+    }
+  ]
+}

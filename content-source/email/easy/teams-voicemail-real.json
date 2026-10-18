@@ -1,0 +1,9 @@
+{
+  "format": "mobile",
+  "from_name": "Microsoft Teams",
+  "from_email": "noreply@email.teams.microsoft.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "You have a missed message from Dana Whitfield",
+  "date": "Thu, Oct 15, 2026 7:48 AM",
+  "body": "Hi Jordan,\n\nDana Whitfield sent you a message in Teams while you were away:\n\n\"Can you review the Q4 plan before 3pm?\"\n\nOpen Teams to reply."
+}

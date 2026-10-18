@@ -1,0 +1,36 @@
+{
+  "format": "mobile",
+  "from_name": "Google Workspace",
+  "from_email": "admin-alerts@google-workspace-admin.co",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Security alert: your mailbox will be disabled",
+  "date": "Fri, Oct 16, 2026 11:33 AM",
+  "body": "Hi Jordan,\n\nYour mailbox is over its limit and will be disabled in 24 hours. Sign in to your admin portal to keep access.",
+  "link_text": "Keep my mailbox",
+  "link_url": "https://google-workspace-admin.co/signin",
+  "landing": {
+    "src": "assets/google-workspace-fake-landing.svg",
+    "alt": "A fake page on google-workspace-admin.co"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "google-workspace-admin.co",
+      "text": "Not google.com"
+    },
+    {
+      "on": "subject",
+      "mark": "mailbox will be disabled",
+      "text": "Threat to disable your mailbox"
+    },
+    {
+      "on": "body",
+      "mark": "Sign in to your admin portal",
+      "text": "Pushes a sign-in"
+    },
+    {
+      "on": "link_url",
+      "text": "Unknown site, not google.com"
+    }
+  ]
+}

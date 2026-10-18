@@ -1,0 +1,15 @@
+{
+  "from_name": "Xero",
+  "from_email": "messaging-service@post.xero.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Invoice INV-0412 from Rossum Industrial Supply",
+  "date": "Mon, Oct 12, 2026 9:14 AM",
+  "body": "Hi Jordan,\n\nRossum Industrial Supply sent you an invoice for $2,460.00 due Oct 30.\n\nView and pay it online with the invoice link below.\n\nXero",
+  "banner": "assets/xero-paynow-real-banner.svg",
+  "link_text": "View invoice",
+  "link_url": "https://in.xero.com/Zx48213",
+  "landing": {
+    "src": "assets/xero-paynow-real-landing.svg",
+    "alt": "The real page on in.xero.com"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "format": "mobile",
+  "from_name": "OCBC Bank",
+  "from_email": "statement@ocbc-estatement.net",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Your September e-statement is ready",
+  "date": "Tue, Oct 13, 2026 4:12 PM",
+  "body": "Dear Jordan,\n\nYour OCBC e-statement for September 2026 is attached. Open the attachment and sign in to view it.\n\nOCBC Bank",
+  "attachment_name": "OCBC_Statement_Sep2026.html",
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "ocbc-estatement.net",
+      "text": "Not ocbc.com"
+    },
+    {
+      "on": "attachment_name",
+      "text": "A statement sent as .html"
+    },
+    {
+      "on": "body",
+      "mark": "Open the attachment and sign in",
+      "text": "Asks you to sign in from it"
+    }
+  ]
+}

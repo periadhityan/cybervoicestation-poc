@@ -1,0 +1,39 @@
+{
+  "format": "qr",
+  "from_name": "Orchard Road Car Park",
+  "subject": "PAY NOW: $60 fine unpaid",
+  "body": "Pay within 24 hours to avoid a $200 fine.",
+  "printed_url": "park-sg-pay.top",
+  "scan_url": "http://park-sg-pay.top/fine",
+  "sticker": 2,
+  "qr": {
+    "src": "assets/qr-parking-sticker-fake-qr.svg",
+    "caption": "Scan to pay fine",
+    "alt": "A QR code"
+  },
+  "landing": {
+    "src": "assets/qr-parking-sticker-fake-landing.svg",
+    "alt": "A fake page on park-sg-pay.top"
+  },
+  "flags": [
+    {
+      "on": "qr",
+      "text": "A sticker over the real sign"
+    },
+    {
+      "on": "subject",
+      "mark": "PAY NOW",
+      "text": "Shouting and a threat"
+    },
+    {
+      "on": "body",
+      "mark": "avoid a $200 fine",
+      "text": "Threatens a bigger fine"
+    },
+    {
+      "on": "printed_url",
+      "mark": "park-sg-pay.top",
+      "text": "Not parking.sg"
+    }
+  ]
+}

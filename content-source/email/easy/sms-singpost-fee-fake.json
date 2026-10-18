@@ -1,0 +1,33 @@
+{
+  "format": "sms",
+  "from_name": "+65 8123 4567",
+  "subject": "SingPost: your parcel is held. Pay a $1.",
+  "date": "Today 9:41 AM",
+  "body": "SingPost: your parcel is held. Pay a $1.50 fee to release it: http://singpost-fee.top/p within 12hrs or it will be returned.",
+  "landing": {
+    "src": "assets/sms-singpost-fee-fake-landing.svg",
+    "alt": "A fake page on singpost-fee.top"
+  },
+  "flags": [
+    {
+      "on": "from_name",
+      "mark": "+65 8123 4567",
+      "text": "A random mobile number"
+    },
+    {
+      "on": "body",
+      "mark": "singpost-fee.top",
+      "text": "Not singpost.com"
+    },
+    {
+      "on": "body",
+      "mark": "Pay a $1.50 fee",
+      "text": "Asks for a small fee"
+    },
+    {
+      "on": "body",
+      "mark": "within 12hrs",
+      "text": "12-hour deadline"
+    }
+  ]
+}

@@ -14,5 +14,26 @@
   "landing": {
     "src": "assets/singpost-locker-fake-landing.svg",
     "alt": "A fake payment page on singpost-collect.top asking for card details"
-  }
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "singpost-collect.top",
+      "text": "Not singpost.com"
+    },
+    {
+      "on": "subject",
+      "mark": "scan to pay now",
+      "text": "Asks you to pay by QR"
+    },
+    {
+      "on": "body",
+      "mark": "12 HOURS",
+      "text": "12-hour deadline"
+    },
+    {
+      "on": "qr",
+      "text": "QR hides where it leads"
+    }
+  ]
 }

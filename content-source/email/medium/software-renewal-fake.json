@@ -7,5 +7,26 @@
   "body": "Your DesignSuite invoice #DS-88213 for $588.00 is past due. Service will be suspended within 48 hours unless payment is submitted immediately.\n\nPay now to avoid interruption to your team's access.",
   "link_text": "Pay Invoice Now",
   "link_url": "http://designsuite-billing.net/pay?inv=88213",
-  "attachment_name": "Invoice_DS-88213.pdf.exe"
+  "attachment_name": "Invoice_DS-88213.pdf.exe",
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "designsuite-billing.net",
+      "text": "Not designsuite.com"
+    },
+    {
+      "on": "attachment_name",
+      "mark": ".pdf.exe",
+      "text": "A program, not a PDF"
+    },
+    {
+      "on": "body",
+      "mark": "within 48 hours",
+      "text": "48-hour threat"
+    },
+    {
+      "on": "link_url",
+      "text": "Payment link, plain http"
+    }
+  ]
 }

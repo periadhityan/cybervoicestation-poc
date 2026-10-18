@@ -1,0 +1,9 @@
+{
+  "from_name": "DBS iBanking",
+  "from_email": "ibanking.alert@dbs.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "DBS iBanking: Transaction alert",
+  "date": "Mon, Oct 12, 2026 9:14 AM",
+  "body": "Dear Jordan,\n\nA transaction of SGD 120.00 was made on your DBS account ending 4821 on 13 Oct 2026.\n\nIf you did not make this transaction, please call the number on the back of your card or use the DBS digibank app.\n\nDBS Bank Ltd",
+  "banner": "assets/dbs-ibanking-real-banner.svg"
+}

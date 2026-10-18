@@ -1,0 +1,17 @@
+{
+  "format": "qr",
+  "from_name": "SingPost: Sorry we missed you",
+  "subject": "Collect your parcel",
+  "body": "We tried to deliver SP48213390SG. Choose a new date in the SingPost app or at the POPStation named on this card.",
+  "printed_url": "singpost.com/reschedule",
+  "scan_url": "https://www.singpost.com/reschedule",
+  "qr": {
+    "src": "assets/qr-missed-parcel-real-qr.svg",
+    "caption": "Reschedule",
+    "alt": "A QR code"
+  },
+  "landing": {
+    "src": "assets/qr-missed-parcel-real-landing.svg",
+    "alt": "The real page on www.singpost.com"
+  }
+}

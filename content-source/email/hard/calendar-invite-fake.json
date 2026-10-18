@@ -1,0 +1,31 @@
+{
+  "from_name": "Google Calendar",
+  "from_email": "calendar-notification@googIe.com",
+  "to": "j.alvarez@meridianfreight.com",
+  "subject": "Invitation: Vendor review @ Thu Oct 15, 3pm (SGT)",
+  "date": "Fri, Oct 16, 2026 11:33 AM",
+  "body": "Priya Nair has invited you to a meeting.\n\nVendor review\nThu Oct 15, 2026, 3:00 PM - 4:00 PM (SGT)\nJoining info: Google Meet\n\nSign in to view the agenda and attachments.",
+  "banner": "assets/calendar-invite-fake-banner.svg",
+  "link_text": "View agenda",
+  "link_url": "https://googIe.com/calendar/event?eid=xyz",
+  "landing": {
+    "src": "assets/calendar-invite-fake-landing.svg",
+    "alt": "A fake page on googIe.com"
+  },
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "googIe.com",
+      "text": "A capital I, not an l"
+    },
+    {
+      "on": "body",
+      "mark": "Sign in to view the agenda",
+      "text": "Adds a sign-in step"
+    },
+    {
+      "on": "link_url",
+      "text": "Same lookalike domain"
+    }
+  ]
+}

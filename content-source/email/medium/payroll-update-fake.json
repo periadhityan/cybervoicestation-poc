@@ -6,5 +6,26 @@
   "date": "Tue, Sep 8, 2026 2:05 PM",
   "body": "Hi team,\n\nAs part of this weekend's payroll platform update, all employees must re-confirm direct deposit details or paychecks may be delayed. This will take less than 2 minutes.\n\nPlease confirm before Friday 5pm.\n\nMeridian Payroll Team",
   "link_text": "Confirm Direct Deposit",
-  "link_url": "http://payroll-updates.meridianfreiqht.com/confirm"
+  "link_url": "http://payroll-updates.meridianfreiqht.com/confirm",
+  "flags": [
+    {
+      "on": "from_email",
+      "mark": "meridianfreiqht.com",
+      "text": "q for g in freight"
+    },
+    {
+      "on": "body",
+      "mark": "re-confirm direct deposit details",
+      "text": "Asks for bank details"
+    },
+    {
+      "on": "body",
+      "mark": "Friday 5pm",
+      "text": "Deadline: Friday 5pm"
+    },
+    {
+      "on": "link_url",
+      "text": "Lookalike domain, plain http"
+    }
+  ]
 }

@@ -12,7 +12,8 @@
       "Threat of permanent suspension in 24 hours",
       "Generic 'Dear Employee' greeting",
       "Link goes to a different domain over plain http"
-    ]
+    ],
+    "what_you_can_do": "Don't click. Go to the IT portal yourself, or contact the Help Desk on a number you trust."
   },
   "package-delivery": {
     "subject_label": "Package delivery notification",
@@ -27,7 +28,8 @@
       "Generic sender name 'Delivery Service' and no order number",
       "A redelivery fee and a 24-hour deadline",
       "Link goes to an unrelated domain over http"
-    ]
+    ],
+    "what_you_can_do": "Track the parcel on the courier's own site, and never pay a fee from an email link."
   },
   "gift-card-request": {
     "subject_label": "Request from \"the boss\"",
@@ -42,7 +44,8 @@
       "Asks for gift card codes, which can't be traced or reversed",
       "'Keep this between us' stops you checking",
       "Pressure: needed quietly and quickly"
-    ]
+    ],
+    "what_you_can_do": "Call or message Dana on a channel you already use. Real purchases go through expenses, never gift cards."
   },
   "account-suspended": {
     "subject_label": "Bank account security alert",
@@ -57,7 +60,8 @@
       "Account 'suspended' with a 12-hour deadline",
       "Generic 'Dear Customer' greeting",
       "Link goes straight to a login page over http"
-    ]
+    ],
+    "what_you_can_do": "Open your bank's app or type its address yourself. Banks never ask you to verify through an email link."
   },
   "ms365-signin": {
     "subject_label": "Microsoft account sign-in alert",
@@ -95,5 +99,346 @@
       "The page asks for card number and CVV"
     ],
     "what_you_can_do": "Never pay a fee from an email link. Track the parcel on the courier's own site."
+  },
+  "amazon-order": {
+    "subject_label": "An Amazon order notice",
+    "reveal_note": "The real notice comes from amazon.com and sends you to your orders in the app. The fake comes from amaz0n-security.xyz, says your order is locked and wants payment details in 12 hours.",
+    "techniques": [
+      "Urgency",
+      "Payment harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Not amazon.com (zero for o)",
+      "Shouting and a threat",
+      "Generic greeting",
+      "Spelling mistake"
+    ],
+    "what_you_can_do": "Don't click. Open the Amazon app or type amazon.com yourself and check Your Orders."
+  },
+  "paypal-limited": {
+    "subject_label": "A PayPal account notice, on your phone",
+    "reveal_note": "The real notice comes from paypal.com and tells you to open the app. The fake comes from paypa1-support.top (a 1 for the l), threatens to hold your funds and links to an unknown site.",
+    "techniques": [
+      "Urgency",
+      "Credential harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Not paypal.com (a 1 for l)",
+      "Shouting and a threat",
+      "Generic greeting",
+      "Unknown site, plain http"
+    ],
+    "what_you_can_do": "Tap the sender name to check the address, then open PayPal yourself instead of tapping the link."
+  },
+  "netflix-payment": {
+    "subject_label": "A Netflix billing notice",
+    "reveal_note": "The real email comes from netflix.com and needs no action. The fake comes from netflix-payment-update.xyz, shouts that your payment was declined and threatens to delete your account.",
+    "techniques": [
+      "Urgency",
+      "Payment harvesting",
+      "Lookalike domain",
+      "Poor spelling"
+    ],
+    "red_flags": [
+      "Not netflix.com",
+      "Shouting and a threat",
+      "Generic greeting",
+      "Spelling mistake"
+    ],
+    "what_you_can_do": "Open the Netflix app or type netflix.com yourself to check your billing. Never use a link in the email."
+  },
+  "apple-id-locked": {
+    "subject_label": "An Apple ID alert, on your phone",
+    "reveal_note": "The real alert comes from apple.com and tells you to go to account.apple.com yourself. The fake comes from apple-support-verify.top, says your Apple ID is locked and links to an unknown site.",
+    "techniques": [
+      "Urgency",
+      "Credential harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Not apple.com",
+      "Shouting and a threat",
+      "Generic greeting",
+      "Unknown site, plain http"
+    ],
+    "what_you_can_do": "On a phone, tap the sender name to see the real address. Go to account.apple.com yourself to check."
+  },
+  "grab-prize": {
+    "subject_label": "A Grab message",
+    "reveal_note": "The real email is a plain receipt from grab.com with nothing to click. The fake comes from grab-prize-draw.top and says you won a prize you never entered, with a 12-hour deadline.",
+    "techniques": [
+      "Too good to be true",
+      "Urgency",
+      "Lookalike domain",
+      "Poor spelling"
+    ],
+    "red_flags": [
+      "Not grab.com",
+      "A prize you never entered",
+      "Spelling mistake",
+      "12-hour deadline"
+    ],
+    "what_you_can_do": "You can't win a draw you didn't enter. Delete it, and check offers in the Grab app only."
+  },
+  "fedex-duty": {
+    "subject_label": "A FedEx delivery notice",
+    "reveal_note": "The real notice comes from fedex.com and asks for no money. The fake comes from fedex-sg-parcel.xyz, asks for a small duty fee and threatens to destroy the parcel.",
+    "techniques": [
+      "Urgency",
+      "Payment harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Not fedex.com",
+      "A small fee to release it",
+      "Threat to destroy parcel",
+      "Card page, plain http"
+    ],
+    "what_you_can_do": "Never pay a fee from an email link. Track the parcel on fedex.com yourself."
+  },
+  "iras-refund": {
+    "subject_label": "A tax notice from IRAS",
+    "reveal_note": "The real notice comes from iras.gov.sg and says IRAS never asks for bank details by email. The fake comes from iras-taxrefund.top and asks for exactly that to release a refund.",
+    "techniques": [
+      "Too good to be true",
+      "Authority",
+      "Lookalike domain",
+      "Poor spelling"
+    ],
+    "red_flags": [
+      "Not iras.gov.sg",
+      "Money you didn't expect",
+      "Spelling mistake",
+      "Asks for bank details"
+    ],
+    "what_you_can_do": "Only use mytax.iras.gov.sg with Singpass. IRAS never asks for bank details by email."
+  },
+  "linkedin-views": {
+    "subject_label": "A LinkedIn notice, on your phone",
+    "reveal_note": "The real email comes from linkedin.com and names a real person. The fake comes from linkedln-mail.top (an l and n instead of i and n) and baits you with who viewed your profile.",
+    "techniques": [
+      "Curiosity bait",
+      "Credential harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Lookalike of linkedin.com",
+      "Curiosity bait",
+      "Generic greeting",
+      "Unknown site, plain http"
+    ],
+    "what_you_can_do": "Open the LinkedIn app yourself to see notifications. Don't sign in from a link in a message."
+  },
+  "dropbox-storage": {
+    "subject_label": "A Dropbox storage warning",
+    "reveal_note": "The real email comes from dropbox.com and says nothing will be deleted. The fake comes from dropbox-storage-alert.top and threatens to delete your files in 24 hours.",
+    "techniques": [
+      "Urgency",
+      "Payment harvesting",
+      "Lookalike domain",
+      "Poor spelling"
+    ],
+    "red_flags": [
+      "Not dropbox.com",
+      "Shouting and a threat",
+      "Generic greeting",
+      "Spelling mistake"
+    ],
+    "what_you_can_do": "Check your storage in the Dropbox app or at dropbox.com. Real warnings don't delete files in 24 hours."
+  },
+  "teams-voicemail": {
+    "subject_label": "A Teams message, on your phone",
+    "reveal_note": "The real email comes from microsoft.com and shows a real message from a colleague. The fake comes from teams-voicemail.top and wants you to open an .exe file, which is a program, not a voice message.",
+    "techniques": [
+      "Risky attachment",
+      "Urgency",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Not microsoft.com",
+      "Pushes you to act now",
+      "Generic greeting",
+      "Attachment is a .exe program"
+    ],
+    "what_you_can_do": "Never open an .exe attachment. Check voicemails in the Teams app itself."
+  },
+  "zoom-closed": {
+    "subject_label": "A Zoom account email",
+    "reveal_note": "The real email is a meeting invite from zoom.us with a named organiser. The fake comes from zoom-verification.top and threatens to close your account in 24 hours.",
+    "techniques": [
+      "Urgency",
+      "Credential harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Not zoom.us",
+      "Shouting and a threat",
+      "Generic greeting",
+      "Unknown site, plain http"
+    ],
+    "what_you_can_do": "Don't verify anything from a link. Open the Zoom app or zoom.us yourself to check your account."
+  },
+  "shopee-refund": {
+    "subject_label": "A Shopee order message, on your phone",
+    "reveal_note": "The real email comes from shopee.sg and points you to the app. The fake comes from shopee-refund-sg.xyz and asks for your card details to receive a refund.",
+    "techniques": [
+      "Payment harvesting",
+      "Urgency",
+      "Lookalike domain",
+      "Poor spelling"
+    ],
+    "red_flags": [
+      "Not shopee.sg",
+      "Asks for card details",
+      "Spelling mistake",
+      "Unknown site, plain http"
+    ],
+    "what_you_can_do": "A refund never needs your card number. Check My Purchases in the Shopee app."
+  },
+  "carousell-offer": {
+    "subject_label": "A Carousell buyer message",
+    "reveal_note": "The real email comes from carousell.com and tells you to meet in person and pay on collection. The fake comes from carousell-secure-pay.top and wants your bank login to release a payment.",
+    "techniques": [
+      "Payment harvesting",
+      "Urgency",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Not carousell.com",
+      "Asks for your bank login",
+      "12-hour deadline",
+      "Unknown site, plain http"
+    ],
+    "what_you_can_do": "Marketplaces never need your bank login. Check offers inside the Carousell app only."
+  },
+  "sms-singpost-fee": {
+    "subject_label": "A SingPost text message",
+    "reveal_note": "The real text comes from the SingPost sender name and sends you to singpost.com. The fake comes from a random mobile number, asks for a fee and links to singpost-fee.top.",
+    "techniques": [
+      "Smishing",
+      "Payment harvesting",
+      "Urgency"
+    ],
+    "red_flags": [
+      "A random mobile number",
+      "Not singpost.com",
+      "Asks for a small fee",
+      "12-hour deadline"
+    ],
+    "what_you_can_do": "Ignore texts from unknown numbers about parcels. Check the parcel at singpost.com or in the SingPost app."
+  },
+  "sms-dbs-locked": {
+    "subject_label": "A DBS text message",
+    "reveal_note": "The real text comes from the DBS sender name, carries no link and tells you to call the bank. The fake comes from a mobile number, says your account is locked and links to dbs-unlock.xyz.",
+    "techniques": [
+      "Smishing",
+      "Credential harvesting",
+      "Urgency"
+    ],
+    "red_flags": [
+      "Not DBS' sender name",
+      "Not dbs.com",
+      "A scary lock-out claim",
+      "Threat of closure"
+    ],
+    "what_you_can_do": "Banks don't text you a link to unlock an account. Call the number on the back of your card."
+  },
+  "sms-grab-prize": {
+    "subject_label": "A Grab text message",
+    "reveal_note": "The real text is a plain trip update from the Grab sender name. The fake comes from a mobile number, says you won a prize and links to grab-win.top.",
+    "techniques": [
+      "Smishing",
+      "Too good to be true",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "A random mobile number",
+      "A prize you never entered",
+      "Not grab.com",
+      "Pushes you to hurry"
+    ],
+    "what_you_can_do": "You can't win a draw you didn't enter. Delete it, and check offers in the Grab app only."
+  },
+  "qr-parking-sticker": {
+    "subject_label": "A QR code at a car park",
+    "reveal_note": "The real sign points to the Parking.sg app. The fake is a sticker, shouts PAY NOW, threatens a fine and prints park-sg-pay.top. A QR code never tells you where it leads.",
+    "techniques": [
+      "Quishing",
+      "Payment harvesting",
+      "Sticker over a sign"
+    ],
+    "red_flags": [
+      "A sticker over the real sign",
+      "Shouting and a threat",
+      "Threatens a bigger fine",
+      "Not parking.sg"
+    ],
+    "what_you_can_do": "Never pay a fine from a QR sticker. Use the official Parking.sg app, and report the sticker."
+  },
+  "qr-hawker-menu": {
+    "subject_label": "A QR code on a hawker table",
+    "reveal_note": "The real code opens a menu and you pay when you collect. The fake is a sticker offering 50% off, wants your card number and rushes you with a 10-minute timer.",
+    "techniques": [
+      "Quishing",
+      "Payment harvesting",
+      "Too good to be true"
+    ],
+    "red_flags": [
+      "A sticker on the table",
+      "A too-good offer",
+      "Asks for card details",
+      "Not the stall's website"
+    ],
+    "what_you_can_do": "A menu never needs your card. Ask the stall holder if a code looks stuck on."
+  },
+  "qr-missed-parcel": {
+    "subject_label": "A 'sorry we missed you' card",
+    "reveal_note": "The real card names SingPost and sends you to the SingPost app or a POPStation. The fake says only 'Courier', asks for a fee, sets a 24-hour deadline and prints sp-redeliver.top.",
+    "techniques": [
+      "Quishing",
+      "Payment harvesting",
+      "Urgency"
+    ],
+    "red_flags": [
+      "A fee to get your parcel",
+      "24-hour deadline",
+      "Not singpost.com",
+      "No courier name"
+    ],
+    "what_you_can_do": "Track the parcel in the courier's own app. Never pay a fee from a card pushed through your door."
+  },
+  "singtel-hr-leave": {
+    "subject_label": "A Singtel HR email, on your phone",
+    "reveal_note": "The real email comes from singtel.com, uses your name and tells you to open the HR portal from your own bookmark. The fake comes from singtel-hr-portal.top, threatens to cancel your leave and asks for your staff ID and password.",
+    "techniques": [
+      "Urgency",
+      "Credential harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Not singtel.com",
+      "Shouting and a threat",
+      "Generic greeting",
+      "Asks for your password"
+    ],
+    "what_you_can_do": "Tap the sender name to check the address. HR never asks for your password; open the HR portal from your own bookmark."
+  },
+  "singtel-it-laptop": {
+    "subject_label": "A Singtel IT Service Desk email",
+    "reveal_note": "The real email comes from singtel.com, uses your name and needs no action. The fake comes from singtel-it-help.top, threatens to lock your account today and asks for your staff ID and password.",
+    "techniques": [
+      "Urgency",
+      "Credential harvesting",
+      "Lookalike domain"
+    ],
+    "red_flags": [
+      "Not singtel.com",
+      "Shouting and a threat",
+      "Generic greeting",
+      "Asks for your password"
+    ],
+    "what_you_can_do": "IT never asks for your password by email. Contact the IT Service Desk on a number you already hold."
   }
 }

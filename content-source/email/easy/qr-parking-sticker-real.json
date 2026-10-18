@@ -1,0 +1,17 @@
+{
+  "format": "qr",
+  "from_name": "Orchard Road Car Park",
+  "subject": "Pay for parking in the Parking.sg app",
+  "body": "Scan to open the app and start or end your parking session.",
+  "printed_url": "parking.sg",
+  "scan_url": "https://www.parking.sg",
+  "qr": {
+    "src": "assets/qr-parking-sticker-real-qr.svg",
+    "caption": "Scan for the app",
+    "alt": "A QR code"
+  },
+  "landing": {
+    "src": "assets/qr-parking-sticker-real-landing.svg",
+    "alt": "The real page on www.parking.sg"
+  }
+}
