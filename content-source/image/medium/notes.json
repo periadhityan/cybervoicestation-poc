@@ -30,5 +30,25 @@
   "sticky-note": {
     "subject_label": "A sticky note beside a keyboard",
     "reveal_note": "The real photo is a plain, blank sticky pad next to a keyboard and phone. The AI version adds a line of handwriting that looks fluent from a distance but is meaningless squiggle up close, and the whole scene is arranged like a product shot, with razor-sharp window shadows and not a mark on anything."
+  },
+  "cctv-wall": {
+    "subject_label": "A security camera on a wall",
+    "reveal_note": "The AI camera floats like a product shot on a clean bracket, with no cable, screws or junction box. The real photo shows two cameras bolted to rough concrete, with their cable and boxes."
+  },
+  "empty-meeting-room": {
+    "subject_label": "An empty meeting room",
+    "reveal_note": "The AI room is too tidy: identical chairs, a small plant on the table and spotless floor-to-ceiling glass. The real room has a ceiling projector, uneven chairs and worn carpet."
+  },
+  "booth-laptops": {
+    "subject_label": "Two people working on a laptop",
+    "reveal_note": "The AI pair look like stock models, with smooth faces and a laptop with a blank lid and no logo. The real photo is two people in a booth, candid and a little dim, with phones and papers on the table."
+  },
+  "woman-train-phone": {
+    "subject_label": "Someone looking at their phone",
+    "reveal_note": "The AI woman is smiling at her phone, with perfect hair and a phone that has no clear edges or buttons. The real photo is a candid over-the-shoulder shot at a station, with a real train blurred behind."
+  },
+  "woman-desk-writing": {
+    "subject_label": "A person working at a desk",
+    "reveal_note": "The AI woman sits in a dark, empty office with blank screens and flawless hair and glasses. The real photo is a woman writing by a bright window, with a desk lamp, a globe and a name plate."
   }
 }

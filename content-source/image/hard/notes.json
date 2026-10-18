@@ -26,5 +26,21 @@
   "waiting-room": {
     "subject_label": "Two people in a waiting room",
     "reveal_note": "The seating doesn't hold together in the AI image: the bench, separate backrests and armrests merge into each other, and the man's crossed leg and the woman's feet sit at odd depths against the bench. Both devices are blank slabs with no visible screens, and the bright glass wall behind them is a washed-out blur with no structure."
+  },
+  "contractor-cabinet": {
+    "subject_label": "A contractor at a wiring cabinet",
+    "reveal_note": "The AI worker faces the camera, lit like a film still, with orange wires that glow. The real photo is a man in a hard hat seen from behind at a real cabinet, with loose cables and a flat, ordinary light."
+  },
+  "two-colleagues-talking": {
+    "subject_label": "Two colleagues talking",
+    "reveal_note": "In the AI image the two men's hands clasp in a way that does not quite join up, and the people behind them are smeared. The real photo is a candid whisper between two colleagues, with a real watch and hands."
+  },
+  "team-meeting-laptops": {
+    "subject_label": "A team meeting with laptops",
+    "reveal_note": "The AI table is covered in neat food, cups and laptops with blank lids, and several faces look alike. The real photo is a busier meeting with real screens, a coffee cup and people looking in different directions."
+  },
+  "glass-corridor": {
+    "subject_label": "A glass-walled office corridor",
+    "reveal_note": "The AI corridor is perfectly symmetrical, sunlit and spotless, with plants repeated down both sides. The real corridor is dark and uneven, with signs, fire equipment and reflections in the glass."
   }
 }

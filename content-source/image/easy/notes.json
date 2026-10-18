@@ -22,5 +22,21 @@
   "video-call": {
     "subject_label": "A video call on a laptop",
     "reveal_note": "The real photo shows a slightly blurry, awkward call, which is how video calls actually look. In the AI image the laptop is turned so its screen faces the camera rather than the person using it, and the call tiles are tiny and warped, with a stray white shape over the man in the bottom tile."
+  },
+  "hands-typing": {
+    "subject_label": "Hands typing at a desk",
+    "reveal_note": "The AI image has two keyboards on the desk and fingers that look long and uneven, against a smooth glowing blur. The real photo is ordinary hands on one keyboard, with a mug, a monitor and a messy cable behind them."
+  },
+  "parcel-handover": {
+    "subject_label": "A parcel being handed over",
+    "reveal_note": "The AI image is a posed portrait of a masked courier in front of a stack of identical, spotless boxes. The real photo is a candid close-up of a hand signing on a clipboard next to a box with printed text."
+  },
+  "phone-street": {
+    "subject_label": "Someone using a phone outdoors",
+    "reveal_note": "The AI man has smooth, even skin, a tidy jacket and a blurred stone wall that looks painted on. The real photo is a candid crop of hands, a watch and a belt, with a real car blurred behind."
+  },
+  "woman-laptop": {
+    "subject_label": "Working on a laptop",
+    "reveal_note": "The AI woman looks straight at the camera with flawless skin, and her laptop lid has no logo, ports or detail. The real photo is a candid side view, with real keys, a desk lamp and a messy plait."
   }
 }

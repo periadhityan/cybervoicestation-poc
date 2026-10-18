@@ -45,3 +45,33 @@ Each was followed by `--ar 3:2 --style raw`.
 - Some real photos contain incidental brand marks (an Apple monitor, a branded mug). They are ordinary
   stock photographs, not endorsements.
 - None of the AI images show real, named people.
+
+
+## Batch 2 (13 pairs, October 2026): found online, not generated
+
+The 13 pairs below use **ready-made images from the web, with no image generator involved**. The real photo and the
+AI image were each picked separately to show the same kind of scene, then both were normalised with
+`tools/make_photo_pair.py` (same crop, size and JPEG quality, metadata removed).
+
+- **Real photos:** StockSnap, which publishes its photos under **CC0**, so no credit is required.
+- **AI images:** Pixabay, where each is tagged "AI generated" by its uploader and published under the
+  **Pixabay Content License** (free for commercial and non-commercial use, no credit required). Which tool made each
+  image is not recorded, and nothing was done to them beyond cropping and resizing.
+- None of the images show real, named people. Pixabay's licence does not allow implying that a person or brand endorses
+  something, so keep these as training material.
+
+| Pair (id) | Tier | Real photo (StockSnap, CC0) | AI image (Pixabay) |
+|---|---|---|---|
+| `hands-typing` | easy | https://stocksnap.io/photo/typing-working-ARCKFUOEWN | https://pixabay.com/images/id-9083517/ |
+| `parcel-handover` | easy | https://stocksnap.io/photo/clipboard-hand-TRKNLIGFAJ | https://pixabay.com/images/id-8988980/ |
+| `phone-street` | easy | https://stocksnap.io/photo/man-phone-KNSJXBFYFZ | https://pixabay.com/images/id-8948878/ |
+| `woman-laptop` | easy | https://stocksnap.io/photo/woman-working-FTBGHTW6EJ | https://pixabay.com/images/id-8991961/ |
+| `cctv-wall` | medium | https://stocksnap.io/photo/concrete-wall-70GQNT6XZM | https://pixabay.com/images/id-8331480/ |
+| `empty-meeting-room` | medium | https://stocksnap.io/photo/office-work-FSU5SG0X4U | https://pixabay.com/images/id-8704765/ |
+| `booth-laptops` | medium | https://stocksnap.io/photo/meeting-booth-7FLAARLMPI | https://pixabay.com/images/id-9030608/ |
+| `woman-train-phone` | medium | https://stocksnap.io/photo/people-woman-K9M8BPV08N | https://pixabay.com/images/id-8523266/ |
+| `woman-desk-writing` | medium | https://stocksnap.io/photo/woman-working-VR6GFV0ZO9 | https://pixabay.com/images/id-8779693/ |
+| `contractor-cabinet` | hard | https://stocksnap.io/photo/electrician-electricity-3A5FXM89OG | https://pixabay.com/images/id-9143280/ |
+| `two-colleagues-talking` | hard | https://stocksnap.io/photo/teamwork-business-TWSAADHX5T | https://pixabay.com/images/id-8582949/ |
+| `team-meeting-laptops` | hard | https://stocksnap.io/photo/conferenceroom-meeting-GVUWVKUHZE | https://pixabay.com/images/id-8974303/ |
+| `glass-corridor` | hard | https://stocksnap.io/photo/office-interior-NSQTXCLWQ5 | https://pixabay.com/images/id-8983506/ |
