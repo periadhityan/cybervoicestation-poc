@@ -1,42 +1,34 @@
 {
-  "handshake": {
-    "subject_label": "A business handshake",
-    "reveal_note": "The real photo is a candid close-up: natural soft blur, and the paper on the desk has real lines of text. The AI version is a glossy portrait with a generic blurred skyline, and the clasped hands look small and soft next to the sharp faces and suits."
+  "police-patrol": {
+    "subject_label": "A police officer on patrol",
+    "reveal_note": "In the AI image the vest reads 'PCILCLE' instead of POLICE with a line of gibberish above it, the yellow shoulder patch is blank with a smeared number, and the cap badge is a gold blob. The real photo has crisp, readable text on the phone the officer holds up."
   },
-  "laptop-typing": {
-    "subject_label": "Typing on a laptop",
-    "reveal_note": "Check the keyboard. On the real laptop every key legend is crisp and the layout is consistent. On the AI laptop the key labels dissolve into smudges, and the screen reflects a keyboard and fingers that don't match what is in front of it."
+  "handshake-city": {
+    "subject_label": "Two business people shaking hands",
+    "reveal_note": "In the AI image the clasped hands are tiny next to the arms and the fingers melt into one lump, the free hand on the right hangs with fused fingers, and the skyline behind is a soft smear. The real photo is a close, natural grip with real suit seams."
   },
-  "meeting-room": {
-    "subject_label": "An empty meeting room",
-    "reveal_note": "The real room is full of consistent, believable detail: ceiling grid and vents, a desk phone, and a frosted-glass pattern that repeats properly. The AI room is oddly clean and symmetrical, the ceiling light is a thin cross hanging from nothing, and the chairs don't quite match each other."
+  "hooded-laptop": {
+    "subject_label": "Someone working on a laptop in a hoodie",
+    "reveal_note": "In the AI image the hood is an empty black void with one glowing eye slit and no face, the keyboard is a blur of unreadable keys, and both monitors show meaningless boxes. The real photo is a bearded man in a grey hoodie at a laptop with a clear Apple logo."
   },
-  "phone-call": {
-    "subject_label": "Taking a phone call at a desk",
-    "reveal_note": "The real photo is an unposed moment with messy, specific detail: sticky notes, a mug, paper trays and real icons on the monitor. The AI executive is stock-photo perfect, with flawless lighting, a generic skyline, and a chart and notebook that look right from a distance but say nothing up close."
+  "trading-desk": {
+    "subject_label": "A person at a trading desk",
+    "reveal_note": "In the AI image she stares at the camera with no hands on a keyboard, the screens behind her are soft blocks of look-alike text with no real chart, and the pendant holds a made-up glyph. The real photo has readable trading charts on several screens and hands typing."
   },
-  "server-room": {
-    "subject_label": "Server racks",
-    "reveal_note": "The real shot is a soft close-up of one server with a few green status lights. The AI racks are packed with detail that doesn't hold up: cables that loop and tangle without clearly ending at a port, tiny screens and labels with no readable text, and units that don't line up."
+  "desk-phone": {
+    "subject_label": "A woman on a desk phone",
+    "reveal_note": "In the AI image the numbers on her watch face are scrambled and some run backwards, and the second phone on the shelf is a smeared blue lump. The real photo is a reception desk with a readable Dell logo on the monitor and a second person working behind."
   },
-  "video-call": {
-    "subject_label": "A video call on a laptop",
-    "reveal_note": "The real photo shows a slightly blurry, awkward call, which is how video calls actually look. In the AI image the laptop is turned so its screen faces the camera rather than the person using it, and the call tiles are tiny and warped, with a stray white shape over the man in the bottom tile."
+  "headset-agent": {
+    "subject_label": "A call-centre agent with a headset",
+    "reveal_note": "In the AI image the logo on the headset is garbled letters, the man behind her has his microphone fused into his moustache, and the rest of the room is a blur of featureless faces. The real photo is two people in plain headsets, sharp across the whole frame."
   },
-  "hands-typing": {
-    "subject_label": "Hands typing at a desk",
-    "reveal_note": "The AI image has two keyboards on the desk and fingers that look long and uneven, against a smooth glowing blur. The real photo is ordinary hands on one keyboard, with a mug, a monitor and a messy cable behind them."
+  "team-screen": {
+    "subject_label": "Colleagues looking at something together",
+    "reveal_note": "In the AI image the logos on the shirts are made-up letters, the red dots on her blouse ignore the folds of the fabric, and a thin chain on the man's collar melts into the cloth. The real photo is three colleagues pointing at the same laptop."
   },
-  "parcel-handover": {
-    "subject_label": "A parcel being handed over",
-    "reveal_note": "The AI image is a posed portrait of a masked courier in front of a stack of identical, spotless boxes. The real photo is a candid close-up of a hand signing on a clipboard next to a box with printed text."
-  },
-  "phone-street": {
-    "subject_label": "Someone using a phone outdoors",
-    "reveal_note": "The AI man has smooth, even skin, a tidy jacket and a blurred stone wall that looks painted on. The real photo is a candid crop of hands, a watch and a belt, with a real car blurred behind."
-  },
-  "woman-laptop": {
-    "subject_label": "Working on a laptop",
-    "reveal_note": "The AI woman looks straight at the camera with flawless skin, and her laptop lid has no logo, ports or detail. The real photo is a candid side view, with real keys, a desk lamp and a messy plait."
+  "two-factor-auth": {
+    "subject_label": "Entering a code on a phone",
+    "reveal_note": "In the AI image the keypad is wrong: the digit 5 repeats, a letter Z sits where a number should be, the top-right key is a fused 5 and 6, and 2, 4, 7 and 8 are missing. The real keypad has 1 to 9 and 0, with small letters under each number."
   }
 }

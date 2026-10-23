@@ -1,46 +1,38 @@
 {
-  "fingerprint-scan": {
-    "subject_label": "Fingerprint access control scanner",
-    "reveal_note": "This one's subtle -- look closely at the scanner housing and mounting bracket; AI-generated hardware often has screws, seams, or edges that don't quite align."
-  },
-  "usb-drive": {
-    "subject_label": "USB flash drive, close-up",
-    "reveal_note": "A close, detailed shot like this is genuinely hard -- check the connector pins and any printed branding/text, which AI image generators frequently smear or duplicate at this zoom level."
-  },
-  "suspicious-email": {
-    "subject_label": "Reacting to a suspicious email",
-    "reveal_note": "Look at the laptop screen and the person's hands -- AI-generated screens often show illegible text, and hand/finger positioning near a keyboard is a common tell."
-  },
   "cafe-laptop": {
     "subject_label": "Working on a laptop in a cafe",
-    "reveal_note": "The AI cafe looks cinematic, but the laptop screen is full of text-shaped smudges that don't say anything, the clutter at the bottom right of the table is a pile of shapes you can't name, and the people behind the window dissolve into blur. The real photo is a plain, sharp close-up where the watch strap and shirt stripes hold up."
-  },
-  "two-monitor-desk": {
-    "subject_label": "A desk with two monitors",
-    "reveal_note": "Look at the small objects on the desk. In the AI image the area by the lamp is crowded with things you can't name (a black gadget, a red bottle), there is an odd round puck under the left monitor, and both screens show code-shaped smudges rather than real text. Everything on the real desk, from the plant to the mug and notebook, is identifiable."
-  },
-  "security-gates": {
-    "subject_label": "Security gates at an entrance",
-    "reveal_note": "The AI gates look right until you study the hardware. The tall panels with three round holes above every gate have no clear purpose, the turnstile arms and rails differ from one unit to the next and don't connect to anything, and the green readers show no text or symbols. The real photo is a plain row of gates with readable signs."
-  },
-  "waiting-room": {
-    "subject_label": "Two people in a waiting room",
-    "reveal_note": "The seating doesn't hold together in the AI image: the bench, separate backrests and armrests merge into each other, and the man's crossed leg and the woman's feet sit at odd depths against the bench. Both devices are blank slabs with no visible screens, and the bright glass wall behind them is a washed-out blur with no structure."
+    "reveal_note": "In the AI image the laptop screen is rows of look-alike text with no readable words, his dark sweater merges into the chair behind him, and the woman outside the window has a smeared face. The real photo is a close crop of a hand with a smartwatch on a marble laptop."
   },
   "contractor-cabinet": {
     "subject_label": "A contractor at a wiring cabinet",
-    "reveal_note": "The AI worker faces the camera, lit like a film still, with orange wires that glow. The real photo is a man in a hard hat seen from behind at a real cabinet, with loose cables and a flat, ordinary light."
+    "reveal_note": "In the AI image two gloved hands reach the panel but only one arm leads to them, the gloves bunch into mitten shapes, and the orange wires glow like noodles that end at no terminal. The real photo is a man in a hard hat seen from behind, in ordinary flat light."
   },
-  "two-colleagues-talking": {
-    "subject_label": "Two colleagues talking",
-    "reveal_note": "In the AI image the two men's hands clasp in a way that does not quite join up, and the people behind them are smeared. The real photo is a candid whisper between two colleagues, with a real watch and hands."
+  "fingerprint-scan": {
+    "subject_label": "Fingerprint access control scanner",
+    "reveal_note": "In the AI image the reader has no keypad or clock, its screen is blank grey, the scanner is a plain glowing ring with no sensor window, and there is a USB port on its chin. The real reader shows the time, a keypad and a green fingerprint window."
+  },
+  "security-gates": {
+    "subject_label": "Security gates at an entrance",
+    "reveal_note": "In the AI image there is no readable sign, number or screen text anywhere, the left and right sides mirror each other, and the horizontal bars run straight through the posts. The real photo has numbered gates, no-smoking signs and an information board."
+  },
+  "suspicious-email": {
+    "subject_label": "Reacting to a suspicious email",
+    "reveal_note": "In the AI image the papers beside the laptop hold only smeared rows that look like text, the laptop has no logo, and the hand at his temple has smooth, over-long fingers. The real photo has sticky notes on the wall and a phone, a pen and papers on the desk."
   },
   "team-meeting-laptops": {
     "subject_label": "A team meeting with laptops",
-    "reveal_note": "The AI table is covered in neat food, cups and laptops with blank lids, and several faces look alike. The real photo is a busier meeting with real screens, a coffee cup and people looking in different directions."
+    "reveal_note": "In the AI image the chart on the wall screen has bars with no axes or labels, every cup and glass is identical, and the faces share the same smooth, glossy look. The real photo is a messier meeting, with real code on a laptop and people looking in different directions."
   },
-  "glass-corridor": {
-    "subject_label": "A glass-walled office corridor",
-    "reveal_note": "The AI corridor is perfectly symmetrical, sunlit and spotless, with plants repeated down both sides. The real corridor is dark and uneven, with signs, fire equipment and reflections in the glass."
+  "two-colleagues-talking": {
+    "subject_label": "Two colleagues talking",
+    "reveal_note": "In the AI image the navy-suit man's hands are a knot of fused fingers, the other man's thumb is oversized, and below the table edge their clothes dissolve into vertical stripes. The real photo is a candid whisper with a real watch and ordinary hands."
+  },
+  "two-monitor-desk": {
+    "subject_label": "A desk with two monitors",
+    "reveal_note": "In the AI image both screens fill with look-alike code lines that cannot be read, the monitor cables lead nowhere, and a black upright object by the lamp has no clear purpose. The real photo shows a recognisable web page and a picture of Earth from space on its screens."
+  },
+  "usb-drive": {
+    "subject_label": "USB flash drive, close-up",
+    "reveal_note": "In the AI image the metal plug has two square holes in its top and its gold contacts on the tip instead of inside the opening, the engraved logo is a made-up glyph, and the cap's opening is much larger than the plug. The real photo has USB-A and USB-C ends, a braided strap and a matching cap."
   }
 }

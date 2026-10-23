@@ -3,65 +3,6 @@
 window.CONTENT = {
  "email": [
   {
-   "id": "email/easy/account-suspended",
-   "tier": "easy",
-   "label": "Bank account security alert",
-   "note": "The fake's sender address is a lookalike domain (secure-harborline.com vs the bank's real harborlinebank.com) and links straight to a login page, instead of pointing you to open the app or type the bank's URL yourself.",
-   "todo": "Open your bank's app or type its address yourself. Banks never ask you to verify through an email link.",
-   "techniques": [
-    "Urgency",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Sender domain secure-harborline.com is not harborlinebank.com",
-    "Account 'suspended' with a 12-hour deadline",
-    "Generic 'Dear Customer' greeting",
-    "Link goes straight to a login page over http"
-   ],
-   "real": {
-    "from_name": "Harborline Bank",
-    "from_email": "alerts@harborlinebank.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "A new device signed in to your account",
-    "date": "Fri, Sep 5, 2026 6:30 PM",
-    "body": "Hi Jordan,\n\nWe noticed a sign-in to your account from a new device (iPhone, Seattle WA) on Sep 5 at 6:28 PM. If this was you, no action is needed.\n\nIf you don't recognize this activity, open the Harborline app or type harborlinebank.com directly into your browser to review your account.\n\nHarborline Bank",
-    "link_text": "Learn About Account Security",
-    "link_url": "https://harborlinebank.com/security"
-   },
-   "fake": {
-    "from_name": "Harborline Bank Security",
-    "from_email": "security@secure-harborline.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your account has been suspended",
-    "date": "Fri, Sep 5, 2026 6:41 PM",
-    "body": "Dear Customer,\n\nWe detected unusual activity and have suspended your account. You must verify your identity within 12 hours or your account will be permanently closed.\n\nClick below to restore access immediately.",
-    "link_text": "Restore My Account",
-    "link_url": "http://secure-harborline.com/restore?ref=48291",
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "secure-harborline.com",
-      "text": "Not harborlinebank.com"
-     },
-     {
-      "on": "body",
-      "mark": "Dear Customer",
-      "text": "Generic greeting"
-     },
-     {
-      "on": "body",
-      "mark": "within 12 hours",
-      "text": "12-hour deadline"
-     },
-     {
-      "on": "link_url",
-      "text": "Login page over plain http"
-     }
-    ]
-   }
-  },
-  {
    "id": "email/easy/amazon-order",
    "tier": "easy",
    "label": "An Amazon order notice",
@@ -136,7 +77,7 @@ window.CONTENT = {
    "tier": "easy",
    "label": "An Apple ID alert, on your phone",
    "note": "The real alert comes from apple.com and tells you to go to account.apple.com yourself. The fake comes from apple-support-verify.top, says your Apple ID is locked and links to an unknown site.",
-   "todo": "On a phone, tap the sender name to see the real address. Go to account.apple.com yourself to check.",
+   "todo": "Read the sender's address, not just the name. Go to account.apple.com yourself to check.",
    "techniques": [
     "Urgency",
     "Credential harvesting",
@@ -195,287 +136,6 @@ window.CONTENT = {
    }
   },
   {
-   "id": "email/easy/carousell-offer",
-   "tier": "easy",
-   "label": "A Carousell buyer message",
-   "note": "The real email comes from carousell.com and tells you to meet in person and pay on collection. The fake comes from carousell-secure-pay.top and wants your bank login to release a payment.",
-   "todo": "Marketplaces never need your bank login. Check offers inside the Carousell app only.",
-   "techniques": [
-    "Payment harvesting",
-    "Urgency",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not carousell.com",
-    "Asks for your bank login",
-    "12-hour deadline",
-    "Unknown site, plain http"
-   ],
-   "real": {
-    "from_name": "Carousell",
-    "from_email": "no-reply@carousell.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Someone made an offer on your listing",
-    "date": "Wed, Oct 14, 2026 10:26 AM",
-    "body": "Hi Jordan,\n\nPriya offered $120 for your 'Standing desk'.\n\nOpen the Carousell app to accept, decline or chat. Always meet in person and pay on collection.",
-    "banner": "content/media/email/easy/assets/carousell-offer-real-banner.svg",
-    "link_text": "View offer",
-    "link_url": "https://www.carousell.sg/inbox",
-    "landing": {
-     "src": "content/media/email/easy/assets/carousell-offer-real-landing.svg",
-     "alt": "The real page on www.carousell.sg"
-    }
-   },
-   "fake": {
-    "from_name": "Carousell Pay",
-    "from_email": "payments@carousell-secure-pay.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Buyer has PAID $320 - confirm to receive funds",
-    "date": "Wed, Oct 14, 2026 1:05 PM",
-    "body": "Dear Seller,\n\nThe buyer has paid $320 for your listing. To release the funds into your account, confirm your bank login within 12 hours.\n\nCarousell Pay",
-    "banner": "content/media/email/easy/assets/carousell-offer-fake-banner.svg",
-    "link_text": "Release funds",
-    "link_url": "http://carousell-secure-pay.top/release",
-    "landing": {
-     "src": "content/media/email/easy/assets/carousell-offer-fake-landing.svg",
-     "alt": "A fake page on carousell-secure-pay.top"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "carousell-secure-pay.top",
-      "text": "Not carousell.com"
-     },
-     {
-      "on": "body",
-      "mark": "confirm your bank login",
-      "text": "Asks for your bank login"
-     },
-     {
-      "on": "body",
-      "mark": "within 12 hours",
-      "text": "12-hour deadline"
-     },
-     {
-      "on": "link_url",
-      "text": "Unknown site, plain http"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/dhl-redelivery",
-   "tier": "easy",
-   "label": "Parcel delivery notice",
-   "note": "The fake comes from dhI-express-parcel.xyz (a capital I for the l), not dhl.com, asks for a $1.99 'fee' with a 24-hour threat, and its page wants your card details. The real notice asks for no payment and links to dhl.com.",
-   "todo": "Never pay a fee from an email link. Track the parcel on the courier's own site.",
-   "techniques": [
-    "Urgency",
-    "Payment harvesting",
-    "Lookalike domain",
-    "Poor spelling"
-   ],
-   "red_flags": [
-    "Domain dhI-express-parcel.xyz is not dhl.com (capital 'I' for 'l')",
-    "Asks you to pay a small fee to release a parcel",
-    "Spelling mistake ('tryed')",
-    "Blurry banner that reads 'DHI'",
-    "Link goes to dhl-parcel-release.xyz over http",
-    "The page asks for card number and CVV"
-   ],
-   "real": {
-    "from_name": "DHL Express",
-    "from_email": "noreply@dhl.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your DHL shipment 4821 3390 55 is on its way",
-    "date": "Wed, Sep 30, 2026 7:40 AM",
-    "body": "Hi Jordan,\n\nYour shipment is on its way.\n\nTracking number: 4821 3390 55\nEstimated delivery: Thu, Oct 1, 2026 by 6:00 PM\n\nFollow it any time from the link below. No payment is needed.\n\nDHL Express",
-    "banner": "content/media/email/easy/assets/dhl-redelivery-real-banner.svg",
-    "link_text": "Track your shipment",
-    "link_url": "https://www.dhl.com/sg-en/home/tracking.html?tracking-id=4821339055",
-    "landing": {
-     "src": "content/media/email/easy/assets/dhl-redelivery-real-landing.svg",
-     "alt": "The real DHL tracking page at dhl.com"
-    }
-   },
-   "fake": {
-    "from_name": "DHL Express Delivery",
-    "from_email": "redelivery@dhI-express-parcel.xyz",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Delivery FAILED - pay $1.99 to release your parcel NOW",
-    "date": "Wed, Sep 30, 2026 7:12 AM",
-    "body": "Dear customer,\n\nWe tryed to deliver your parcel but nobody was home. A small customs fee of $1.99 is required to release it.\n\nYour parcel will be RETURNED TO SENDER in 24 HRS if you do not pay.\n\nDHL Delivery Team",
-    "banner": "content/media/email/easy/assets/dhl-redelivery-fake-banner.svg",
-    "link_text": "Pay customs fee",
-    "link_url": "http://dhl-parcel-release.xyz/pay",
-    "landing": {
-     "src": "content/media/email/easy/assets/dhl-redelivery-fake-landing.svg",
-     "alt": "A fake payment page on dhl-parcel-release.xyz asking for card details"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "dhI-express-parcel.xyz",
-      "text": "Capital I standing in for l"
-     },
-     {
-      "on": "subject",
-      "mark": "pay $1.99",
-      "text": "Asks for a small fee"
-     },
-     {
-      "on": "body",
-      "mark": "tryed",
-      "text": "Spelling mistake"
-     },
-     {
-      "on": "link_url",
-      "text": "Card page, plain http"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/dropbox-storage",
-   "tier": "easy",
-   "label": "A Dropbox storage warning",
-   "note": "The real email comes from dropbox.com and says nothing will be deleted. The fake comes from dropbox-storage-alert.top and threatens to delete your files in 24 hours.",
-   "todo": "Check your storage in the Dropbox app or at dropbox.com. Real warnings don't delete files in 24 hours.",
-   "techniques": [
-    "Urgency",
-    "Payment harvesting",
-    "Lookalike domain",
-    "Poor spelling"
-   ],
-   "red_flags": [
-    "Not dropbox.com",
-    "Shouting and a threat",
-    "Generic greeting",
-    "Spelling mistake"
-   ],
-   "real": {
-    "from_name": "Dropbox",
-    "from_email": "no-reply@dropbox.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "You're almost out of space in your Dropbox",
-    "date": "Wed, Oct 14, 2026 10:26 AM",
-    "body": "Hi Jordan,\n\nYou've used 95% of your Dropbox storage. You can free up space by deleting files, or see plans at dropbox.com/plans.\n\nNothing will be deleted from your account.",
-    "banner": "content/media/email/easy/assets/dropbox-storage-real-banner.svg",
-    "link_text": "See plans",
-    "link_url": "https://www.dropbox.com/plans",
-    "landing": {
-     "src": "content/media/email/easy/assets/dropbox-storage-real-landing.svg",
-     "alt": "The real page on www.dropbox.com"
-    }
-   },
-   "fake": {
-    "from_name": "Dropbox Support",
-    "from_email": "support@dropbox-storage-alert.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Dropbox storage FULL - files will be DELETED",
-    "date": "Wed, Oct 14, 2026 1:05 PM",
-    "body": "Dear User,\n\nYour Dropbox storage is full and your files will be permanently DELETED in 24 hours. Upgrade now to keep you're files safe.\n\nDropbox Team",
-    "banner": "content/media/email/easy/assets/dropbox-storage-fake-banner.svg",
-    "link_text": "Upgrade now",
-    "link_url": "http://dropbox-storage-alert.top/upgrade",
-    "landing": {
-     "src": "content/media/email/easy/assets/dropbox-storage-fake-landing.svg",
-     "alt": "A fake page on dropbox-storage-alert.top"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "dropbox-storage-alert.top",
-      "text": "Not dropbox.com"
-     },
-     {
-      "on": "subject",
-      "mark": "files will be DELETED",
-      "text": "Shouting and a threat"
-     },
-     {
-      "on": "body",
-      "mark": "Dear User",
-      "text": "Generic greeting"
-     },
-     {
-      "on": "body",
-      "mark": "you're files",
-      "text": "Spelling mistake"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/fedex-duty",
-   "tier": "easy",
-   "label": "A FedEx delivery notice",
-   "note": "The real notice comes from fedex.com and asks for no money. The fake comes from fedex-sg-parcel.xyz, asks for a small duty fee and threatens to destroy the parcel.",
-   "todo": "Never pay a fee from an email link. Track the parcel on fedex.com yourself.",
-   "techniques": [
-    "Urgency",
-    "Payment harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not fedex.com",
-    "A small fee to release it",
-    "Threat to destroy parcel",
-    "Card page, plain http"
-   ],
-   "real": {
-    "from_name": "FedEx",
-    "from_email": "TrackingUpdates@fedex.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your FedEx package is on its way",
-    "date": "Tue, Oct 13, 2026 8:02 AM",
-    "body": "Hi Jordan,\n\nYour package from a Meridian vendor is scheduled for delivery tomorrow.\n\nYou can follow it or set delivery preferences in FedEx Delivery Manager at fedex.com.",
-    "banner": "content/media/email/easy/assets/fedex-duty-real-banner.svg",
-    "link_text": "Track package",
-    "link_url": "https://www.fedex.com/fedextrack/",
-    "landing": {
-     "src": "content/media/email/easy/assets/fedex-duty-real-landing.svg",
-     "alt": "The real page on www.fedex.com"
-    }
-   },
-   "fake": {
-    "from_name": "FedEx Delivery",
-    "from_email": "fedex-delivery@fedex-sg-parcel.xyz",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "FedEx: package HELD - duty fee unpaid",
-    "date": "Tue, Oct 13, 2026 4:12 PM",
-    "body": "Dear Customer,\n\nYour package is held at our depot because an import duty of $3.50 is unpaid. Pay within 24 hours or it will be destroyed.\n\nFedEx Delivery",
-    "banner": "content/media/email/easy/assets/fedex-duty-fake-banner.svg",
-    "link_text": "Pay duty fee",
-    "link_url": "http://fedex-sg-parcel.xyz/duty",
-    "landing": {
-     "src": "content/media/email/easy/assets/fedex-duty-fake-landing.svg",
-     "alt": "A fake page on fedex-sg-parcel.xyz"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "fedex-sg-parcel.xyz",
-      "text": "Not fedex.com"
-     },
-     {
-      "on": "body",
-      "mark": "import duty of $3.50",
-      "text": "A small fee to release it"
-     },
-     {
-      "on": "body",
-      "mark": "destroyed",
-      "text": "Threat to destroy parcel"
-     },
-     {
-      "on": "link_url",
-      "text": "Card page, plain http"
-     }
-    ]
-   }
-  },
-  {
    "id": "email/easy/gift-card-request",
    "tier": "easy",
    "label": "Request from \"the boss\"",
@@ -487,10 +147,10 @@ window.CONTENT = {
     "Gift cards"
    ],
    "red_flags": [
-    "Sent from a free webmail address, not the company's",
-    "Asks for gift card codes, which can't be traced or reversed",
-    "'Keep this between us' stops you checking",
-    "Pressure: needed quietly and quickly"
+    "Free webmail, not company",
+    "Gift cards can't be traced",
+    "Secrecy stops you checking",
+    "Urgent, out of the blue"
    ],
    "real": {
     "from_name": "Dana Whitfield",
@@ -532,142 +192,6 @@ window.CONTENT = {
    }
   },
   {
-   "id": "email/easy/grab-prize",
-   "tier": "easy",
-   "label": "A Grab message",
-   "note": "The real email is a plain receipt from grab.com with nothing to click. The fake comes from grab-prize-draw.top and says you won a prize you never entered, with a 12-hour deadline.",
-   "todo": "You can't win a draw you didn't enter. Delete it, and check offers in the Grab app only.",
-   "techniques": [
-    "Too good to be true",
-    "Urgency",
-    "Lookalike domain",
-    "Poor spelling"
-   ],
-   "red_flags": [
-    "Not grab.com",
-    "A prize you never entered",
-    "Spelling mistake",
-    "12-hour deadline"
-   ],
-   "real": {
-    "from_name": "Grab",
-    "from_email": "no-reply@grab.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your Grab E-Receipt",
-    "date": "Mon, Oct 12, 2026 9:14 AM",
-    "body": "Hi Jordan,\n\nThanks for riding with Grab. Your fare was $14.20.\n\nPickup: Raffles Place MRT\nDrop-off: Meridian Freight, Tampines\n\nYou can see this trip in the Grab app under Activity.",
-    "banner": "content/media/email/easy/assets/grab-prize-real-banner.svg"
-   },
-   "fake": {
-    "from_name": "Grab Rewards",
-    "from_email": "rewards@grab-prize-draw.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "CONGRATULATIONS! You won a $500 Grab voucher",
-    "date": "Mon, Oct 12, 2026 2:41 PM",
-    "body": "Dear Winner,\n\nYou have been selected to recieve a $500 GRAB VOUCHER! Claim within 12 hours or it goes to the next person.\n\nGrab Rewards Team",
-    "banner": "content/media/email/easy/assets/grab-prize-fake-banner.svg",
-    "link_text": "CLAIM NOW",
-    "link_url": "http://grab-prize-draw.top/claim",
-    "landing": {
-     "src": "content/media/email/easy/assets/grab-prize-fake-landing.svg",
-     "alt": "A fake page on grab-prize-draw.top"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "grab-prize-draw.top",
-      "text": "Not grab.com"
-     },
-     {
-      "on": "subject",
-      "mark": "won a $500 Grab voucher",
-      "text": "A prize you never entered"
-     },
-     {
-      "on": "body",
-      "mark": "recieve",
-      "text": "Spelling mistake"
-     },
-     {
-      "on": "body",
-      "mark": "within 12 hours",
-      "text": "12-hour deadline"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/iras-refund",
-   "tier": "easy",
-   "label": "A tax notice from IRAS",
-   "note": "The real notice comes from iras.gov.sg and says IRAS never asks for bank details by email. The fake comes from iras-taxrefund.top and asks for exactly that to release a refund.",
-   "todo": "Only use mytax.iras.gov.sg with Singpass. IRAS never asks for bank details by email.",
-   "techniques": [
-    "Too good to be true",
-    "Authority",
-    "Lookalike domain",
-    "Poor spelling"
-   ],
-   "red_flags": [
-    "Not iras.gov.sg",
-    "Money you didn't expect",
-    "Spelling mistake",
-    "Asks for bank details"
-   ],
-   "real": {
-    "from_name": "IRAS",
-    "from_email": "noreply@iras.gov.sg",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your Notice of Assessment is ready on myTax Portal",
-    "date": "Mon, Oct 12, 2026 9:14 AM",
-    "body": "Dear Taxpayer,\n\nYour Notice of Assessment for Year of Assessment 2026 is now available in myTax Portal.\n\nLog in with Singpass at mytax.iras.gov.sg to view it. IRAS will never ask for your bank or card details by email.",
-    "banner": "content/media/email/easy/assets/iras-refund-real-banner.svg",
-    "link_text": "myTax Portal",
-    "link_url": "https://mytax.iras.gov.sg",
-    "landing": {
-     "src": "content/media/email/easy/assets/iras-refund-real-landing.svg",
-     "alt": "The real page on mytax.iras.gov.sg"
-    }
-   },
-   "fake": {
-    "from_name": "IRAS Refunds",
-    "from_email": "refund@iras-taxrefund.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "IRAS: You are eligible for a tax refund of $1,284.00",
-    "date": "Mon, Oct 12, 2026 2:41 PM",
-    "body": "Dear Taxpayer,\n\nAfter our annual calculations you are eligable for a tax refund of $1,284.00. Submit your bank details within 48 hours to recieve it.\n\nInland Revenue",
-    "banner": "content/media/email/easy/assets/iras-refund-fake-banner.svg",
-    "link_text": "Claim refund",
-    "link_url": "http://iras-taxrefund.top/claim",
-    "landing": {
-     "src": "content/media/email/easy/assets/iras-refund-fake-landing.svg",
-     "alt": "A fake page on iras-taxrefund.top"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "iras-taxrefund.top",
-      "text": "Not iras.gov.sg"
-     },
-     {
-      "on": "subject",
-      "mark": "tax refund of $1,284.00",
-      "text": "Money you didn't expect"
-     },
-     {
-      "on": "body",
-      "mark": "eligable",
-      "text": "Spelling mistake"
-     },
-     {
-      "on": "body",
-      "mark": "bank details",
-      "text": "Asks for bank details"
-     }
-    ]
-   }
-  },
-  {
    "id": "email/easy/it-password-reset",
    "tier": "easy",
    "label": "IT password expiration notice",
@@ -679,10 +203,10 @@ window.CONTENT = {
     "Lookalike domain"
    ],
    "red_flags": [
-    "Sender domain meridian-it-helpdesk.com is not meridianfreight.com",
-    "Threat of permanent suspension in 24 hours",
-    "Generic 'Dear Employee' greeting",
-    "Link goes to a different domain over plain http"
+    "Not meridianfreight.com",
+    "Shouting and a threat",
+    "Generic greeting",
+    "Another domain, plain http"
    ],
    "real": {
     "from_name": "Meridian IT Help Desk",
@@ -722,482 +246,6 @@ window.CONTENT = {
      {
       "on": "link_url",
       "text": "Another domain, plain http"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/linkedin-views",
-   "tier": "easy",
-   "label": "A LinkedIn notice, on your phone",
-   "note": "The real email comes from linkedin.com and names a real person. The fake comes from linkedln-mail.top (an l and n instead of i and n) and baits you with who viewed your profile.",
-   "todo": "Open the LinkedIn app yourself to see notifications. Don't sign in from a link in a message.",
-   "techniques": [
-    "Curiosity bait",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Lookalike of linkedin.com",
-    "Curiosity bait",
-    "Generic greeting",
-    "Unknown site, plain http"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "LinkedIn",
-    "from_email": "messages-noreply@linkedin.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Priya Nair wants to connect with you",
-    "date": "Tue, Oct 13, 2026 8:02 AM",
-    "body": "Hi Jordan,\n\nPriya Nair, Procurement Manager at Meridian Freight, wants to connect with you on LinkedIn.\n\nOpen the LinkedIn app to accept or ignore."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "LinkedIn",
-    "from_email": "notifications@linkedln-mail.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "You appeared in 12 searches - see who",
-    "date": "Tue, Oct 13, 2026 4:12 PM",
-    "body": "Dear Member,\n\nYou appeared in 12 searches this week. Sign in now to see who is looking at your profile before this expires in 24 hours.",
-    "link_text": "See who",
-    "link_url": "http://linkedln-mail.top/signin",
-    "landing": {
-     "src": "content/media/email/easy/assets/linkedin-views-fake-landing.svg",
-     "alt": "A fake page on linkedln-mail.top"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "linkedln-mail.top",
-      "text": "Lookalike of linkedin.com"
-     },
-     {
-      "on": "subject",
-      "mark": "see who",
-      "text": "Curiosity bait"
-     },
-     {
-      "on": "body",
-      "mark": "Dear Member",
-      "text": "Generic greeting"
-     },
-     {
-      "on": "link_url",
-      "text": "Unknown site, plain http"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/ms365-signin",
-   "tier": "easy",
-   "label": "Microsoft account sign-in alert",
-   "note": "The fake comes from micros0ft-support-center.com (a zero for the o), not microsoft.com. It threatens deletion in 24 hours, and its link opens a different site over plain http asking for your password, phone and recovery email.",
-   "todo": "Don't click. Type the Microsoft account address yourself to check, and report the email.",
-   "techniques": [
-    "Urgency",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Sender domain micros0ft-support-center.com is not microsoft.com (a zero for the 'o')",
-    "Threat: account deleted in 24 hours",
-    "Generic 'Dear User' and a spelling mistake ('you're')",
-    "Blurry, misspelt logo banner",
-    "Link opens a different site over plain http",
-    "The page asks for password, phone number and recovery email"
-   ],
-   "real": {
-    "from_name": "Microsoft account team",
-    "from_email": "account-security-noreply@accountprotection.microsoft.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Microsoft account unusual sign-in activity",
-    "date": "Tue, Sep 29, 2026 9:12 AM",
-    "body": "Unusual sign-in activity\n\nWe detected something unusual about a recent sign-in to the Microsoft account j.alvarez@meridianfreight.com.\n\nCountry/region: Singapore\n\nIf this was you, you don't need to do anything. If not, we'll help you secure your account.\n\nThe Microsoft account team",
-    "banner": "content/media/email/easy/assets/ms365-signin-real-banner.svg",
-    "link_text": "Review recent activity",
-    "link_url": "https://account.microsoft.com/activity",
-    "landing": {
-     "src": "content/media/email/easy/assets/ms365-signin-real-landing.svg",
-     "alt": "The real Microsoft sign-in page at login.microsoftonline.com, with a padlock"
-    }
-   },
-   "fake": {
-    "from_name": "Microsoft Account Team",
-    "from_email": "security-alert@micros0ft-support-center.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "!! URGENT !! Your Microsoft account will be DELETED in 24 hours",
-    "date": "Tue, Sep 29, 2026 9:21 AM",
-    "body": "Dear User,\n\nWe have detected suspicious activity on you're Microsoft account. If you do not verify within 24 HOURS your account and all your files will be permanently DELETED.\n\nVerify your identity now to keep your access.\n\nMicrosoft Security Department",
-    "banner": "content/media/email/easy/assets/ms365-signin-fake-banner.svg",
-    "link_text": "VERIFY NOW",
-    "link_url": "http://micros0ft-support-center.com/verify/login.php?user=8827",
-    "landing": {
-     "src": "content/media/email/easy/assets/ms365-signin-fake-landing.svg",
-     "alt": "A fake sign-in page on micros0ft-support-center.com asking for password, phone and recovery email"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "micros0ft-support-center.com",
-      "text": "Fake domain (zero for o)"
-     },
-     {
-      "on": "subject",
-      "mark": "!! URGENT !!",
-      "text": "Shouting and a threat"
-     },
-     {
-      "on": "body",
-      "mark": "Dear User",
-      "text": "Generic greeting"
-     },
-     {
-      "on": "link_url",
-      "text": "Unknown site, plain http"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/netflix-payment",
-   "tier": "easy",
-   "label": "A Netflix billing notice",
-   "note": "The real email comes from netflix.com and needs no action. The fake comes from netflix-payment-update.xyz, shouts that your payment was declined and threatens to delete your account.",
-   "todo": "Open the Netflix app or type netflix.com yourself to check your billing. Never use a link in the email.",
-   "techniques": [
-    "Urgency",
-    "Payment harvesting",
-    "Lookalike domain",
-    "Poor spelling"
-   ],
-   "red_flags": [
-    "Not netflix.com",
-    "Shouting and a threat",
-    "Generic greeting",
-    "Spelling mistake"
-   ],
-   "real": {
-    "from_name": "Netflix",
-    "from_email": "info@mailer.netflix.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your Netflix membership: a change to your plan price",
-    "date": "Wed, Oct 14, 2026 10:26 AM",
-    "body": "Hi Jordan,\n\nFrom your next billing date, your Standard plan will cost $17.98 a month. You don't need to do anything.\n\nYou can review or change your plan any time in Account on netflix.com.",
-    "banner": "content/media/email/easy/assets/netflix-payment-real-banner.svg",
-    "link_text": "Go to Account",
-    "link_url": "https://www.netflix.com/youraccount",
-    "landing": {
-     "src": "content/media/email/easy/assets/netflix-payment-real-landing.svg",
-     "alt": "The real page on www.netflix.com"
-    }
-   },
-   "fake": {
-    "from_name": "Netflix Billing",
-    "from_email": "billing@netflix-payment-update.xyz",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Payment DECLINED - membership suspended today",
-    "date": "Wed, Oct 14, 2026 1:05 PM",
-    "body": "Dear Valued Member,\n\nYour payment was declined and your membership is SUSPENDED. Update your billing detials within 24 hours or your account will be deleted.\n\nNetflix Billing Team",
-    "banner": "content/media/email/easy/assets/netflix-payment-fake-banner.svg",
-    "link_text": "Update billing",
-    "link_url": "http://netflix-payment-update.xyz/billing",
-    "landing": {
-     "src": "content/media/email/easy/assets/netflix-payment-fake-landing.svg",
-     "alt": "A fake page on netflix-payment-update.xyz"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "netflix-payment-update.xyz",
-      "text": "Not netflix.com"
-     },
-     {
-      "on": "subject",
-      "mark": "DECLINED",
-      "text": "Shouting and a threat"
-     },
-     {
-      "on": "body",
-      "mark": "Dear Valued Member",
-      "text": "Generic greeting"
-     },
-     {
-      "on": "body",
-      "mark": "detials",
-      "text": "Spelling mistake"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/package-delivery",
-   "tier": "easy",
-   "label": "Package delivery notification",
-   "note": "The fake uses a generic courier name, a link to an unrelated .top domain, and manufactures urgency about a 'failed delivery attempt' -- the real courier always references your specific order number and links to its own known domain.",
-   "todo": "Track the parcel on the courier's own site, and never pay a fee from an email link.",
-   "techniques": [
-    "Urgency",
-    "Payment harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Sender domain parcel-status.top is not the courier's",
-    "Generic sender name 'Delivery Service' and no order number",
-    "A redelivery fee and a 24-hour deadline",
-    "Link goes to an unrelated domain over http"
-   ],
-   "real": {
-    "from_name": "Coastline Parcel",
-    "from_email": "tracking@coastlineparcel.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your order #48213 is out for delivery",
-    "date": "Wed, Sep 3, 2026 7:02 AM",
-    "body": "Hi Jordan,\n\nYour package (order #48213) is out for delivery today between 10am-2pm. No signature required.\n\nTrack your order anytime from the link below.\n\nCoastline Parcel",
-    "link_text": "Track Order #48213",
-    "link_url": "https://coastlineparcel.com/track/48213"
-   },
-   "fake": {
-    "from_name": "Delivery Service",
-    "from_email": "notice@parcel-status.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Delivery attempt failed - action needed",
-    "date": "Wed, Sep 3, 2026 6:47 AM",
-    "body": "We attempted to deliver your package today but were unable to complete delivery. Your package will be returned to sender in 24 hours unless you confirm your address and pay a small redelivery fee.\n\nConfirm now to avoid your package being returned.",
-    "link_text": "Confirm Redelivery",
-    "link_url": "http://parcel-status.top/redeliver?track=48213X",
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "parcel-status.top",
-      "text": "An odd .top courier domain"
-     },
-     {
-      "on": "from_name",
-      "mark": "Delivery Service",
-      "text": "No courier name"
-     },
-     {
-      "on": "body",
-      "mark": "pay a small redelivery fee",
-      "text": "A fee to release a parcel"
-     },
-     {
-      "on": "link_url",
-      "text": "Unknown site, plain http"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/paypal-limited",
-   "tier": "easy",
-   "label": "A PayPal account notice, on your phone",
-   "note": "The real notice comes from paypal.com and tells you to open the app. The fake comes from paypa1-support.top (a 1 for the l), threatens to hold your funds and links to an unknown site.",
-   "todo": "Tap the sender name to check the address, then open PayPal yourself instead of tapping the link.",
-   "techniques": [
-    "Urgency",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not paypal.com (a 1 for l)",
-    "Shouting and a threat",
-    "Generic greeting",
-    "Unknown site, plain http"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "PayPal",
-    "from_email": "service@paypal.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "You sent a payment of $45.00 SGD to Priya Nair",
-    "date": "Tue, Oct 13, 2026 8:02 AM",
-    "body": "Hi Jordan,\n\nYou sent a payment of $45.00 SGD to Priya Nair on Oct 13.\n\nIf you didn't make this payment, log in to the PayPal app or go to paypal.com and open the Resolution Centre."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "PayPal",
-    "from_email": "service@paypa1-support.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your PayPal account is LIMITED",
-    "date": "Tue, Oct 13, 2026 4:12 PM",
-    "body": "Dear Customer,\n\nWe noticed unusual activity. Your account has been limited. Confirm your identity within 24 hours or your funds will be held.",
-    "link_text": "Resolve now",
-    "link_url": "http://paypa1-support.top/resolve/login",
-    "landing": {
-     "src": "content/media/email/easy/assets/paypal-limited-fake-landing.svg",
-     "alt": "A fake page on paypa1-support.top"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "paypa1-support.top",
-      "text": "Not paypal.com (a 1 for l)"
-     },
-     {
-      "on": "subject",
-      "mark": "LIMITED",
-      "text": "Shouting and a threat"
-     },
-     {
-      "on": "body",
-      "mark": "Dear Customer",
-      "text": "Generic greeting"
-     },
-     {
-      "on": "link_url",
-      "text": "Unknown site, plain http"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/qr-hawker-menu",
-   "tier": "easy",
-   "label": "A QR code on a hawker table",
-   "note": "The real code opens a menu and you pay when you collect. The fake is a sticker offering 50% off, wants your card number and rushes you with a 10-minute timer.",
-   "todo": "A menu never needs your card. Ask the stall holder if a code looks stuck on.",
-   "techniques": [
-    "Quishing",
-    "Payment harvesting",
-    "Too good to be true"
-   ],
-   "red_flags": [
-    "A sticker on the table",
-    "A too-good offer",
-    "Asks for card details",
-    "Not the stall's website"
-   ],
-   "real": {
-    "format": "qr",
-    "from_name": "Hawker Centre, Stall 14",
-    "subject": "Scan to see today's menu",
-    "body": "Order at the stall. Pay when you collect.",
-    "printed_url": "stall14menu.sg",
-    "scan_url": "https://stall14menu.sg",
-    "qr": {
-     "src": "content/media/email/easy/assets/qr-hawker-menu-real-qr.svg",
-     "caption": "Menu",
-     "alt": "A QR code"
-    },
-    "landing": {
-     "src": "content/media/email/easy/assets/qr-hawker-menu-real-landing.svg",
-     "alt": "The real page on stall14menu.sg"
-    }
-   },
-   "fake": {
-    "format": "qr",
-    "from_name": "Hawker Centre, Stall 14",
-    "subject": "50% OFF your meal today!",
-    "body": "Scan and enter your card to claim. Offer ends in 10 minutes!",
-    "printed_url": "hawker-deals.top",
-    "scan_url": "http://hawker-deals.top/claim",
-    "sticker": 2,
-    "qr": {
-     "src": "content/media/email/easy/assets/qr-hawker-menu-fake-qr.svg",
-     "caption": "Claim 50% off",
-     "alt": "A QR code"
-    },
-    "landing": {
-     "src": "content/media/email/easy/assets/qr-hawker-menu-fake-landing.svg",
-     "alt": "A fake page on hawker-deals.top"
-    },
-    "flags": [
-     {
-      "on": "qr",
-      "text": "A sticker on the table"
-     },
-     {
-      "on": "subject",
-      "mark": "50% OFF",
-      "text": "A too-good offer"
-     },
-     {
-      "on": "body",
-      "mark": "enter your card",
-      "text": "Asks for card details"
-     },
-     {
-      "on": "printed_url",
-      "mark": "hawker-deals.top",
-      "text": "Not the stall's website"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/qr-missed-parcel",
-   "tier": "easy",
-   "label": "A 'sorry we missed you' card",
-   "note": "The real card names SingPost and sends you to the SingPost app or a POPStation. The fake says only 'Courier', asks for a fee, sets a 24-hour deadline and prints sp-redeliver.top.",
-   "todo": "Track the parcel in the courier's own app. Never pay a fee from a card pushed through your door.",
-   "techniques": [
-    "Quishing",
-    "Payment harvesting",
-    "Urgency"
-   ],
-   "red_flags": [
-    "A fee to get your parcel",
-    "24-hour deadline",
-    "Not singpost.com",
-    "No courier name"
-   ],
-   "real": {
-    "format": "qr",
-    "from_name": "SingPost: Sorry we missed you",
-    "subject": "Collect your parcel",
-    "body": "We tried to deliver SP48213390SG. Choose a new date in the SingPost app or at the POPStation named on this card.",
-    "printed_url": "singpost.com/reschedule",
-    "scan_url": "https://www.singpost.com/reschedule",
-    "qr": {
-     "src": "content/media/email/easy/assets/qr-missed-parcel-real-qr.svg",
-     "caption": "Reschedule",
-     "alt": "A QR code"
-    },
-    "landing": {
-     "src": "content/media/email/easy/assets/qr-missed-parcel-real-landing.svg",
-     "alt": "The real page on www.singpost.com"
-    }
-   },
-   "fake": {
-    "format": "qr",
-    "from_name": "Courier: Sorry we missed you",
-    "subject": "PAY $2.99 to redeliver",
-    "body": "Your parcel will be sent back in 24 hours unless you pay the redelivery fee.",
-    "printed_url": "sp-redeliver.top",
-    "scan_url": "http://sp-redeliver.top/pay",
-    "sticker": 2,
-    "qr": {
-     "src": "content/media/email/easy/assets/qr-missed-parcel-fake-qr.svg",
-     "caption": "Scan to pay",
-     "alt": "A QR code"
-    },
-    "landing": {
-     "src": "content/media/email/easy/assets/qr-missed-parcel-fake-landing.svg",
-     "alt": "A fake page on sp-redeliver.top"
-    },
-    "flags": [
-     {
-      "on": "subject",
-      "mark": "PAY $2.99 to redeliver",
-      "text": "A fee to get your parcel"
-     },
-     {
-      "on": "body",
-      "mark": "sent back in 24 hours",
-      "text": "24-hour deadline"
-     },
-     {
-      "on": "printed_url",
-      "mark": "sp-redeliver.top",
-      "text": "Not singpost.com"
-     },
-     {
-      "on": "from_name",
-      "mark": "Courier",
-      "text": "No courier name"
      }
     ]
    }
@@ -1277,75 +325,11 @@ window.CONTENT = {
    }
   },
   {
-   "id": "email/easy/shopee-refund",
-   "tier": "easy",
-   "label": "A Shopee order message, on your phone",
-   "note": "The real email comes from shopee.sg and points you to the app. The fake comes from shopee-refund-sg.xyz and asks for your card details to receive a refund.",
-   "todo": "A refund never needs your card number. Check My Purchases in the Shopee app.",
-   "techniques": [
-    "Payment harvesting",
-    "Urgency",
-    "Lookalike domain",
-    "Poor spelling"
-   ],
-   "red_flags": [
-    "Not shopee.sg",
-    "Asks for card details",
-    "Spelling mistake",
-    "Unknown site, plain http"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "Shopee",
-    "from_email": "no-reply@shopee.sg",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your Shopee order has been shipped",
-    "date": "Tue, Oct 13, 2026 8:02 AM",
-    "body": "Hi Jordan,\n\nYour order #2410133 has been shipped. Track it any time in the Shopee app under My Purchases."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "Shopee Refunds",
-    "from_email": "refund@shopee-refund-sg.xyz",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Order cancelled - refund of $89.00 pending",
-    "date": "Tue, Oct 13, 2026 4:12 PM",
-    "body": "Dear Customer,\n\nYour order was cancelled. A refund of $89.00 is pending. Confirm your card details within 24 hours to recieve it.",
-    "link_text": "Get my refund",
-    "link_url": "http://shopee-refund-sg.xyz/refund",
-    "landing": {
-     "src": "content/media/email/easy/assets/shopee-refund-fake-landing.svg",
-     "alt": "A fake page on shopee-refund-sg.xyz"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "shopee-refund-sg.xyz",
-      "text": "Not shopee.sg"
-     },
-     {
-      "on": "body",
-      "mark": "Confirm your card details",
-      "text": "Asks for card details"
-     },
-     {
-      "on": "body",
-      "mark": "recieve",
-      "text": "Spelling mistake"
-     },
-     {
-      "on": "link_url",
-      "text": "Unknown site, plain http"
-     }
-    ]
-   }
-  },
-  {
    "id": "email/easy/singtel-hr-leave",
    "tier": "easy",
    "label": "A Singtel HR email, on your phone",
    "note": "The real email comes from singtel.com, uses your name and tells you to open the HR portal from your own bookmark. The fake comes from singtel-hr-portal.top, threatens to cancel your leave and asks for your staff ID and password.",
-   "todo": "Tap the sender name to check the address. HR never asks for your password; open the HR portal from your own bookmark.",
+   "todo": "Read the sender's address before you act. HR never asks for your password; open the HR portal from your own bookmark.",
    "techniques": [
     "Urgency",
     "Credential harvesting",
@@ -1389,70 +373,6 @@ window.CONTENT = {
      {
       "on": "subject",
       "mark": "CANCELLED",
-      "text": "Shouting and a threat"
-     },
-     {
-      "on": "body",
-      "mark": "Dear Employee",
-      "text": "Generic greeting"
-     },
-     {
-      "on": "body",
-      "mark": "staff ID and password",
-      "text": "Asks for your password"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/singtel-it-laptop",
-   "tier": "easy",
-   "label": "A Singtel IT Service Desk email",
-   "note": "The real email comes from singtel.com, uses your name and needs no action. The fake comes from singtel-it-help.top, threatens to lock your account today and asks for your staff ID and password.",
-   "todo": "IT never asks for your password by email. Contact the IT Service Desk on a number you already hold.",
-   "techniques": [
-    "Urgency",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not singtel.com",
-    "Shouting and a threat",
-    "Generic greeting",
-    "Asks for your password"
-   ],
-   "real": {
-    "from_name": "Singtel IT Service Desk",
-    "from_email": "servicedesk@singtel.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your laptop refresh is booked for 22 Oct",
-    "date": "Thu, Oct 15, 2026 7:48 AM",
-    "body": "Hi Jordan,\n\nYour laptop refresh is booked for 22 Oct at the Level 3 IT Bar. Please bring your staff pass.\n\nNo action is needed. If the time does not suit you, reply to this email or call the Service Desk.\n\nIT Service Desk",
-    "banner": "content/media/email/easy/assets/singtel-it-laptop-real-banner.svg"
-   },
-   "fake": {
-    "from_name": "Singtel IT Help",
-    "from_email": "servicedesk@singtel-it-help.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your staff account will be LOCKED today",
-    "date": "Fri, Oct 16, 2026 11:33 AM",
-    "body": "Dear Employee,\n\nYour staff account will be locked today because your details are out of date. Re-verify your staff ID and password now to keep access.\n\nIT Service Desk",
-    "banner": "content/media/email/easy/assets/singtel-it-laptop-fake-banner.svg",
-    "link_text": "Re-verify now",
-    "link_url": "http://singtel-it-help.top/login",
-    "landing": {
-     "src": "content/media/email/easy/assets/singtel-it-laptop-fake-landing.svg",
-     "alt": "A fake page on singtel-it-help.top"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "singtel-it-help.top",
-      "text": "Not singtel.com"
-     },
-     {
-      "on": "subject",
-      "mark": "LOCKED",
       "text": "Shouting and a threat"
      },
      {
@@ -1585,191 +505,6 @@ window.CONTENT = {
    }
   },
   {
-   "id": "email/easy/sms-singpost-fee",
-   "tier": "easy",
-   "label": "A SingPost text message",
-   "note": "The real text comes from the SingPost sender name and sends you to singpost.com. The fake comes from a random mobile number, asks for a fee and links to singpost-fee.top.",
-   "todo": "Ignore texts from unknown numbers about parcels. Check the parcel at singpost.com or in the SingPost app.",
-   "techniques": [
-    "Smishing",
-    "Payment harvesting",
-    "Urgency"
-   ],
-   "red_flags": [
-    "A random mobile number",
-    "Not singpost.com",
-    "Asks for a small fee",
-    "12-hour deadline"
-   ],
-   "real": {
-    "format": "sms",
-    "from_name": "SingPost",
-    "subject": "SingPost: Your parcel SP48213390SG is re",
-    "date": "Today 9:41 AM",
-    "body": "SingPost: Your parcel SP48213390SG is ready to collect at POPStation @ Bukit Batok MRT. Collect within 3 days.\n\nTrack it at singpost.com/track"
-   },
-   "fake": {
-    "format": "sms",
-    "from_name": "+65 8123 4567",
-    "subject": "SingPost: your parcel is held. Pay a $1.",
-    "date": "Today 9:41 AM",
-    "body": "SingPost: your parcel is held. Pay a $1.50 fee to release it: http://singpost-fee.top/p within 12hrs or it will be returned.",
-    "landing": {
-     "src": "content/media/email/easy/assets/sms-singpost-fee-fake-landing.svg",
-     "alt": "A fake page on singpost-fee.top"
-    },
-    "flags": [
-     {
-      "on": "from_name",
-      "mark": "+65 8123 4567",
-      "text": "A random mobile number"
-     },
-     {
-      "on": "body",
-      "mark": "singpost-fee.top",
-      "text": "Not singpost.com"
-     },
-     {
-      "on": "body",
-      "mark": "Pay a $1.50 fee",
-      "text": "Asks for a small fee"
-     },
-     {
-      "on": "body",
-      "mark": "within 12hrs",
-      "text": "12-hour deadline"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/teams-voicemail",
-   "tier": "easy",
-   "label": "A Teams message, on your phone",
-   "note": "The real email comes from microsoft.com and shows a real message from a colleague. The fake comes from teams-voicemail.top and wants you to open an .exe file, which is a program, not a voice message.",
-   "todo": "Never open an .exe attachment. Check voicemails in the Teams app itself.",
-   "techniques": [
-    "Risky attachment",
-    "Urgency",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not microsoft.com",
-    "Pushes you to act now",
-    "Generic greeting",
-    "Attachment is a .exe program"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "Microsoft Teams",
-    "from_email": "noreply@email.teams.microsoft.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "You have a missed message from Dana Whitfield",
-    "date": "Thu, Oct 15, 2026 7:48 AM",
-    "body": "Hi Jordan,\n\nDana Whitfield sent you a message in Teams while you were away:\n\n\"Can you review the Q4 plan before 3pm?\"\n\nOpen Teams to reply."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "Teams Voicemail",
-    "from_email": "voicemail@teams-voicemail.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "3 missed voice messages - listen now",
-    "date": "Fri, Oct 16, 2026 11:33 AM",
-    "body": "Dear User,\n\nYou have 3 new voice messages. Open the attachment to listen. Messages are deleted after 24 hours.",
-    "attachment_name": "Voicemail_Oct12.exe",
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "teams-voicemail.top",
-      "text": "Not microsoft.com"
-     },
-     {
-      "on": "subject",
-      "mark": "listen now",
-      "text": "Pushes you to act now"
-     },
-     {
-      "on": "body",
-      "mark": "Dear User",
-      "text": "Generic greeting"
-     },
-     {
-      "on": "attachment_name",
-      "text": "Attachment is a .exe program"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/easy/zoom-closed",
-   "tier": "easy",
-   "label": "A Zoom account email",
-   "note": "The real email is a meeting invite from zoom.us with a named organiser. The fake comes from zoom-verification.top and threatens to close your account in 24 hours.",
-   "todo": "Don't verify anything from a link. Open the Zoom app or zoom.us yourself to check your account.",
-   "techniques": [
-    "Urgency",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not zoom.us",
-    "Shouting and a threat",
-    "Generic greeting",
-    "Unknown site, plain http"
-   ],
-   "real": {
-    "from_name": "Zoom",
-    "from_email": "no-reply@zoom.us",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Meeting invitation: Q4 Planning",
-    "date": "Mon, Oct 12, 2026 9:14 AM",
-    "body": "Hi Jordan,\n\nDana Whitfield is inviting you to a scheduled Zoom meeting.\n\nTopic: Q4 Planning\nTime: Oct 14, 2026 03:00 PM Singapore\n\nJoin from the Zoom app or the link below.",
-    "banner": "content/media/email/easy/assets/zoom-closed-real-banner.svg",
-    "link_text": "Join meeting",
-    "link_url": "https://zoom.us/j/84213390551",
-    "landing": {
-     "src": "content/media/email/easy/assets/zoom-closed-real-landing.svg",
-     "alt": "The real page on zoom.us"
-    }
-   },
-   "fake": {
-    "from_name": "Zoom Support",
-    "from_email": "support@zoom-verification.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your Zoom account will be CLOSED - verify now",
-    "date": "Mon, Oct 12, 2026 2:41 PM",
-    "body": "Dear User,\n\nYour Zoom account will be closed within 24 hours due to a licence error. Verify your account now to keep your meetings and recordings.\n\nZoom Support Team",
-    "banner": "content/media/email/easy/assets/zoom-closed-fake-banner.svg",
-    "link_text": "Verify account",
-    "link_url": "http://zoom-verification.top/verify",
-    "landing": {
-     "src": "content/media/email/easy/assets/zoom-closed-fake-landing.svg",
-     "alt": "A fake page on zoom-verification.top"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "zoom-verification.top",
-      "text": "Not zoom.us"
-     },
-     {
-      "on": "subject",
-      "mark": "CLOSED",
-      "text": "Shouting and a threat"
-     },
-     {
-      "on": "body",
-      "mark": "Dear User",
-      "text": "Generic greeting"
-     },
-     {
-      "on": "link_url",
-      "text": "Unknown site, plain http"
-     }
-    ]
-   }
-  },
-  {
    "id": "email/medium/apple-receipt",
    "tier": "medium",
    "label": "An Apple receipt",
@@ -1834,204 +569,6 @@ window.CONTENT = {
    }
   },
   {
-   "id": "email/medium/aws-bill",
-   "tier": "medium",
-   "label": "An AWS billing email",
-   "note": "The real email comes from amazon.com and says to use your own bookmark. The fake comes from aws-billing-center.com, claims big unusual charges and links to a look-alike console.",
-   "todo": "Open the AWS console from your own bookmark. Never sign in through an email link.",
-   "techniques": [
-    "Urgency",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not amazon.com",
-    "A big charge to alarm you",
-    "24-hour deadline",
-    "Not console.aws.amazon.com"
-   ],
-   "real": {
-    "from_name": "Amazon Web Services",
-    "from_email": "no-reply-aws@amazon.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your AWS bill for September is available",
-    "date": "Wed, Oct 14, 2026 10:26 AM",
-    "body": "Hello,\n\nYour AWS bill for September 2026 is now available. Total: $1,284.19.\n\nSign in to the AWS Billing console from your usual bookmark to view details. AWS will never ask for your password by email.",
-    "banner": "content/media/email/medium/assets/aws-bill-real-banner.svg",
-    "link_text": "Open Billing console",
-    "link_url": "https://console.aws.amazon.com/billing/home",
-    "landing": {
-     "src": "content/media/email/medium/assets/aws-bill-real-landing.svg",
-     "alt": "The real page on console.aws.amazon.com"
-    }
-   },
-   "fake": {
-    "from_name": "AWS Billing",
-    "from_email": "billing@aws-billing-center.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "AWS: unusual charges of $4,812.00 on your account",
-    "date": "Wed, Oct 14, 2026 1:05 PM",
-    "body": "Hello,\n\nWe detected unusual charges of $4,812.00 on your AWS account. To dispute them, sign in to the AWS Billing console within 24 hours.\n\nAmazon Web Services",
-    "banner": "content/media/email/medium/assets/aws-bill-fake-banner.svg",
-    "link_text": "Open Billing console",
-    "link_url": "https://aws-billing-center.com/console/billing",
-    "landing": {
-     "src": "content/media/email/medium/assets/aws-bill-fake-landing.svg",
-     "alt": "A fake page on aws-billing-center.com"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "aws-billing-center.com",
-      "text": "Not amazon.com"
-     },
-     {
-      "on": "subject",
-      "mark": "unusual charges of $4,812.00",
-      "text": "A big charge to alarm you"
-     },
-     {
-      "on": "body",
-      "mark": "within 24 hours",
-      "text": "24-hour deadline"
-     },
-     {
-      "on": "link_url",
-      "text": "Not console.aws.amazon.com"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/bank-new-device",
-   "tier": "medium",
-   "label": "A bank sign-in alert, on your phone",
-   "note": "On a phone you only see the display name, so both say Harborline Bank. The sender address, behind Details, is harborline-verify.top, not harborlinebank.com. The real alert has no link and tells you to open the app.",
-   "todo": "On a phone, tap the sender name to see the real address. Don't tap a sign-in link; open the bank's app yourself.",
-   "techniques": [
-    "Urgency",
-    "Credential harvesting",
-    "Lookalike domain",
-    "Hidden sender (mobile)"
-   ],
-   "red_flags": [
-    "Sender domain harborline-verify.top is not harborlinebank.com",
-    "'Action needed' and a 30-minute deadline",
-    "The link text hides where it goes",
-    "The link opens an unrelated site over plain http"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "Harborline Bank",
-    "from_email": "noreply@harborlinebank.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "New device sign-in to Harborline Online",
-    "date": "Tue, Oct 6, 2026 8:04 PM",
-    "body": "Hi Jordan,\n\nYou signed in to Harborline Online from a new device today at 8:02 PM.\n\nIf that was you, there is nothing to do. If it wasn't, open the Harborline app and tap Report, or call the number on the back of your card.\n\nWe never ask you to sign in from an email."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "Harborline Bank",
-    "from_email": "alerts@harborline-verify.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Action needed: new device blocked",
-    "date": "Tue, Oct 6, 2026 8:12 PM",
-    "body": "Hi Jordan,\n\nA sign-in from a new device was blocked. Confirm it was you within 30 minutes or your online banking will be locked.",
-    "link_text": "Confirm sign-in",
-    "link_url": "http://harborline-verify.top/c/9f2k",
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "harborline-verify.top",
-      "text": "Not harborlinebank.com"
-     },
-     {
-      "on": "subject",
-      "mark": "Action needed",
-      "text": "Pushes you to act now"
-     },
-     {
-      "on": "body",
-      "mark": "within 30 minutes",
-      "text": "30-minute deadline"
-     },
-     {
-      "on": "link_url",
-      "text": "Link hides another site"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/booking-card",
-   "tier": "medium",
-   "label": "A hotel booking email",
-   "note": "The real email comes from booking.com and sends you to the app. The fake comes from booking-confirm-pay.com, sets a 6-hour deadline and uses a QR code that hides where it leads.",
-   "todo": "Don't scan a QR code from an email. Open the Booking.com app and check the booking there.",
-   "techniques": [
-    "QR code",
-    "Payment harvesting",
-    "Urgency",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not booking.com",
-    "Asks for card checks",
-    "6-hour deadline",
-    "QR hides where it leads"
-   ],
-   "real": {
-    "from_name": "Booking.com",
-    "from_email": "customer.service@booking.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your booking in Kuala Lumpur is confirmed",
-    "date": "Wed, Oct 14, 2026 10:26 AM",
-    "body": "Hi Jordan,\n\nYour booking at Grand Meridian Hotel, Kuala Lumpur is confirmed.\n\nCheck-in: Nov 3, 2026\nCheck-out: Nov 5, 2026\n\nYou can manage your booking in the Booking.com app.",
-    "banner": "content/media/email/medium/assets/booking-card-real-banner.svg",
-    "link_text": "Manage booking",
-    "link_url": "https://secure.booking.com/mybooking.html",
-    "landing": {
-     "src": "content/media/email/medium/assets/booking-card-real-landing.svg",
-     "alt": "The real page on secure.booking.com"
-    }
-   },
-   "fake": {
-    "from_name": "Booking.com",
-    "from_email": "reservations@booking-confirm-pay.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Action needed: verify your payment to keep your booking",
-    "date": "Wed, Oct 14, 2026 1:05 PM",
-    "body": "Hi Jordan,\n\nYour booking at Grand Meridian Hotel, Kuala Lumpur will be cancelled unless you verify your card within 6 hours.\n\nScan the QR code to verify your payment method.",
-    "banner": "content/media/email/medium/assets/booking-card-fake-banner.svg",
-    "qr": {
-     "src": "content/media/email/medium/assets/booking-card-fake-qr.svg",
-     "caption": "Scan to verify card",
-     "alt": "A QR code"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "booking-confirm-pay.com",
-      "text": "Not booking.com"
-     },
-     {
-      "on": "subject",
-      "mark": "verify your payment",
-      "text": "Asks for card checks"
-     },
-     {
-      "on": "body",
-      "mark": "within 6 hours",
-      "text": "6-hour deadline"
-     },
-     {
-      "on": "qr",
-      "text": "QR hides where it leads"
-     }
-    ]
-   }
-  },
-  {
    "id": "email/medium/dbs-ibanking",
    "tier": "medium",
    "label": "A DBS transaction alert",
@@ -2046,7 +583,7 @@ window.CONTENT = {
    "red_flags": [
     "Not dbs.com",
     "2-hour deadline",
-    "A big charge to alarm you",
+    "Banks don't verify by email",
     "Real host: login-verify.top"
    ],
    "real": {
@@ -2085,8 +622,8 @@ window.CONTENT = {
      },
      {
       "on": "body",
-      "mark": "SGD 1,980.00",
-      "text": "A big charge to alarm you"
+      "mark": "verify your payee",
+      "text": "Banks don't verify by email"
      },
      {
       "on": "link_url",
@@ -2108,10 +645,10 @@ window.CONTENT = {
     "Impersonated colleague"
    ],
    "red_flags": [
-    "Sender domain docusign-secure-view.co is not docusign.net",
-    "'Expires in 2 hours' to rush you",
-    "Link goes to a different domain over plain http",
-    "The page asks for your work email password, which DocuSign never needs to view a document"
+    "Not docusign.net",
+    "2-hour deadline",
+    "Asks for your work login",
+    "Different site, plain http"
    ],
    "real": {
     "from_name": "Alicia Tan via DocuSign",
@@ -2176,10 +713,10 @@ window.CONTENT = {
     "Urgency"
    ],
    "red_flags": [
-    "Sender and link domain goog1e-docs-viewer.com (a digit 1 for the 'l')",
-    "'This link will expire in 1 hour'",
-    "The page has a padlock, which proves nothing about who runs it",
-    "It asks you to sign in again to 'confirm access'"
+    "A digit 1 for the l",
+    "1-hour deadline",
+    "Asks you to sign in again",
+    "Not a google.com page"
    ],
    "real": {
     "from_name": "Priya Nandakumar (via Google Drive)",
@@ -2232,132 +769,6 @@ window.CONTENT = {
    }
   },
   {
-   "id": "email/medium/github-session",
-   "tier": "medium",
-   "label": "A GitHub security alert, on your phone",
-   "note": "The real alert comes from github.com and tells you to go to github.com/settings yourself. The fake comes from github-support.co, names a scary location and sets a 1-hour deadline.",
-   "todo": "Tap the sender name to check the address. Go to github.com yourself and look at your security log.",
-   "techniques": [
-    "Urgency",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not github.com",
-    "1-hour deadline",
-    "A scary sign-in location",
-    "Not a github.com page"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "GitHub",
-    "from_email": "noreply@github.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "[GitHub] A new SSH key was added to your account",
-    "date": "Thu, Oct 15, 2026 7:48 AM",
-    "body": "Hey jalvarez!\n\nA new SSH key, \"work-laptop\", was added to your account.\n\nIf you didn't add it, remove it at github.com/settings/keys and change your password."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "GitHub",
-    "from_email": "security@github-support.co",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "[GitHub] Unusual sign-in - verify within 1 hour",
-    "date": "Fri, Oct 16, 2026 11:33 AM",
-    "body": "Hey jalvarez!\n\nWe blocked an unusual sign-in to your account from Lagos, Nigeria. Verify your account within 1 hour or access will be revoked.",
-    "link_text": "Review sign-in",
-    "link_url": "https://github-support.co/session/verify",
-    "landing": {
-     "src": "content/media/email/medium/assets/github-session-fake-landing.svg",
-     "alt": "A fake page on github-support.co"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "github-support.co",
-      "text": "Not github.com"
-     },
-     {
-      "on": "subject",
-      "mark": "within 1 hour",
-      "text": "1-hour deadline"
-     },
-     {
-      "on": "body",
-      "mark": "Lagos, Nigeria",
-      "text": "A scary sign-in location"
-     },
-     {
-      "on": "link_url",
-      "text": "Not a github.com page"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/google-workspace",
-   "tier": "medium",
-   "label": "A Google Workspace alert, on your phone",
-   "note": "The real alert comes from google.com and tells you to go to myaccount.google.com yourself. The fake comes from google-workspace-admin.co and threatens to disable your mailbox.",
-   "todo": "Admins don't ask you to sign in from an email. Check with IT through a channel you trust.",
-   "techniques": [
-    "Urgency",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not google.com",
-    "Threat to disable your mailbox",
-    "Pushes a sign-in",
-    "Unknown site, not google.com"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "Google Workspace",
-    "from_email": "workspace-noreply@google.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Security alert: your password was changed",
-    "date": "Thu, Oct 15, 2026 7:48 AM",
-    "body": "Hi Jordan,\n\nThe password for j.alvarez@meridianfreight.com was changed on Oct 13.\n\nIf this was you, there's nothing to do. If not, go to myaccount.google.com/security to secure your account."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "Google Workspace",
-    "from_email": "admin-alerts@google-workspace-admin.co",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Security alert: your mailbox will be disabled",
-    "date": "Fri, Oct 16, 2026 11:33 AM",
-    "body": "Hi Jordan,\n\nYour mailbox is over its limit and will be disabled in 24 hours. Sign in to your admin portal to keep access.",
-    "link_text": "Keep my mailbox",
-    "link_url": "https://google-workspace-admin.co/signin",
-    "landing": {
-     "src": "content/media/email/medium/assets/google-workspace-fake-landing.svg",
-     "alt": "A fake page on google-workspace-admin.co"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "google-workspace-admin.co",
-      "text": "Not google.com"
-     },
-     {
-      "on": "subject",
-      "mark": "mailbox will be disabled",
-      "text": "Threat to disable your mailbox"
-     },
-     {
-      "on": "body",
-      "mark": "Sign in to your admin portal",
-      "text": "Pushes a sign-in"
-     },
-     {
-      "on": "link_url",
-      "text": "Unknown site, not google.com"
-     }
-    ]
-   }
-  },
-  {
    "id": "email/medium/invoice-image",
    "tier": "medium",
    "label": "A subscription invoice",
@@ -2370,12 +781,10 @@ window.CONTENT = {
     "Lookalike domain"
    ],
    "red_flags": [
-    "Sender domain adobe-invoice-center.net is not adobe.com",
-    "The whole message is one image: no real text or link",
-    "A spelling mistake inside the picture ('becuase')",
-    "A blurry picture",
-    "Attachment is an .html file",
-    "Threat that the service will be stopped"
+    "Not adobe.com",
+    "A payment-failed scare",
+    "The message is one picture",
+    "Attachment is an .html file"
    ],
    "real": {
     "from_name": "Adobe",
@@ -2420,58 +829,6 @@ window.CONTENT = {
      {
       "on": "attachment_name",
       "text": "Attachment is an .html file"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/ocbc-estatement",
-   "tier": "medium",
-   "label": "A bank e-statement, on your phone",
-   "note": "The real email comes from ocbc.com and says statements are never sent as attachments. The fake comes from ocbc-estatement.net with an .html attachment, which opens a fake sign-in page.",
-   "todo": "Never open an .html attachment. Log in to OCBC Online Banking yourself to see statements.",
-   "techniques": [
-    "Risky attachment",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not ocbc.com",
-    "A statement sent as .html",
-    "Asks you to sign in from it"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "OCBC Bank",
-    "from_email": "noreply@ocbc.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your September e-statement is ready",
-    "date": "Tue, Oct 13, 2026 8:02 AM",
-    "body": "Dear Jordan,\n\nYour OCBC e-statement for September 2026 is ready. Log in to OCBC Online Banking or the OCBC app to view it.\n\nWe will never send statements as attachments."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "OCBC Bank",
-    "from_email": "statement@ocbc-estatement.net",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your September e-statement is ready",
-    "date": "Tue, Oct 13, 2026 4:12 PM",
-    "body": "Dear Jordan,\n\nYour OCBC e-statement for September 2026 is attached. Open the attachment and sign in to view it.\n\nOCBC Bank",
-    "attachment_name": "OCBC_Statement_Sep2026.html",
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "ocbc-estatement.net",
-      "text": "Not ocbc.com"
-     },
-     {
-      "on": "attachment_name",
-      "text": "A statement sent as .html"
-     },
-     {
-      "on": "body",
-      "mark": "Open the attachment and sign in",
-      "text": "Asks you to sign in from it"
      }
     ]
    }
@@ -2540,63 +897,6 @@ window.CONTENT = {
    }
   },
   {
-   "id": "email/medium/paypal-invoice",
-   "tier": "medium",
-   "label": "A PayPal invoice, on your phone",
-   "note": "The real email comes from paypal.com and tells you to log in yourself. The fake comes from paypal.com.invoice-pay.top, where paypal.com is only a prefix: the real domain is invoice-pay.top.",
-   "todo": "Read a web address from right to left: the domain is just before the first slash. Open PayPal yourself.",
-   "techniques": [
-    "Link trick",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Domain is invoice-pay.top",
-    "No 'open PayPal yourself'",
-    "paypal.com is only a prefix"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "PayPal",
-    "from_email": "service@paypal.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Priya Nair sent you an invoice for $240.00 SGD",
-    "date": "Wed, Oct 14, 2026 10:26 AM",
-    "body": "Hi Jordan,\n\nPriya Nair sent you an invoice for $240.00 SGD, due Oct 30.\n\nTo view and pay it, log in to paypal.com or the PayPal app."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "PayPal",
-    "from_email": "service@paypal.com.invoice-pay.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Priya Nair sent you an invoice for $240.00 SGD",
-    "date": "Wed, Oct 14, 2026 1:05 PM",
-    "body": "Hi Jordan,\n\nPriya Nair sent you an invoice for $240.00 SGD, due Oct 30.\n\nView and pay your invoice below.",
-    "link_text": "View and pay invoice",
-    "link_url": "https://paypal.com.invoice-pay.top/inv/48213",
-    "landing": {
-     "src": "content/media/email/medium/assets/paypal-invoice-fake-landing.svg",
-     "alt": "A fake page on paypal.com.invoice-pay.top"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "invoice-pay.top",
-      "text": "Domain is invoice-pay.top"
-     },
-     {
-      "on": "body",
-      "mark": "View and pay your invoice below",
-      "text": "No 'open PayPal yourself'"
-     },
-     {
-      "on": "link_url",
-      "text": "paypal.com is only a prefix"
-     }
-    ]
-   }
-  },
-  {
    "id": "email/medium/payroll-update",
    "tier": "medium",
    "label": "Payroll system update notice",
@@ -2607,10 +907,10 @@ window.CONTENT = {
     "Lookalike domain"
    ],
    "red_flags": [
-    "Sender and link domain meridianfreiqht.com (q instead of g)",
-    "Asks you to 're-confirm' bank details",
-    "Deadline of Friday 5pm",
-    "Link goes to a subdomain of the lookalike domain"
+    "q for g in freight",
+    "Asks for bank details",
+    "Deadline: Friday 5pm",
+    "Lookalike domain, plain http"
    ],
    "real": {
     "from_name": "Meridian Payroll Team",
@@ -2721,513 +1021,6 @@ window.CONTENT = {
    }
   },
   {
-   "id": "email/medium/qr-lobby-flyer",
-   "tier": "medium",
-   "label": "A QR flyer in the office lobby",
-   "note": "The real flyer is from IT Security and opens the intranet. The fake offers a free gift card for staff and prints meridianfreight-rewards.com, which is not the company's domain.",
-   "todo": "Be wary of unexpected flyers. Ask IT or Facilities before scanning a code on a notice board.",
-   "techniques": [
-    "Quishing",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "A freebie for a login",
-    "Asks for your work login",
-    "Not meridianfreight.com"
-   ],
-   "real": {
-    "format": "qr",
-    "from_name": "IT Security notice",
-    "subject": "Spotted a phishing email?",
-    "body": "Scan to open the Phish Alert guide on the intranet. Staff sign-in required.",
-    "printed_url": "intranet.meridianfreight.com/security",
-    "scan_url": "https://intranet.meridianfreight.com/security",
-    "qr": {
-     "src": "content/media/email/medium/assets/qr-lobby-flyer-real-qr.svg",
-     "caption": "Phish Alert guide",
-     "alt": "A QR code"
-    },
-    "landing": {
-     "src": "content/media/email/medium/assets/qr-lobby-flyer-real-landing.svg",
-     "alt": "The real page on intranet.meridianfreight.com"
-    }
-   },
-   "fake": {
-    "format": "qr",
-    "from_name": "Staff notice",
-    "subject": "Free coffee gift card for staff",
-    "body": "Scan to claim your $20 card. Sign in with your work account to confirm you are staff.",
-    "printed_url": "meridianfreight-rewards.com",
-    "scan_url": "https://meridianfreight-rewards.com/staff",
-    "sticker": 1,
-    "qr": {
-     "src": "content/media/email/medium/assets/qr-lobby-flyer-fake-qr.svg",
-     "caption": "Claim your card",
-     "alt": "A QR code"
-    },
-    "landing": {
-     "src": "content/media/email/medium/assets/qr-lobby-flyer-fake-landing.svg",
-     "alt": "A fake page on meridianfreight-rewards.com"
-    },
-    "flags": [
-     {
-      "on": "subject",
-      "mark": "Free coffee gift card",
-      "text": "A freebie for a login"
-     },
-     {
-      "on": "body",
-      "mark": "Sign in with your work account",
-      "text": "Asks for your work login"
-     },
-     {
-      "on": "printed_url",
-      "mark": "meridianfreight-rewards.com",
-      "text": "Not meridianfreight.com"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/qr-mrt-poster",
-   "tier": "medium",
-   "label": "A QR poster at a station",
-   "note": "The real poster sends you to the app store. The fake offers free credit if you log in, and prints grab-sg-promo.top.",
-   "todo": "Install apps by searching your phone's app store, not by scanning posters.",
-   "techniques": [
-    "Quishing",
-    "Credential harvesting",
-    "Too good to be true"
-   ],
-   "red_flags": [
-    "Free money for a login",
-    "Asks you to log in",
-    "Not grab.com"
-   ],
-   "real": {
-    "format": "qr",
-    "from_name": "Station advertisement",
-    "subject": "Get the Grab app",
-    "body": "Scan to download Grab from your phone's app store.",
-    "printed_url": "grab.com/sg",
-    "scan_url": "https://www.grab.com/sg",
-    "qr": {
-     "src": "content/media/email/medium/assets/qr-mrt-poster-real-qr.svg",
-     "caption": "Get Grab",
-     "alt": "A QR code"
-    },
-    "landing": {
-     "src": "content/media/email/medium/assets/qr-mrt-poster-real-landing.svg",
-     "alt": "The real page on www.grab.com"
-    }
-   },
-   "fake": {
-    "format": "qr",
-    "from_name": "Station advertisement",
-    "subject": "Free ride credit for new riders",
-    "body": "Scan and log in to collect your $15 ride credit before the end of the week.",
-    "printed_url": "grab-sg-promo.top",
-    "scan_url": "https://grab-sg-promo.top/ride",
-    "sticker": 1,
-    "qr": {
-     "src": "content/media/email/medium/assets/qr-mrt-poster-fake-qr.svg",
-     "caption": "Collect credit",
-     "alt": "A QR code"
-    },
-    "landing": {
-     "src": "content/media/email/medium/assets/qr-mrt-poster-fake-landing.svg",
-     "alt": "A fake page on grab-sg-promo.top"
-    },
-    "flags": [
-     {
-      "on": "subject",
-      "mark": "Free ride credit",
-      "text": "Free money for a login"
-     },
-     {
-      "on": "body",
-      "mark": "log in to collect",
-      "text": "Asks you to log in"
-     },
-     {
-      "on": "printed_url",
-      "mark": "grab-sg-promo.top",
-      "text": "Not grab.com"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/shared-document",
-   "tier": "medium",
-   "label": "Shared document invite",
-   "note": "The fake's \"shared document\" link doesn't go to the real file-sharing provider at all -- it points to an unrelated domain disguised to look like one, a common way to harvest login credentials through a fake sign-in page.",
-   "todo": "Message Priya on a channel you trust before opening a shared link you didn't expect.",
-   "techniques": [
-    "Credential harvesting",
-    "Lookalike domain",
-    "Urgency"
-   ],
-   "red_flags": [
-    "Sender domain clouddocs-share.net is not clouddocs.com",
-    "'Expires in 24 hours' to rush you",
-    "Link goes to a login page over plain http"
-   ],
-   "real": {
-    "from_name": "Priya Nandakumar via CloudDocs",
-    "from_email": "no-reply@clouddocs.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Priya Nandakumar shared \"Q3 Vendor Contracts.pdf\" with you",
-    "date": "Mon, Sep 14, 2026 11:03 AM",
-    "body": "Priya Nandakumar (p.nandakumar@meridianfreight.com) shared a file with you on CloudDocs.\n\n\"Q3 Vendor Contracts.pdf\"\n\nOpen the file directly from your CloudDocs account -- you may need to sign in if you haven't recently.",
-    "link_text": "Open in CloudDocs",
-    "link_url": "https://clouddocs.com/d/8a92f1"
-   },
-   "fake": {
-    "from_name": "Priya Nandakumar via CloudDocs",
-    "from_email": "no-reply@clouddocs-share.net",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Priya Nandakumar shared \"Q3 Vendor Contracts.pdf\" with you",
-    "date": "Mon, Sep 14, 2026 11:07 AM",
-    "body": "Priya Nandakumar shared a file with you.\n\n\"Q3 Vendor Contracts.pdf\"\n\nThis link will expire in 24 hours -- open it soon to avoid losing access.",
-    "link_text": "View Shared Document",
-    "link_url": "http://clouddocs-share.net/login?redirect=8a92f1",
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "clouddocs-share.net",
-      "text": "Not clouddocs.com"
-     },
-     {
-      "on": "body",
-      "mark": "This link will expire in 24 hours",
-      "text": "24-hour expiry"
-     },
-     {
-      "on": "link_url",
-      "text": "Login page over plain http"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/sharepoint-share",
-   "tier": "medium",
-   "label": "A shared file from a colleague",
-   "note": "The real notice comes from sharepointonline.com and links to your company's own SharePoint. The fake comes from sharepoint-docs.net and sends you to a sign-in page on another site.",
-   "todo": "Open the file from OneDrive or Teams yourself, or message Dana to check it was really sent.",
-   "techniques": [
-    "Impersonated colleague",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not sharepoint.com",
-    "Asks for your work login",
-    "Not your SharePoint address"
-   ],
-   "real": {
-    "from_name": "Dana Whitfield via SharePoint",
-    "from_email": "no-reply@sharepointonline.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Dana Whitfield shared \"Q4 Budget.xlsx\" with you",
-    "date": "Thu, Oct 15, 2026 7:48 AM",
-    "body": "Dana Whitfield shared a file with you.\n\nQ4 Budget.xlsx\n\n\"Jordan, here's the draft for Thursday.\"\n\nOpen the file from the link below, or from your OneDrive.",
-    "banner": "content/media/email/medium/assets/sharepoint-share-real-banner.svg",
-    "link_text": "Open",
-    "link_url": "https://meridianfreight.sharepoint.com/:x:/s/finance/Q4Budget",
-    "landing": {
-     "src": "content/media/email/medium/assets/sharepoint-share-real-landing.svg",
-     "alt": "The real page on meridianfreight.sharepoint.com"
-    }
-   },
-   "fake": {
-    "from_name": "Dana Whitfield via SharePoint",
-    "from_email": "no-reply@sharepoint-docs.net",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Dana Whitfield shared \"Q4 Budget.xlsx\" with you",
-    "date": "Fri, Oct 16, 2026 11:33 AM",
-    "body": "Dana Whitfield shared a file with you.\n\nQ4 Budget.xlsx\n\n\"Jordan, here's the draft for Thursday.\"\n\nSign in with your work account to open it.",
-    "banner": "content/media/email/medium/assets/sharepoint-share-fake-banner.svg",
-    "link_text": "Open",
-    "link_url": "https://sharepoint-docs.net/:x:/s/finance/Q4Budget",
-    "landing": {
-     "src": "content/media/email/medium/assets/sharepoint-share-fake-landing.svg",
-     "alt": "A fake page on sharepoint-docs.net"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "sharepoint-docs.net",
-      "text": "Not sharepoint.com"
-     },
-     {
-      "on": "body",
-      "mark": "Sign in with your work account",
-      "text": "Asks for your work login"
-     },
-     {
-      "on": "link_url",
-      "text": "Not your SharePoint address"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/singpost-locker",
-   "tier": "medium",
-   "label": "A parcel locker collection notice",
-   "note": "The real QR code is a collection code you show to the locker. The fake asks you to scan a QR code to pay $2.40 within 12 hours, from singpost-collect.top rather than singpost.com, and leads to a card payment page.",
-   "todo": "Check the parcel on singpost.com or in the SingPost app, never by scanning a code from an email.",
-   "techniques": [
-    "QR code",
-    "Urgency",
-    "Payment harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Sender domain singpost-collect.top is not singpost.com",
-    "A QR code that asks you to pay is a warning sign",
-    "'ON HOLD' and a 12-hour deadline",
-    "Blurry banner that reads 'SingP0st' with a zero",
-    "The QR hides where it leads",
-    "The page asks for card details"
-   ],
-   "real": {
-    "from_name": "SingPost",
-    "from_email": "noreply@singpost.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your parcel is ready to collect at POPStation",
-    "date": "Sat, Oct 3, 2026 11:20 AM",
-    "body": "Hi Jordan,\n\nYour parcel (SP48213390SG) is ready to collect at POPStation @ Bukit Batok MRT.\n\nShow the QR code below to the locker's scanner to open your compartment. Please collect within 3 days.",
-    "banner": "content/media/email/medium/assets/singpost-locker-real-banner.svg",
-    "qr": {
-     "src": "content/media/email/medium/assets/singpost-locker-real-qr.svg",
-     "caption": "Collection code, valid 3 days",
-     "alt": "A QR code"
-    },
-    "link_text": "Track your parcel",
-    "link_url": "https://www.singpost.com/track-items",
-    "landing": {
-     "src": "content/media/email/medium/assets/singpost-locker-real-landing.svg",
-     "alt": "The real SingPost tracking page at singpost.com"
-    }
-   },
-   "fake": {
-    "from_name": "SingPost Notice",
-    "from_email": "popstation@singpost-collect.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Parcel on hold: unpaid $2.40 delivery fee - scan to pay now",
-    "date": "Sat, Oct 3, 2026 11:04 AM",
-    "body": "Dear customer,\n\nYour parcel SP48213390SG is ON HOLD because a delivery fee of $2.40 is unpaid.\n\nScan the QR code below to pay now. Parcels not paid within 12 HOURS are returned to sender.",
-    "banner": "content/media/email/medium/assets/singpost-locker-fake-banner.svg",
-    "qr": {
-     "src": "content/media/email/medium/assets/singpost-locker-fake-qr.svg",
-     "caption": "Scan to pay $2.40",
-     "alt": "A QR code"
-    },
-    "landing": {
-     "src": "content/media/email/medium/assets/singpost-locker-fake-landing.svg",
-     "alt": "A fake payment page on singpost-collect.top asking for card details"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "singpost-collect.top",
-      "text": "Not singpost.com"
-     },
-     {
-      "on": "subject",
-      "mark": "scan to pay now",
-      "text": "Asks you to pay by QR"
-     },
-     {
-      "on": "body",
-      "mark": "12 HOURS",
-      "text": "12-hour deadline"
-     },
-     {
-      "on": "qr",
-      "text": "QR hides where it leads"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/slack-invite",
-   "tier": "medium",
-   "label": "A Slack message",
-   "note": "The real invite comes from slack.com and links to your company's own Slack address. The fake comes from slack-workspace-invite.com and baits you with unread leadership messages.",
-   "todo": "Open Slack from the app or your bookmark. Never sign in from an emailed link.",
-   "techniques": [
-    "Curiosity bait",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not slack.com",
-    "Curiosity bait",
-    "Pushes a sign-in",
-    "Not meridianfreight.slack.com"
-   ],
-   "real": {
-    "from_name": "Slack",
-    "from_email": "feedback@slack.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Priya Nair invited you to join Meridian Freight on Slack",
-    "date": "Mon, Oct 12, 2026 9:14 AM",
-    "body": "Hi Jordan,\n\nPriya Nair (p.nair@meridianfreight.com) has invited you to join the Meridian Freight workspace on Slack.\n\nJoin from the Slack app, or use the button below.",
-    "banner": "content/media/email/medium/assets/slack-invite-real-banner.svg",
-    "link_text": "Join now",
-    "link_url": "https://meridianfreight.slack.com/join",
-    "landing": {
-     "src": "content/media/email/medium/assets/slack-invite-real-landing.svg",
-     "alt": "The real page on meridianfreight.slack.com"
-    }
-   },
-   "fake": {
-    "from_name": "Slack",
-    "from_email": "no-reply@slack-workspace-invite.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "You have 3 unread messages in #leadership",
-    "date": "Mon, Oct 12, 2026 2:41 PM",
-    "body": "Hi Jordan,\n\nYou have 3 unread messages in #leadership from Daniel Koh. Sign in to your workspace to read them.",
-    "banner": "content/media/email/medium/assets/slack-invite-fake-banner.svg",
-    "link_text": "Read messages",
-    "link_url": "https://slack-workspace-invite.com/signin?team=meridianfreight",
-    "landing": {
-     "src": "content/media/email/medium/assets/slack-invite-fake-landing.svg",
-     "alt": "A fake page on slack-workspace-invite.com"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "slack-workspace-invite.com",
-      "text": "Not slack.com"
-     },
-     {
-      "on": "subject",
-      "mark": "#leadership",
-      "text": "Curiosity bait"
-     },
-     {
-      "on": "body",
-      "mark": "Sign in to your workspace",
-      "text": "Pushes a sign-in"
-     },
-     {
-      "on": "link_url",
-      "text": "Not meridianfreight.slack.com"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/sms-iras-refund",
-   "tier": "medium",
-   "label": "An IRAS text message",
-   "note": "The real text points to mytax.iras.gov.sg. The fake's link starts with iras-refunds.gov-sg.top, so its real domain is gov-sg.top, not a .gov.sg address.",
-   "todo": "Government sites end in .gov.sg. Go to mytax.iras.gov.sg yourself and log in with Singpass.",
-   "techniques": [
-    "Smishing",
-    "Link trick",
-    "Too good to be true"
-   ],
-   "red_flags": [
-    "Real host is gov-sg.top",
-    "Money you didn't expect",
-    "A same-day deadline"
-   ],
-   "real": {
-    "format": "sms",
-    "from_name": "IRAS",
-    "subject": "IRAS: Your Notice of Assessment is ready",
-    "date": "Today 3:12 PM",
-    "body": "IRAS: Your Notice of Assessment is ready. Log in at mytax.iras.gov.sg with Singpass."
-   },
-   "fake": {
-    "format": "sms",
-    "from_name": "IRAS",
-    "subject": "IRAS: A tax refund of $842 is pending. C",
-    "date": "Today 3:12 PM",
-    "body": "IRAS: A tax refund of $842 is pending. Claim it at https://iras-refunds.gov-sg.top before 5pm today.",
-    "landing": {
-     "src": "content/media/email/medium/assets/sms-iras-refund-fake-landing.svg",
-     "alt": "A fake page on iras-refunds.gov-sg.top"
-    },
-    "flags": [
-     {
-      "on": "body",
-      "mark": "gov-sg.top",
-      "text": "Real host is gov-sg.top"
-     },
-     {
-      "on": "body",
-      "mark": "refund of $842",
-      "text": "Money you didn't expect"
-     },
-     {
-      "on": "body",
-      "mark": "before 5pm today",
-      "text": "A same-day deadline"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/sms-lazada-redeliver",
-   "tier": "medium",
-   "label": "A Lazada text message",
-   "note": "The real text sends you to the Lazada app. The fake claims a failed delivery and links to lazada-redeliver.com.",
-   "todo": "Open the Lazada app to see delivery status. Don't reschedule through a link in a text.",
-   "techniques": [
-    "Smishing",
-    "Lookalike domain",
-    "Urgency"
-   ],
-   "red_flags": [
-    "Not lazada.sg",
-    "A failed delivery bait",
-    "A link instead of the app"
-   ],
-   "real": {
-    "format": "sms",
-    "from_name": "Lazada",
-    "subject": "Lazada: Your order #LZ4821 is out for de",
-    "date": "Today 10:48 AM",
-    "body": "Lazada: Your order #LZ4821 is out for delivery today. Track it in the Lazada app."
-   },
-   "fake": {
-    "format": "sms",
-    "from_name": "Lazada",
-    "subject": "Lazada: delivery failed for order #LZ482",
-    "date": "Today 10:48 AM",
-    "body": "Lazada: delivery failed for order #LZ4821. Reschedule at http://lazada-redeliver.com/sg to avoid return.",
-    "landing": {
-     "src": "content/media/email/medium/assets/sms-lazada-redeliver-fake-landing.svg",
-     "alt": "A fake page on lazada-redeliver.com"
-    },
-    "flags": [
-     {
-      "on": "body",
-      "mark": "lazada-redeliver.com",
-      "text": "Not lazada.sg"
-     },
-     {
-      "on": "body",
-      "mark": "delivery failed",
-      "text": "A failed delivery bait"
-     },
-     {
-      "on": "body",
-      "mark": "Reschedule at",
-      "text": "A link instead of the app"
-     }
-    ]
-   }
-  },
-  {
    "id": "email/medium/sms-ocbc-otp",
    "tier": "medium",
    "label": "An OCBC text message",
@@ -3271,295 +1064,6 @@ window.CONTENT = {
       "on": "body",
       "mark": "within 10 minutes",
       "text": "10-minute deadline"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/sms-uob-device",
-   "tier": "medium",
-   "label": "A UOB text message",
-   "note": "Both show UOB. The real text tells you to call the bank. The fake gives you a link to cancel, at uob-cancel.net.",
-   "todo": "Call the number on the back of your card, not a link in the text.",
-   "techniques": [
-    "Smishing",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not uob.com.sg",
-    "15-minute deadline",
-    "A link replaces the phone call"
-   ],
-   "real": {
-    "format": "sms",
-    "from_name": "UOB",
-    "subject": "UOB: A new device was added to your UOB ",
-    "date": "Today 7:55 PM",
-    "body": "UOB: A new device was added to your UOB TMRW app. If this was not you, call 1800 222 2121."
-   },
-   "fake": {
-    "format": "sms",
-    "from_name": "UOB",
-    "subject": "UOB: A new device was added to your UOB ",
-    "date": "Today 7:55 PM",
-    "body": "UOB: A new device was added to your UOB TMRW app. Not you? Cancel it within 15 min: uob-cancel.net/x",
-    "landing": {
-     "src": "content/media/email/medium/assets/sms-uob-device-fake-landing.svg",
-     "alt": "A fake page on uob-cancel.net"
-    },
-    "flags": [
-     {
-      "on": "body",
-      "mark": "uob-cancel.net",
-      "text": "Not uob.com.sg"
-     },
-     {
-      "on": "body",
-      "mark": "within 15 min",
-      "text": "15-minute deadline"
-     },
-     {
-      "on": "body",
-      "mark": "Not you? Cancel it",
-      "text": "A link replaces the phone call"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/software-renewal",
-   "tier": "medium",
-   "label": "Software license renewal notice",
-   "note": "The fake's invoice total and \"past due\" framing are meant to create urgency, the payment link goes to a generic lookalike domain rather than the vendor's own billing portal, and the attached \"invoice\" has a double file extension (.pdf.exe) -- a classic sign it's an executable, not a document.",
-   "todo": "Check invoices in the vendor's own portal, and never open a file ending .pdf.exe.",
-   "techniques": [
-    "Urgency",
-    "Risky attachment",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Sender domain designsuite-billing.net is not designsuite.com",
-    "'Past due' and service suspended in 48 hours",
-    "Attachment ends in .pdf.exe: it's a program, not a document",
-    "Payment link goes to the lookalike domain"
-   ],
-   "real": {
-    "from_name": "DesignSuite Billing",
-    "from_email": "billing@designsuite.com",
-    "to": "accounts@meridianfreight.com",
-    "subject": "Your DesignSuite renewal is coming up",
-    "date": "Thu, Sep 17, 2026 9:00 AM",
-    "body": "Hi Meridian Freight Co.,\n\nYour DesignSuite Team plan (12 seats) renews on Oct 1, 2026 for $588.00/yr. No action is needed -- this will renew automatically on the payment method already on file.\n\nManage your subscription anytime from your account dashboard.\n\nDesignSuite Billing",
-    "link_text": "Manage Subscription",
-    "link_url": "https://designsuite.com/account/billing"
-   },
-   "fake": {
-    "from_name": "DesignSuite Billing Dept",
-    "from_email": "invoices@designsuite-billing.net",
-    "to": "accounts@meridianfreight.com",
-    "subject": "Invoice past due - service will be suspended",
-    "date": "Thu, Sep 17, 2026 9:12 AM",
-    "body": "Your DesignSuite invoice #DS-88213 for $588.00 is past due. Service will be suspended within 48 hours unless payment is submitted immediately.\n\nPay now to avoid interruption to your team's access.",
-    "link_text": "Pay Invoice Now",
-    "link_url": "http://designsuite-billing.net/pay?inv=88213",
-    "attachment_name": "Invoice_DS-88213.pdf.exe",
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "designsuite-billing.net",
-      "text": "Not designsuite.com"
-     },
-     {
-      "on": "attachment_name",
-      "mark": ".pdf.exe",
-      "text": "A program, not a PDF"
-     },
-     {
-      "on": "body",
-      "mark": "within 48 hours",
-      "text": "48-hour threat"
-     },
-     {
-      "on": "link_url",
-      "text": "Payment link, plain http"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/medium/zoom-recording",
-   "tier": "medium",
-   "label": "A Zoom recording email, on your phone",
-   "note": "The real email comes from zoom.us and sends you to Recordings in the app. The fake comes from zoom-recordings.net and says the recording will be deleted in 24 hours unless you sign in.",
-   "todo": "Open the Zoom app and check Recordings yourself. Don't sign in from a link.",
-   "techniques": [
-    "Urgency",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not zoom.us",
-    "24-hour deadline",
-    "Asks for a sign-in",
-    "Not a zoom.us page"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "Zoom",
-    "from_email": "no-reply@zoom.us",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Cloud Recording: Q4 Planning is now available",
-    "date": "Mon, Oct 12, 2026 9:14 AM",
-    "body": "Hi Jordan,\n\nThe cloud recording for Q4 Planning is now available.\n\nOpen the Zoom app and go to Recordings to watch it."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "Zoom",
-    "from_email": "no-reply@zoom-recordings.net",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Cloud Recording: Q4 Planning - expires in 24 hours",
-    "date": "Mon, Oct 12, 2026 2:41 PM",
-    "body": "Hi Jordan,\n\nThe cloud recording for Q4 Planning will be deleted in 24 hours. Sign in to download it now.",
-    "link_text": "Download recording",
-    "link_url": "https://zoom-recordings.net/rec/download",
-    "landing": {
-     "src": "content/media/email/medium/assets/zoom-recording-fake-landing.svg",
-     "alt": "A fake page on zoom-recordings.net"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "zoom-recordings.net",
-      "text": "Not zoom.us"
-     },
-     {
-      "on": "subject",
-      "mark": "expires in 24 hours",
-      "text": "24-hour deadline"
-     },
-     {
-      "on": "body",
-      "mark": "Sign in to download it now",
-      "text": "Asks for a sign-in"
-     },
-     {
-      "on": "link_url",
-      "text": "Not a zoom.us page"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/ariba-approval",
-   "tier": "hard",
-   "label": "A supplier invoice for approval",
-   "note": "Both look the same. The real one comes from ariba.com and tells you to open Ariba from your own bookmark. The fake comes from ariba-approvals.com and gives you a link to a look-alike login.",
-   "todo": "Approve invoices only inside Ariba, opened from your own bookmark.",
-   "techniques": [
-    "Credential harvesting",
-    "Lookalike domain",
-    "Business process"
-   ],
-   "red_flags": [
-    "Not ariba.com",
-    "A link, not your bookmark",
-    "Not an Ariba address"
-   ],
-   "real": {
-    "from_name": "SAP Ariba",
-    "from_email": "ordering@ansmtp.ariba.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Invoice INV-8821 awaits your approval",
-    "date": "Mon, Oct 12, 2026 9:14 AM",
-    "body": "Hello Jordan,\n\nInvoice INV-8821 from Rossum Industrial Supply for $9,640.00 is awaiting your approval.\n\nOpen Ariba from your usual bookmark to review it.\n\nSAP Ariba",
-    "banner": "content/media/email/hard/assets/ariba-approval-real-banner.svg"
-   },
-   "fake": {
-    "from_name": "SAP Ariba",
-    "from_email": "invoices@ariba-approvals.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Invoice INV-8821 awaits your approval",
-    "date": "Mon, Oct 12, 2026 2:41 PM",
-    "body": "Hello Jordan,\n\nInvoice INV-8821 from Rossum Industrial Supply for $9,640.00 is awaiting your approval.\n\nReview and approve it below.\n\nSAP Ariba",
-    "banner": "content/media/email/hard/assets/ariba-approval-fake-banner.svg",
-    "link_text": "Review invoice",
-    "link_url": "https://ariba-approvals.com/invoices/INV-8821",
-    "landing": {
-     "src": "content/media/email/hard/assets/ariba-approval-fake-landing.svg",
-     "alt": "A fake page on ariba-approvals.com"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "ariba-approvals.com",
-      "text": "Not ariba.com"
-     },
-     {
-      "on": "body",
-      "mark": "Review and approve it below",
-      "text": "A link, not your bookmark"
-     },
-     {
-      "on": "link_url",
-      "text": "Not an Ariba address"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/aws-mfa",
-   "tier": "hard",
-   "label": "An AWS security notification",
-   "note": "The real notice comes from amazon.com and tells you to use your own bookmark. The fake comes from amazon-aws-security.com and gives you a link to a look-alike IAM page.",
-   "todo": "Review IAM activity from your own bookmark and report the email to Security.",
-   "techniques": [
-    "Credential harvesting",
-    "Lookalike domain",
-    "Urgency"
-   ],
-   "red_flags": [
-    "Not amazon.com",
-    "A link, not your bookmark",
-    "Not an aws.amazon.com page"
-   ],
-   "real": {
-    "from_name": "Amazon Web Services",
-    "from_email": "no-reply-aws@amazon.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "AWS Notification: MFA device removed from IAM user",
-    "date": "Mon, Oct 12, 2026 9:14 AM",
-    "body": "Hello,\n\nAn MFA device was removed from IAM user jalvarez at 2026-10-13 09:41 UTC.\n\nIf you made this change, no action is needed. If not, sign in to the IAM console from your bookmark and review recent activity.\n\nAmazon Web Services",
-    "banner": "content/media/email/hard/assets/aws-mfa-real-banner.svg"
-   },
-   "fake": {
-    "from_name": "Amazon Web Services",
-    "from_email": "no-reply@amazon-aws-security.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "AWS Notification: MFA device removed from IAM user",
-    "date": "Mon, Oct 12, 2026 2:41 PM",
-    "body": "Hello,\n\nAn MFA device was removed from IAM user jalvarez at 2026-10-13 09:41 UTC.\n\nIf you did not make this change, secure your account now.\n\nAmazon Web Services",
-    "banner": "content/media/email/hard/assets/aws-mfa-fake-banner.svg",
-    "link_text": "Secure account",
-    "link_url": "https://amazon-aws-security.com/iam/secure",
-    "landing": {
-     "src": "content/media/email/hard/assets/aws-mfa-fake-landing.svg",
-     "alt": "A fake page on amazon-aws-security.com"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "amazon-aws-security.com",
-      "text": "Not amazon.com"
-     },
-     {
-      "on": "body",
-      "mark": "secure your account now",
-      "text": "A link, not your bookmark"
-     },
-     {
-      "on": "link_url",
-      "text": "Not an aws.amazon.com page"
      }
     ]
    }
@@ -3627,389 +1131,6 @@ window.CONTENT = {
    }
   },
   {
-   "id": "email/hard/ceo-desk",
-   "tier": "hard",
-   "label": "A message from the CEO, on your phone",
-   "note": "The display name is identical, so on a phone you only see Daniel Koh. The fake address ends in .co, not .com, and the message builds trust before asking for something.",
-   "todo": "If an executive asks for an unspecified favour, call or message them on a channel you already use.",
-   "techniques": [
-    "Authority",
-    "Impersonated executive",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Ends in .co, not .com",
-    "A vague, urgent opener",
-    "Avoids a phone call",
-    "Pressure to reply fast"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "Daniel Koh",
-    "from_email": "daniel.koh@meridianfreight.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Team offsite: dates",
-    "date": "Tue, Oct 13, 2026 8:02 AM",
-    "body": "Hi Jordan,\n\nWe're looking at Nov 19-20 for the team offsite. Can you check your calendar and reply with any clashes by Friday?\n\nThanks,\nDaniel"
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "Daniel Koh",
-    "from_email": "daniel.koh@meridianfreight.co",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Quick favour",
-    "date": "Tue, Oct 13, 2026 4:12 PM",
-    "body": "Jordan,\n\nAre you at your desk? I need you to do something for me and I'd rather not call. Reply as soon as you see this.\n\nDaniel\nSent from my iPhone",
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "meridianfreight.co",
-      "text": "Ends in .co, not .com"
-     },
-     {
-      "on": "subject",
-      "mark": "Quick favour",
-      "text": "A vague, urgent opener"
-     },
-     {
-      "on": "body",
-      "mark": "I'd rather not call",
-      "text": "Avoids a phone call"
-     },
-     {
-      "on": "body",
-      "mark": "Reply as soon as you see this",
-      "text": "Pressure to reply fast"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/compliance-training",
-   "tier": "hard",
-   "label": "A compliance training reminder",
-   "note": "The fake borrows the CEO's title to scare you, but comes from meridianfreight-hr.com, not meridianfreight.com, orders you not to discuss it, and links to a login page over http.",
-   "todo": "Check with the sender or IT on a channel you already trust. A genuine directive never needs you to hide it.",
-   "techniques": [
-    "Authority",
-    "Urgency",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Sender domain meridianfreight-hr.com is not meridianfreight.com",
-    "Uses the CEO's authority and a threat of discipline",
-    "'Do not discuss this with colleagues' stops you checking",
-    "Deadline of 'today by 5pm'",
-    "'Sent from my iPhone' is a cheap trust trick",
-    "Link opens a login page over plain http"
-   ],
-   "real": {
-    "from_name": "Meridian Learning",
-    "from_email": "learning@meridianfreight.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Reminder: complete Data Protection training by 16 Oct",
-    "date": "Wed, Oct 7, 2026 9:00 AM",
-    "body": "Hi Jordan,\n\nYour annual Data Protection training is due on Fri, Oct 16, 2026. It takes about 20 minutes.\n\nSign in with your usual company SSO from the Learning portal. If you've already completed it, please ignore this reminder.\n\nThanks,\nPeople & Culture",
-    "link_text": "Open Learning portal",
-    "link_url": "https://learn.meridianfreight.com/courses/data-protection",
-    "landing": {
-     "src": "content/media/email/hard/assets/compliance-training-real-landing.svg",
-     "alt": "The company's real Learning portal sign-in on meridianfreight.com"
-    }
-   },
-   "fake": {
-    "from_name": "Daniel Koh, Chief Executive Officer",
-    "from_email": "daniel.koh@meridianfreight-hr.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "MANDATORY - complete today by order of the CEO",
-    "date": "Wed, Oct 7, 2026 8:41 AM",
-    "body": "All staff,\n\nPer my direct instruction, everyone must verify their login on the compliance portal TODAY. Anyone who has not done so by 5pm will be reported to the board and may face disciplinary action.\n\nThis is not optional. Do not discuss this with colleagues.\n\nDaniel Koh\nChief Executive Officer\nSent from my iPhone",
-    "link_text": "Compliance portal",
-    "link_url": "http://meridianfreight-hr.com/compliance",
-    "landing": {
-     "src": "content/media/email/hard/assets/compliance-training-fake-landing.svg",
-     "alt": "A fake company login page on meridianfreight-hr.com"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "meridianfreight-hr.com",
-      "text": "Not meridianfreight.com"
-     },
-     {
-      "on": "body",
-      "mark": "Do not discuss this with colleagues",
-      "text": "Told to keep it secret"
-     },
-     {
-      "on": "body",
-      "mark": "reported to the board and may face disciplinary action",
-      "text": "Threat of discipline"
-     },
-     {
-      "on": "link_url",
-      "text": "Login page over plain http"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/cpf-statement",
-   "tier": "hard",
-   "label": "A CPF statement email",
-   "note": "The real email says CPF never asks for your Singpass password by email. The fake comes from cpf-board.com, not a .gov.sg address, and asks for exactly that.",
-   "todo": "Government sites end in .gov.sg. Go to cpf.gov.sg yourself and log in with Singpass.",
-   "techniques": [
-    "Government impersonation",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not cpf.gov.sg",
-    "Asks for your Singpass login",
-    "48-hour deadline",
-    "Not a .gov.sg address"
-   ],
-   "real": {
-    "from_name": "CPF Board",
-    "from_email": "noreply@cpf.gov.sg",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your CPF contribution statement for September",
-    "date": "Mon, Oct 12, 2026 9:14 AM",
-    "body": "Dear Member,\n\nYour CPF contribution for September 2026 has been credited. View your statement at cpf.gov.sg with Singpass.\n\nCPF will never ask for your Singpass password or bank details by email.\n\nCPF Board",
-    "banner": "content/media/email/hard/assets/cpf-statement-real-banner.svg",
-    "link_text": "Go to CPF",
-    "link_url": "https://www.cpf.gov.sg/member",
-    "landing": {
-     "src": "content/media/email/hard/assets/cpf-statement-real-landing.svg",
-     "alt": "The real page on www.cpf.gov.sg"
-    }
-   },
-   "fake": {
-    "from_name": "CPF Board",
-    "from_email": "service@cpf-board.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your CPF contribution statement - action needed",
-    "date": "Mon, Oct 12, 2026 2:41 PM",
-    "body": "Dear Member,\n\nWe found a mismatch in your September contribution. Log in with your Singpass ID and password to correct it within 48 hours.\n\nCPF Board",
-    "banner": "content/media/email/hard/assets/cpf-statement-fake-banner.svg",
-    "link_text": "Correct my record",
-    "link_url": "https://cpf-board.com/member/login",
-    "landing": {
-     "src": "content/media/email/hard/assets/cpf-statement-fake-landing.svg",
-     "alt": "A fake page on cpf-board.com"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "cpf-board.com",
-      "text": "Not cpf.gov.sg"
-     },
-     {
-      "on": "body",
-      "mark": "Singpass ID and password",
-      "text": "Asks for your Singpass login"
-     },
-     {
-      "on": "body",
-      "mark": "within 48 hours",
-      "text": "48-hour deadline"
-     },
-     {
-      "on": "link_url",
-      "text": "Not a .gov.sg address"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/eventbrite-ticket",
-   "tier": "hard",
-   "label": "An event ticket with a QR code",
-   "note": "The real ticket has an entry QR code and a link to eventbrite.com. The fake, from eventbrite-entry-pass.top, says your ticket is invalid and has no link, only a QR code that hides where it leads.",
-   "todo": "Don't scan a QR code from an email that asks you to sign in. Open the Eventbrite app or site yourself.",
-   "techniques": [
-    "QR code",
-    "Urgency",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Sender domain eventbrite-entry-pass.top is not eventbrite.com",
-    "A ticket 'problem' with a 15-minute countdown",
-    "No link, only a QR code: you can't see the destination",
-    "Banner misspelt 'eventbrlte'",
-    "The QR leads to a sign-in page for your password"
-   ],
-   "real": {
-    "from_name": "Eventbrite",
-    "from_email": "orders@eventbrite.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your tickets for Singapore Cyber Summit 2026 (Order #48213)",
-    "date": "Tue, Oct 6, 2026 9:50 AM",
-    "body": "You're going to Singapore Cyber Summit 2026!\n\nOrder #48213 · 1 x General Admission\nSat, 17 Oct 2026 · Suntec Convention Centre\n\nShow the QR code below at the entrance.",
-    "banner": "content/media/email/hard/assets/eventbrite-ticket-real-banner.svg",
-    "qr": {
-     "src": "content/media/email/hard/assets/eventbrite-ticket-real-qr.svg",
-     "caption": "Entry ticket, Order #48213",
-     "alt": "A QR code"
-    },
-    "link_text": "View your order",
-    "link_url": "https://www.eventbrite.com/orders/48213",
-    "landing": {
-     "src": "content/media/email/hard/assets/eventbrite-ticket-real-landing.svg",
-     "alt": "The real Eventbrite login page at eventbrite.com"
-    }
-   },
-   "fake": {
-    "from_name": "Eventbrite Tickets",
-    "from_email": "tickets@eventbrite-entry-pass.top",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Ticket problem: scan to re-validate your entry within 15 minutes",
-    "date": "Tue, Oct 6, 2026 9:38 AM",
-    "body": "Hi,\n\nWe could not validate your ticket for Singapore Cyber Summit 2026 (Order #48213). Tickets that are not re-validated are CANCELLED and refunded at 50%.\n\nTo keep your seat, scan the QR code below with your phone and sign in to re-validate within 15 MINUTES.",
-    "banner": "content/media/email/hard/assets/eventbrite-ticket-fake-banner.svg",
-    "qr": {
-     "src": "content/media/email/hard/assets/eventbrite-ticket-fake-qr.svg",
-     "caption": "Scan to re-validate, expires 15:00",
-     "alt": "A QR code"
-    },
-    "landing": {
-     "src": "content/media/email/hard/assets/eventbrite-ticket-fake-landing.svg",
-     "alt": "A fake sign-in page on eventbrite-entry-pass.top"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "eventbrite-entry-pass.top",
-      "text": "Not eventbrite.com"
-     },
-     {
-      "on": "subject",
-      "mark": "within 15 minutes",
-      "text": "15-minute countdown"
-     },
-     {
-      "on": "body",
-      "mark": "sign in to re-validate",
-      "text": "Wants a sign-in to continue"
-     },
-     {
-      "on": "qr",
-      "text": "QR hides where it leads"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/executive-travel-request",
-   "tier": "hard",
-   "label": "Executive travel booking request",
-   "note": "The display name and writing style closely match the CFO, but the actual sender address is a personal Outlook account rather than the company one, and the request routes payment through personal Venmo instead of the corporate travel system finance normally uses.",
-   "todo": "Call Marcus on his known number. Flights are booked through Concur, never with personal payment apps.",
-   "techniques": [
-    "Authority",
-    "Personal email address",
-    "Payment diversion"
-   ],
-   "red_flags": [
-    "Sent from a personal Outlook address, not the company's",
-    "Asks you to pay by Venmo and skip the travel system",
-    "Urgent and 'no time' for the normal process"
-   ],
-   "real": {
-    "from_name": "Marcus Feld (CFO)",
-    "from_email": "m.feld@meridianfreight.com",
-    "to": "travel@meridianfreight.com",
-    "subject": "Flight change for Chicago trip",
-    "date": "Fri, Sep 25, 2026 4:12 PM",
-    "body": "Hi team,\n\nCan you move my Chicago flight from Tuesday to Wednesday morning? Same airline is fine. Book it through Concur as usual and send me the new itinerary.\n\nThanks,\nMarcus"
-   },
-   "fake": {
-    "from_name": "Marcus Feld (CFO)",
-    "from_email": "marcus.feld1972@outlook.com",
-    "to": "travel@meridianfreight.com",
-    "subject": "Need a quick flight booked - traveling today",
-    "date": "Fri, Sep 25, 2026 4:18 PM",
-    "body": "Hi,\n\nI'm about to board and need a last-minute flight booked for a client emergency in Chicago tonight. Can you book it directly and Venmo me the receipt total so I can expense it later? Don't have time to go through Concur right now, just need this handled fast.\n\nMarcus",
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "marcus.feld1972@outlook.com",
-      "text": "Personal Outlook address"
-     },
-     {
-      "on": "body",
-      "mark": "Venmo me",
-      "text": "Asks for payment by Venmo"
-     },
-     {
-      "on": "body",
-      "mark": "Don't have time",
-      "text": "Skips the normal process"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/hr-statement",
-   "tier": "hard",
-   "label": "An HR statement email",
-   "note": "The real email points you to Workday. The fake comes from meridianfrieght.com (ie and ei swapped) and wants your bank details before you can see anything.",
-   "todo": "Open Workday yourself. HR never needs bank details to show you a statement.",
-   "techniques": [
-    "Impersonated HR",
-    "Lookalike domain",
-    "Data harvesting"
-   ],
-   "red_flags": [
-    "ie and ei swapped",
-    "Wants bank details to view",
-    "Same lookalike domain"
-   ],
-   "real": {
-    "from_name": "Meridian HR",
-    "from_email": "hr@meridianfreight.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your annual compensation statement is ready",
-    "date": "Wed, Oct 14, 2026 10:26 AM",
-    "body": "Hi Jordan,\n\nYour 2026 compensation statement is now available in Workday under Pay > Statements.\n\nPlease review it by Oct 30. If anything looks wrong, reply to this email or contact HR.\n\nMeridian HR Team",
-    "banner": "content/media/email/hard/assets/hr-statement-real-banner.svg"
-   },
-   "fake": {
-    "from_name": "Meridian HR",
-    "from_email": "hr@meridianfrieght.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your annual compensation statement is ready",
-    "date": "Wed, Oct 14, 2026 1:05 PM",
-    "body": "Hi Jordan,\n\nYour 2026 compensation statement is ready. To view it, confirm your direct deposit details by Oct 30.\n\nMeridian HR Team",
-    "banner": "content/media/email/hard/assets/hr-statement-fake-banner.svg",
-    "link_text": "View statement",
-    "link_url": "https://meridianfrieght.com/hr/statement",
-    "landing": {
-     "src": "content/media/email/hard/assets/hr-statement-fake-landing.svg",
-     "alt": "A fake page on meridianfrieght.com"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "meridianfrieght.com",
-      "text": "ie and ei swapped"
-     },
-     {
-      "on": "body",
-      "mark": "confirm your direct deposit details",
-      "text": "Wants bank details to view"
-     },
-     {
-      "on": "link_url",
-      "text": "Same lookalike domain"
-     }
-    ]
-   }
-  },
-  {
    "id": "email/hard/invoice-approval",
    "tier": "hard",
    "label": "Vendor invoice approval",
@@ -4021,9 +1142,9 @@ window.CONTENT = {
     "Changed bank details"
    ],
    "red_flags": [
-    "Sender domain rossum-supply.com has an extra hyphen",
-    "Bank details changed with no phone confirmation",
-    "Sent late in the day to catch finance in a rush"
+    "Extra hyphen in the domain",
+    "Bank details changed",
+    "Bank details only in a file"
    ],
    "real": {
     "from_name": "Rossum Industrial Supply",
@@ -4124,64 +1245,6 @@ window.CONTENT = {
    }
   },
   {
-   "id": "email/hard/maersk-bol",
-   "tier": "hard",
-   "label": "A shipping document from Maersk",
-   "note": "In a freight company this is a daily email. The real one sends you to the Maersk portal; the fake comes from maersk-docs.com with an .html attachment that opens a fake login.",
-   "todo": "Check booking documents in the carrier's portal, opened from your bookmark.",
-   "techniques": [
-    "Risky attachment",
-    "Business process",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not maersk.com",
-    "An .html file, not a PDF",
-    "Opens a file, not the portal"
-   ],
-   "real": {
-    "from_name": "Maersk",
-    "from_email": "noreply@maersk.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Draft bill of lading for booking 248213390",
-    "date": "Wed, Oct 14, 2026 10:26 AM",
-    "body": "Hello Jordan,\n\nThe draft bill of lading for booking 248213390 is available. Please review it in the Maersk portal and confirm by Oct 16.\n\nMaersk Customer Service",
-    "banner": "content/media/email/hard/assets/maersk-bol-real-banner.svg",
-    "link_text": "Open in Maersk portal",
-    "link_url": "https://www.maersk.com/portal",
-    "landing": {
-     "src": "content/media/email/hard/assets/maersk-bol-real-landing.svg",
-     "alt": "The real page on www.maersk.com"
-    }
-   },
-   "fake": {
-    "from_name": "Maersk",
-    "from_email": "docs@maersk-docs.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Draft bill of lading for booking 248213390",
-    "date": "Wed, Oct 14, 2026 1:05 PM",
-    "body": "Hello Jordan,\n\nThe draft bill of lading for booking 248213390 is attached. Please open it and confirm by Oct 16.\n\nMaersk Customer Service",
-    "banner": "content/media/email/hard/assets/maersk-bol-fake-banner.svg",
-    "attachment_name": "BoL_248213390.html",
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "maersk-docs.com",
-      "text": "Not maersk.com"
-     },
-     {
-      "on": "attachment_name",
-      "text": "An .html file, not a PDF"
-     },
-     {
-      "on": "body",
-      "mark": "open it and confirm",
-      "text": "Opens a file, not the portal"
-     }
-    ]
-   }
-  },
-  {
    "id": "email/hard/oauth-consent",
    "tier": "hard",
    "label": "A Microsoft account notice, on your phone",
@@ -4251,7 +1314,7 @@ window.CONTENT = {
    "red_flags": [
     "A sticker over the real code",
     "Guests don't have a work login",
-    "Copies the real network name"
+    "Printed link ≠ where QR goes"
    ],
    "real": {
     "format": "qr",
@@ -4298,9 +1361,8 @@ window.CONTENT = {
       "text": "Guests don't have a work login"
      },
      {
-      "on": "body",
-      "mark": "Network: Meridian-Guest",
-      "text": "Copies the real network name"
+      "on": "printed_url",
+      "text": "Printed link ≠ where QR goes"
      }
     ]
    }
@@ -4319,7 +1381,7 @@ window.CONTENT = {
    "red_flags": [
     "A sticker over the real code",
     "A different UEN",
-    "Same words as the real one"
+    "Payee shows a person's name"
    ],
    "real": {
     "format": "qr",
@@ -4358,306 +1420,9 @@ window.CONTENT = {
       "text": "A different UEN"
      },
      {
-      "on": "subject",
-      "mark": "Pay with PayNow",
-      "text": "Same words as the real one"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/qr-summit-badge",
-   "tier": "hard",
-   "label": "A conference agenda code",
-   "note": "The sign looks the same, with no sticker. The printed address is missing an m (sgcybersumit.sg), and the fake asks you to sign in with LinkedIn for an agenda.",
-   "todo": "An agenda never needs a login. Read the printed address letter by letter before you scan.",
-   "techniques": [
-    "Quishing",
-    "Credential harvesting",
-    "Typosquatting"
-   ],
-   "red_flags": [
-    "One letter missing: sumit",
-    "Asks for a login",
-    "QR can't show where it leads"
-   ],
-   "real": {
-    "format": "qr",
-    "from_name": "Singapore Cyber Summit",
-    "subject": "Scan for the agenda",
-    "body": "Scan to see today's sessions and speakers. No sign-in needed.",
-    "printed_url": "sgcybersummit.sg",
-    "scan_url": "https://sgcybersummit.sg/agenda",
-    "qr": {
-     "src": "content/media/email/hard/assets/qr-summit-badge-real-qr.svg",
-     "caption": "Agenda",
-     "alt": "A QR code"
-    },
-    "landing": {
-     "src": "content/media/email/hard/assets/qr-summit-badge-real-landing.svg",
-     "alt": "The real page on sgcybersummit.sg"
-    }
-   },
-   "fake": {
-    "format": "qr",
-    "from_name": "Singapore Cyber Summit",
-    "subject": "Scan for the agenda",
-    "body": "Scan to see today's sessions and speakers. Sign in with LinkedIn to continue.",
-    "printed_url": "sgcybersumit.sg",
-    "scan_url": "https://sgcybersumit.sg/agenda",
-    "qr": {
-     "src": "content/media/email/hard/assets/qr-summit-badge-fake-qr.svg",
-     "caption": "Agenda",
-     "alt": "A QR code"
-    },
-    "landing": {
-     "src": "content/media/email/hard/assets/qr-summit-badge-fake-landing.svg",
-     "alt": "A fake page on sgcybersumit.sg"
-    },
-    "flags": [
-     {
-      "on": "printed_url",
-      "mark": "sgcybersumit.sg",
-      "text": "One letter missing: sumit"
-     },
-     {
       "on": "body",
-      "mark": "Sign in with LinkedIn",
-      "text": "Asks for a login"
-     },
-     {
-      "on": "qr",
-      "text": "QR can't show where it leads"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/recruiter-pdf",
-   "tier": "hard",
-   "label": "A recruiter message, on your phone",
-   "note": "A job message is a favourite lure. The fake comes from maersk-careers.com, flatters you, asks for secrecy and attaches a file that ends .pdf.html: a web page pretending to be a PDF.",
-   "todo": "Look up the role on the company's real careers page. Never open a file ending .pdf.html.",
-   "techniques": [
-    "Spear phishing",
-    "Risky attachment",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not maersk.com",
-    "Flattery and secrecy",
-    "A .pdf that is really .html",
-    "Pushes you to hurry"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "LinkedIn Job Alerts",
-    "from_email": "jobs-noreply@linkedin.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Logistics Manager at Maersk and 11 more jobs",
-    "date": "Mon, Oct 12, 2026 9:14 AM",
-    "body": "Hi Jordan,\n\nHere are jobs that match your profile.\n\nLogistics Manager, Maersk, Singapore\n\nOpen the LinkedIn app to see all matches."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "Sarah Lim, Maersk Talent",
-    "from_email": "s.lim@maersk-careers.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Confidential: Head of Logistics role (Singapore)",
-    "date": "Mon, Oct 12, 2026 2:41 PM",
-    "body": "Hi Jordan,\n\nI'm recruiting for a confidential Head of Logistics role at Maersk. Your profile stood out. The job description is attached; please review it today.\n\nSarah Lim\nTalent Acquisition",
-    "attachment_name": "JD_HeadOfLogistics.pdf.html",
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "maersk-careers.com",
-      "text": "Not maersk.com"
-     },
-     {
-      "on": "subject",
-      "mark": "Confidential",
-      "text": "Flattery and secrecy"
-     },
-     {
-      "on": "attachment_name",
-      "mark": ".pdf.html",
-      "text": "A .pdf that is really .html"
-     },
-     {
-      "on": "body",
-      "mark": "review it today",
-      "text": "Pushes you to hurry"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/servicenow-ticket",
-   "tier": "hard",
-   "label": "An IT ticket update",
-   "note": "The ticket number and wording are right, because the attacker knew about your VPN problem. The fake ends in .co, not .com, and asks for your network password to 'confirm'.",
-   "todo": "IT never needs your password to close a ticket. Reply to the ticket or call the Service Desk.",
-   "techniques": [
-    "Spear phishing",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Ends in .co, not .com",
-    "Asks for your password",
-    "Not service-now.com"
-   ],
-   "real": {
-    "from_name": "Meridian IT Service Desk",
-    "from_email": "meridianfreight@service-now.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "INC0048213 has been resolved",
-    "date": "Tue, Oct 13, 2026 8:02 AM",
-    "body": "Hi Jordan,\n\nYour incident INC0048213 (Laptop VPN not connecting) has been resolved.\n\nIf the issue is fixed, no action is needed. If not, reply to this email within 3 days to reopen it.\n\nIT Service Desk",
-    "banner": "content/media/email/hard/assets/servicenow-ticket-real-banner.svg"
-   },
-   "fake": {
-    "from_name": "Meridian IT Service Desk",
-    "from_email": "meridianfreight@service-now.co",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "INC0048213 has been resolved",
-    "date": "Tue, Oct 13, 2026 4:12 PM",
-    "body": "Hi Jordan,\n\nYour incident INC0048213 (Laptop VPN not connecting) has been resolved. Please confirm the fix by signing in with your network password.\n\nIT Service Desk",
-    "banner": "content/media/email/hard/assets/servicenow-ticket-fake-banner.svg",
-    "link_text": "Confirm fix",
-    "link_url": "https://service-now.co/meridianfreight/confirm",
-    "landing": {
-     "src": "content/media/email/hard/assets/servicenow-ticket-fake-landing.svg",
-     "alt": "A fake page on service-now.co"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "service-now.co",
-      "text": "Ends in .co, not .com"
-     },
-     {
-      "on": "body",
-      "mark": "signing in with your network password",
-      "text": "Asks for your password"
-     },
-     {
-      "on": "link_url",
-      "text": "Not service-now.com"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/singpass-device",
-   "tier": "hard",
-   "label": "A Singpass alert, on your phone",
-   "note": "Real: singpass.gov.sg. Fake: singpass-gov.sg, where a hyphen replaces the dot. The real alert tells you to use the Singpass app instead of a link.",
-   "todo": "Report suspicious logins in the Singpass app. Never verify your identity through an email link.",
-   "techniques": [
-    "Government impersonation",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "A hyphen replaces the dot",
-    "Asks you to verify by link",
-    "Not singpass.gov.sg"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "Singpass",
-    "from_email": "no-reply@singpass.gov.sg",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "You logged in to Singpass on a new device",
-    "date": "Tue, Oct 13, 2026 8:02 AM",
-    "body": "Hi Jordan,\n\nYou logged in to Singpass on a new device on Oct 13 at 4:12 PM.\n\nIf this was you, no action is needed. If not, open the Singpass app and report it."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "Singpass",
-    "from_email": "no-reply@singpass-gov.sg",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "You logged in to Singpass on a new device",
-    "date": "Tue, Oct 13, 2026 4:12 PM",
-    "body": "Hi Jordan,\n\nYou logged in to Singpass on a new device on Oct 13 at 4:12 PM.\n\nIf this wasn't you, verify your identity now.",
-    "link_text": "Verify identity",
-    "link_url": "https://singpass-gov.sg/verify",
-    "landing": {
-     "src": "content/media/email/hard/assets/singpass-device-fake-landing.svg",
-     "alt": "A fake page on singpass-gov.sg"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "singpass-gov.sg",
-      "text": "A hyphen replaces the dot"
-     },
-     {
-      "on": "body",
-      "mark": "verify your identity now",
-      "text": "Asks you to verify by link"
-     },
-     {
-      "on": "link_url",
-      "text": "Not singpass.gov.sg"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/singtel-benefits",
-   "tier": "hard",
-   "label": "A Singtel benefits email, on your phone",
-   "note": "The sender name matches on a phone. The real email says to use the HR portal from your bookmark. The fake comes from singte1.com, with a 1 in place of the l, and gives you a link.",
-   "todo": "Tap the sender name to read the address letter by letter. Open the HR portal from your own bookmark.",
-   "techniques": [
-    "Credential harvesting",
-    "Homoglyph domain",
-    "Internal impersonation"
-   ],
-   "red_flags": [
-    "A 1 where the l should be",
-    "A link, not your bookmark",
-    "Not an HR portal address"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "Singtel HR Benefits",
-    "from_email": "benefits@singtel.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Confirm your dependants for 2027 benefits",
-    "date": "Mon, Oct 12, 2026 9:14 AM",
-    "body": "Hi Jordan,\n\nBenefits for 2027 open on 1 Nov. Please review your dependants before 30 Oct.\n\nYou can do this in the HR portal, from your usual bookmark."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "Singtel HR Benefits",
-    "from_email": "benefits@singte1.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Confirm your dependants for 2027 benefits",
-    "date": "Mon, Oct 12, 2026 2:41 PM",
-    "body": "Hi Jordan,\n\nBenefits for 2027 open on 1 Nov. Please review your dependants before 30 Oct.\n\nYou can do this using the link below.",
-    "link_text": "Review dependants",
-    "link_url": "https://singte1.com/hr/benefits",
-    "landing": {
-     "src": "content/media/email/hard/assets/singtel-benefits-fake-landing.svg",
-     "alt": "A fake page on singte1.com"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "singte1.com",
-      "text": "A 1 where the l should be"
-     },
-     {
-      "on": "body",
-      "mark": "using the link below",
-      "text": "A link, not your bookmark"
-     },
-     {
-      "on": "link_url",
-      "text": "Not an HR portal address"
+      "mark": "check the name shows Kopi Corner",
+      "text": "Payee shows a person's name"
      }
     ]
    }
@@ -4719,7 +1484,7 @@ window.CONTENT = {
    "tier": "hard",
    "label": "A Singtel training reminder, on your phone",
    "note": "Both look the same on a phone. The real email tells you to use your own bookmark. The fake comes from singtel-learning.com and gives you a link that asks for your staff login.",
-   "todo": "Tap the sender name to check the address, then open the learning portal from your own bookmark.",
+   "todo": "Read the sender's address, then open the learning portal from your own bookmark.",
    "techniques": [
     "Credential harvesting",
     "Lookalike domain",
@@ -4772,63 +1537,6 @@ window.CONTENT = {
    }
   },
   {
-   "id": "email/hard/singtel-town-hall",
-   "tier": "hard",
-   "label": "A Singtel town hall invitation",
-   "note": "The real email is from singtel.com and points you to the staff intranet. The fake comes from singtei.com, with an i in place of the l, and asks you to register with your staff login.",
-   "todo": "Use the staff intranet from your own bookmark. Read an address letter by letter before you sign in.",
-   "techniques": [
-    "Credential harvesting",
-    "Typosquatting",
-    "Internal impersonation"
-   ],
-   "red_flags": [
-    "An i where the l should be",
-    "Wants a login to register",
-    "Not a singtel.com address"
-   ],
-   "real": {
-    "from_name": "Singtel Corporate Communications",
-    "from_email": "corporatecomms@singtel.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Town hall: submit your questions by 20 Oct",
-    "date": "Tue, Oct 13, 2026 8:02 AM",
-    "body": "Hi Jordan,\n\nThe Group CEO fireside chat is on 22 Oct at 3:00 PM, in the auditorium and online.\n\nSubmit your questions for the Q&A on the staff intranet by 20 Oct.\n\nCorporate Communications",
-    "banner": "content/media/email/hard/assets/singtel-town-hall-real-banner.svg"
-   },
-   "fake": {
-    "from_name": "Singtel Corporate Communications",
-    "from_email": "corporatecomms@singtei.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Town hall: submit your questions by 20 Oct",
-    "date": "Tue, Oct 13, 2026 4:12 PM",
-    "body": "Hi Jordan,\n\nThe Group CEO fireside chat is on 22 Oct at 3:00 PM, in the auditorium and online.\n\nRegister and submit your questions with your staff login by 20 Oct.\n\nCorporate Communications",
-    "banner": "content/media/email/hard/assets/singtel-town-hall-fake-banner.svg",
-    "link_text": "Register now",
-    "link_url": "https://singtei.com/townhall/register",
-    "landing": {
-     "src": "content/media/email/hard/assets/singtel-town-hall-fake-landing.svg",
-     "alt": "A fake page on singtei.com"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "singtei.com",
-      "text": "An i where the l should be"
-     },
-     {
-      "on": "body",
-      "mark": "with your staff login",
-      "text": "Wants a login to register"
-     },
-     {
-      "on": "link_url",
-      "text": "Not a singtel.com address"
-     }
-    ]
-   }
-  },
-  {
    "id": "email/hard/sms-ceo-newnumber",
    "tier": "hard",
    "label": "A text from your CEO",
@@ -4875,593 +1583,150 @@ window.CONTENT = {
      }
     ]
    }
-  },
-  {
-   "id": "email/hard/sms-google-code",
-   "tier": "hard",
-   "label": "A Google verification code",
-   "note": "A real verification text is just the code. The fake adds a line and a link, google-help.co, to cancel it.",
-   "todo": "If you didn't ask for a code, change your password in the Google app or at google.com, not through the text.",
-   "techniques": [
-    "Smishing",
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not google.com",
-    "Adds a link to a code text",
-    "Real codes carry no links"
-   ],
-   "real": {
-    "format": "sms",
-    "from_name": "Google",
-    "subject": "G-482913 is your Google verification cod",
-    "date": "Today 5:44 PM",
-    "body": "G-482913 is your Google verification code."
-   },
-   "fake": {
-    "format": "sms",
-    "from_name": "Google",
-    "subject": "G-482913 is your Google verification cod",
-    "date": "Today 5:44 PM",
-    "body": "G-482913 is your Google verification code. Don't recognise this? Cancel at google-help.co/x",
-    "landing": {
-     "src": "content/media/email/hard/assets/sms-google-code-fake-landing.svg",
-     "alt": "A fake page on google-help.co"
-    },
-    "flags": [
-     {
-      "on": "body",
-      "mark": "google-help.co",
-      "text": "Not google.com"
-     },
-     {
-      "on": "body",
-      "mark": "Don't recognise this?",
-      "text": "Adds a link to a code text"
-     },
-     {
-      "on": "body",
-      "mark": "Cancel at",
-      "text": "Real codes carry no links"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/sms-singpass-code",
-   "tier": "hard",
-   "label": "A Singpass text message",
-   "note": "Both show SINGPASS. The real text only holds a code and says to ignore it if you didn't ask. The fake raises an alarm and links to singpass-verify.sg.",
-   "todo": "Real Singpass texts carry a code, not a link. Use the Singpass app to check your activity.",
-   "techniques": [
-    "Smishing",
-    "Government impersonation",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not singpass.gov.sg",
-    "An alarm, then a link",
-    "30-minute deadline"
-   ],
-   "real": {
-    "format": "sms",
-    "from_name": "SINGPASS",
-    "subject": "Singpass: Your login code is 481920. Do ",
-    "date": "Today 9:10 AM",
-    "body": "Singpass: Your login code is 481920. Do not share this code. If you did not request it, ignore this SMS."
-   },
-   "fake": {
-    "format": "sms",
-    "from_name": "SINGPASS",
-    "subject": "Singpass: unusual login detected. Verify",
-    "date": "Today 9:10 AM",
-    "body": "Singpass: unusual login detected. Verify within 30 minutes at singpass-verify.sg to keep your account active.",
-    "flags": [
-     {
-      "on": "body",
-      "mark": "singpass-verify.sg",
-      "text": "Not singpass.gov.sg"
-     },
-     {
-      "on": "body",
-      "mark": "unusual login detected",
-      "text": "An alarm, then a link"
-     },
-     {
-      "on": "body",
-      "mark": "within 30 minutes",
-      "text": "30-minute deadline"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/teams-guest",
-   "tier": "hard",
-   "label": "A Teams meeting invite, on your phone",
-   "note": "Both show Microsoft Teams. The real address is email.teams.microsoft.com; the fake swaps the dots for hyphens, so the real domain is email-teams-microsoft.com.",
-   "todo": "Join meetings from your calendar or the Teams app, never through a link that asks you to sign in.",
-   "techniques": [
-    "Credential harvesting",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Dots swapped for hyphens",
-    "Asks for a sign-in first",
-    "Not a microsoft.com page"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "Microsoft Teams",
-    "from_email": "noreply@email.teams.microsoft.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Priya Nair invited you to a Teams meeting",
-    "date": "Thu, Oct 15, 2026 7:48 AM",
-    "body": "Hi Jordan,\n\nPriya Nair invited you to a meeting: Vendor review, Thursday 3:00 PM.\n\nJoin from the Teams app or calendar."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "Microsoft Teams",
-    "from_email": "noreply@email-teams-microsoft.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Priya Nair invited you to a Teams meeting",
-    "date": "Fri, Oct 16, 2026 11:33 AM",
-    "body": "Hi Jordan,\n\nPriya Nair invited you to a meeting: Vendor review, Thursday 3:00 PM.\n\nSign in to join.",
-    "link_text": "Join meeting",
-    "link_url": "https://email-teams-microsoft.com/meet/join",
-    "landing": {
-     "src": "content/media/email/hard/assets/teams-guest-fake-landing.svg",
-     "alt": "A fake page on email-teams-microsoft.com"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "email-teams-microsoft.com",
-      "text": "Dots swapped for hyphens"
-     },
-     {
-      "on": "body",
-      "mark": "Sign in to join",
-      "text": "Asks for a sign-in first"
-     },
-     {
-      "on": "link_url",
-      "text": "Not a microsoft.com page"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/wise-transfer",
-   "tier": "hard",
-   "label": "A payment update, on your phone",
-   "note": "The real update comes from wise.com and tells you to track it in the app. The fake's domain is transfer-status.net (wise.com is only a prefix) and it asks for 'new bank details', a classic payment fraud.",
-   "todo": "Confirm any change of bank details by phone, using a number you already hold.",
-   "techniques": [
-    "Payment fraud",
-    "Link trick",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Domain is transfer-status.net",
-    "Bank details have changed",
-    "wise.com is only a prefix"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "Wise",
-    "from_email": "noreply@wise.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your transfer to Rossum Industrial Supply is on its way",
-    "date": "Thu, Oct 15, 2026 7:48 AM",
-    "body": "Hi Jordan,\n\nYour transfer of $9,640.00 SGD to Rossum Industrial Supply is on its way. It should arrive by Oct 15.\n\nYou can track it in the Wise app."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "Wise",
-    "from_email": "noreply@wise.com.transfer-status.net",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your transfer to Rossum Industrial Supply is on hold",
-    "date": "Fri, Oct 16, 2026 11:33 AM",
-    "body": "Hi Jordan,\n\nYour transfer of $9,640.00 SGD to Rossum Industrial Supply is on hold. Confirm the recipient's new bank details to release it.",
-    "link_text": "Confirm details",
-    "link_url": "https://wise.com.transfer-status.net/hold",
-    "landing": {
-     "src": "content/media/email/hard/assets/wise-transfer-fake-landing.svg",
-     "alt": "A fake page on wise.com.transfer-status.net"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "transfer-status.net",
-      "text": "Domain is transfer-status.net"
-     },
-     {
-      "on": "body",
-      "mark": "recipient's new bank details",
-      "text": "Bank details have changed"
-     },
-     {
-      "on": "link_url",
-      "text": "wise.com is only a prefix"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/workday-expense",
-   "tier": "hard",
-   "label": "A Workday approval request",
-   "note": "Same words, same layout. The fake comes from workdayy.com (a double y) and links to a copy of the Workday sign-in page.",
-   "todo": "Approve things from the Workday app or your own bookmark, not from the email.",
-   "techniques": [
-    "Credential harvesting",
-    "Typosquatting",
-    "Business process"
-   ],
-   "red_flags": [
-    "A double y in workday",
-    "A link, not your inbox",
-    "Not myworkday.com"
-   ],
-   "real": {
-    "from_name": "Workday",
-    "from_email": "noreply@workday.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Action required: Expense Report ER-4821 awaits approval",
-    "date": "Wed, Oct 14, 2026 10:26 AM",
-    "body": "Hello Jordan,\n\nExpense Report ER-4821 submitted by Priya Nair ($412.60) is awaiting your approval.\n\nOpen your Workday Inbox to review it.\n\nWorkday",
-    "banner": "content/media/email/hard/assets/workday-expense-real-banner.svg",
-    "link_text": "Open Workday Inbox",
-    "link_url": "https://wd3.myworkday.com/meridianfreight/inbox",
-    "landing": {
-     "src": "content/media/email/hard/assets/workday-expense-real-landing.svg",
-     "alt": "The real page on wd3.myworkday.com"
-    }
-   },
-   "fake": {
-    "from_name": "Workday",
-    "from_email": "noreply@workdayy.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Action required: Expense Report ER-4821 awaits approval",
-    "date": "Wed, Oct 14, 2026 1:05 PM",
-    "body": "Hello Jordan,\n\nExpense Report ER-4821 submitted by Priya Nair ($412.60) is awaiting your approval.\n\nReview it below.\n\nWorkday",
-    "banner": "content/media/email/hard/assets/workday-expense-fake-banner.svg",
-    "link_text": "Review expense",
-    "link_url": "https://workdayy.com/meridianfreight/inbox",
-    "landing": {
-     "src": "content/media/email/hard/assets/workday-expense-fake-landing.svg",
-     "alt": "A fake page on workdayy.com"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "workdayy.com",
-      "text": "A double y in workday"
-     },
-     {
-      "on": "body",
-      "mark": "Review it below",
-      "text": "A link, not your inbox"
-     },
-     {
-      "on": "link_url",
-      "text": "Not myworkday.com"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/xero-paynow",
-   "tier": "hard",
-   "label": "A supplier invoice from Xero",
-   "note": "The real invoice comes from post.xero.com with a link to an invoice page. The fake comes from post-xero.com and asks you to pay with a PayNow QR code, which hides who actually gets the money.",
-   "todo": "Pay invoices only from a PO or supplier record you can verify, never from a QR code in an email.",
-   "techniques": [
-    "QR code",
-    "Payment fraud",
-    "Lookalike domain"
-   ],
-   "red_flags": [
-    "Not post.xero.com",
-    "Asks you to pay by QR",
-    "A QR hides who gets paid"
-   ],
-   "real": {
-    "from_name": "Xero",
-    "from_email": "messaging-service@post.xero.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Invoice INV-0412 from Rossum Industrial Supply",
-    "date": "Mon, Oct 12, 2026 9:14 AM",
-    "body": "Hi Jordan,\n\nRossum Industrial Supply sent you an invoice for $2,460.00 due Oct 30.\n\nView and pay it online with the invoice link below.\n\nXero",
-    "banner": "content/media/email/hard/assets/xero-paynow-real-banner.svg",
-    "link_text": "View invoice",
-    "link_url": "https://in.xero.com/Zx48213",
-    "landing": {
-     "src": "content/media/email/hard/assets/xero-paynow-real-landing.svg",
-     "alt": "The real page on in.xero.com"
-    }
-   },
-   "fake": {
-    "from_name": "Xero",
-    "from_email": "messaging-service@post-xero.com",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Invoice INV-0412 from Rossum Industrial Supply",
-    "date": "Mon, Oct 12, 2026 2:41 PM",
-    "body": "Hi Jordan,\n\nRossum Industrial Supply sent you an invoice for $2,460.00 due Oct 30.\n\nScan the PayNow QR code to pay it now.\n\nXero",
-    "banner": "content/media/email/hard/assets/xero-paynow-fake-banner.svg",
-    "qr": {
-     "src": "content/media/email/hard/assets/xero-paynow-fake-qr.svg",
-     "caption": "Scan to pay with PayNow",
-     "alt": "A QR code"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "post-xero.com",
-      "text": "Not post.xero.com"
-     },
-     {
-      "on": "body",
-      "mark": "Scan the PayNow QR code",
-      "text": "Asks you to pay by QR"
-     },
-     {
-      "on": "qr",
-      "text": "A QR hides who gets paid"
-     }
-    ]
-   }
-  },
-  {
-   "id": "email/hard/zoom-invoice",
-   "tier": "hard",
-   "label": "A Zoom invoice, on your phone",
-   "note": "On a phone both say Zoom. The fake address is billing@zoom.us.invoice-center.net, where zoom.us is only a prefix: the real domain is invoice-center.net.",
-   "todo": "Read a domain from right to left, just before the first slash. Download invoices from zoom.us after signing in yourself.",
-   "techniques": [
-    "Link trick",
-    "Lookalike domain",
-    "Credential harvesting"
-   ],
-   "red_flags": [
-    "Domain is invoice-center.net",
-    "No 'sign in yourself'",
-    "zoom.us is only a prefix"
-   ],
-   "real": {
-    "format": "mobile",
-    "from_name": "Zoom",
-    "from_email": "billing@zoom.us",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your Zoom invoice for October",
-    "date": "Wed, Oct 14, 2026 10:26 AM",
-    "body": "Hi Jordan,\n\nYour Zoom invoice INV-48213 for $159.90 is ready. Sign in to zoom.us and open Billing to view or download it."
-   },
-   "fake": {
-    "format": "mobile",
-    "from_name": "Zoom",
-    "from_email": "billing@zoom.us.invoice-center.net",
-    "to": "j.alvarez@meridianfreight.com",
-    "subject": "Your Zoom invoice for October",
-    "date": "Wed, Oct 14, 2026 1:05 PM",
-    "body": "Hi Jordan,\n\nYour Zoom invoice INV-48213 for $159.90 is ready. Download it below.",
-    "link_text": "Download invoice",
-    "link_url": "https://zoom.us.invoice-center.net/INV-48213",
-    "landing": {
-     "src": "content/media/email/hard/assets/zoom-invoice-fake-landing.svg",
-     "alt": "A fake page on zoom.us.invoice-center.net"
-    },
-    "flags": [
-     {
-      "on": "from_email",
-      "mark": "invoice-center.net",
-      "text": "Domain is invoice-center.net"
-     },
-     {
-      "on": "body",
-      "mark": "Download it below",
-      "text": "No 'sign in yourself'"
-     },
-     {
-      "on": "link_url",
-      "text": "zoom.us is only a prefix"
-     }
-    ]
-   }
   }
  ],
  "image": [
   {
-   "id": "image/easy/hands-typing",
+   "id": "image/easy/desk-phone",
    "tier": "easy",
-   "label": "Hands typing at a desk",
-   "note": "The AI image has two keyboards on the desk and fingers that look long and uneven, against a smooth glowing blur. The real photo is ordinary hands on one keyboard, with a mug, a monitor and a messy cable behind them.",
-   "real": "content/media/image/easy/hands-typing-real.jpg",
-   "fake": "content/media/image/easy/hands-typing-fake.jpg"
+   "label": "A woman on a desk phone",
+   "note": "In the AI image the numbers on her watch face are scrambled and some run backwards, and the second phone on the shelf is a smeared blue lump. The real photo is a reception desk with a readable Dell logo on the monitor and a second person working behind.",
+   "real": "content/media/image/easy/desk-phone-real.jpg",
+   "fake": "content/media/image/easy/desk-phone-fake.jpg"
   },
   {
-   "id": "image/easy/handshake",
+   "id": "image/easy/handshake-city",
    "tier": "easy",
-   "label": "A business handshake",
-   "note": "The real photo is a candid close-up: natural soft blur, and the paper on the desk has real lines of text. The AI version is a glossy portrait with a generic blurred skyline, and the clasped hands look small and soft next to the sharp faces and suits.",
-   "real": "content/media/image/easy/handshake-real.jpg",
-   "fake": "content/media/image/easy/handshake-fake.jpg"
+   "label": "Two business people shaking hands",
+   "note": "In the AI image the clasped hands are tiny next to the arms and the fingers melt into one lump, the free hand on the right hangs with fused fingers, and the skyline behind is a soft smear. The real photo is a close, natural grip with real suit seams.",
+   "real": "content/media/image/easy/handshake-city-real.jpg",
+   "fake": "content/media/image/easy/handshake-city-fake.jpg"
   },
   {
-   "id": "image/easy/laptop-typing",
+   "id": "image/easy/headset-agent",
    "tier": "easy",
-   "label": "Typing on a laptop",
-   "note": "Check the keyboard. On the real laptop every key legend is crisp and the layout is consistent. On the AI laptop the key labels dissolve into smudges, and the screen reflects a keyboard and fingers that don't match what is in front of it.",
-   "real": "content/media/image/easy/laptop-typing-real.jpg",
-   "fake": "content/media/image/easy/laptop-typing-fake.jpg"
+   "label": "A call-centre agent with a headset",
+   "note": "In the AI image the logo on the headset is garbled letters, the man behind her has his microphone fused into his moustache, and the rest of the room is a blur of featureless faces. The real photo is two people in plain headsets, sharp across the whole frame.",
+   "real": "content/media/image/easy/headset-agent-real.jpg",
+   "fake": "content/media/image/easy/headset-agent-fake.jpg"
   },
   {
-   "id": "image/easy/meeting-room",
+   "id": "image/easy/hooded-laptop",
    "tier": "easy",
-   "label": "An empty meeting room",
-   "note": "The real room is full of consistent, believable detail: ceiling grid and vents, a desk phone, and a frosted-glass pattern that repeats properly. The AI room is oddly clean and symmetrical, the ceiling light is a thin cross hanging from nothing, and the chairs don't quite match each other.",
-   "real": "content/media/image/easy/meeting-room-real.jpg",
-   "fake": "content/media/image/easy/meeting-room-fake.jpg"
+   "label": "Someone working on a laptop in a hoodie",
+   "note": "In the AI image the hood is an empty black void with one glowing eye slit and no face, the keyboard is a blur of unreadable keys, and both monitors show meaningless boxes. The real photo is a bearded man in a grey hoodie at a laptop with a clear Apple logo.",
+   "real": "content/media/image/easy/hooded-laptop-real.jpg",
+   "fake": "content/media/image/easy/hooded-laptop-fake.jpg"
   },
   {
-   "id": "image/easy/parcel-handover",
+   "id": "image/easy/police-patrol",
    "tier": "easy",
-   "label": "A parcel being handed over",
-   "note": "The AI image is a posed portrait of a masked courier in front of a stack of identical, spotless boxes. The real photo is a candid close-up of a hand signing on a clipboard next to a box with printed text.",
-   "real": "content/media/image/easy/parcel-handover-real.jpg",
-   "fake": "content/media/image/easy/parcel-handover-fake.jpg"
+   "label": "A police officer on patrol",
+   "note": "In the AI image the vest reads 'PCILCLE' instead of POLICE with a line of gibberish above it, the yellow shoulder patch is blank with a smeared number, and the cap badge is a gold blob. The real photo has crisp, readable text on the phone the officer holds up.",
+   "real": "content/media/image/easy/police-patrol-real.jpg",
+   "fake": "content/media/image/easy/police-patrol-fake.jpg"
   },
   {
-   "id": "image/easy/phone-call",
+   "id": "image/easy/team-screen",
    "tier": "easy",
-   "label": "Taking a phone call at a desk",
-   "note": "The real photo is an unposed moment with messy, specific detail: sticky notes, a mug, paper trays and real icons on the monitor. The AI executive is stock-photo perfect, with flawless lighting, a generic skyline, and a chart and notebook that look right from a distance but say nothing up close.",
-   "real": "content/media/image/easy/phone-call-real.jpg",
-   "fake": "content/media/image/easy/phone-call-fake.jpg"
+   "label": "Colleagues looking at something together",
+   "note": "In the AI image the logos on the shirts are made-up letters, the red dots on her blouse ignore the folds of the fabric, and a thin chain on the man's collar melts into the cloth. The real photo is three colleagues pointing at the same laptop.",
+   "real": "content/media/image/easy/team-screen-real.jpg",
+   "fake": "content/media/image/easy/team-screen-fake.jpg"
   },
   {
-   "id": "image/easy/phone-street",
+   "id": "image/easy/trading-desk",
    "tier": "easy",
-   "label": "Someone using a phone outdoors",
-   "note": "The AI man has smooth, even skin, a tidy jacket and a blurred stone wall that looks painted on. The real photo is a candid crop of hands, a watch and a belt, with a real car blurred behind.",
-   "real": "content/media/image/easy/phone-street-real.jpg",
-   "fake": "content/media/image/easy/phone-street-fake.jpg"
+   "label": "A person at a trading desk",
+   "note": "In the AI image she stares at the camera with no hands on a keyboard, the screens behind her are soft blocks of look-alike text with no real chart, and the pendant holds a made-up glyph. The real photo has readable trading charts on several screens and hands typing.",
+   "real": "content/media/image/easy/trading-desk-real.jpg",
+   "fake": "content/media/image/easy/trading-desk-fake.jpg"
   },
   {
-   "id": "image/easy/server-room",
+   "id": "image/easy/two-factor-auth",
    "tier": "easy",
-   "label": "Server racks",
-   "note": "The real shot is a soft close-up of one server with a few green status lights. The AI racks are packed with detail that doesn't hold up: cables that loop and tangle without clearly ending at a port, tiny screens and labels with no readable text, and units that don't line up.",
-   "real": "content/media/image/easy/server-room-real.jpg",
-   "fake": "content/media/image/easy/server-room-fake.jpg"
-  },
-  {
-   "id": "image/easy/video-call",
-   "tier": "easy",
-   "label": "A video call on a laptop",
-   "note": "The real photo shows a slightly blurry, awkward call, which is how video calls actually look. In the AI image the laptop is turned so its screen faces the camera rather than the person using it, and the call tiles are tiny and warped, with a stray white shape over the man in the bottom tile.",
-   "real": "content/media/image/easy/video-call-real.jpg",
-   "fake": "content/media/image/easy/video-call-fake.jpg"
-  },
-  {
-   "id": "image/easy/woman-laptop",
-   "tier": "easy",
-   "label": "Working on a laptop",
-   "note": "The AI woman looks straight at the camera with flawless skin, and her laptop lid has no logo, ports or detail. The real photo is a candid side view, with real keys, a desk lamp and a messy plait.",
-   "real": "content/media/image/easy/woman-laptop-real.jpg",
-   "fake": "content/media/image/easy/woman-laptop-fake.jpg"
-  },
-  {
-   "id": "image/medium/booth-laptops",
-   "tier": "medium",
-   "label": "Two people working on a laptop",
-   "note": "The AI pair look like stock models, with smooth faces and a laptop with a blank lid and no logo. The real photo is two people in a booth, candid and a little dim, with phones and papers on the table.",
-   "real": "content/media/image/medium/booth-laptops-real.jpg",
-   "fake": "content/media/image/medium/booth-laptops-fake.jpg"
+   "label": "Entering a code on a phone",
+   "note": "In the AI image the keypad is wrong: the digit 5 repeats, a letter Z sits where a number should be, the top-right key is a fused 5 and 6, and 2, 4, 7 and 8 are missing. The real keypad has 1 to 9 and 0, with small letters under each number.",
+   "real": "content/media/image/easy/two-factor-auth-real.jpg",
+   "fake": "content/media/image/easy/two-factor-auth-fake.jpg"
   },
   {
    "id": "image/medium/cctv-wall",
    "tier": "medium",
    "label": "A security camera on a wall",
-   "note": "The AI camera floats like a product shot on a clean bracket, with no cable, screws or junction box. The real photo shows two cameras bolted to rough concrete, with their cable and boxes.",
+   "note": "In the AI image the text engraved on the camera is gibberish, the bracket is one smooth sculpted piece with almost no fixings, no cable enters the camera, and it floats against a seamless grey backdrop. The real photo shows two cameras bolted to rough concrete, with conduit and junction boxes.",
    "real": "content/media/image/medium/cctv-wall-real.jpg",
    "fake": "content/media/image/medium/cctv-wall-fake.jpg"
   },
   {
-   "id": "image/medium/doc-review",
+   "id": "image/medium/hacker-hall",
    "tier": "medium",
-   "label": "Reviewing paperwork at a desk",
-   "note": "Look at the text on the documents themselves -- AI-generated paperwork often has smudged, repeated, or nonsensical printed text up close.",
-   "real": "content/media/image/medium/doc-review-real.jpg",
-   "fake": "content/media/image/medium/doc-review-fake.jpg"
-  },
-  {
-   "id": "image/medium/empty-meeting-room",
-   "tier": "medium",
-   "label": "An empty meeting room",
-   "note": "The AI room is too tidy: identical chairs, a small plant on the table and spotless floor-to-ceiling glass. The real room has a ceiling projector, uneven chairs and worn carpet.",
-   "real": "content/media/image/medium/empty-meeting-room-real.jpg",
-   "fake": "content/media/image/medium/empty-meeting-room-fake.jpg"
+   "label": "A person working at a desk, seen from behind",
+   "note": "In the AI image code falls like rain down the wall and is printed on the back of the hoodie, and the walls of server racks melt into each other with no cables or gaps. The real photo is a man at a plain desk in a bright room, with a typewriter and a globe.",
+   "real": "content/media/image/medium/hacker-hall-real.jpg",
+   "fake": "content/media/image/medium/hacker-hall-fake.jpg"
   },
   {
    "id": "image/medium/id-badge",
    "tier": "medium",
    "label": "Employee wearing an ID badge",
-   "note": "Zoom in on the badge and lanyard -- AI-generated badges often have garbled text/photo details, and lanyard clips or straps that don't attach correctly.",
+   "note": "In the AI image the badge text is smudged lines that cannot be read, the photo on it is a tiny blur, and the glass offices behind are a soft wash. The real photo's badge shows a clear name, job title and barcode.",
    "real": "content/media/image/medium/id-badge-real.jpg",
    "fake": "content/media/image/medium/id-badge-fake.jpg"
+  },
+  {
+   "id": "image/medium/panel-techs",
+   "tier": "medium",
+   "label": "Two technicians at a wiring cabinet",
+   "note": "In the AI image the two men look like near-twins in different shirts and both stare straight at the camera, the red logo on one pocket is scribble, and the breaker rows are repeated blocks of tangled red wire that go nowhere. The real photo has labelled breaker modules and real hands.",
+   "real": "content/media/image/medium/panel-techs-real.jpg",
+   "fake": "content/media/image/medium/panel-techs-fake.jpg"
   },
   {
    "id": "image/medium/patch-panel",
    "tier": "medium",
    "label": "A network patch panel",
-   "note": "The real rack has numbered, labelled ports you can read, with each cable running to its own port. The AI image has no readable labels at all, its connectors vary in size and blur into each other, and the bundle on the left becomes a wall of cable with no clear beginning or end.",
+   "note": "In the AI image every cable is the same blue with no labels, the plugs go into a black strip with no distinct ports while the switch above has nothing connected, and the bundle melts into a smooth mass. The real photo has colour-coded cables and labelled ports.",
    "real": "content/media/image/medium/patch-panel-real.jpg",
    "fake": "content/media/image/medium/patch-panel-fake.jpg"
   },
   {
-   "id": "image/medium/phone-desk",
+   "id": "image/medium/server-aisle",
    "tier": "medium",
-   "label": "A phone on a desk",
-   "note": "The AI phone's screen shows a text conversation, but none of the message text is readable: it is squiggles shaped like words. The stripes of sunlight and the dramatic shadows are also too perfect. The real photo is plain: a phone with its screen off, a notebook and a pen.",
-   "real": "content/media/image/medium/phone-desk-real.jpg",
-   "fake": "content/media/image/medium/phone-desk-fake.jpg"
+   "label": "A technician in a server aisle",
+   "note": "In the AI image the racks are repeating smeared blocks with no labels or cables, the far end of the aisle melts into a grey smudge, and the arm of his glasses vanishes into his hair. The real photo shows a technician pushing a real cable into a rack.",
+   "real": "content/media/image/medium/server-aisle-real.jpg",
+   "fake": "content/media/image/medium/server-aisle-fake.jpg"
   },
   {
    "id": "image/medium/sticky-note",
    "tier": "medium",
    "label": "A sticky note beside a keyboard",
-   "note": "The real photo is a plain, blank sticky pad next to a keyboard and phone. The AI version adds a line of handwriting that looks fluent from a distance but is meaningless squiggle up close, and the whole scene is arranged like a product shot, with razor-sharp window shadows and not a mark on anything.",
+   "note": "In the AI image the handwriting on the note is a loop of scribble that never forms a word, and the keyboard keys fade to blank grey where the shadow falls. The real photo has a plain note pad and a keyboard with clear key labels (page up, clear, F-keys).",
    "real": "content/media/image/medium/sticky-note-real.jpg",
    "fake": "content/media/image/medium/sticky-note-fake.jpg"
   },
   {
-   "id": "image/medium/two-factor-auth",
+   "id": "image/medium/team-table",
    "tier": "medium",
-   "label": "Entering a code on a phone",
-   "note": "Look at the finger position and the phone screen's UI -- AI-generated phone screens often show illegible or inconsistent app interface elements.",
-   "real": "content/media/image/medium/two-factor-auth-real.jpg",
-   "fake": "content/media/image/medium/two-factor-auth-fake.jpg"
+   "label": "A team around a table",
+   "note": "In the AI image the charts on the papers are blue shapes with no axes or words, the two potted plants are copies of each other, and everyone has the same soft, glossy skin. The real photo is five colleagues of different ages leaning over one laptop.",
+   "real": "content/media/image/medium/team-table-real.jpg",
+   "fake": "content/media/image/medium/team-table-fake.jpg"
   },
   {
    "id": "image/medium/whiteboard-diagram",
    "tier": "medium",
    "label": "A whiteboard with a diagram",
-   "note": "Read the writing. The real whiteboard's flowchart is legible (\"Dashboard\", \"Budget\", \"Select Plan\"). On the AI wall every sticky note and diagram box is scribble that only looks like handwriting, the notes fold into odd tent shapes, and the markers in the tray melt into one lump.",
+   "note": "In the AI image the writing on the sticky notes and on the sketch is look-alike scribble with no readable word, and the notes' folded backs show red wedges that don't match their orange fronts. The real photo has a readable flow chart: Dashboard, Plans, Budget, Media.",
    "real": "content/media/image/medium/whiteboard-diagram-real.jpg",
    "fake": "content/media/image/medium/whiteboard-diagram-fake.jpg"
-  },
-  {
-   "id": "image/medium/wifi-router",
-   "tier": "medium",
-   "label": "Office WiFi router",
-   "note": "Check the antennas and port/cable connections -- AI-generated electronics often get the number of antennas, port placement, or cable routing subtly wrong.",
-   "real": "content/media/image/medium/wifi-router-real.jpg",
-   "fake": "content/media/image/medium/wifi-router-fake.jpg"
-  },
-  {
-   "id": "image/medium/woman-desk-writing",
-   "tier": "medium",
-   "label": "A person working at a desk",
-   "note": "The AI woman sits in a dark, empty office with blank screens and flawless hair and glasses. The real photo is a woman writing by a bright window, with a desk lamp, a globe and a name plate.",
-   "real": "content/media/image/medium/woman-desk-writing-real.jpg",
-   "fake": "content/media/image/medium/woman-desk-writing-fake.jpg"
-  },
-  {
-   "id": "image/medium/woman-train-phone",
-   "tier": "medium",
-   "label": "Someone looking at their phone",
-   "note": "The AI woman is smiling at her phone, with perfect hair and a phone that has no clear edges or buttons. The real photo is a candid over-the-shoulder shot at a station, with a real train blurred behind.",
-   "real": "content/media/image/medium/woman-train-phone-real.jpg",
-   "fake": "content/media/image/medium/woman-train-phone-fake.jpg"
   },
   {
    "id": "image/hard/cafe-laptop",
    "tier": "hard",
    "label": "Working on a laptop in a cafe",
-   "note": "The AI cafe looks cinematic, but the laptop screen is full of text-shaped smudges that don't say anything, the clutter at the bottom right of the table is a pile of shapes you can't name, and the people behind the window dissolve into blur. The real photo is a plain, sharp close-up where the watch strap and shirt stripes hold up.",
+   "note": "In the AI image the laptop screen is rows of look-alike text with no readable words, his dark sweater merges into the chair behind him, and the woman outside the window has a smeared face. The real photo is a close crop of a hand with a smartwatch on a marble laptop.",
    "real": "content/media/image/hard/cafe-laptop-real.jpg",
    "fake": "content/media/image/hard/cafe-laptop-fake.jpg"
   },
@@ -5469,7 +1734,7 @@ window.CONTENT = {
    "id": "image/hard/contractor-cabinet",
    "tier": "hard",
    "label": "A contractor at a wiring cabinet",
-   "note": "The AI worker faces the camera, lit like a film still, with orange wires that glow. The real photo is a man in a hard hat seen from behind at a real cabinet, with loose cables and a flat, ordinary light.",
+   "note": "In the AI image two gloved hands reach the panel but only one arm leads to them, the gloves bunch into mitten shapes, and the orange wires glow like noodles that end at no terminal. The real photo is a man in a hard hat seen from behind, in ordinary flat light.",
    "real": "content/media/image/hard/contractor-cabinet-real.jpg",
    "fake": "content/media/image/hard/contractor-cabinet-fake.jpg"
   },
@@ -5477,23 +1742,15 @@ window.CONTENT = {
    "id": "image/hard/fingerprint-scan",
    "tier": "hard",
    "label": "Fingerprint access control scanner",
-   "note": "This one's subtle -- look closely at the scanner housing and mounting bracket; AI-generated hardware often has screws, seams, or edges that don't quite align.",
+   "note": "In the AI image the reader has no keypad or clock, its screen is blank grey, the scanner is a plain glowing ring with no sensor window, and there is a USB port on its chin. The real reader shows the time, a keypad and a green fingerprint window.",
    "real": "content/media/image/hard/fingerprint-scan-real.jpg",
    "fake": "content/media/image/hard/fingerprint-scan-fake.jpg"
-  },
-  {
-   "id": "image/hard/glass-corridor",
-   "tier": "hard",
-   "label": "A glass-walled office corridor",
-   "note": "The AI corridor is perfectly symmetrical, sunlit and spotless, with plants repeated down both sides. The real corridor is dark and uneven, with signs, fire equipment and reflections in the glass.",
-   "real": "content/media/image/hard/glass-corridor-real.jpg",
-   "fake": "content/media/image/hard/glass-corridor-fake.jpg"
   },
   {
    "id": "image/hard/security-gates",
    "tier": "hard",
    "label": "Security gates at an entrance",
-   "note": "The AI gates look right until you study the hardware. The tall panels with three round holes above every gate have no clear purpose, the turnstile arms and rails differ from one unit to the next and don't connect to anything, and the green readers show no text or symbols. The real photo is a plain row of gates with readable signs.",
+   "note": "In the AI image there is no readable sign, number or screen text anywhere, the left and right sides mirror each other, and the horizontal bars run straight through the posts. The real photo has numbered gates, no-smoking signs and an information board.",
    "real": "content/media/image/hard/security-gates-real.jpg",
    "fake": "content/media/image/hard/security-gates-fake.jpg"
   },
@@ -5501,7 +1758,7 @@ window.CONTENT = {
    "id": "image/hard/suspicious-email",
    "tier": "hard",
    "label": "Reacting to a suspicious email",
-   "note": "Look at the laptop screen and the person's hands -- AI-generated screens often show illegible text, and hand/finger positioning near a keyboard is a common tell.",
+   "note": "In the AI image the papers beside the laptop hold only smeared rows that look like text, the laptop has no logo, and the hand at his temple has smooth, over-long fingers. The real photo has sticky notes on the wall and a phone, a pen and papers on the desk.",
    "real": "content/media/image/hard/suspicious-email-real.jpg",
    "fake": "content/media/image/hard/suspicious-email-fake.jpg"
   },
@@ -5509,7 +1766,7 @@ window.CONTENT = {
    "id": "image/hard/team-meeting-laptops",
    "tier": "hard",
    "label": "A team meeting with laptops",
-   "note": "The AI table is covered in neat food, cups and laptops with blank lids, and several faces look alike. The real photo is a busier meeting with real screens, a coffee cup and people looking in different directions.",
+   "note": "In the AI image the chart on the wall screen has bars with no axes or labels, every cup and glass is identical, and the faces share the same smooth, glossy look. The real photo is a messier meeting, with real code on a laptop and people looking in different directions.",
    "real": "content/media/image/hard/team-meeting-laptops-real.jpg",
    "fake": "content/media/image/hard/team-meeting-laptops-fake.jpg"
   },
@@ -5517,7 +1774,7 @@ window.CONTENT = {
    "id": "image/hard/two-colleagues-talking",
    "tier": "hard",
    "label": "Two colleagues talking",
-   "note": "In the AI image the two men's hands clasp in a way that does not quite join up, and the people behind them are smeared. The real photo is a candid whisper between two colleagues, with a real watch and hands.",
+   "note": "In the AI image the navy-suit man's hands are a knot of fused fingers, the other man's thumb is oversized, and below the table edge their clothes dissolve into vertical stripes. The real photo is a candid whisper with a real watch and ordinary hands.",
    "real": "content/media/image/hard/two-colleagues-talking-real.jpg",
    "fake": "content/media/image/hard/two-colleagues-talking-fake.jpg"
   },
@@ -5525,7 +1782,7 @@ window.CONTENT = {
    "id": "image/hard/two-monitor-desk",
    "tier": "hard",
    "label": "A desk with two monitors",
-   "note": "Look at the small objects on the desk. In the AI image the area by the lamp is crowded with things you can't name (a black gadget, a red bottle), there is an odd round puck under the left monitor, and both screens show code-shaped smudges rather than real text. Everything on the real desk, from the plant to the mug and notebook, is identifiable.",
+   "note": "In the AI image both screens fill with look-alike code lines that cannot be read, the monitor cables lead nowhere, and a black upright object by the lamp has no clear purpose. The real photo shows a recognisable web page and a picture of Earth from space on its screens.",
    "real": "content/media/image/hard/two-monitor-desk-real.jpg",
    "fake": "content/media/image/hard/two-monitor-desk-fake.jpg"
   },
@@ -5533,17 +1790,9 @@ window.CONTENT = {
    "id": "image/hard/usb-drive",
    "tier": "hard",
    "label": "USB flash drive, close-up",
-   "note": "A close, detailed shot like this is genuinely hard -- check the connector pins and any printed branding/text, which AI image generators frequently smear or duplicate at this zoom level.",
+   "note": "In the AI image the metal plug has two square holes in its top and its gold contacts on the tip instead of inside the opening, the engraved logo is a made-up glyph, and the cap's opening is much larger than the plug. The real photo has USB-A and USB-C ends, a braided strap and a matching cap.",
    "real": "content/media/image/hard/usb-drive-real.jpg",
    "fake": "content/media/image/hard/usb-drive-fake.jpg"
-  },
-  {
-   "id": "image/hard/waiting-room",
-   "tier": "hard",
-   "label": "Two people in a waiting room",
-   "note": "The seating doesn't hold together in the AI image: the bench, separate backrests and armrests merge into each other, and the man's crossed leg and the woman's feet sit at odd depths against the bench. Both devices are blank slabs with no visible screens, and the bright glass wall behind them is a washed-out blur with no structure.",
-   "real": "content/media/image/hard/waiting-room-real.jpg",
-   "fake": "content/media/image/hard/waiting-room-fake.jpg"
   }
  ]
 };
