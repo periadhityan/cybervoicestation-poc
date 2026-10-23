@@ -1,161 +1,4 @@
 {
-  "invoice-approval": {
-    "subject_label": "Vendor invoice approval",
-    "reveal_note": "Everything reads professionally and the domain looks right at a glance. The tell is subtle: the fake domain has an added hyphen (rossum-supply.com vs rossumsupply.com), and the bank details changed without the phone confirmation finance policy requires.",
-    "techniques": [
-      "Payment fraud",
-      "Lookalike domain",
-      "Changed bank details"
-    ],
-    "red_flags": [
-      "Sender domain rossum-supply.com has an extra hyphen",
-      "Bank details changed with no phone confirmation",
-      "Sent late in the day to catch finance in a rush"
-    ],
-    "what_you_can_do": "Phone the supplier on a number you already hold before changing any bank details."
-  },
-  "executive-travel-request": {
-    "subject_label": "Executive travel booking request",
-    "reveal_note": "The display name and writing style closely match the CFO, but the actual sender address is a personal Outlook account rather than the company one, and the request routes payment through personal Venmo instead of the corporate travel system finance normally uses.",
-    "techniques": [
-      "Authority",
-      "Personal email address",
-      "Payment diversion"
-    ],
-    "red_flags": [
-      "Sent from a personal Outlook address, not the company's",
-      "Asks you to pay by Venmo and skip the travel system",
-      "Urgent and 'no time' for the normal process"
-    ],
-    "what_you_can_do": "Call Marcus on his known number. Flights are booked through Concur, never with personal payment apps."
-  },
-  "eventbrite-ticket": {
-    "subject_label": "An event ticket with a QR code",
-    "reveal_note": "The real ticket has an entry QR code and a link to eventbrite.com. The fake, from eventbrite-entry-pass.top, says your ticket is invalid and has no link, only a QR code that hides where it leads.",
-    "techniques": [
-      "QR code",
-      "Urgency",
-      "Credential harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Sender domain eventbrite-entry-pass.top is not eventbrite.com",
-      "A ticket 'problem' with a 15-minute countdown",
-      "No link, only a QR code: you can't see the destination",
-      "Banner misspelt 'eventbrlte'",
-      "The QR leads to a sign-in page for your password"
-    ],
-    "what_you_can_do": "Don't scan a QR code from an email that asks you to sign in. Open the Eventbrite app or site yourself."
-  },
-  "compliance-training": {
-    "subject_label": "A compliance training reminder",
-    "reveal_note": "The fake borrows the CEO's title to scare you, but comes from meridianfreight-hr.com, not meridianfreight.com, orders you not to discuss it, and links to a login page over http.",
-    "techniques": [
-      "Authority",
-      "Urgency",
-      "Credential harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Sender domain meridianfreight-hr.com is not meridianfreight.com",
-      "Uses the CEO's authority and a threat of discipline",
-      "'Do not discuss this with colleagues' stops you checking",
-      "Deadline of 'today by 5pm'",
-      "'Sent from my iPhone' is a cheap trust trick",
-      "Link opens a login page over plain http"
-    ],
-    "what_you_can_do": "Check with the sender or IT on a channel you already trust. A genuine directive never needs you to hide it."
-  },
-  "ariba-approval": {
-    "subject_label": "A supplier invoice for approval",
-    "reveal_note": "Both look the same. The real one comes from ariba.com and tells you to open Ariba from your own bookmark. The fake comes from ariba-approvals.com and gives you a link to a look-alike login.",
-    "techniques": [
-      "Credential harvesting",
-      "Lookalike domain",
-      "Business process"
-    ],
-    "red_flags": [
-      "Not ariba.com",
-      "A link, not your bookmark",
-      "Not an Ariba address"
-    ],
-    "what_you_can_do": "Approve invoices only inside Ariba, opened from your own bookmark."
-  },
-  "ceo-desk": {
-    "subject_label": "A message from the CEO, on your phone",
-    "reveal_note": "The display name is identical, so on a phone you only see Daniel Koh. The fake address ends in .co, not .com, and the message builds trust before asking for something.",
-    "techniques": [
-      "Authority",
-      "Impersonated executive",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Ends in .co, not .com",
-      "A vague, urgent opener",
-      "Avoids a phone call",
-      "Pressure to reply fast"
-    ],
-    "what_you_can_do": "If an executive asks for an unspecified favour, call or message them on a channel you already use."
-  },
-  "hr-statement": {
-    "subject_label": "An HR statement email",
-    "reveal_note": "The real email points you to Workday. The fake comes from meridianfrieght.com (ie and ei swapped) and wants your bank details before you can see anything.",
-    "techniques": [
-      "Impersonated HR",
-      "Lookalike domain",
-      "Data harvesting"
-    ],
-    "red_flags": [
-      "ie and ei swapped",
-      "Wants bank details to view",
-      "Same lookalike domain"
-    ],
-    "what_you_can_do": "Open Workday yourself. HR never needs bank details to show you a statement."
-  },
-  "teams-guest": {
-    "subject_label": "A Teams meeting invite, on your phone",
-    "reveal_note": "Both show Microsoft Teams. The real address is email.teams.microsoft.com; the fake swaps the dots for hyphens, so the real domain is email-teams-microsoft.com.",
-    "techniques": [
-      "Credential harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Dots swapped for hyphens",
-      "Asks for a sign-in first",
-      "Not a microsoft.com page"
-    ],
-    "what_you_can_do": "Join meetings from your calendar or the Teams app, never through a link that asks you to sign in."
-  },
-  "aws-mfa": {
-    "subject_label": "An AWS security notification",
-    "reveal_note": "The real notice comes from amazon.com and tells you to use your own bookmark. The fake comes from amazon-aws-security.com and gives you a link to a look-alike IAM page.",
-    "techniques": [
-      "Credential harvesting",
-      "Lookalike domain",
-      "Urgency"
-    ],
-    "red_flags": [
-      "Not amazon.com",
-      "A link, not your bookmark",
-      "Not an aws.amazon.com page"
-    ],
-    "what_you_can_do": "Review IAM activity from your own bookmark and report the email to Security."
-  },
-  "zoom-invoice": {
-    "subject_label": "A Zoom invoice, on your phone",
-    "reveal_note": "On a phone both say Zoom. The fake address is billing@zoom.us.invoice-center.net, where zoom.us is only a prefix: the real domain is invoice-center.net.",
-    "techniques": [
-      "Link trick",
-      "Lookalike domain",
-      "Credential harvesting"
-    ],
-    "red_flags": [
-      "Domain is invoice-center.net",
-      "No 'sign in yourself'",
-      "zoom.us is only a prefix"
-    ],
-    "what_you_can_do": "Read a domain from right to left, just before the first slash. Download invoices from zoom.us after signing in yourself."
-  },
   "calendar-invite": {
     "subject_label": "A calendar invitation",
     "reveal_note": "Nearly identical. The fake comes from googIe.com, with a capital I instead of the l in google, which is hard to see in most fonts, and it adds a sign-in step.",
@@ -170,231 +13,20 @@
     ],
     "what_you_can_do": "Accept invites from your calendar app. If a sign-in appears, stop and check the address letter by letter."
   },
-  "recruiter-pdf": {
-    "subject_label": "A recruiter message, on your phone",
-    "reveal_note": "A job message is a favourite lure. The fake comes from maersk-careers.com, flatters you, asks for secrecy and attaches a file that ends .pdf.html: a web page pretending to be a PDF.",
-    "techniques": [
-      "Spear phishing",
-      "Risky attachment",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not maersk.com",
-      "Flattery and secrecy",
-      "A .pdf that is really .html",
-      "Pushes you to hurry"
-    ],
-    "what_you_can_do": "Look up the role on the company's real careers page. Never open a file ending .pdf.html."
-  },
-  "servicenow-ticket": {
-    "subject_label": "An IT ticket update",
-    "reveal_note": "The ticket number and wording are right, because the attacker knew about your VPN problem. The fake ends in .co, not .com, and asks for your network password to 'confirm'.",
-    "techniques": [
-      "Spear phishing",
-      "Credential harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Ends in .co, not .com",
-      "Asks for your password",
-      "Not service-now.com"
-    ],
-    "what_you_can_do": "IT never needs your password to close a ticket. Reply to the ticket or call the Service Desk."
-  },
-  "maersk-bol": {
-    "subject_label": "A shipping document from Maersk",
-    "reveal_note": "In a freight company this is a daily email. The real one sends you to the Maersk portal; the fake comes from maersk-docs.com with an .html attachment that opens a fake login.",
-    "techniques": [
-      "Risky attachment",
-      "Business process",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not maersk.com",
-      "An .html file, not a PDF",
-      "Opens a file, not the portal"
-    ],
-    "what_you_can_do": "Check booking documents in the carrier's portal, opened from your bookmark."
-  },
-  "oauth-consent": {
-    "subject_label": "A Microsoft account notice, on your phone",
-    "reveal_note": "Everything matches except one letter: the fake comes from microsft.com, missing an o. Real Microsoft emails tell you to review apps at account.microsoft.com yourself.",
-    "techniques": [
-      "Typosquatting",
-      "Credential harvesting"
-    ],
-    "red_flags": [
-      "An o is missing: microsft",
-      "A link, not the site",
-      "Same lookalike domain"
-    ],
-    "what_you_can_do": "Review connected apps by going to account.microsoft.com yourself."
-  },
-  "xero-paynow": {
-    "subject_label": "A supplier invoice from Xero",
-    "reveal_note": "The real invoice comes from post.xero.com with a link to an invoice page. The fake comes from post-xero.com and asks you to pay with a PayNow QR code, which hides who actually gets the money.",
-    "techniques": [
-      "QR code",
-      "Payment fraud",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not post.xero.com",
-      "Asks you to pay by QR",
-      "A QR hides who gets paid"
-    ],
-    "what_you_can_do": "Pay invoices only from a PO or supplier record you can verify, never from a QR code in an email."
-  },
-  "singpass-device": {
-    "subject_label": "A Singpass alert, on your phone",
-    "reveal_note": "Real: singpass.gov.sg. Fake: singpass-gov.sg, where a hyphen replaces the dot. The real alert tells you to use the Singpass app instead of a link.",
-    "techniques": [
-      "Government impersonation",
-      "Credential harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "A hyphen replaces the dot",
-      "Asks you to verify by link",
-      "Not singpass.gov.sg"
-    ],
-    "what_you_can_do": "Report suspicious logins in the Singpass app. Never verify your identity through an email link."
-  },
-  "workday-expense": {
-    "subject_label": "A Workday approval request",
-    "reveal_note": "Same words, same layout. The fake comes from workdayy.com (a double y) and links to a copy of the Workday sign-in page.",
-    "techniques": [
-      "Credential harvesting",
-      "Typosquatting",
-      "Business process"
-    ],
-    "red_flags": [
-      "A double y in workday",
-      "A link, not your inbox",
-      "Not myworkday.com"
-    ],
-    "what_you_can_do": "Approve things from the Workday app or your own bookmark, not from the email."
-  },
-  "wise-transfer": {
-    "subject_label": "A payment update, on your phone",
-    "reveal_note": "The real update comes from wise.com and tells you to track it in the app. The fake's domain is transfer-status.net (wise.com is only a prefix) and it asks for 'new bank details', a classic payment fraud.",
+  "invoice-approval": {
+    "subject_label": "Vendor invoice approval",
+    "reveal_note": "Everything reads professionally and the domain looks right at a glance. The tell is subtle: the fake domain has an added hyphen (rossum-supply.com vs rossumsupply.com), and the bank details changed without the phone confirmation finance policy requires.",
     "techniques": [
       "Payment fraud",
-      "Link trick",
-      "Lookalike domain"
+      "Lookalike domain",
+      "Changed bank details"
     ],
     "red_flags": [
-      "Domain is transfer-status.net",
-      "Bank details have changed",
-      "wise.com is only a prefix"
+      "Extra hyphen in the domain",
+      "Bank details changed",
+      "Bank details only in a file"
     ],
-    "what_you_can_do": "Confirm any change of bank details by phone, using a number you already hold."
-  },
-  "cpf-statement": {
-    "subject_label": "A CPF statement email",
-    "reveal_note": "The real email says CPF never asks for your Singpass password by email. The fake comes from cpf-board.com, not a .gov.sg address, and asks for exactly that.",
-    "techniques": [
-      "Government impersonation",
-      "Credential harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not cpf.gov.sg",
-      "Asks for your Singpass login",
-      "48-hour deadline",
-      "Not a .gov.sg address"
-    ],
-    "what_you_can_do": "Government sites end in .gov.sg. Go to cpf.gov.sg yourself and log in with Singpass."
-  },
-  "sms-ceo-newnumber": {
-    "subject_label": "A text from your CEO",
-    "reveal_note": "The real message shows Daniel Koh because he is in your contacts. The fake arrives from an unknown number, claims it is Daniel's new one, and asks for a vague favour first.",
-    "techniques": [
-      "Impersonated executive",
-      "Smishing",
-      "Authority"
-    ],
-    "red_flags": [
-      "A number, not your contact",
-      "A classic new-number opener",
-      "A vague ask to hook you"
-    ],
-    "what_you_can_do": "Call Daniel on the number you already have before you reply to a 'new number' message."
-  },
-  "sms-singpass-code": {
-    "subject_label": "A Singpass text message",
-    "reveal_note": "Both show SINGPASS. The real text only holds a code and says to ignore it if you didn't ask. The fake raises an alarm and links to singpass-verify.sg.",
-    "techniques": [
-      "Smishing",
-      "Government impersonation",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not singpass.gov.sg",
-      "An alarm, then a link",
-      "30-minute deadline"
-    ],
-    "what_you_can_do": "Real Singpass texts carry a code, not a link. Use the Singpass app to check your activity."
-  },
-  "sms-google-code": {
-    "subject_label": "A Google verification code",
-    "reveal_note": "A real verification text is just the code. The fake adds a line and a link, google-help.co, to cancel it.",
-    "techniques": [
-      "Smishing",
-      "Credential harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not google.com",
-      "Adds a link to a code text",
-      "Real codes carry no links"
-    ],
-    "what_you_can_do": "If you didn't ask for a code, change your password in the Google app or at google.com, not through the text."
-  },
-  "qr-guest-wifi": {
-    "subject_label": "A guest Wi-Fi card",
-    "reveal_note": "The printed address is the same, which is what makes this hard. The fake is a sticker over the real code, and it asks guests for a work login. The QR really opens meridianfreight-guest.com.",
-    "techniques": [
-      "Quishing",
-      "Credential harvesting",
-      "Evil twin Wi-Fi"
-    ],
-    "red_flags": [
-      "A sticker over the real code",
-      "Guests don't have a work login",
-      "Copies the real network name"
-    ],
-    "what_you_can_do": "Guest Wi-Fi never needs a work login. Ask reception for the password instead of scanning an unexpected code."
-  },
-  "qr-paynow-counter": {
-    "subject_label": "A PayNow code at a cafe counter",
-    "reveal_note": "Everything matches except two details: the fake is a sticker over the original, and its UEN differs from the one on the shop's receipts. Scanning pays a private account, not Kopi Corner.",
-    "techniques": [
-      "Quishing",
-      "Payment fraud",
-      "Sticker over a sign"
-    ],
-    "red_flags": [
-      "A sticker over the real code",
-      "A different UEN",
-      "Same words as the real one"
-    ],
-    "what_you_can_do": "Check the payee name in your banking app before you confirm. If it isn't the shop's name, don't pay."
-  },
-  "qr-summit-badge": {
-    "subject_label": "A conference agenda code",
-    "reveal_note": "The sign looks the same, with no sticker. The printed address is missing an m (sgcybersumit.sg), and the fake asks you to sign in with LinkedIn for an agenda.",
-    "techniques": [
-      "Quishing",
-      "Credential harvesting",
-      "Typosquatting"
-    ],
-    "red_flags": [
-      "One letter missing: sumit",
-      "Asks for a login",
-      "QR can't show where it leads"
-    ],
-    "what_you_can_do": "An agenda never needs a login. Read the printed address letter by letter before you scan."
+    "what_you_can_do": "Phone the supplier on a number you already hold before changing any bank details."
   },
   "it-vpn-certificate": {
     "subject_label": "An IT email about your VPN certificate",
@@ -412,35 +44,49 @@
     ],
     "what_you_can_do": "IT never sends installers by email link. Raise a ticket on the Service Desk portal from your own bookmark."
   },
-  "singtel-town-hall": {
-    "subject_label": "A Singtel town hall invitation",
-    "reveal_note": "The real email is from singtel.com and points you to the staff intranet. The fake comes from singtei.com, with an i in place of the l, and asks you to register with your staff login.",
+  "oauth-consent": {
+    "subject_label": "A Microsoft account notice, on your phone",
+    "reveal_note": "Everything matches except one letter: the fake comes from microsft.com, missing an o. Real Microsoft emails tell you to review apps at account.microsoft.com yourself.",
     "techniques": [
-      "Credential harvesting",
       "Typosquatting",
-      "Internal impersonation"
+      "Credential harvesting"
     ],
     "red_flags": [
-      "An i where the l should be",
-      "Wants a login to register",
-      "Not a singtel.com address"
+      "An o is missing: microsft",
+      "A link, not the site",
+      "Same lookalike domain"
     ],
-    "what_you_can_do": "Use the staff intranet from your own bookmark. Read an address letter by letter before you sign in."
+    "what_you_can_do": "Review connected apps by going to account.microsoft.com yourself."
   },
-  "singtel-cyber-training": {
-    "subject_label": "A Singtel training reminder, on your phone",
-    "reveal_note": "Both look the same on a phone. The real email tells you to use your own bookmark. The fake comes from singtel-learning.com and gives you a link that asks for your staff login.",
+  "qr-guest-wifi": {
+    "subject_label": "A guest Wi-Fi card",
+    "reveal_note": "The printed address is the same, which is what makes this hard. The fake is a sticker over the real code, and it asks guests for a work login. The QR really opens meridianfreight-guest.com.",
     "techniques": [
+      "Quishing",
       "Credential harvesting",
-      "Lookalike domain",
-      "Internal impersonation"
+      "Evil twin Wi-Fi"
     ],
     "red_flags": [
-      "Not singtel.com",
-      "Asks for your staff login",
-      "Not your learning portal"
+      "A sticker over the real code",
+      "Guests don't have a work login",
+      "Printed link ≠ where QR goes"
     ],
-    "what_you_can_do": "Tap the sender name to check the address, then open the learning portal from your own bookmark."
+    "what_you_can_do": "Guest Wi-Fi never needs a work login. Ask reception for the password instead of scanning an unexpected code."
+  },
+  "qr-paynow-counter": {
+    "subject_label": "A PayNow code at a cafe counter",
+    "reveal_note": "Everything matches except two details: the fake is a sticker over the original, and its UEN differs from the one on the shop's receipts. Scanning pays a private account, not Kopi Corner.",
+    "techniques": [
+      "Quishing",
+      "Payment fraud",
+      "Sticker over a sign"
+    ],
+    "red_flags": [
+      "A sticker over the real code",
+      "A different UEN",
+      "Payee shows a person's name"
+    ],
+    "what_you_can_do": "Check the payee name in your banking app before you confirm. If it isn't the shop's name, don't pay."
   },
   "singtel-ceo-office": {
     "subject_label": "An email from the Group CEO Office",
@@ -457,19 +103,34 @@
     ],
     "what_you_can_do": "Executives' offices don't ask for your number by email. Check with your manager before you reply."
   },
-  "singtel-benefits": {
-    "subject_label": "A Singtel benefits email, on your phone",
-    "reveal_note": "The sender name matches on a phone. The real email says to use the HR portal from your bookmark. The fake comes from singte1.com, with a 1 in place of the l, and gives you a link.",
+  "singtel-cyber-training": {
+    "subject_label": "A Singtel training reminder, on your phone",
+    "reveal_note": "Both look the same on a phone. The real email tells you to use your own bookmark. The fake comes from singtel-learning.com and gives you a link that asks for your staff login.",
     "techniques": [
       "Credential harvesting",
-      "Homoglyph domain",
+      "Lookalike domain",
       "Internal impersonation"
     ],
     "red_flags": [
-      "A 1 where the l should be",
-      "A link, not your bookmark",
-      "Not an HR portal address"
+      "Not singtel.com",
+      "Asks for your staff login",
+      "Not your learning portal"
     ],
-    "what_you_can_do": "Tap the sender name to read the address letter by letter. Open the HR portal from your own bookmark."
+    "what_you_can_do": "Read the sender's address, then open the learning portal from your own bookmark."
+  },
+  "sms-ceo-newnumber": {
+    "subject_label": "A text from your CEO",
+    "reveal_note": "The real message shows Daniel Koh because he is in your contacts. The fake arrives from an unknown number, claims it is Daniel's new one, and asks for a vague favour first.",
+    "techniques": [
+      "Impersonated executive",
+      "Smishing",
+      "Authority"
+    ],
+    "red_flags": [
+      "A number, not your contact",
+      "A classic new-number opener",
+      "A vague ask to hook you"
+    ],
+    "what_you_can_do": "Call Daniel on the number you already have before you reply to a 'new number' message."
   }
 }

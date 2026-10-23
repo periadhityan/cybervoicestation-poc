@@ -5,11 +5,11 @@ photos) and **Reel or Real?** (film plot or real cyber incident). Each game is w
 with a "Control Shield" lesson after every answer. The first two show two items and you pick the
 real one (7 rounds); Reel or Real? shows one case and you answer Reel or Real (8 cases).
 
-Spot the Phish has **81 pairs, 27 per difficulty**, in four kinds: emails on a desktop, emails as they look in a phone's mail
-app (you only see the sender's name until you tap Details), **text messages** (smishing), and **QR codes out in the world**
-(car park stickers, table codes, Wi-Fi cards; four email pairs also carry a QR). Every game is built to mix them: the game
+Spot the Phish has **26 pairs (8 easy, 9 medium, 9 hard)**, in four kinds: emails on a desktop, emails as they look in a phone's mail
+app (links show as coloured text with no address, so you have to know where to look), **text messages** (smishing), and **QR codes out in the world**
+(car park stickers, table codes, Wi-Fi cards). Every game is built to mix them: the game
 scores hundreds of random line-ups and keeps one with all four kinds, no more than 3 of one kind, and pairs the player
-hasn't just seen (in a 400-game test, every game had at least one text, one QR and one phone email). After you answer, the fake is shown again with its **3-4 red flags
+hasn't just seen (in a 1,000-game simulation, every game had at least one text, one QR, one phone email and one desktop email, and a pair the player had just seen came up about 2.5 times per game, which is the cost of a small bank). After you answer, the fake is shown again with its **3-4 red flags
 numbered on the email itself**. Three **question banks** on the home screen list everything in a game. The **Phish bank** shows every email pair
 side by side (tap an email to open it in full, with the page its link opens; "Show answers" marks which is
 the phish, the techniques used, and the red flags). The **Photo bank** shows every photo pair (tap to enlarge).

@@ -22,9 +22,9 @@
       "text": "A different UEN"
     },
     {
-      "on": "subject",
-      "mark": "Pay with PayNow",
-      "text": "Same words as the real one"
+      "on": "body",
+      "mark": "check the name shows Kopi Corner",
+      "text": "Payee shows a person's name"
     }
   ]
 }

@@ -1,9 +1,0 @@
-{
-  "from_name": "SAP Ariba",
-  "from_email": "ordering@ansmtp.ariba.com",
-  "to": "j.alvarez@meridianfreight.com",
-  "subject": "Invoice INV-8821 awaits your approval",
-  "date": "Mon, Oct 12, 2026 9:14 AM",
-  "body": "Hello Jordan,\n\nInvoice INV-8821 from Rossum Industrial Supply for $9,640.00 is awaiting your approval.\n\nOpen Ariba from your usual bookmark to review it.\n\nSAP Ariba",
-  "banner": "assets/ariba-approval-real-banner.svg"
-}

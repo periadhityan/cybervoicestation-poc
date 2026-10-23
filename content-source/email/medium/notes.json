@@ -1,138 +1,19 @@
 {
-  "payroll-update": {
-    "subject_label": "Payroll system update notice",
-    "reveal_note": "Both emails look professional, but the fake's sender and link domain (meridianfreiqht.com) swaps the g in 'freight' for a q -- easy to miss at a glance, which is exactly the point.",
+  "apple-receipt": {
+    "subject_label": "An Apple receipt",
+    "reveal_note": "The real receipt comes from apple.com and points to reportaproblem.apple.com. The fake comes from apple-billing-support.com, shows a big charge and tells you to phone a number, where a scammer waits.",
     "techniques": [
-      "Credential harvesting",
+      "Callback scam",
+      "Urgency",
       "Lookalike domain"
     ],
     "red_flags": [
-      "Sender and link domain meridianfreiqht.com (q instead of g)",
-      "Asks you to 're-confirm' bank details",
-      "Deadline of Friday 5pm",
-      "Link goes to a subdomain of the lookalike domain"
+      "Not apple.com",
+      "A big charge to alarm you",
+      "Tells you to phone a number",
+      "24-hour deadline"
     ],
-    "what_you_can_do": "Check payroll changes in the HR system yourself, or ask Payroll on a channel you trust."
-  },
-  "shared-document": {
-    "subject_label": "Shared document invite",
-    "reveal_note": "The fake's \"shared document\" link doesn't go to the real file-sharing provider at all -- it points to an unrelated domain disguised to look like one, a common way to harvest login credentials through a fake sign-in page.",
-    "techniques": [
-      "Credential harvesting",
-      "Lookalike domain",
-      "Urgency"
-    ],
-    "red_flags": [
-      "Sender domain clouddocs-share.net is not clouddocs.com",
-      "'Expires in 24 hours' to rush you",
-      "Link goes to a login page over plain http"
-    ],
-    "what_you_can_do": "Message Priya on a channel you trust before opening a shared link you didn't expect."
-  },
-  "software-renewal": {
-    "subject_label": "Software license renewal notice",
-    "reveal_note": "The fake's invoice total and \"past due\" framing are meant to create urgency, the payment link goes to a generic lookalike domain rather than the vendor's own billing portal, and the attached \"invoice\" has a double file extension (.pdf.exe) -- a classic sign it's an executable, not a document.",
-    "techniques": [
-      "Urgency",
-      "Risky attachment",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Sender domain designsuite-billing.net is not designsuite.com",
-      "'Past due' and service suspended in 48 hours",
-      "Attachment ends in .pdf.exe: it's a program, not a document",
-      "Payment link goes to the lookalike domain"
-    ],
-    "what_you_can_do": "Check invoices in the vendor's own portal, and never open a file ending .pdf.exe."
-  },
-  "docusign-review": {
-    "subject_label": "A DocuSign request from a colleague",
-    "reveal_note": "The fake keeps the colleague's name, but its address is docusign-secure-view.co, not docusign.net, and it adds a 2-hour expiry. Its link opens a page asking for your work email password.",
-    "techniques": [
-      "Urgency",
-      "Credential harvesting",
-      "Lookalike domain",
-      "Impersonated colleague"
-    ],
-    "red_flags": [
-      "Sender domain docusign-secure-view.co is not docusign.net",
-      "'Expires in 2 hours' to rush you",
-      "Link goes to a different domain over plain http",
-      "The page asks for your work email password, which DocuSign never needs to view a document"
-    ],
-    "what_you_can_do": "Check with Alicia on a channel you trust, or open DocuSign yourself, before signing in anywhere."
-  },
-  "gdrive-share": {
-    "subject_label": "A Google Drive share from a colleague",
-    "reveal_note": "The fake uses goog1e-docs-viewer.com (a digit 1 for the l), not google.com. Its page even shows a padlock, which only means the connection is encrypted, not that the site is genuine.",
-    "techniques": [
-      "Credential harvesting",
-      "Lookalike domain",
-      "Padlock on a fake site",
-      "Urgency"
-    ],
-    "red_flags": [
-      "Sender and link domain goog1e-docs-viewer.com (a digit 1 for the 'l')",
-      "'This link will expire in 1 hour'",
-      "The page has a padlock, which proves nothing about who runs it",
-      "It asks you to sign in again to 'confirm access'"
-    ],
-    "what_you_can_do": "Open Drive from your own bookmark or the app instead of the email link."
-  },
-  "singpost-locker": {
-    "subject_label": "A parcel locker collection notice",
-    "reveal_note": "The real QR code is a collection code you show to the locker. The fake asks you to scan a QR code to pay $2.40 within 12 hours, from singpost-collect.top rather than singpost.com, and leads to a card payment page.",
-    "techniques": [
-      "QR code",
-      "Urgency",
-      "Payment harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Sender domain singpost-collect.top is not singpost.com",
-      "A QR code that asks you to pay is a warning sign",
-      "'ON HOLD' and a 12-hour deadline",
-      "Blurry banner that reads 'SingP0st' with a zero",
-      "The QR hides where it leads",
-      "The page asks for card details"
-    ],
-    "what_you_can_do": "Check the parcel on singpost.com or in the SingPost app, never by scanning a code from an email."
-  },
-  "invoice-image": {
-    "subject_label": "A subscription invoice",
-    "reveal_note": "The fake is one big picture with no text, which slips past text filters, from adobe-invoice-center.net, with an .html attachment (a common fake-login trick). The real receipt is ordinary text from adobe.com.",
-    "techniques": [
-      "Image-only email",
-      "Urgency",
-      "Risky attachment",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Sender domain adobe-invoice-center.net is not adobe.com",
-      "The whole message is one image: no real text or link",
-      "A spelling mistake inside the picture ('becuase')",
-      "A blurry picture",
-      "Attachment is an .html file",
-      "Threat that the service will be stopped"
-    ],
-    "what_you_can_do": "Never open an .html attachment. Check billing in your Adobe account directly."
-  },
-  "bank-new-device": {
-    "subject_label": "A bank sign-in alert, on your phone",
-    "reveal_note": "On a phone you only see the display name, so both say Harborline Bank. The sender address, behind Details, is harborline-verify.top, not harborlinebank.com. The real alert has no link and tells you to open the app.",
-    "techniques": [
-      "Urgency",
-      "Credential harvesting",
-      "Lookalike domain",
-      "Hidden sender (mobile)"
-    ],
-    "red_flags": [
-      "Sender domain harborline-verify.top is not harborlinebank.com",
-      "'Action needed' and a 30-minute deadline",
-      "The link text hides where it goes",
-      "The link opens an unrelated site over plain http"
-    ],
-    "what_you_can_do": "On a phone, tap the sender name to see the real address. Don't tap a sign-in link; open the bank's app yourself."
+    "what_you_can_do": "Never phone a number from a receipt. Check purchases in your Apple account yourself."
   },
   "dbs-ibanking": {
     "subject_label": "A DBS transaction alert",
@@ -146,73 +27,61 @@
     "red_flags": [
       "Not dbs.com",
       "2-hour deadline",
-      "A big charge to alarm you",
+      "Banks don't verify by email",
       "Real host: login-verify.top"
     ],
     "what_you_can_do": "Never use a link in a bank alert. Open the DBS digibank app or call the number on your card."
   },
-  "ocbc-estatement": {
-    "subject_label": "A bank e-statement, on your phone",
-    "reveal_note": "The real email comes from ocbc.com and says statements are never sent as attachments. The fake comes from ocbc-estatement.net with an .html attachment, which opens a fake sign-in page.",
-    "techniques": [
-      "Risky attachment",
-      "Credential harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not ocbc.com",
-      "A statement sent as .html",
-      "Asks you to sign in from it"
-    ],
-    "what_you_can_do": "Never open an .html attachment. Log in to OCBC Online Banking yourself to see statements."
-  },
-  "aws-bill": {
-    "subject_label": "An AWS billing email",
-    "reveal_note": "The real email comes from amazon.com and says to use your own bookmark. The fake comes from aws-billing-center.com, claims big unusual charges and links to a look-alike console.",
+  "docusign-review": {
+    "subject_label": "A DocuSign request from a colleague",
+    "reveal_note": "The fake keeps the colleague's name, but its address is docusign-secure-view.co, not docusign.net, and it adds a 2-hour expiry. Its link opens a page asking for your work email password.",
     "techniques": [
       "Urgency",
       "Credential harvesting",
-      "Lookalike domain"
+      "Lookalike domain",
+      "Impersonated colleague"
     ],
     "red_flags": [
-      "Not amazon.com",
-      "A big charge to alarm you",
-      "24-hour deadline",
-      "Not console.aws.amazon.com"
+      "Not docusign.net",
+      "2-hour deadline",
+      "Asks for your work login",
+      "Different site, plain http"
     ],
-    "what_you_can_do": "Open the AWS console from your own bookmark. Never sign in through an email link."
+    "what_you_can_do": "Check with Alicia on a channel you trust, or open DocuSign yourself, before signing in anywhere."
   },
-  "github-session": {
-    "subject_label": "A GitHub security alert, on your phone",
-    "reveal_note": "The real alert comes from github.com and tells you to go to github.com/settings yourself. The fake comes from github-support.co, names a scary location and sets a 1-hour deadline.",
+  "gdrive-share": {
+    "subject_label": "A Google Drive share from a colleague",
+    "reveal_note": "The fake uses goog1e-docs-viewer.com (a digit 1 for the l), not google.com. Its page even shows a padlock, which only means the connection is encrypted, not that the site is genuine.",
     "techniques": [
-      "Urgency",
       "Credential harvesting",
-      "Lookalike domain"
+      "Lookalike domain",
+      "Padlock on a fake site",
+      "Urgency"
     ],
     "red_flags": [
-      "Not github.com",
+      "A digit 1 for the l",
       "1-hour deadline",
-      "A scary sign-in location",
-      "Not a github.com page"
+      "Asks you to sign in again",
+      "Not a google.com page"
     ],
-    "what_you_can_do": "Tap the sender name to check the address. Go to github.com yourself and look at your security log."
+    "what_you_can_do": "Open Drive from your own bookmark or the app instead of the email link."
   },
-  "slack-invite": {
-    "subject_label": "A Slack message",
-    "reveal_note": "The real invite comes from slack.com and links to your company's own Slack address. The fake comes from slack-workspace-invite.com and baits you with unread leadership messages.",
+  "invoice-image": {
+    "subject_label": "A subscription invoice",
+    "reveal_note": "The fake is one big picture with no text, which slips past text filters, from adobe-invoice-center.net, with an .html attachment (a common fake-login trick). The real receipt is ordinary text from adobe.com.",
     "techniques": [
-      "Curiosity bait",
-      "Credential harvesting",
+      "Image-only email",
+      "Urgency",
+      "Risky attachment",
       "Lookalike domain"
     ],
     "red_flags": [
-      "Not slack.com",
-      "Curiosity bait",
-      "Pushes a sign-in",
-      "Not meridianfreight.slack.com"
+      "Not adobe.com",
+      "A payment-failed scare",
+      "The message is one picture",
+      "Attachment is an .html file"
     ],
-    "what_you_can_do": "Open Slack from the app or your bookmark. Never sign in from an emailed link."
+    "what_you_can_do": "Never open an .html attachment. Check billing in your Adobe account directly."
   },
   "okta-password": {
     "subject_label": "An Okta security email, on your phone",
@@ -230,160 +99,20 @@
     ],
     "what_you_can_do": "Ask the IT Service Desk through a channel you already trust. IT never resets MFA by link."
   },
-  "booking-card": {
-    "subject_label": "A hotel booking email",
-    "reveal_note": "The real email comes from booking.com and sends you to the app. The fake comes from booking-confirm-pay.com, sets a 6-hour deadline and uses a QR code that hides where it leads.",
+  "payroll-update": {
+    "subject_label": "Payroll system update notice",
+    "reveal_note": "Both emails look professional, but the fake's sender and link domain (meridianfreiqht.com) swaps the g in 'freight' for a q -- easy to miss at a glance, which is exactly the point.",
     "techniques": [
-      "QR code",
-      "Payment harvesting",
-      "Urgency",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not booking.com",
-      "Asks for card checks",
-      "6-hour deadline",
-      "QR hides where it leads"
-    ],
-    "what_you_can_do": "Don't scan a QR code from an email. Open the Booking.com app and check the booking there."
-  },
-  "sharepoint-share": {
-    "subject_label": "A shared file from a colleague",
-    "reveal_note": "The real notice comes from sharepointonline.com and links to your company's own SharePoint. The fake comes from sharepoint-docs.net and sends you to a sign-in page on another site.",
-    "techniques": [
-      "Impersonated colleague",
       "Credential harvesting",
       "Lookalike domain"
     ],
     "red_flags": [
-      "Not sharepoint.com",
-      "Asks for your work login",
-      "Not your SharePoint address"
+      "q for g in freight",
+      "Asks for bank details",
+      "Deadline: Friday 5pm",
+      "Lookalike domain, plain http"
     ],
-    "what_you_can_do": "Open the file from OneDrive or Teams yourself, or message Dana to check it was really sent."
-  },
-  "zoom-recording": {
-    "subject_label": "A Zoom recording email, on your phone",
-    "reveal_note": "The real email comes from zoom.us and sends you to Recordings in the app. The fake comes from zoom-recordings.net and says the recording will be deleted in 24 hours unless you sign in.",
-    "techniques": [
-      "Urgency",
-      "Credential harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not zoom.us",
-      "24-hour deadline",
-      "Asks for a sign-in",
-      "Not a zoom.us page"
-    ],
-    "what_you_can_do": "Open the Zoom app and check Recordings yourself. Don't sign in from a link."
-  },
-  "apple-receipt": {
-    "subject_label": "An Apple receipt",
-    "reveal_note": "The real receipt comes from apple.com and points to reportaproblem.apple.com. The fake comes from apple-billing-support.com, shows a big charge and tells you to phone a number, where a scammer waits.",
-    "techniques": [
-      "Callback scam",
-      "Urgency",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not apple.com",
-      "A big charge to alarm you",
-      "Tells you to phone a number",
-      "24-hour deadline"
-    ],
-    "what_you_can_do": "Never phone a number from a receipt. Check purchases in your Apple account yourself."
-  },
-  "paypal-invoice": {
-    "subject_label": "A PayPal invoice, on your phone",
-    "reveal_note": "The real email comes from paypal.com and tells you to log in yourself. The fake comes from paypal.com.invoice-pay.top, where paypal.com is only a prefix: the real domain is invoice-pay.top.",
-    "techniques": [
-      "Link trick",
-      "Credential harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Domain is invoice-pay.top",
-      "No 'open PayPal yourself'",
-      "paypal.com is only a prefix"
-    ],
-    "what_you_can_do": "Read a web address from right to left: the domain is just before the first slash. Open PayPal yourself."
-  },
-  "google-workspace": {
-    "subject_label": "A Google Workspace alert, on your phone",
-    "reveal_note": "The real alert comes from google.com and tells you to go to myaccount.google.com yourself. The fake comes from google-workspace-admin.co and threatens to disable your mailbox.",
-    "techniques": [
-      "Urgency",
-      "Credential harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not google.com",
-      "Threat to disable your mailbox",
-      "Pushes a sign-in",
-      "Unknown site, not google.com"
-    ],
-    "what_you_can_do": "Admins don't ask you to sign in from an email. Check with IT through a channel you trust."
-  },
-  "sms-ocbc-otp": {
-    "subject_label": "An OCBC text message",
-    "reveal_note": "Both show OCBC: a fake can reuse a genuine sender name. The real text gives you an OTP and a number to call. The fake asks you to type an OTP into ocbc-secure.net.",
-    "techniques": [
-      "Smishing",
-      "OTP theft",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not ocbc.com",
-      "Asks you to hand over an OTP",
-      "10-minute deadline"
-    ],
-    "what_you_can_do": "Never type an OTP into a website you reached from a text. Real OTPs are for you to use, not to hand over."
-  },
-  "sms-iras-refund": {
-    "subject_label": "An IRAS text message",
-    "reveal_note": "The real text points to mytax.iras.gov.sg. The fake's link starts with iras-refunds.gov-sg.top, so its real domain is gov-sg.top, not a .gov.sg address.",
-    "techniques": [
-      "Smishing",
-      "Link trick",
-      "Too good to be true"
-    ],
-    "red_flags": [
-      "Real host is gov-sg.top",
-      "Money you didn't expect",
-      "A same-day deadline"
-    ],
-    "what_you_can_do": "Government sites end in .gov.sg. Go to mytax.iras.gov.sg yourself and log in with Singpass."
-  },
-  "sms-lazada-redeliver": {
-    "subject_label": "A Lazada text message",
-    "reveal_note": "The real text sends you to the Lazada app. The fake claims a failed delivery and links to lazada-redeliver.com.",
-    "techniques": [
-      "Smishing",
-      "Lookalike domain",
-      "Urgency"
-    ],
-    "red_flags": [
-      "Not lazada.sg",
-      "A failed delivery bait",
-      "A link instead of the app"
-    ],
-    "what_you_can_do": "Open the Lazada app to see delivery status. Don't reschedule through a link in a text."
-  },
-  "sms-uob-device": {
-    "subject_label": "A UOB text message",
-    "reveal_note": "Both show UOB. The real text tells you to call the bank. The fake gives you a link to cancel, at uob-cancel.net.",
-    "techniques": [
-      "Smishing",
-      "Credential harvesting",
-      "Lookalike domain"
-    ],
-    "red_flags": [
-      "Not uob.com.sg",
-      "15-minute deadline",
-      "A link replaces the phone call"
-    ],
-    "what_you_can_do": "Call the number on the back of your card, not a link in the text."
+    "what_you_can_do": "Check payroll changes in the HR system yourself, or ask Payroll on a channel you trust."
   },
   "qr-ev-charger": {
     "subject_label": "A QR code on an EV charger",
@@ -400,34 +129,19 @@
     ],
     "what_you_can_do": "Use the charging app you installed yourself, not a code on a sticker. Report stickers to building management."
   },
-  "qr-lobby-flyer": {
-    "subject_label": "A QR flyer in the office lobby",
-    "reveal_note": "The real flyer is from IT Security and opens the intranet. The fake offers a free gift card for staff and prints meridianfreight-rewards.com, which is not the company's domain.",
+  "sms-ocbc-otp": {
+    "subject_label": "An OCBC text message",
+    "reveal_note": "Both show OCBC: a fake can reuse a genuine sender name. The real text gives you an OTP and a number to call. The fake asks you to type an OTP into ocbc-secure.net.",
     "techniques": [
-      "Quishing",
-      "Credential harvesting",
+      "Smishing",
+      "OTP theft",
       "Lookalike domain"
     ],
     "red_flags": [
-      "A freebie for a login",
-      "Asks for your work login",
-      "Not meridianfreight.com"
+      "Not ocbc.com",
+      "Asks you to hand over an OTP",
+      "10-minute deadline"
     ],
-    "what_you_can_do": "Be wary of unexpected flyers. Ask IT or Facilities before scanning a code on a notice board."
-  },
-  "qr-mrt-poster": {
-    "subject_label": "A QR poster at a station",
-    "reveal_note": "The real poster sends you to the app store. The fake offers free credit if you log in, and prints grab-sg-promo.top.",
-    "techniques": [
-      "Quishing",
-      "Credential harvesting",
-      "Too good to be true"
-    ],
-    "red_flags": [
-      "Free money for a login",
-      "Asks you to log in",
-      "Not grab.com"
-    ],
-    "what_you_can_do": "Install apps by searching your phone's app store, not by scanning posters."
+    "what_you_can_do": "Never type an OTP into a website you reached from a text. Real OTPs are for you to use, not to hand over."
   }
 }

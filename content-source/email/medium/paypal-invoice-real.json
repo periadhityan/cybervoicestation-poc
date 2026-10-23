@@ -1,9 +1,0 @@
-{
-  "format": "mobile",
-  "from_name": "PayPal",
-  "from_email": "service@paypal.com",
-  "to": "j.alvarez@meridianfreight.com",
-  "subject": "Priya Nair sent you an invoice for $240.00 SGD",
-  "date": "Wed, Oct 14, 2026 10:26 AM",
-  "body": "Hi Jordan,\n\nPriya Nair sent you an invoice for $240.00 SGD, due Oct 30.\n\nTo view and pay it, log in to paypal.com or the PayPal app."
-}

@@ -25,8 +25,8 @@
     },
     {
       "on": "body",
-      "mark": "SGD 1,980.00",
-      "text": "A big charge to alarm you"
+      "mark": "verify your payee",
+      "text": "Banks don't verify by email"
     },
     {
       "on": "link_url",

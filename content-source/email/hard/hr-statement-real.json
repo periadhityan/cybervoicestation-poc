@@ -1,9 +1,0 @@
-{
-  "from_name": "Meridian HR",
-  "from_email": "hr@meridianfreight.com",
-  "to": "j.alvarez@meridianfreight.com",
-  "subject": "Your annual compensation statement is ready",
-  "date": "Wed, Oct 14, 2026 10:26 AM",
-  "body": "Hi Jordan,\n\nYour 2026 compensation statement is now available in Workday under Pay > Statements.\n\nPlease review it by Oct 30. If anything looks wrong, reply to this email or contact HR.\n\nMeridian HR Team",
-  "banner": "assets/hr-statement-real-banner.svg"
-}

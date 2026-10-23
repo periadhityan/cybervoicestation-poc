@@ -26,9 +26,8 @@
       "text": "Guests don't have a work login"
     },
     {
-      "on": "body",
-      "mark": "Network: Meridian-Guest",
-      "text": "Copies the real network name"
+      "on": "printed_url",
+      "text": "Printed link ≠ where QR goes"
     }
   ]
 }
