@@ -82,7 +82,7 @@ core phishing tells this game teaches, so make it count in your fake
 rounds' `link_url`.
 
 **Phone view and red flags.** Add `"format": "mobile"` to *both* emails of a pair to show them as they look in a phone's
-mail app: only the display name is visible until the player taps "Details", links show as coloured text with no address,
+mail app: the sender address is shown under the name, links show as coloured text with no address,
 and the screen is narrow. Add a `flags` list to the *fake* email to number its giveaways on the answer screen:
 `{ "on": "from_email", "mark": "micros0ft-support-center.com", "text": "Not microsoft.com (zero for o)" }`. `on` is the
 field (`from_name`, `from_email`, `subject`, `body`, `link_text`, `link_url`, `attachment_name`, or a picture:

@@ -550,9 +550,9 @@
     </div>`;
   }
 
-  // The same email as it looks in a phone's mail app: the sender is only a display name until you tap "Details", the
-  // link is a bit of coloured text with no address, and everything is squeezed into a narrow screen. That is the whole point:
-  // on a phone the tells are hidden, so the player has to know where to look.
+  // The same email as it looks in a phone's mail app: the link is a bit of coloured text with no address and everything
+  // is squeezed into a narrow screen, so the player has to know where to look. The sender's address is always shown
+  // (nobody should have to tap "Details" to find the first thing to check).
   function phoneHtml(m, flags = null) {
     const F = withNo(flags), annotate = F.length > 0;
     const initial = esc(String(m.from_name || '?').trim().charAt(0).toUpperCase());
@@ -565,12 +565,11 @@
       <div class="phone__status" aria-hidden="true"><b>${time || '9:41'}</b><span class="phone__sig"><i></i><i></i><i></i><i></i></span></div>
       <div class="phone__nav" aria-hidden="true"><span>‹ Inbox</span><span>⌃ ⌄</span></div>
       <h3 class="phone__subject">${rfText(m.subject, F, 'subject')}</h3>
-      <div class="phone__sender${annotate ? ' is-open' : ''}">
+      <div class="phone__sender">
         <span class="phone__avatar" aria-hidden="true">${initial}</span>
         <div class="phone__who">
           <b>${rfText(m.from_name, F, 'from_name')}</b>
           <span class="phone__to">to me</span>
-          <button class="phone__details" type="button" data-details aria-expanded="${annotate}">Details</button>
           <p class="phone__addr">${rfText(m.from_email, F, 'from_email')}</p>
         </div>
         <time>${time}</time>
@@ -745,14 +744,13 @@
             ${src}
           </article>`;
       } else if (state.station === 'email' && ((r.items[r.realSlot === 'A' ? 'B' : 'A'] || {}).flags || []).length) {
-        const fakeSlot = r.realSlot === 'A' ? 'B' : 'A', fake = r.items[fakeSlot], real = r.items[r.realSlot], fl = fake.flags;
+        const fakeSlot = r.realSlot === 'A' ? 'B' : 'A', fake = r.items[fakeSlot], fl = fake.flags;
         verdict = `<article class="verdict verdict--flags card fit">
             <p class="mono">Where ${noun.toLowerCase()} ${fakeSlot} gave itself away${res.choice === fakeSlot ? ' <span class="verdict__you">&nbsp;·&nbsp; your pick</span>' : ''}</p>
             <div class="flagview">
               <div class="flagview__mail${['mobile', 'sms', 'qr'].includes(fake.format) ? ' flagview__mail--phone' : ''}">${mailHtml(fake, true, fl)}</div>
               <div class="flagview__side">
                 ${flagList(fl)}
-                <p class="verdict__real"><span class="tag tag--real">Real</span> <b>${esc(real.format === 'sms' ? real.from_name : real.format === 'qr' ? real.printed_url : String(real.from_email).split('@').pop())}</b></p>
                 ${fake.scan_url ? `<p class="verdict__scan"><span class="mono">Scanning the fake opens</span>${esc(fake.scan_url)}</p>` : ''}
               </div>
             </div>
@@ -1092,16 +1090,10 @@
     $('.mailview__close', mailview).focus({ preventScroll: true });
   }
   function closeMail() { mailview.hidden = true; if (mailFocus && mailFocus.focus) mailFocus.focus({ preventScroll: true }); }
-  mailview.addEventListener('click', (e) => {
-    const det = e.target.closest('[data-details]');
-    if (det) { const open = det.closest('.phone__sender').classList.toggle('is-open'); det.setAttribute('aria-expanded', open); }
-  });
   mailview.addEventListener('click', (e) => { if (e.target === mailview || e.target.closest('.mailview__close')) closeMail(); });
 
   /* ------------------------------------------------------------------ input */
   stage.addEventListener('click', (e) => {
-    const det = e.target.closest('[data-details]');
-    if (det) { const box = det.closest('.phone__sender'); const open = box.classList.toggle('is-open'); det.setAttribute('aria-expanded', open); return; }
     const t = e.target.closest('[data-pick], [data-choice], [data-zoom], [data-bank-zoom], [data-mail], [data-action]');
     if (!t) return;
     if (t.dataset.pick) answer(t.dataset.pick);
